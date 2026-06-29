@@ -1,0 +1,274 @@
+{
+  "odigahara": {
+    "id": "odigahara",
+    "displayName": "桶狭間の戦",
+    "year": 1560,
+    "description": "織田信長が今川義元の大軍を奇襲。歴史上有名な大逆転劇。",
+    "playerInitialStrength": 3500,
+    "enemyInitialStrength": 15000,
+    "difficulty": 1,
+    "estimatedDuration": 300,
+    "backgroundImage": "assets/images/maps/odigahara_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "敵到着前に奇襲",
+        "description": "敵が到着する前に奇襲コマンドを実行する",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "嵐の中での戦闘",
+        "description": "2分目～3分目に敵と接触する",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp3",
+        "name": "敵将兵力低下",
+        "description": "敵将の兵力を50%以下に低下させる",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "敵将を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_cavalry_1",
+        "name": "織田騎馬隊",
+        "type": "cavalry",
+        "strength": 2000
+      },
+      {
+        "id": "player_spear_1",
+        "name": "羽柴槍兵隊",
+        "type": "spear",
+        "strength": 1500
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "今川騎馬隊",
+        "type": "cavalry",
+        "strength": 8000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "今川槍兵隊",
+        "type": "spear",
+        "strength": 7000
+      }
+    ]
+  },
+  "nagashino": {
+    "id": "nagashino",
+    "displayName": "長篠の戦",
+    "year": 1575,
+    "description": "織田信長と豊臣秀吉が武田勝頼の騎馬隊に対して鉄砲を駆使。",
+    "playerInitialStrength": 12000,
+    "enemyInitialStrength": 15000,
+    "difficulty": 2,
+    "estimatedDuration": 360,
+    "backgroundImage": "assets/images/maps/nagashino_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "初期陣形を防御に設定",
+        "description": "最初のコマンドを待機で開始する",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "敵騎馬隊の突撃を耐える",
+        "description": "敵騎馬隊の突撃を待機コマンドで耐える",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp3",
+        "name": "一斉反撃",
+        "description": "敵が近づいたら進軍で一斉反撃",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "敵将武田勝頼を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_cavalry_1",
+        "name": "織田騎馬隊",
+        "type": "cavalry",
+        "strength": 5000
+      },
+      {
+        "id": "player_musket_1",
+        "name": "鉄砲隊",
+        "type": "musket",
+        "strength": 7000
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "武田騎馬隊",
+        "type": "cavalry",
+        "strength": 8000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "武田槍兵隊",
+        "type": "spear",
+        "strength": 7000
+      }
+    ]
+  },
+  "honnoJi": {
+    "id": "honnoJi",
+    "displayName": "本能寺の変",
+    "year": 1582,
+    "description": "織田信長が明智光秀の謀反に遭遇。絶望的な状況での逆転を目指す。",
+    "playerInitialStrength": 500,
+    "enemyInitialStrength": 13000,
+    "difficulty": 3,
+    "estimatedDuration": 420,
+    "backgroundImage": "assets/images/maps/honnou_ji_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "敵の包囲を突破",
+        "description": "敵の包囲を撤退コマンドで突破する",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "援軍到着まで生存",
+        "description": "5分以上敵をかわし続ける",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp3",
+        "name": "援軍到着後の反撃",
+        "description": "援軍到着後に進軍で敵陣に突撃",
+        "rewardPoints": 5000
+      },
+      {
+        "id": "tp4",
+        "name": "敵総大将討死",
+        "description": "明智光秀を討ち取る",
+        "rewardPoints": 6000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_cavalry_1",
+        "name": "信長護衛隊",
+        "type": "cavalry",
+        "strength": 500
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "明智騎馬隊",
+        "type": "cavalry",
+        "strength": 6500
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "明智槍兵隊",
+        "type": "spear",
+        "strength": 6500
+      }
+    ]
+  },
+  "sekigahara": {
+    "id": "sekigahara",
+    "displayName": "関ヶ原の戦",
+    "year": 1600,
+    "description": "徳川家康率いる東軍と石田三成率いる西軍の天下分け目の戦い。",
+    "playerInitialStrength": 30000,
+    "enemyInitialStrength": 32000,
+    "difficulty": 4,
+    "estimatedDuration": 480,
+    "backgroundImage": "assets/images/maps/sekigahara_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "序盤は慎重に",
+        "description": "序盤は待機コマンドで敵の出方を見る",
+        "rewardPoints": 2000
+      },
+      {
+        "id": "tp2",
+        "name": "味方のモラル維持",
+        "description": "小早川秀秋のモラルを50%以上維持",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp3",
+        "name": "側面を奇襲",
+        "description": "敵の側面を奇襲コマンドで突く",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "石田三成を討ち取る",
+        "rewardPoints": 5000
+      },
+      {
+        "id": "tp5",
+        "name": "豊臣武将生存",
+        "description": "豊臣家の武将を1体以上生存させる",
+        "rewardPoints": 3000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_cavalry_1",
+        "name": "徳川騎馬隊",
+        "type": "cavalry",
+        "strength": 12000
+      },
+      {
+        "id": "player_spear_1",
+        "name": "徳川槍兵隊",
+        "type": "spear",
+        "strength": 10000
+      },
+      {
+        "id": "player_musket_1",
+        "name": "徳川鉄砲隊",
+        "type": "musket",
+        "strength": 8000
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "西軍騎馬隊",
+        "type": "cavalry",
+        "strength": 10000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "西軍槍兵隊",
+        "type": "spear",
+        "strength": 12000
+      },
+      {
+        "id": "enemy_musket_1",
+        "name": "西軍鉄砲隊",
+        "type": "musket",
+        "strength": 10000
+      }
+    ]
+  }
+}

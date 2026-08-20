@@ -207,12 +207,15 @@ class BattleState {
 
   void _updateCombat(double dt) {
     _inCombatThisFrame = false;
+    final collidingPlayers = <Unit>{};
+    final collidingEnemies = <Unit>{};
+
     for (final pu in playerArmy.aliveUnits) {
       for (final eu in enemyArmy.aliveUnits) {
         final dist = pu.distanceTo(eu);
         if (dist < combatRange) {
-          pu.isColliding = true;
-          eu.isColliding = true;
+          collidingPlayers.add(pu);
+          collidingEnemies.add(eu);
           _inCombatThisFrame = true;
 
           final pDmg = DamageCalculator.calculate(eu, pu);
@@ -225,11 +228,21 @@ class BattleState {
             _enemyCommanderKilled = true;
             eventLog.enemyCommanderKilled = true;
           }
-        } else {
-          pu.isColliding = false;
-          eu.isColliding = false;
         }
       }
+    }
+
+    // isColliding はユニットごとに一度だけ確定させる（複数の敵と判定する際、
+    // 最後に調べた相手だけで上書きされて誤ってfalseに戻るのを防ぐ）。
+    // 交戦中のユニットはその場で戦うため移動を止める（敵陣中央などの
+    // 目標座標へ突き抜けて移動し続け、ユニットが1点に集まってしまうのを防ぐ）。
+    for (final pu in playerArmy.aliveUnits) {
+      pu.isColliding = collidingPlayers.contains(pu);
+      if (pu.isColliding) pu.isMoving = false;
+    }
+    for (final eu in enemyArmy.aliveUnits) {
+      eu.isColliding = collidingEnemies.contains(eu);
+      if (eu.isColliding) eu.isMoving = false;
     }
   }
 

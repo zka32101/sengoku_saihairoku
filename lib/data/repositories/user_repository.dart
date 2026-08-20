@@ -88,10 +88,7 @@ class UserRepository implements IUserRepository {
       await _firestore.collection(_collectionName).doc(userId).update({
         'scenarioProgress': updatedList,
         'totalPlayed': FieldValue.increment(1),
-        if (progress.timesWon > 0)
-          'totalWins': FieldValue.increment(1)
-        else
-          'totalWins': 0,
+        if (progress.timesWon > 0) 'totalWins': FieldValue.increment(1),
         if (progress.bestScore > (userData['bestScore'] as int? ?? 0))
           'bestScore': progress.bestScore
         else

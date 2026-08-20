@@ -36,4 +36,21 @@ class Army {
     final y = alive.fold(0.0, (sum, u) => sum + u.posY) / alive.length;
     return (x, y);
   }
+
+  /// 指定座標から見て最も近い生存ユニットを返す（いなければ null）。
+  /// 進軍中のユニットが「目の前の敵」を追うために使う。
+  Unit? nearestAliveTo(double x, double y) {
+    Unit? nearest;
+    double bestDistSq = double.infinity;
+    for (final u in aliveUnits) {
+      final dx = u.posX - x;
+      final dy = u.posY - y;
+      final distSq = dx * dx + dy * dy;
+      if (distSq < bestDistSq) {
+        bestDistSq = distSq;
+        nearest = u;
+      }
+    }
+    return nearest;
+  }
 }

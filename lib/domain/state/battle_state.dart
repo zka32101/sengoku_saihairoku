@@ -43,29 +43,39 @@ class PlayerCommandHandler {
     switch (command) {
       case PlayerCommand.advance:
         for (final u in playerArmy.aliveUnits) {
-          u.targetX = ex;
-          u.targetY = ey;
+          final nearest = enemyArmy.nearestAliveTo(u.posX, u.posY);
+          u.targetX = nearest?.posX ?? ex;
+          u.targetY = nearest?.posY ?? ey;
           u.isMoving = true;
+          u.seeksEnemy = true;
         }
       case PlayerCommand.retreat:
         for (final u in playerArmy.aliveUnits) {
           u.targetX = u.posX;
           u.targetY = 550;
           u.isMoving = true;
+          u.seeksEnemy = false;
         }
       case PlayerCommand.wait:
         for (final u in playerArmy.aliveUnits) {
           u.isMoving = false;
+          u.seeksEnemy = false;
         }
       case PlayerCommand.ambush:
+        // 奇襲：側面の地点へ進み、目の前の敵に固執しすぎない（追尾はしない）
         for (final u in playerArmy.aliveUnits) {
-          u.targetX = ex + (u.posX < ex ? -80 : 80);
-          u.targetY = ey;
+          final nearest = enemyArmy.nearestAliveTo(u.posX, u.posY);
+          final nx = nearest?.posX ?? ex;
+          final ny = nearest?.posY ?? ey;
+          u.targetX = nx + (u.posX < nx ? -80 : 80);
+          u.targetY = ny;
           u.isMoving = true;
+          u.seeksEnemy = false;
         }
       case PlayerCommand.formation:
         for (final u in playerArmy.aliveUnits) {
           u.isMoving = false;
+          u.seeksEnemy = false;
         }
       case PlayerCommand.rally:
         // 激励：攻撃力を10秒間 1.5倍
@@ -78,14 +88,17 @@ class PlayerCommandHandler {
         for (final u in playerArmy.aliveUnits) {
           u.defenseBuffTimer = 10.0;
           u.isMoving = false;
+          u.seeksEnemy = false;
         }
       case PlayerCommand.charge:
-        // 突撃：速度バフ5秒 + 全力進軍
+        // 突撃：速度バフ5秒 + 目の前の敵へ全力進軍
         for (final u in playerArmy.aliveUnits) {
+          final nearest = enemyArmy.nearestAliveTo(u.posX, u.posY);
           u.speedBuffTimer = 5.0;
-          u.targetX = ex;
-          u.targetY = ey;
+          u.targetX = nearest?.posX ?? ex;
+          u.targetY = nearest?.posY ?? ey;
           u.isMoving = true;
+          u.seeksEnemy = true;
         }
     }
 
@@ -199,10 +212,36 @@ class BattleState {
     elapsedTime += dt;
     eventLog.tick(dt);
     commandHandler.update(dt);
+    _updateTargeting();
+    for (final u in playerArmy.aliveUnits) {
+      u.update(dt);
+    }
     enemyAI.update(dt);
     _updateCombat(dt);
     _evaluateTurningPoints();
     _checkBattleEnd();
+  }
+
+  // 「目の前の敵と戦う」系の命令（進軍・突撃・敵AIの前進/偵察）は、
+  // 移動中は毎フレーム最も近い生存中の敵ユニットへ目標を追従させる。
+  // 敵が倒れたり移動したりしても自然に次の相手へ向き直る。
+  void _updateTargeting() {
+    for (final pu in playerArmy.aliveUnits) {
+      if (!pu.seeksEnemy || !pu.isMoving) continue;
+      final nearest = enemyArmy.nearestAliveTo(pu.posX, pu.posY);
+      if (nearest != null) {
+        pu.targetX = nearest.posX;
+        pu.targetY = nearest.posY;
+      }
+    }
+    for (final eu in enemyArmy.aliveUnits) {
+      if (!eu.seeksEnemy || !eu.isMoving) continue;
+      final nearest = playerArmy.nearestAliveTo(eu.posX, eu.posY);
+      if (nearest != null) {
+        eu.targetX = nearest.posX;
+        eu.targetY = nearest.posY;
+      }
+    }
   }
 
   void _updateCombat(double dt) {

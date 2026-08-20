@@ -3,12 +3,14 @@ import 'unit.dart';
 
 class DamageCalculator {
   static double calculate(Unit attacker, Unit defender) {
-    final baseDamage = attacker.attack * attacker.strengthRatio;
-    final reduced = baseDamage * (1.0 - defender.defense);
+    final baseDamage = attacker.effectiveAttack * attacker.strengthRatio;
+    final reduced = baseDamage * (1.0 - defender.effectiveDefense);
     final moraleMod = 0.5 + (attacker.morale / 100) * 0.5;
+    // 士気が低い部隊は統率が乱れ、被弾がより深刻になる（最大+30%）。
+    final defenderMoraleMod = 1.0 + (1.0 - defender.morale / 100) * 0.3;
     final typeMod = _typeModifier(attacker.type, defender.type);
 
-    return max(0, reduced * moraleMod * typeMod);
+    return max(0, reduced * moraleMod * defenderMoraleMod * typeMod);
   }
 
   static double _typeModifier(UnitType attacker, UnitType defender) {

@@ -59,9 +59,11 @@ class EnemyAI {
   void _commandAdvance() {
     final (cx, cy) = playerArmy.getCenterPosition();
     for (final unit in enemyArmy.aliveUnits) {
-      unit.targetX = cx;
-      unit.targetY = cy;
+      final nearest = playerArmy.nearestAliveTo(unit.posX, unit.posY);
+      unit.targetX = nearest?.posX ?? cx;
+      unit.targetY = nearest?.posY ?? cy;
       unit.isMoving = true;
+      unit.seeksEnemy = true;
       unit.speed = _baseSpeed(unit.type);
     }
   }
@@ -72,6 +74,7 @@ class EnemyAI {
       unit.targetX = unit.posX;
       unit.targetY = 50;
       unit.isMoving = true;
+      unit.seeksEnemy = false;
       unit.speed = _baseSpeed(unit.type) * 1.2;
     }
   }
@@ -79,9 +82,11 @@ class EnemyAI {
   void _commandScout() {
     final (cx, cy) = playerArmy.getCenterPosition();
     for (final unit in enemyArmy.aliveUnits) {
-      unit.targetX = cx;
-      unit.targetY = cy;
+      final nearest = playerArmy.nearestAliveTo(unit.posX, unit.posY);
+      unit.targetX = nearest?.posX ?? cx;
+      unit.targetY = nearest?.posY ?? cy;
       unit.isMoving = true;
+      unit.seeksEnemy = true;
       unit.speed = _baseSpeed(unit.type) * 0.5;
     }
   }

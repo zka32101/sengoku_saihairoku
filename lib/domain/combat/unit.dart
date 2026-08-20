@@ -20,6 +20,10 @@ class Unit {
   double targetY;
   bool isMoving = false;
   bool isColliding = false;
+  // true の間、移動中は毎フレーム最も近い敵ユニットへ目標座標を追従させる
+  // （進軍・突撃など「目の前の敵と戦う」命令用。奇襲の側面地点への移動などは
+  // false のままにして、指定地点への移動を維持する）。
+  bool seeksEnemy = false;
 
   // バフ状態（残り時間で管理）
   double attackBuffTimer = 0;   // 攻撃力バフ残り秒

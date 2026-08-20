@@ -35,7 +35,8 @@ class PlayerCommandHandler {
     if (_nextCommandIn > 0) return false;
 
     eventLog.recordCommand(command);
-    commandHistory.add(CommandRecord(command: command, timestamp: 0));
+    commandHistory
+        .add(CommandRecord(command: command, timestamp: eventLog.commands.last.timestamp));
 
     final (ex, ey) = enemyArmy.getCenterPosition();
 
@@ -134,6 +135,7 @@ class BattleState {
   BattlePhase phase = BattlePhase.waiting;
   BattleResult result = BattleResult.none;
   bool _enemyCommanderKilled = false;
+  bool _inCombatThisFrame = false;
 
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
@@ -147,6 +149,7 @@ class BattleState {
       enemyArmy: enemyArmy,
     );
     tpEvaluator = TurningPointEvaluator(
+      scenarioId: scenario.id,
       turningPoints: scenario.turningPoints,
       eventLog: eventLog,
     );
@@ -203,12 +206,14 @@ class BattleState {
   }
 
   void _updateCombat(double dt) {
+    _inCombatThisFrame = false;
     for (final pu in playerArmy.aliveUnits) {
       for (final eu in enemyArmy.aliveUnits) {
         final dist = pu.distanceTo(eu);
         if (dist < combatRange) {
           pu.isColliding = true;
           eu.isColliding = true;
+          _inCombatThisFrame = true;
 
           final pDmg = DamageCalculator.calculate(eu, pu);
           final eDmg = DamageCalculator.calculate(pu, eu);
@@ -232,9 +237,10 @@ class BattleState {
     tpEvaluator.evaluate(
       elapsedTime: elapsedTime,
       playerStrengthRatio: playerArmy.getStrengthRatio(),
+      enemyStrengthRatio: enemyArmy.getStrengthRatio(),
       playerMorale: playerArmy.getAverageMorale(),
       enemyCommanderKilled: _enemyCommanderKilled,
-      isFirstCommand: eventLog.getAll().isEmpty,
+      inCombat: _inCombatThisFrame,
     );
   }
 

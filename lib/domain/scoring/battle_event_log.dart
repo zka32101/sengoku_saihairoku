@@ -39,9 +39,20 @@ class BattleEventLog {
         (c) => c.command == command && c.timestamp >= from && c.timestamp <= to);
   }
 
+  bool hasCommandAfter(PlayerCommand command, double afterTime) {
+    return commands
+        .any((c) => c.command == command && c.timestamp >= afterTime);
+  }
+
   int countCommand(PlayerCommand command) {
     return commands.where((c) => c.command == command).length;
   }
+
+  PlayerCommand? get firstCommand =>
+      commands.isEmpty ? null : commands.first.command;
+
+  PlayerCommand? get lastCommand =>
+      commands.isEmpty ? null : commands.last.command;
 
   List<CommandRecord> getAll() => List.unmodifiable(commands);
 }

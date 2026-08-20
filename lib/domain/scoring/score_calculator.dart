@@ -58,7 +58,13 @@ class ScoreCalculator {
     return survivorScore + timeScore;
   }
 
-  int _commandScore(List<CommandRecord> commands) {
+  int _commandScore(List<CommandRecord> commands) =>
+      commandScoreForCommands(commands);
+
+  /// コマンド履歴から采配スコアを算出する。戦闘結果画面だけでなく、
+  /// 戦闘中HUDの途中経過表示（BattleGame.commandScore）とも同じ式を使うことで
+  /// 表示のズレを防ぐ。
+  static int commandScoreForCommands(List<CommandRecord> commands) {
     int score = 0;
     for (final cmd in commands) {
       switch (cmd.command) {

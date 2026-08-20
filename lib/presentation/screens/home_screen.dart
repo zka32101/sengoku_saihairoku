@@ -181,7 +181,10 @@ class HomeScreen extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          if (!selected) Navigator.pushNamed(context, route);
+          // ranking/settings画面の下部ナビと挙動を揃える（スタックを積み上げず置換する）
+          if (!selected) {
+            Navigator.pushNamedAndRemoveUntil(context, route, (_) => false);
+          }
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),

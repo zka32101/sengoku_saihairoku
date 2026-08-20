@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import '../core/services/audio_manager.dart';
 import '../data/models/scenario_data.dart';
 import '../domain/scoring/battle_event_log.dart';
+import '../domain/scoring/score_calculator.dart';
 import '../domain/state/battle_state.dart';
 import 'components/effect_component.dart';
 import 'components/map_background.dart';
@@ -139,6 +140,11 @@ class BattleGame extends FlameGame {
   int get tpTotal => scenarioData.turningPoints.length;
   int get commandCount =>
       _ready ? _battleState.commandHandler.commandHistory.length : 0;
+  // 結果画面と同じ式で采配スコアを算出する（表示のズレを防ぐ）。
+  int get commandScore => _ready
+      ? ScoreCalculator.commandScoreForCommands(
+          _battleState.commandHandler.commandHistory)
+      : 0;
   BattlePhase get phase =>
       _ready ? _battleState.phase : BattlePhase.waiting;
 }

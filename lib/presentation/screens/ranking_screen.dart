@@ -166,7 +166,7 @@ class _RankingScreenState extends State<RankingScreen> {
   }
 
   String _getScenarioName(Scenario scenario) => switch (scenario) {
-        Scenario.odigahara => '小田原の戦い',
+        Scenario.odigahara => '桶狭間の戦い',
         Scenario.nagashino => '長篠の戦い',
         Scenario.honnoJi => '本能寺の変',
         Scenario.sekigahara => '関ヶ原の戦い',

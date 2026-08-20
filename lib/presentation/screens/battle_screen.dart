@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/repositories/scenario_repository.dart';
@@ -18,7 +19,9 @@ class BattleScreen extends StatefulWidget {
 }
 
 class _BattleScreenState extends State<BattleScreen> {
-  static const bool _debugMode = true;
+  // デバッグパネルはデバッグビルドのみ表示する（本番で内部数値が
+  // 常時表示されてしまっていたのを修正）。
+  static const bool _debugMode = kDebugMode;
 
   BattleGame? _battleGame;
   ScenarioData? _scenarioData;
@@ -33,6 +36,7 @@ class _BattleScreenState extends State<BattleScreen> {
   double _elapsed = 0;
   int _tpCount = 0;
   int _commandCount = 0;
+  int _commandScore = 0;
   int _playerUnitCount = 0;
   int _enemyUnitCount = 0;
   late final List<String> _commandHistory;
@@ -77,6 +81,7 @@ class _BattleScreenState extends State<BattleScreen> {
           _elapsed = g.elapsedTime;
           _tpCount = g.tpAchievedCount;
           _commandCount = g.commandCount;
+          _commandScore = g.commandScore;
         });
       });
     } catch (e) {
@@ -161,7 +166,7 @@ class _BattleScreenState extends State<BattleScreen> {
             _BattleCommandUI(
               tpCount: _tpCount,
               tpTotal: data.turningPoints.length,
-              commandScore: _commandCount * 50,
+              commandScore: _commandScore,
               onCommand: (cmd) {
                 game.executeCommand(cmd);
                 if (_debugMode) {

@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -35,11 +36,15 @@ jobs:
       - name: Upload APK as build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sengoku-saihairoku-${{ github.ref_name }}
+          name: sengoku-saihairoku-${{ github.run_id }}
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
 
+      # タグ push のときだけ GitHub Release を作成/更新して添付する。
+      # workflow_dispatch（手動実行）はどのブランチからでも起動できるため、
+      # リリースを紐づけるタグが存在するとは限らない。
       - name: Attach APK to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk

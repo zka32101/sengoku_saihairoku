@@ -1,4 +1,4 @@
-package com.example.sengoku_saihairoku
+package com.petitworksapps.sengokusaihairoku
 
 import io.flutter.embedding.android.FlutterActivity
 

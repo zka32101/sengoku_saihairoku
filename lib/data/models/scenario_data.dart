@@ -3,6 +3,7 @@ enum Scenario {
   nagashino,
   honnoJi,
   sekigahara,
+  kawanakajima,
 }
 
 class ScenarioData {

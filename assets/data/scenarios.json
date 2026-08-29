@@ -270,5 +270,70 @@
         "strength": 10000
       }
     ]
+  },
+  "kawanakajima": {
+    "id": "kawanakajima",
+    "displayName": "川中島の戦",
+    "year": 1561,
+    "description": "武田信玄の本隊が、夜明けの車懸りで奇襲してきた上杉謙信の大軍と単独で激突。別働隊到着まで凌ぎ切れるか。",
+    "playerInitialStrength": 4000,
+    "enemyInitialStrength": 9000,
+    "difficulty": 3,
+    "estimatedDuration": 360,
+    "backgroundImage": "assets/images/maps/kawanakajima_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "夜明けの奇襲に備える",
+        "description": "開戦直後に盾陣で守りを固める",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "別働隊到着まで凌ぐ",
+        "description": "3分以上本隊のみで持ちこたえる",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp3",
+        "name": "挟撃を成功させる",
+        "description": "別働隊到着後に進軍で挟撃を仕掛ける",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "上杉謙信を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_spear_1",
+        "name": "武田槍隊",
+        "type": "spear",
+        "strength": 2500
+      },
+      {
+        "id": "player_cavalry_1",
+        "name": "武田騎馬隊",
+        "type": "cavalry",
+        "strength": 1500
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "上杉騎馬隊",
+        "type": "cavalry",
+        "strength": 5000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "上杉槍兵隊",
+        "type": "spear",
+        "strength": 4000
+      }
+    ]
   }
 }

@@ -170,6 +170,7 @@ class _RankingScreenState extends State<RankingScreen> {
         Scenario.nagashino => '長篠の戦い',
         Scenario.honnoJi => '本能寺の変',
         Scenario.sekigahara => '関ヶ原の戦い',
+        Scenario.kawanakajima => '川中島の戦い',
       };
 }
 

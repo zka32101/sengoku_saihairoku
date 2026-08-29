@@ -124,6 +124,22 @@ class TurningPointEvaluator {
             // 豊臣家の武将を1体以上生存させる
             return playerStrengthRatio > 0.0;
         }
+        break;
+      case Scenario.kawanakajima:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に盾陣で守りを固める
+            return eventLog.hasCommandBefore(PlayerCommand.shield, 30.0);
+          case 'tp2':
+            // 別働隊到着まで(3分以上)本隊のみで持ちこたえる
+            return elapsedTime >= 180.0;
+          case 'tp3':
+            // 別働隊到着（3分経過）後に進軍で挟撃を仕掛ける
+            return eventLog.hasCommandAfter(PlayerCommand.advance, 180.0);
+          case 'tp4':
+            // 上杉謙信を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

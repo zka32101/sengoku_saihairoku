@@ -51,6 +51,8 @@ class MapBackground extends PositionComponent {
         _drawHonnoji(canvas);
       case Scenario.sekigahara:
         _drawSekigahara(canvas);
+      case Scenario.kawanakajima:
+        _drawKawanakajima(canvas);
     }
   }
 
@@ -89,6 +91,21 @@ class MapBackground extends PositionComponent {
     final plainPaint = Paint()..color = const Color(0xFF152515);
     canvas.drawRect(Rect.fromLTWH(80, 250, 200, 140), plainPaint);
     _drawLabel(canvas, '関ヶ原', 150, 320, const Color(0xFFAAAAAA));
+  }
+
+  void _drawKawanakajima(Canvas canvas) {
+    // 千曲川と犀川の合流点（川中島の平野）
+    final riverPaint = Paint()..color = const Color(0xFF1A4A6A);
+    canvas.drawRect(Rect.fromLTWH(0, 60, 360, 16), riverPaint);
+    canvas.drawRect(Rect.fromLTWH(0, 500, 360, 16), riverPaint);
+    _drawLabel(canvas, '犀川', 160, 62, const Color(0xFF64B5F6));
+    _drawLabel(canvas, '千曲川', 155, 502, const Color(0xFF64B5F6));
+    // 夜明けの霧（車懸りの奇襲を示す薄い白霧）
+    final mistPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.08)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
+    canvas.drawRect(Rect.fromLTWH(0, 150, 360, 340), mistPaint);
+    _drawLabel(canvas, '八幡原', 150, 300, const Color(0xFFAAAAAA));
   }
 
   void _drawHill(Canvas canvas, double cx, double cy, double r) {

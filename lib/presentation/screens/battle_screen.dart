@@ -6,6 +6,7 @@ import '../../data/models/scenario_data.dart';
 import '../../data/repositories/scenario_repository.dart';
 import '../../domain/scoring/battle_event_log.dart';
 import '../../domain/state/battle_state.dart';
+import '../../core/services/audio_manager.dart';
 import '../../flame/battle_game.dart';
 import 'result_screen.dart';
 
@@ -110,6 +111,8 @@ class _BattleScreenState extends State<BattleScreen> {
   @override
   void dispose() {
     _uiTimer?.cancel();
+    // 戦闘BGMを止める（結果・メッセージ・ホーム画面まで鳴り続けるのを防ぐ）。
+    AudioManager().stopBgm();
     super.dispose();
   }
 

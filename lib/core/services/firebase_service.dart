@@ -104,14 +104,39 @@ class FirebaseService {
                 scenarioId: doc['scenarioId'] as String? ?? '',
                 score: doc['totalScore'] as int? ?? 0,
                 won: doc['won'] as bool? ?? false,
+                // このドキュメントは BattleResultData.toJson() 経由で書き込まれており、
+                // playedAt は ISO8601 文字列（Timestamp ではない）。
                 playedAt: doc['playedAt'] != null
-                    ? (doc['playedAt'] as Timestamp).toDate()
+                    ? DateTime.parse(doc['playedAt'] as String)
                     : DateTime.now(),
                 duration: doc['duration'] as int? ?? 0,
               ))
           .toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  /// このユーザーのバトル履歴・ランキング掲載データを完全に削除する。
+  Future<void> deleteUserData() async {
+    if (_userId == null) return;
+
+    final battlesSnap = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('battles')
+        .get();
+    for (final doc in battlesSnap.docs) {
+      await doc.reference.delete();
+    }
+    await _firestore.collection('users').doc(_userId).delete();
+
+    final rankingsSnap = await _firestore
+        .collection('rankings')
+        .where('userId', isEqualTo: _userId)
+        .get();
+    for (final doc in rankingsSnap.docs) {
+      await doc.reference.delete();
     }
   }
 }

@@ -6,6 +6,18 @@ enum Scenario {
   kawanakajima,
 }
 
+/// 画面間で表記がずれないよう、シナリオの日本語表示名を一箇所にまとめる
+/// （ranking_screen.dart / message_screen.dart などから共通で参照する）。
+extension ScenarioDisplayName on Scenario {
+  String get displayNameJa => switch (this) {
+        Scenario.odigahara => '桶狭間の戦い',
+        Scenario.nagashino => '長篠の戦い',
+        Scenario.honnoJi => '本能寺の変',
+        Scenario.sekigahara => '関ヶ原の戦い',
+        Scenario.kawanakajima => '川中島の戦い',
+      };
+}
+
 class ScenarioData {
   final Scenario id;
   final String displayName;

@@ -102,7 +102,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('歴史分析: ${widget.args.scenario.name}'),
+        title: Text('歴史分析: ${widget.args.scenario.displayNameJa}'),
       ),
       body: Column(
         children: [

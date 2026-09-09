@@ -1,0 +1,818 @@
+[
+  {
+    "id": "oda_nobunaga",
+    "name": "織田信長",
+    "faction": "oda",
+    "leadership": 95,
+    "valor": 80,
+    "intelligence": 96
+  },
+  {
+    "id": "toyotomi_hideyoshi",
+    "name": "豊臣秀吉",
+    "faction": "toyotomi",
+    "leadership": 90,
+    "valor": 65,
+    "intelligence": 98
+  },
+  {
+    "id": "tokugawa_ieyasu",
+    "name": "徳川家康",
+    "faction": "tokugawa",
+    "leadership": 93,
+    "valor": 70,
+    "intelligence": 95
+  },
+  {
+    "id": "takeda_shingen",
+    "name": "武田信玄",
+    "faction": "takeda",
+    "leadership": 97,
+    "valor": 85,
+    "intelligence": 93
+  },
+  {
+    "id": "uesugi_kenshin",
+    "name": "上杉謙信",
+    "faction": "uesugi",
+    "leadership": 96,
+    "valor": 97,
+    "intelligence": 88
+  },
+  {
+    "id": "date_masamune",
+    "name": "伊達政宗",
+    "faction": "date",
+    "leadership": 88,
+    "valor": 86,
+    "intelligence": 85
+  },
+  {
+    "id": "mouri_motonari",
+    "name": "毛利元就",
+    "faction": "mouri",
+    "leadership": 85,
+    "valor": 60,
+    "intelligence": 97
+  },
+  {
+    "id": "shimazu_yoshihisa",
+    "name": "島津義久",
+    "faction": "shimazu",
+    "leadership": 84,
+    "valor": 70,
+    "intelligence": 86
+  },
+  {
+    "id": "akechi_mitsuhide",
+    "name": "明智光秀",
+    "faction": "akechi",
+    "leadership": 82,
+    "valor": 72,
+    "intelligence": 90
+  },
+  {
+    "id": "ishida_mitsunari",
+    "name": "石田三成",
+    "faction": "toyotomi",
+    "leadership": 78,
+    "valor": 45,
+    "intelligence": 93
+  },
+  {
+    "id": "imagawa_yoshimoto",
+    "name": "今川義元",
+    "faction": "imagawa",
+    "leadership": 75,
+    "valor": 55,
+    "intelligence": 80
+  },
+  {
+    "id": "hojo_ujiyasu",
+    "name": "北条氏康",
+    "faction": "hojo",
+    "leadership": 89,
+    "valor": 78,
+    "intelligence": 87
+  },
+  {
+    "id": "chosokabe_motochika",
+    "name": "長宗我部元親",
+    "faction": "chosokabe",
+    "leadership": 80,
+    "valor": 82,
+    "intelligence": 78
+  },
+  {
+    "id": "otomo_sorin",
+    "name": "大友宗麟",
+    "faction": "otomo",
+    "leadership": 70,
+    "valor": 60,
+    "intelligence": 75
+  },
+  {
+    "id": "ryuzoji_takanobu",
+    "name": "龍造寺隆信",
+    "faction": "ryuzoji",
+    "leadership": 72,
+    "valor": 75,
+    "intelligence": 68
+  },
+  {
+    "id": "saito_dosan",
+    "name": "斎藤道三",
+    "faction": "saito",
+    "leadership": 78,
+    "valor": 68,
+    "intelligence": 90
+  },
+  {
+    "id": "azai_nagamasa",
+    "name": "浅井長政",
+    "faction": "azai",
+    "leadership": 74,
+    "valor": 80,
+    "intelligence": 65
+  },
+  {
+    "id": "asakura_yoshikage",
+    "name": "朝倉義景",
+    "faction": "asakura",
+    "leadership": 58,
+    "valor": 45,
+    "intelligence": 60
+  },
+  {
+    "id": "takeda_katsuyori",
+    "name": "武田勝頼",
+    "faction": "takeda",
+    "leadership": 72,
+    "valor": 88,
+    "intelligence": 55
+  },
+  {
+    "id": "uesugi_kagekatsu",
+    "name": "上杉景勝",
+    "faction": "uesugi",
+    "leadership": 78,
+    "valor": 70,
+    "intelligence": 72
+  },
+  {
+    "id": "naoe_kanetsugu",
+    "name": "直江兼続",
+    "faction": "uesugi",
+    "leadership": 80,
+    "valor": 68,
+    "intelligence": 90
+  },
+  {
+    "id": "sanada_masayuki",
+    "name": "真田昌幸",
+    "faction": "sanada",
+    "leadership": 85,
+    "valor": 75,
+    "intelligence": 96
+  },
+  {
+    "id": "sanada_yukimura",
+    "name": "真田信繁",
+    "faction": "sanada",
+    "leadership": 83,
+    "valor": 93,
+    "intelligence": 85
+  },
+  {
+    "id": "sanada_nobuyuki",
+    "name": "真田信之",
+    "faction": "sanada",
+    "leadership": 80,
+    "valor": 72,
+    "intelligence": 82
+  },
+  {
+    "id": "honda_tadakatsu",
+    "name": "本多忠勝",
+    "faction": "tokugawa",
+    "leadership": 85,
+    "valor": 99,
+    "intelligence": 70
+  },
+  {
+    "id": "sakakibara_yasumasa",
+    "name": "榊原康政",
+    "faction": "tokugawa",
+    "leadership": 83,
+    "valor": 80,
+    "intelligence": 78
+  },
+  {
+    "id": "ii_naomasa",
+    "name": "井伊直政",
+    "faction": "tokugawa",
+    "leadership": 82,
+    "valor": 90,
+    "intelligence": 68
+  },
+  {
+    "id": "sakai_tadatsugu",
+    "name": "酒井忠次",
+    "faction": "tokugawa",
+    "leadership": 84,
+    "valor": 75,
+    "intelligence": 80
+  },
+  {
+    "id": "shibata_katsuie",
+    "name": "柴田勝家",
+    "faction": "oda",
+    "leadership": 80,
+    "valor": 90,
+    "intelligence": 60
+  },
+  {
+    "id": "hashiba_hidenaga",
+    "name": "羽柴秀長",
+    "faction": "toyotomi",
+    "leadership": 82,
+    "valor": 60,
+    "intelligence": 88
+  },
+  {
+    "id": "kuroda_kanbei",
+    "name": "黒田官兵衛",
+    "faction": "toyotomi",
+    "leadership": 75,
+    "valor": 55,
+    "intelligence": 99
+  },
+  {
+    "id": "takenaka_hanbei",
+    "name": "竹中半兵衛",
+    "faction": "toyotomi",
+    "leadership": 70,
+    "valor": 50,
+    "intelligence": 98
+  },
+  {
+    "id": "kato_kiyomasa",
+    "name": "加藤清正",
+    "faction": "toyotomi",
+    "leadership": 80,
+    "valor": 92,
+    "intelligence": 65
+  },
+  {
+    "id": "fukushima_masanori",
+    "name": "福島正則",
+    "faction": "toyotomi",
+    "leadership": 75,
+    "valor": 88,
+    "intelligence": 55
+  },
+  {
+    "id": "maeda_toshiie",
+    "name": "前田利家",
+    "faction": "oda",
+    "leadership": 82,
+    "valor": 85,
+    "intelligence": 72
+  },
+  {
+    "id": "niwa_nagahide",
+    "name": "丹羽長秀",
+    "faction": "oda",
+    "leadership": 80,
+    "valor": 68,
+    "intelligence": 78
+  },
+  {
+    "id": "akechi_hidemitsu",
+    "name": "明智秀満",
+    "faction": "akechi",
+    "leadership": 70,
+    "valor": 82,
+    "intelligence": 68
+  },
+  {
+    "id": "hosokawa_fujitaka",
+    "name": "細川藤孝",
+    "faction": "hosokawa",
+    "leadership": 75,
+    "valor": 60,
+    "intelligence": 90
+  },
+  {
+    "id": "hosokawa_tadaoki",
+    "name": "細川忠興",
+    "faction": "hosokawa",
+    "leadership": 76,
+    "valor": 78,
+    "intelligence": 75
+  },
+  {
+    "id": "otani_yoshitsugu",
+    "name": "大谷吉継",
+    "faction": "toyotomi",
+    "leadership": 78,
+    "valor": 60,
+    "intelligence": 92
+  },
+  {
+    "id": "kobayakawa_hideaki",
+    "name": "小早川秀秋",
+    "faction": "toyotomi",
+    "leadership": 50,
+    "valor": 55,
+    "intelligence": 40
+  },
+  {
+    "id": "mori_terumoto",
+    "name": "毛利輝元",
+    "faction": "mouri",
+    "leadership": 65,
+    "valor": 50,
+    "intelligence": 65
+  },
+  {
+    "id": "kikkawa_motoharu",
+    "name": "吉川元春",
+    "faction": "mouri",
+    "leadership": 80,
+    "valor": 90,
+    "intelligence": 75
+  },
+  {
+    "id": "kobayakawa_takakage",
+    "name": "小早川隆景",
+    "faction": "mouri",
+    "leadership": 85,
+    "valor": 65,
+    "intelligence": 95
+  },
+  {
+    "id": "amago_tsunehisa",
+    "name": "尼子経久",
+    "faction": "amago",
+    "leadership": 78,
+    "valor": 60,
+    "intelligence": 88
+  },
+  {
+    "id": "yamana_toyokuni",
+    "name": "山名豊国",
+    "faction": "yamana",
+    "leadership": 55,
+    "valor": 50,
+    "intelligence": 55
+  },
+  {
+    "id": "miyoshi_nagayoshi",
+    "name": "三好長慶",
+    "faction": "miyoshi",
+    "leadership": 78,
+    "valor": 70,
+    "intelligence": 85
+  },
+  {
+    "id": "matsunaga_hisahide",
+    "name": "松永久秀",
+    "faction": "miyoshi",
+    "leadership": 70,
+    "valor": 60,
+    "intelligence": 92
+  },
+  {
+    "id": "oda_nobunaga_brother",
+    "name": "織田信行",
+    "faction": "oda",
+    "leadership": 50,
+    "valor": 55,
+    "intelligence": 45
+  },
+  {
+    "id": "oda_nobutada",
+    "name": "織田信忠",
+    "faction": "oda",
+    "leadership": 75,
+    "valor": 78,
+    "intelligence": 70
+  },
+  {
+    "id": "hatakeyama_yoshitsugu",
+    "name": "畠山義続",
+    "faction": "hatakeyama",
+    "leadership": 50,
+    "valor": 48,
+    "intelligence": 50
+  },
+  {
+    "id": "takeda_nobushige",
+    "name": "武田信繁",
+    "faction": "takeda",
+    "leadership": 80,
+    "valor": 75,
+    "intelligence": 80
+  },
+  {
+    "id": "baba_nobuharu",
+    "name": "馬場信春",
+    "faction": "takeda",
+    "leadership": 82,
+    "valor": 88,
+    "intelligence": 70
+  },
+  {
+    "id": "yamagata_masakage",
+    "name": "山県昌景",
+    "faction": "takeda",
+    "leadership": 80,
+    "valor": 90,
+    "intelligence": 68
+  },
+  {
+    "id": "naito_masatoyo",
+    "name": "内藤昌豊",
+    "faction": "takeda",
+    "leadership": 78,
+    "valor": 80,
+    "intelligence": 75
+  },
+  {
+    "id": "kosaka_masanobu",
+    "name": "高坂昌信",
+    "faction": "takeda",
+    "leadership": 78,
+    "valor": 72,
+    "intelligence": 85
+  },
+  {
+    "id": "sanada_yukitaka",
+    "name": "真田幸隆",
+    "faction": "sanada",
+    "leadership": 78,
+    "valor": 70,
+    "intelligence": 88
+  },
+  {
+    "id": "date_terumune",
+    "name": "伊達輝宗",
+    "faction": "date",
+    "leadership": 72,
+    "valor": 65,
+    "intelligence": 70
+  },
+  {
+    "id": "katakura_kojuro",
+    "name": "片倉小十郎",
+    "faction": "date",
+    "leadership": 78,
+    "valor": 75,
+    "intelligence": 88
+  },
+  {
+    "id": "mogami_yoshiaki",
+    "name": "最上義光",
+    "faction": "mogami",
+    "leadership": 80,
+    "valor": 72,
+    "intelligence": 85
+  },
+  {
+    "id": "satake_yoshishige",
+    "name": "佐竹義重",
+    "faction": "satake",
+    "leadership": 78,
+    "valor": 85,
+    "intelligence": 70
+  },
+  {
+    "id": "ashina_moriuji",
+    "name": "蘆名盛氏",
+    "faction": "ashina",
+    "leadership": 70,
+    "valor": 68,
+    "intelligence": 68
+  },
+  {
+    "id": "nanbu_nobunao",
+    "name": "南部信直",
+    "faction": "nanbu",
+    "leadership": 65,
+    "valor": 60,
+    "intelligence": 62
+  },
+  {
+    "id": "tsugaru_tamenobu",
+    "name": "津軽為信",
+    "faction": "tsugaru",
+    "leadership": 68,
+    "valor": 65,
+    "intelligence": 75
+  },
+  {
+    "id": "shimazu_yoshihiro",
+    "name": "島津義弘",
+    "faction": "shimazu",
+    "leadership": 85,
+    "valor": 96,
+    "intelligence": 80
+  },
+  {
+    "id": "shimazu_toshihisa",
+    "name": "島津歳久",
+    "faction": "shimazu",
+    "leadership": 75,
+    "valor": 70,
+    "intelligence": 78
+  },
+  {
+    "id": "shimazu_iehisa",
+    "name": "島津家久",
+    "faction": "shimazu",
+    "leadership": 80,
+    "valor": 85,
+    "intelligence": 82
+  },
+  {
+    "id": "ryuzoji_masaie",
+    "name": "龍造寺政家",
+    "faction": "ryuzoji",
+    "leadership": 55,
+    "valor": 50,
+    "intelligence": 50
+  },
+  {
+    "id": "otomo_yoshimune",
+    "name": "大友義統",
+    "faction": "otomo",
+    "leadership": 50,
+    "valor": 45,
+    "intelligence": 48
+  },
+  {
+    "id": "akizuki_tanezane",
+    "name": "秋月種実",
+    "faction": "akizuki",
+    "leadership": 65,
+    "valor": 62,
+    "intelligence": 70
+  },
+  {
+    "id": "sagara_yoshihi",
+    "name": "相良義陽",
+    "faction": "sagara",
+    "leadership": 60,
+    "valor": 58,
+    "intelligence": 55
+  },
+  {
+    "id": "chosokabe_morichika",
+    "name": "長宗我部盛親",
+    "faction": "chosokabe",
+    "leadership": 65,
+    "valor": 70,
+    "intelligence": 60
+  },
+  {
+    "id": "miyoshi_yasunaga",
+    "name": "三好康長",
+    "faction": "miyoshi",
+    "leadership": 60,
+    "valor": 58,
+    "intelligence": 60
+  },
+  {
+    "id": "tsutsui_junkei",
+    "name": "筒井順慶",
+    "faction": "tsutsui",
+    "leadership": 60,
+    "valor": 55,
+    "intelligence": 68
+  },
+  {
+    "id": "wakisaka_yasuharu",
+    "name": "脇坂安治",
+    "faction": "toyotomi",
+    "leadership": 72,
+    "valor": 78,
+    "intelligence": 65
+  },
+  {
+    "id": "kato_yoshiaki",
+    "name": "加藤嘉明",
+    "faction": "toyotomi",
+    "leadership": 72,
+    "valor": 75,
+    "intelligence": 68
+  },
+  {
+    "id": "todo_takatora",
+    "name": "藤堂高虎",
+    "faction": "toyotomi",
+    "leadership": 80,
+    "valor": 75,
+    "intelligence": 85
+  },
+  {
+    "id": "konishi_yukinaga",
+    "name": "小西行長",
+    "faction": "toyotomi",
+    "leadership": 68,
+    "valor": 55,
+    "intelligence": 80
+  },
+  {
+    "id": "otani_yoshikatsu",
+    "name": "大谷吉治",
+    "faction": "toyotomi",
+    "leadership": 60,
+    "valor": 68,
+    "intelligence": 60
+  },
+  {
+    "id": "ukita_hideie",
+    "name": "宇喜多秀家",
+    "faction": "toyotomi",
+    "leadership": 70,
+    "valor": 65,
+    "intelligence": 68
+  },
+  {
+    "id": "mori_hidemoto",
+    "name": "毛利秀元",
+    "faction": "mouri",
+    "leadership": 65,
+    "valor": 60,
+    "intelligence": 62
+  },
+  {
+    "id": "ankokuji_ekei",
+    "name": "安国寺恵瓊",
+    "faction": "mouri",
+    "leadership": 45,
+    "valor": 30,
+    "intelligence": 88
+  },
+  {
+    "id": "naoe_kagetsuna",
+    "name": "直江景綱",
+    "faction": "uesugi",
+    "leadership": 72,
+    "valor": 65,
+    "intelligence": 75
+  },
+  {
+    "id": "kasuga_toratsuna",
+    "name": "春日虎綱",
+    "faction": "takeda",
+    "leadership": 75,
+    "valor": 70,
+    "intelligence": 80
+  },
+  {
+    "id": "obu_toramasa",
+    "name": "飯富虎昌",
+    "faction": "takeda",
+    "leadership": 75,
+    "valor": 85,
+    "intelligence": 60
+  },
+  {
+    "id": "anayama_baisetsu",
+    "name": "穴山梅雪",
+    "faction": "takeda",
+    "leadership": 60,
+    "valor": 58,
+    "intelligence": 65
+  },
+  {
+    "id": "hojo_ujimasa",
+    "name": "北条氏政",
+    "faction": "hojo",
+    "leadership": 70,
+    "valor": 60,
+    "intelligence": 62
+  },
+  {
+    "id": "hojo_ujiteru",
+    "name": "北条氏照",
+    "faction": "hojo",
+    "leadership": 75,
+    "valor": 72,
+    "intelligence": 70
+  },
+  {
+    "id": "hojo_ujikuni",
+    "name": "北条氏邦",
+    "faction": "hojo",
+    "leadership": 72,
+    "valor": 70,
+    "intelligence": 68
+  },
+  {
+    "id": "yamanaka_shikanosuke",
+    "name": "山中鹿介",
+    "faction": "amago",
+    "leadership": 70,
+    "valor": 88,
+    "intelligence": 65
+  },
+  {
+    "id": "kikkawa_hiroie",
+    "name": "吉川広家",
+    "faction": "mouri",
+    "leadership": 72,
+    "valor": 75,
+    "intelligence": 72
+  },
+  {
+    "id": "kuki_yoshitaka",
+    "name": "九鬼嘉隆",
+    "faction": "kuki",
+    "leadership": 70,
+    "valor": 72,
+    "intelligence": 75
+  },
+  {
+    "id": "murakami_takeyoshi",
+    "name": "村上武吉",
+    "faction": "murakami",
+    "leadership": 68,
+    "valor": 75,
+    "intelligence": 70
+  },
+  {
+    "id": "saito_yoshitatsu",
+    "name": "斎藤義龍",
+    "faction": "saito",
+    "leadership": 70,
+    "valor": 75,
+    "intelligence": 68
+  },
+  {
+    "id": "oda_nobukatsu",
+    "name": "織田信雄",
+    "faction": "oda",
+    "leadership": 45,
+    "valor": 50,
+    "intelligence": 42
+  },
+  {
+    "id": "oda_nobutaka",
+    "name": "織田信孝",
+    "faction": "oda",
+    "leadership": 60,
+    "valor": 65,
+    "intelligence": 55
+  },
+  {
+    "id": "gamou_ujisato",
+    "name": "蒲生氏郷",
+    "faction": "toyotomi",
+    "leadership": 82,
+    "valor": 80,
+    "intelligence": 78
+  },
+  {
+    "id": "hori_hidemasa",
+    "name": "堀秀政",
+    "faction": "toyotomi",
+    "leadership": 78,
+    "valor": 70,
+    "intelligence": 80
+  },
+  {
+    "id": "asano_nagamasa",
+    "name": "浅野長政",
+    "faction": "toyotomi",
+    "leadership": 70,
+    "valor": 55,
+    "intelligence": 75
+  },
+  {
+    "id": "maeda_geni",
+    "name": "前田玄以",
+    "faction": "toyotomi",
+    "leadership": 55,
+    "valor": 40,
+    "intelligence": 72
+  },
+  {
+    "id": "nagatsuka_masaie",
+    "name": "長束正家",
+    "faction": "toyotomi",
+    "leadership": 50,
+    "valor": 40,
+    "intelligence": 78
+  },
+  {
+    "id": "uesugi_sadazane",
+    "name": "上杉定実",
+    "faction": "uesugi",
+    "leadership": 50,
+    "valor": 45,
+    "intelligence": 50
+  }
+]

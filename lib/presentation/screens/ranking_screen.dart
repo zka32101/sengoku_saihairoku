@@ -77,7 +77,7 @@ class _RankingScreenState extends State<RankingScreen> {
                   const DropdownMenuItem(value: null, child: Text('全シナリオ')),
                   ...Scenario.values.map((s) => DropdownMenuItem(
                         value: s,
-                        child: Text(_getScenarioName(s)),
+                        child: Text(s.displayNameJa),
                       )),
                 ],
                 onChanged: (scenario) {
@@ -164,14 +164,6 @@ class _RankingScreenState extends State<RankingScreen> {
       ),
     );
   }
-
-  String _getScenarioName(Scenario scenario) => switch (scenario) {
-        Scenario.odigahara => '桶狭間の戦い',
-        Scenario.nagashino => '長篠の戦い',
-        Scenario.honnoJi => '本能寺の変',
-        Scenario.sekigahara => '関ヶ原の戦い',
-        Scenario.kawanakajima => '川中島の戦い',
-      };
 }
 
 class _RankingCard extends StatelessWidget {

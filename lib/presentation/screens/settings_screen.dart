@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/services/audio_manager.dart';
+import '../../core/services/firebase_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -126,11 +127,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('キャンセル'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('データを削除しました')),
-              );
+              try {
+                await FirebaseService().deleteUserData();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('データを削除しました')),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('データの削除に失敗しました')),
+                  );
+                }
+              }
             },
             child: const Text('削除', style: TextStyle(color: Colors.red)),
           ),

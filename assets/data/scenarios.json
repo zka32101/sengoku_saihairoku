@@ -62,7 +62,67 @@
         "type": "spear",
         "strength": 7000
       }
-    ]
+    ],
+    "alternativePerspective": {
+      "id": "odigahara_imagawa",
+      "displayName": "桶狭間の戦（今川視点）",
+      "description": "今川義元の圧倒的な大軍が織田信長の奇襲を受ける。油断からの転機を取り戻せるか。",
+      "difficulty": 2,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "今川騎馬隊",
+          "type": "cavalry",
+          "strength": 8000
+        },
+        {
+          "id": "player_spear_1",
+          "name": "今川槍兵隊",
+          "type": "spear",
+          "strength": 7000
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_cavalry_1",
+          "name": "織田騎馬隊",
+          "type": "cavalry",
+          "strength": 2000
+        },
+        {
+          "id": "enemy_spear_1",
+          "name": "羽柴槍兵隊",
+          "type": "spear",
+          "strength": 1500
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "奇襲に対応する",
+          "description": "敵の奇襲コマンドを待機で受け止める",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp2",
+          "name": "陣営を立て直す",
+          "description": "最初の5秒間で兵力損失を40%以下に抑える",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp3",
+          "name": "敵将に圧力をかける",
+          "description": "敵将の兵力を60%以下に低下させる",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵将討死",
+          "description": "織田信長を討ち取る",
+          "rewardPoints": 5000
+        }
+      ]
+    }
   },
   "nagashino": {
     "id": "nagashino",
@@ -127,7 +187,67 @@
         "type": "spear",
         "strength": 7000
       }
-    ]
+    ],
+    "alternativePerspective": {
+      "id": "nagashino_takeda",
+      "displayName": "長篠の戦（武田視点）",
+      "description": "武田勝頼が伝統の騎馬隊戦法で織田の鉄砲隊に挑む。最強の騎馬隊は新兵器に勝つか。",
+      "difficulty": 3,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "武田騎馬隊",
+          "type": "cavalry",
+          "strength": 8000
+        },
+        {
+          "id": "player_spear_1",
+          "name": "武田槍兵隊",
+          "type": "spear",
+          "strength": 7000
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_cavalry_1",
+          "name": "織田騎馬隊",
+          "type": "cavalry",
+          "strength": 5000
+        },
+        {
+          "id": "enemy_musket_1",
+          "name": "鉄砲隊",
+          "type": "musket",
+          "strength": 7000
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "騎馬隊の突撃を準備",
+          "description": "最初のコマンドを進軍で開始する",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp2",
+          "name": "敵の銃撃を耐える",
+          "description": "敵の鉄砲攻撃による兵力損失を60%以下に抑える",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp3",
+          "name": "敵陣に突撃",
+          "description": "敵将の兵力を40%以下に低下させる",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵将討死",
+          "description": "織田信長を討ち取る",
+          "rewardPoints": 5000
+        }
+      ]
+    }
   },
   "honnoJi": {
     "id": "honnoJi",
@@ -186,7 +306,61 @@
         "type": "spear",
         "strength": 6500
       }
-    ]
+    ],
+    "alternativePerspective": {
+      "id": "honnoJi_akechi",
+      "displayName": "本能寺の変（明智視点）",
+      "description": "明智光秀が織田信長を討つ。天下統一直前の信長を奇襲で打倒できるか。",
+      "difficulty": 2,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "明智騎馬隊",
+          "type": "cavalry",
+          "strength": 6500
+        },
+        {
+          "id": "player_spear_1",
+          "name": "明智槍兵隊",
+          "type": "spear",
+          "strength": 6500
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_cavalry_1",
+          "name": "信長護衛隊",
+          "type": "cavalry",
+          "strength": 500
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "奇襲を成功させる",
+          "description": "最初の進軍コマンドで敵に圧力をかける",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp2",
+          "name": "敵の逃走を阻止",
+          "description": "敵が撤退コマンドを使う前に敵将兵力を30%以下にする",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp3",
+          "name": "統制を保つ",
+          "description": "戦闘中の兵力損失を40%以下に抑える",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵総大将討死",
+          "description": "織田信長を討ち取る",
+          "rewardPoints": 6000
+        }
+      ]
+    }
   },
   "sekigahara": {
     "id": "sekigahara",
@@ -269,7 +443,85 @@
         "type": "musket",
         "strength": 10000
       }
-    ]
+    ],
+    "alternativePerspective": {
+      "id": "sekigahara_ishida",
+      "displayName": "関ヶ原の戦（西軍視点）",
+      "description": "石田三成率いる西軍が徳川家康の東軍に対抗。豊臣家の天下は守れるか。",
+      "difficulty": 4,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "西軍騎馬隊",
+          "type": "cavalry",
+          "strength": 10000
+        },
+        {
+          "id": "player_spear_1",
+          "name": "西軍槍兵隊",
+          "type": "spear",
+          "strength": 12000
+        },
+        {
+          "id": "player_musket_1",
+          "name": "西軍鉄砲隊",
+          "type": "musket",
+          "strength": 10000
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_cavalry_1",
+          "name": "徳川騎馬隊",
+          "type": "cavalry",
+          "strength": 12000
+        },
+        {
+          "id": "enemy_spear_1",
+          "name": "徳川槍兵隊",
+          "type": "spear",
+          "strength": 10000
+        },
+        {
+          "id": "enemy_musket_1",
+          "name": "徳川鉄砲隊",
+          "type": "musket",
+          "strength": 8000
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "敵の動きに対応",
+          "description": "序盤の敵の奇襲に待機で対応する",
+          "rewardPoints": 2000
+        },
+        {
+          "id": "tp2",
+          "name": "盟友のモラル維持",
+          "description": "部隊全体のモラルを60%以上維持",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp3",
+          "name": "敵の側面に反撃",
+          "description": "敵が奇襲してきたら進軍で反撃",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵将討死",
+          "description": "徳川家康を討ち取る",
+          "rewardPoints": 5000
+        },
+        {
+          "id": "tp5",
+          "name": "豊臣家の勝利",
+          "description": "戦闘に勝利する",
+          "rewardPoints": 3000
+        }
+      ]
+    }
   },
   "kawanakajima": {
     "id": "kawanakajima",
@@ -334,6 +586,66 @@
         "type": "spear",
         "strength": 4000
       }
-    ]
+    ],
+    "alternativePerspective": {
+      "id": "kawanakajima_uesugi",
+      "displayName": "川中島の戦（上杉視点）",
+      "description": "上杉謙信が夜明けの車懸りで武田信玄を奇襲。謙信の得意戦法で勝利を掴めるか。",
+      "difficulty": 2,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "上杉騎馬隊",
+          "type": "cavalry",
+          "strength": 5000
+        },
+        {
+          "id": "player_spear_1",
+          "name": "上杉槍兵隊",
+          "type": "spear",
+          "strength": 4000
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_spear_1",
+          "name": "武田槍隊",
+          "type": "spear",
+          "strength": 2500
+        },
+        {
+          "id": "enemy_cavalry_1",
+          "name": "武田騎馬隊",
+          "type": "cavalry",
+          "strength": 1500
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "夜明けの奇襲を決行",
+          "description": "開戦直後に進軍で奇襲を仕掛ける",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp2",
+          "name": "敵の反撃に耐える",
+          "description": "敵の進軍コマンドでの反撃に待機で対応",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp3",
+          "name": "敵将に圧力をかける",
+          "description": "敵将の兵力を50%以下に低下させる",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵将討死",
+          "description": "武田信玄を討ち取る",
+          "rewardPoints": 5000
+        }
+      ]
+    }
   }
 }

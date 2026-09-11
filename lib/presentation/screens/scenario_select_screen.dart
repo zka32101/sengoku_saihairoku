@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../data/models/scenario_data.dart';
 import 'battle_screen.dart';
@@ -17,6 +18,16 @@ class _ScenarioEntry {
 
 class ScenarioSelectScreen extends StatelessWidget {
   const ScenarioSelectScreen({super.key});
+
+  static void _showPerspectiveSelector(
+    BuildContext context,
+    Scenario scenario,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) => _PerspectiveSelectionDialog(scenario: scenario),
+    );
+  }
 
   static const _scenarios = [
     _ScenarioEntry(Scenario.odigahara, '桶狭間の戦', 1560, 1, '3〜5分', '3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ', true),
@@ -43,12 +54,7 @@ class ScenarioSelectScreen extends StatelessWidget {
             playTime: s.playTime,
             description: s.description,
             isUnlocked: s.isUnlocked,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BattleScreen(scenario: s.scenario),
-              ),
-            ),
+            onTap: () => _showPerspectiveSelector(context, s.scenario),
           );
         },
       ),
@@ -165,6 +171,214 @@ class _DifficultyStars extends StatelessWidget {
           color: const Color(0xFFFFD700),
         );
       }),
+    );
+  }
+}
+
+class _PerspectiveSelectionDialog extends StatefulWidget {
+  final Scenario scenario;
+
+  const _PerspectiveSelectionDialog({required this.scenario});
+
+  @override
+  State<_PerspectiveSelectionDialog> createState() =>
+      _PerspectiveSelectionDialogState();
+}
+
+class _PerspectiveSelectionDialogState
+    extends State<_PerspectiveSelectionDialog> {
+  ScenarioData? _scenarioData;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadScenario();
+  }
+
+  Future<void> _loadScenario() async {
+    try {
+      final scenarioJson = await DefaultAssetBundle.of(context)
+          .loadString('assets/data/scenarios.json');
+      final Map<String, dynamic> scenarios =
+          jsonDecode(scenarioJson) as Map<String, dynamic>;
+      final scenarioKey = widget.scenario.name;
+      if (scenarios.containsKey(scenarioKey)) {
+        final data =
+            ScenarioData.fromJson(scenarios[scenarioKey] as Map<String, dynamic>);
+        if (mounted) {
+          setState(() {
+            _scenarioData = data;
+            _loading = false;
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) {
+      return Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('シナリオを読み込み中...'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (_scenarioData == null || _scenarioData!.alternativePerspective == null) {
+      // No alternative perspective, go straight to battle
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BattleScreen(scenario: widget.scenario),
+          ),
+        );
+      });
+      return const SizedBox.shrink();
+    }
+
+    final mainPerspective = _scenarioData!;
+    final altPerspective = _scenarioData!.alternativePerspective!;
+
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '視点を選ぶ',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFD700),
+              ),
+            ),
+            const SizedBox(height: 24),
+            _PerspectiveOption(
+              title: mainPerspective.displayName,
+              description: mainPerspective.description,
+              difficulty: mainPerspective.difficulty,
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BattleScreen(scenario: widget.scenario),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            const Divider(color: Color(0xFF8B6914)),
+            const SizedBox(height: 16),
+            _PerspectiveOption(
+              title: altPerspective.displayName,
+              description: altPerspective.description,
+              difficulty: altPerspective.difficulty,
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BattleScreen(
+                      scenario: widget.scenario,
+                      alternativePerspectiveId: altPerspective.id,
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('キャンセル'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PerspectiveOption extends StatelessWidget {
+  final String title;
+  final String description;
+  final int difficulty;
+  final VoidCallback onTap;
+
+  const _PerspectiveOption({
+    required this.title,
+    required this.description,
+    required this.difficulty,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0xFF8B6914)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFD700),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              description,
+              style: const TextStyle(
+                fontSize: 13,
+                color: Color(0xFFE8D5B0),
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: List.generate(4, (i) {
+                return Icon(
+                  i < difficulty ? Icons.star : Icons.star_border,
+                  size: 14,
+                  color: const Color(0xFFFFD700),
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

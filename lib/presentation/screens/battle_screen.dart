@@ -12,8 +12,13 @@ import 'result_screen.dart';
 
 class BattleScreen extends StatefulWidget {
   final Scenario scenario;
+  final String? alternativePerspectiveId;
 
-  const BattleScreen({super.key, required this.scenario});
+  const BattleScreen({
+    super.key,
+    required this.scenario,
+    this.alternativePerspectiveId,
+  });
 
   @override
   State<BattleScreen> createState() => _BattleScreenState();
@@ -54,7 +59,30 @@ class _BattleScreenState extends State<BattleScreen> {
 
   Future<void> _loadScenario() async {
     try {
-      final data = await ScenarioRepository().getScenario(widget.scenario);
+      var data = await ScenarioRepository().getScenario(widget.scenario);
+
+      // Apply alternative perspective if specified
+      if (widget.alternativePerspectiveId != null &&
+          data.alternativePerspective != null) {
+        final altPerspective = data.alternativePerspective!;
+        data = ScenarioData(
+          id: data.id,
+          displayName: altPerspective.displayName,
+          year: data.year,
+          description: altPerspective.description,
+          playerInitialStrength:
+              altPerspective.playerUnits.fold(0, (sum, u) => sum + u.strength),
+          enemyInitialStrength:
+              altPerspective.enemyUnits.fold(0, (sum, u) => sum + u.strength),
+          difficulty: altPerspective.difficulty,
+          estimatedDuration: data.estimatedDuration,
+          backgroundImage: data.backgroundImage,
+          turningPoints: altPerspective.turningPoints,
+          playerUnits: altPerspective.playerUnits,
+          enemyUnits: altPerspective.enemyUnits,
+          alternativePerspective: data.alternativePerspective,
+        );
+      }
 
       final game = BattleGame(scenarioData: data);
       game.onBattleEnd = _onBattleEnd;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/message_loader.dart';
 import '../../data/models/scenario_data.dart';
+import '../widgets/screen_transition.dart';
 
 class MessageScreenArgs {
   final Scenario scenario;
@@ -104,7 +105,9 @@ class _MessageScreenState extends State<MessageScreen> {
       appBar: AppBar(
         title: Text('歴史分析: ${widget.args.scenario.displayNameJa}'),
       ),
-      body: Column(
+      body: ScreenTransition(
+        duration: const Duration(milliseconds: 500),
+        child: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
@@ -202,6 +205,7 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
             ),
         ],
+        ),
       ),
     );
   }

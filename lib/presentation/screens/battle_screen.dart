@@ -40,6 +40,9 @@ class _BattleScreenState extends State<BattleScreen> {
   int _commandScore = 0;
   int _playerUnitCount = 0;
   int _enemyUnitCount = 0;
+  int _comboCount = 0;
+  double _comboMultiplier = 1.0;
+  double _battleMomentum = 0.5;
   late final List<String> _commandHistory;
 
   @override
@@ -83,6 +86,9 @@ class _BattleScreenState extends State<BattleScreen> {
           _tpCount = g.tpAchievedCount;
           _commandCount = g.commandCount;
           _commandScore = g.commandScore;
+          _comboCount = g.currentCombo;
+          _comboMultiplier = g.comboMultiplier;
+          _battleMomentum = g.battleMomentum;
         });
       });
     } catch (e) {
@@ -145,6 +151,7 @@ class _BattleScreenState extends State<BattleScreen> {
               playerRatio: _playerRatio,
               enemyRatio: _enemyRatio,
               elapsed: _elapsed,
+              battleMomentum: _battleMomentum,
             ),
             Expanded(
               child: Stack(
@@ -170,6 +177,8 @@ class _BattleScreenState extends State<BattleScreen> {
               tpCount: _tpCount,
               tpTotal: data.turningPoints.length,
               commandScore: _commandScore,
+              comboCount: _comboCount,
+              comboMultiplier: _comboMultiplier,
               onCommand: (cmd) {
                 game.executeCommand(cmd);
                 if (_debugMode) {
@@ -194,12 +203,14 @@ class _BattleStatusBar extends StatelessWidget {
   final double playerRatio;
   final double enemyRatio;
   final double elapsed;
+  final double battleMomentum;
 
   const _BattleStatusBar({
     required this.displayName,
     required this.playerRatio,
     required this.enemyRatio,
     required this.elapsed,
+    required this.battleMomentum,
   });
 
   String _formatTime(double seconds) {
@@ -337,6 +348,9 @@ class _BattleStatusBar extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 10),
+          // 戦闘勢い表示
+          _BattleMomentumBar(momentum: battleMomentum),
         ],
       ),
     );
@@ -412,12 +426,16 @@ class _BattleCommandUI extends StatelessWidget {
   final int tpCount;
   final int tpTotal;
   final int commandScore;
+  final int comboCount;
+  final double comboMultiplier;
   final void Function(PlayerCommand) onCommand;
 
   const _BattleCommandUI({
     required this.tpCount,
     required this.tpTotal,
     required this.commandScore,
+    required this.comboCount,
+    required this.comboMultiplier,
     required this.onCommand,
   });
 
@@ -478,6 +496,31 @@ class _BattleCommandUI extends StatelessWidget {
                     ),
                   ],
                 ),
+                // コンボ表示（2以上のみ表示）
+                if (comboCount > 1)
+                  Row(
+                    children: [
+                      const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
+                      const SizedBox(width: 4),
+                      Text(
+                        'コンボ: $comboCount',
+                        style: const TextStyle(
+                          color: Color(0xFFFFAA00),
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'x${comboMultiplier.toStringAsFixed(1)}',
+                        style: const TextStyle(
+                          color: Color(0xFFFF6644),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 Row(
                   children: [
                     const Icon(Icons.trending_up, size: 16, color: Colors.orange),
@@ -763,6 +806,100 @@ class _TurningPointBanner extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _BattleMomentumBar extends StatelessWidget {
+  final double momentum; // 0.0 = 敵優勢, 0.5 = イーブン, 1.0 = プレイヤー優勢
+
+  const _BattleMomentumBar({required this.momentum});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '敵優勢',
+              style: TextStyle(color: Colors.grey, fontSize: 10),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: LayoutBuilder(builder: (context, constraints) {
+                final width = constraints.maxWidth;
+                final playerWidth = width * momentum;
+
+                return Container(
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1A1A1A),
+                    borderRadius: BorderRadius.circular(3),
+                    border: Border.all(
+                      color: Colors.grey.withValues(alpha: 0.3),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      // 敵側（左）
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: width * (1 - momentum),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.blue.withValues(alpha: 0.6),
+                                Colors.blue.withValues(alpha: 0.3),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
+                      // プレイヤー側（右）
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          width: playerWidth,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.red.withValues(alpha: 0.3),
+                                Colors.red.withValues(alpha: 0.6),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
+                      // 中央インジケーター
+                      Positioned(
+                        left: width * 0.5 - 1,
+                        top: -1,
+                        bottom: -1,
+                        child: Container(
+                          width: 2,
+                          color: Colors.yellow.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              '味方優勢',
+              style: TextStyle(color: Colors.grey, fontSize: 10),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -7,6 +7,7 @@ import '../ai/enemy_ai.dart';
 import '../scoring/battle_event_log.dart';
 import '../scoring/score_calculator.dart';
 import '../scoring/turning_point_evaluator.dart';
+import './battle_momentum.dart';
 
 enum BattlePhase { waiting, active, ended }
 
@@ -21,6 +22,10 @@ class PlayerCommandHandler {
   double _nextCommandIn = 0;
   final List<CommandRecord> commandHistory = [];
 
+  // コンボシステム：同じコマンドを連続実行するとボーナス
+  PlayerCommand? _lastCommand;
+  int _comboCount = 0;
+
   PlayerCommandHandler({
     required this.playerArmy,
     required this.eventLog,
@@ -31,8 +36,25 @@ class PlayerCommandHandler {
     _nextCommandIn = max(0, _nextCommandIn - dt);
   }
 
+  /// 現在のコンボ数を取得
+  int get currentCombo => _comboCount;
+
+  /// コンボ倍率（1.0 + (combo - 1) * 0.1、最大2.0倍）
+  double get comboMultiplier {
+    if (_comboCount <= 1) return 1.0;
+    return (1.0 + (_comboCount - 1) * 0.1).clamp(1.0, 2.0);
+  }
+
   bool executeCommand(PlayerCommand command) {
     if (_nextCommandIn > 0) return false;
+
+    // コンボカウント更新
+    if (_lastCommand == command) {
+      _comboCount++;
+    } else {
+      _comboCount = 1;
+      _lastCommand = command;
+    }
 
     eventLog.recordCommand(command);
     commandHistory
@@ -143,6 +165,7 @@ class BattleState {
   late final TurningPointEvaluator tpEvaluator;
   final BattleEventLog eventLog = BattleEventLog();
   final ScoreCalculator _scoreCalc = ScoreCalculator();
+  final BattleMomentum momentum = BattleMomentum();
 
   double elapsedTime = 0;
   BattlePhase phase = BattlePhase.waiting;
@@ -218,6 +241,10 @@ class BattleState {
     }
     enemyAI.update(dt);
     _updateCombat(dt);
+
+    // 戦闘の勢いを更新
+    momentum.update(dt, playerArmy.getStrengthRatio(), enemyArmy.getStrengthRatio());
+
     _evaluateTurningPoints();
     _checkBattleEnd();
   }

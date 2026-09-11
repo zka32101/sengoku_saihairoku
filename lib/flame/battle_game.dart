@@ -62,7 +62,7 @@ class BattleGame extends FlameGame {
     _ready = true;
   }
 
-  void _spawnUnitEffect(Vector2 pos, UnitEffectType type) {
+  void _spawnUnitEffect(Vector2 pos, UnitEffectType type, {double? damage, bool? isCritical}) {
     switch (type) {
       case UnitEffectType.hit:
         _world.add(HitFlashEffect(pos: pos, isPlayer: true));
@@ -70,6 +70,17 @@ class BattleGame extends FlameGame {
       case UnitEffectType.death:
         _world.add(DeathExplosionEffect(pos: pos, isPlayer: true));
         AudioManager().playSe('death', 'assets/audio/death.wav');
+      case UnitEffectType.damage:
+        if (damage != null) {
+          _world.add(DamageNumberEffect(
+            pos: pos,
+            damage: damage.toInt(),
+            isCritical: isCritical ?? false,
+          ));
+          if (isCritical ?? false) {
+            AudioManager().playSe('crit', 'assets/audio/crit.wav');
+          }
+        }
     }
   }
 
@@ -96,6 +107,26 @@ class BattleGame extends FlameGame {
     if (!_ready) return;
     _battleState.executeCommand(command);
     _playCommandSound(command);
+    _spawnCommandFeedback(command);
+  }
+
+  void _spawnCommandFeedback(PlayerCommand command) {
+    // 画面中央上部にコマンド名を表示
+    final commandName = switch (command) {
+      PlayerCommand.advance => '進軍',
+      PlayerCommand.retreat => '撤退',
+      PlayerCommand.wait => '待機',
+      PlayerCommand.ambush => '奇襲',
+      PlayerCommand.formation => '陣形',
+      PlayerCommand.rally => '激励',
+      PlayerCommand.shield => '盾陣',
+      PlayerCommand.charge => '突撃',
+    };
+
+    _world.add(CommandFeedbackEffect(
+      pos: Vector2(180, 100),
+      commandName: commandName,
+    ));
   }
 
   Future<void> _playBattleBgm() async {
@@ -146,6 +177,16 @@ class BattleGame extends FlameGame {
       ? ScoreCalculator.commandScoreForCommands(
           _battleState.commandHandler.commandHistory)
       : 0;
+
+  // コンボ関連のゲッター
+  int get currentCombo => _ready ? _battleState.commandHandler.currentCombo : 0;
+  double get comboMultiplier =>
+      _ready ? _battleState.commandHandler.comboMultiplier : 1.0;
+
+  // 戦闘勢い（0.0 = 敵優勢, 0.5 = イーブン, 1.0 = プレイヤー優勢）
+  double get battleMomentum =>
+      _ready ? _battleState.momentum.playerMomentum : 0.5;
+
   BattlePhase get phase =>
       _ready ? _battleState.phase : BattlePhase.waiting;
 }

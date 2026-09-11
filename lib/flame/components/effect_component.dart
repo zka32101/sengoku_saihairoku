@@ -317,3 +317,127 @@ class CriticalHitEffect extends PositionComponent {
     }
   }
 }
+
+/// ダメージ数値表示（0.8秒間フローアップ）
+class DamageNumberEffect extends PositionComponent {
+  final int damage;
+  final bool isCritical;
+  double _elapsed = 0;
+  static const _duration = 0.8;
+
+  DamageNumberEffect({
+    required Vector2 pos,
+    required this.damage,
+    required this.isCritical,
+  }) : super(anchor: Anchor.center, position: pos);
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    _elapsed += dt;
+    if (_elapsed >= _duration) removeFromParent();
+  }
+
+  @override
+  void render(Canvas canvas) {
+    final t = (_elapsed / _duration).clamp(0.0, 1.0);
+    final alpha = t < 0.6 ? 1.0 : (1.0 - (t - 0.6) / 0.4);
+
+    // フローアップのY移動
+    final floatY = t * -40;
+
+    // テキストスタイル
+    final textSpan = TextSpan(
+      text: isCritical ? 'クリティカル\n$damage' : '$damage',
+      style: TextStyle(
+        color: isCritical
+          ? const Color(0xFFFF3333).withValues(alpha: alpha)
+          : const Color(0xFFFFAA44).withValues(alpha: alpha),
+        fontSize: isCritical ? 18 : 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+
+    // 影効果
+    canvas.drawCircle(
+      Offset(0, floatY),
+      8,
+      Paint()
+        ..color = const Color(0xFF000000).withValues(alpha: alpha * 0.3)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+    );
+
+    // テキスト描画
+    textPainter.paint(
+      canvas,
+      Offset(-textPainter.width / 2, floatY - textPainter.height / 2),
+    );
+  }
+}
+
+/// コマンド実行フィードバックエフェクト（0.6秒）
+class CommandFeedbackEffect extends PositionComponent {
+  final String commandName;
+  double _elapsed = 0;
+  static const _duration = 0.6;
+
+  CommandFeedbackEffect({
+    required Vector2 pos,
+    required this.commandName,
+  }) : super(anchor: Anchor.center, position: pos);
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    _elapsed += dt;
+    if (_elapsed >= _duration) removeFromParent();
+  }
+
+  @override
+  void render(Canvas canvas) {
+    final t = (_elapsed / _duration).clamp(0.0, 1.0);
+    final alpha = t < 0.5 ? (t * 2) : ((1 - t) * 2);
+
+    // スケーリング：最初は小さく、中盤最大、最後にフェードアウト
+    final scale = 0.5 + sin(t * pi) * 0.3;
+
+    // テキスト背景
+    final bgPaint = Paint()
+      ..color = const Color(0xFF4444FF).withValues(alpha: alpha * 0.6)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset.zero, width: 60 * scale, height: 24 * scale),
+        Radius.circular(6 * scale),
+      ),
+      bgPaint,
+    );
+
+    // テキスト
+    final textSpan = TextSpan(
+      text: commandName,
+      style: TextStyle(
+        color: Colors.white.withValues(alpha: alpha),
+        fontSize: 12 * scale,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+    textPainter.paint(
+      canvas,
+      Offset(-textPainter.width / 2, -textPainter.height / 2),
+    );
+  }
+}

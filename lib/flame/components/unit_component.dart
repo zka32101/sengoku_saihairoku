@@ -2,12 +2,12 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import '../../domain/combat/unit.dart';
 
-enum UnitEffectType { hit, death }
+enum UnitEffectType { hit, death, damage }
 
 class UnitComponent extends PositionComponent {
   final Unit unit;
   final bool isPlayer;
-  final void Function(Vector2 pos, UnitEffectType type)? onEffect;
+  final void Function(Vector2 pos, UnitEffectType type, {double? damage, bool? isCritical})? onEffect;
 
   static const _halfSize = 10.0;
   static const _fullSize = _halfSize * 2;
@@ -35,6 +35,17 @@ class UnitComponent extends PositionComponent {
     if (!_wasColliding && nowColliding && !nowDead) {
       onEffect?.call(position.clone(), UnitEffectType.hit);
     }
+
+    // ダメージ表示
+    if (unit.checkAndClearDamageDisplay()) {
+      onEffect?.call(
+        position.clone(),
+        UnitEffectType.damage,
+        damage: unit.lastDamageAmount,
+        isCritical: unit.wasLastDamageCritical,
+      );
+    }
+
     // 死亡 → 爆発エフェクト
     if (!_wasDead && nowDead) {
       onEffect?.call(position.clone(), UnitEffectType.death);

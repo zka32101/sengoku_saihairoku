@@ -30,6 +30,11 @@ class Unit {
   double defenseBuffTimer = 0;  // 防御力バフ残り秒
   double speedBuffTimer = 0;    // 速度バフ残り秒
 
+  // 最後に受けたダメージ情報（UI表示用）
+  double lastDamageAmount = 0;
+  bool wasLastDamageCritical = false;
+  bool _pendingDamageDisplay = false;
+
   static const double attackBuffMultiplier = 1.5;
   static const double defenseBuffMultiplier = 1.5;
   static const double speedBuffMultiplier = 1.8;
@@ -81,11 +86,24 @@ class Unit {
     posY += (dy / dist) * effectiveSpeed * dt;
   }
 
-  void takeDamage(double damage) {
+  void takeDamage(double damage, {bool isCritical = false}) {
     strength = max(0, strength - damage);
     if (damage > maxStrength * 0.05) {
       morale = max(0, morale - 5);
     }
+    // ダメージ表示用に記録
+    lastDamageAmount = damage;
+    wasLastDamageCritical = isCritical;
+    _pendingDamageDisplay = true;
+  }
+
+  /// ダメージ表示フラグを確認して消費する
+  bool checkAndClearDamageDisplay() {
+    if (_pendingDamageDisplay) {
+      _pendingDamageDisplay = false;
+      return true;
+    }
+    return false;
   }
 
   double distanceTo(Unit other) {

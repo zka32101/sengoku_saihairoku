@@ -40,6 +40,8 @@ class _BattleScreenState extends State<BattleScreen> {
   int _commandScore = 0;
   int _playerUnitCount = 0;
   int _enemyUnitCount = 0;
+  int _comboCount = 0;
+  double _comboMultiplier = 1.0;
   late final List<String> _commandHistory;
 
   @override
@@ -83,6 +85,8 @@ class _BattleScreenState extends State<BattleScreen> {
           _tpCount = g.tpAchievedCount;
           _commandCount = g.commandCount;
           _commandScore = g.commandScore;
+          _comboCount = g.currentCombo;
+          _comboMultiplier = g.comboMultiplier;
         });
       });
     } catch (e) {
@@ -170,6 +174,8 @@ class _BattleScreenState extends State<BattleScreen> {
               tpCount: _tpCount,
               tpTotal: data.turningPoints.length,
               commandScore: _commandScore,
+              comboCount: _comboCount,
+              comboMultiplier: _comboMultiplier,
               onCommand: (cmd) {
                 game.executeCommand(cmd);
                 if (_debugMode) {
@@ -412,12 +418,16 @@ class _BattleCommandUI extends StatelessWidget {
   final int tpCount;
   final int tpTotal;
   final int commandScore;
+  final int comboCount;
+  final double comboMultiplier;
   final void Function(PlayerCommand) onCommand;
 
   const _BattleCommandUI({
     required this.tpCount,
     required this.tpTotal,
     required this.commandScore,
+    required this.comboCount,
+    required this.comboMultiplier,
     required this.onCommand,
   });
 
@@ -478,6 +488,31 @@ class _BattleCommandUI extends StatelessWidget {
                     ),
                   ],
                 ),
+                // コンボ表示（2以上のみ表示）
+                if (comboCount > 1)
+                  Row(
+                    children: [
+                      const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
+                      const SizedBox(width: 4),
+                      Text(
+                        'コンボ: $comboCount',
+                        style: const TextStyle(
+                          color: Color(0xFFFFAA00),
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'x${comboMultiplier.toStringAsFixed(1)}',
+                        style: const TextStyle(
+                          color: Color(0xFFFF6644),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 Row(
                   children: [
                     const Icon(Icons.trending_up, size: 16, color: Colors.orange),

@@ -31,6 +31,7 @@ class ScenarioData {
   final List<TurningPoint> turningPoints;
   final List<UnitDataSnapshot> playerUnits;
   final List<UnitDataSnapshot> enemyUnits;
+  final ScenarioPerspective? alternativePerspective;
 
   ScenarioData({
     required this.id,
@@ -45,6 +46,7 @@ class ScenarioData {
     required this.turningPoints,
     required this.playerUnits,
     required this.enemyUnits,
+    this.alternativePerspective,
   });
 
   factory ScenarioData.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,10 @@ class ScenarioData {
       enemyUnits: (json['enemyUnits'] as List)
           .map((u) => UnitDataSnapshot.fromJson(u as Map<String, dynamic>))
           .toList(),
+      alternativePerspective: json['alternativePerspective'] != null
+          ? ScenarioPerspective.fromJson(
+              json['alternativePerspective'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -83,6 +89,56 @@ class ScenarioData {
         'turningPoints': turningPoints.map((tp) => tp.toJson()).toList(),
         'playerUnits': playerUnits.map((u) => u.toJson()).toList(),
         'enemyUnits': enemyUnits.map((u) => u.toJson()).toList(),
+        if (alternativePerspective != null)
+          'alternativePerspective': alternativePerspective!.toJson(),
+      };
+}
+
+class ScenarioPerspective {
+  final String id;
+  final String displayName;
+  final String description;
+  final int difficulty;
+  final List<UnitDataSnapshot> playerUnits;
+  final List<UnitDataSnapshot> enemyUnits;
+  final List<TurningPoint> turningPoints;
+
+  ScenarioPerspective({
+    required this.id,
+    required this.displayName,
+    required this.description,
+    required this.difficulty,
+    required this.playerUnits,
+    required this.enemyUnits,
+    required this.turningPoints,
+  });
+
+  factory ScenarioPerspective.fromJson(Map<String, dynamic> json) {
+    return ScenarioPerspective(
+      id: json['id'] as String,
+      displayName: json['displayName'] as String,
+      description: json['description'] as String,
+      difficulty: json['difficulty'] as int,
+      playerUnits: (json['playerUnits'] as List)
+          .map((u) => UnitDataSnapshot.fromJson(u as Map<String, dynamic>))
+          .toList(),
+      enemyUnits: (json['enemyUnits'] as List)
+          .map((u) => UnitDataSnapshot.fromJson(u as Map<String, dynamic>))
+          .toList(),
+      turningPoints: (json['turningPoints'] as List)
+          .map((tp) => TurningPoint.fromJson(tp as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'displayName': displayName,
+        'description': description,
+        'difficulty': difficulty,
+        'playerUnits': playerUnits.map((u) => u.toJson()).toList(),
+        'enemyUnits': enemyUnits.map((u) => u.toJson()).toList(),
+        'turningPoints': turningPoints.map((tp) => tp.toJson()).toList(),
       };
 }
 

@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../core/services/audio_manager.dart';
 import '../../core/services/firebase_service.dart';
+import '../widgets/balance_diagnostic_panel.dart';
+import '../../data/models/scenario_data.dart';
+import '../../data/models/difficulty_mode.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -74,6 +78,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           const SizedBox(height: 16),
+          if (kDebugMode)
+            _Section(
+              title: 'デバッグ・バランス調整',
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.balance, color: Colors.orange),
+                  title: const Text('バランス診断',
+                      style: TextStyle(color: Color(0xFFE8D5B0))),
+                  subtitle: const Text('シナリオ毎のバランス分析',
+                      style: TextStyle(color: Colors.grey, fontSize: 11)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => _showBalanceDiagnostics(context),
+                ),
+              ],
+            ),
+          const SizedBox(height: 16),
           _Section(
             title: 'その他',
             children: [
@@ -109,6 +129,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _showComingSoon(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('近日公開')),
+    );
+  }
+
+  void _showBalanceDiagnostics(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('バランス診断'),
+            leading: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.pop(ctx),
+            ),
+          ),
+          body: DefaultTabController(
+            length: Scenario.values.length,
+            child: Column(
+              children: [
+                TabBar(
+                  isScrollable: true,
+                  tabs: [
+                    for (final scenario in Scenario.values)
+                      Tab(text: scenario.displayNameJa),
+                  ],
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      for (final scenario in Scenario.values)
+                        _DifficultySwitcher(scenario: scenario),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -218,6 +277,58 @@ class _Section extends StatelessWidget {
           ),
         ),
         Card(child: Column(children: children)),
+      ],
+    );
+  }
+}
+
+/// 難易度別バランス診断スイッチャー
+class _DifficultySwitcher extends StatefulWidget {
+  final Scenario scenario;
+
+  const _DifficultySwitcher({required this.scenario});
+
+  @override
+  State<_DifficultySwitcher> createState() => _DifficultySwitcherState();
+}
+
+class _DifficultySwitcherState extends State<_DifficultySwitcher> {
+  late DifficultyMode _selectedDifficulty;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDifficulty = DifficultyMode.normal;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: SegmentedButton<DifficultyMode>(
+            segments: [
+              for (final diff in DifficultyMode.values)
+                ButtonSegment(
+                  value: diff,
+                  label: Text(diff.displayName),
+                ),
+            ],
+            selected: {_selectedDifficulty},
+            onSelectionChanged: (selection) {
+              setState(() {
+                _selectedDifficulty = selection.first;
+              });
+            },
+          ),
+        ),
+        Expanded(
+          child: BalanceDiagnosticPanel(
+            scenario: widget.scenario,
+            difficulty: _selectedDifficulty,
+          ),
+        ),
       ],
     );
   }

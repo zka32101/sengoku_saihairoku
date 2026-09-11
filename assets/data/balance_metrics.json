@@ -1,0 +1,167 @@
+{
+  "odigahara_easy": {
+    "scenario": "odigahara",
+    "difficulty": "easy",
+    "playerWinRate": 0.85,
+    "avgBattleDuration": 200,
+    "tpAchievementRate": 0.92,
+    "playerDeathRatio": 0.25,
+    "enemyDeathRatio": 0.95,
+    "totalBattles": 50,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "odigahara_normal": {
+    "scenario": "odigahara",
+    "difficulty": "normal",
+    "playerWinRate": 0.48,
+    "avgBattleDuration": 280,
+    "tpAchievementRate": 0.65,
+    "playerDeathRatio": 0.55,
+    "enemyDeathRatio": 0.80,
+    "totalBattles": 75,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "odigahara_hard": {
+    "scenario": "odigahara",
+    "difficulty": "hard",
+    "playerWinRate": 0.32,
+    "avgBattleDuration": 350,
+    "tpAchievementRate": 0.38,
+    "playerDeathRatio": 0.72,
+    "enemyDeathRatio": 0.65,
+    "totalBattles": 45,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "nagashino_easy": {
+    "scenario": "nagashino",
+    "difficulty": "easy",
+    "playerWinRate": 0.82,
+    "avgBattleDuration": 240,
+    "tpAchievementRate": 0.88,
+    "playerDeathRatio": 0.30,
+    "enemyDeathRatio": 0.92,
+    "totalBattles": 45,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "nagashino_normal": {
+    "scenario": "nagashino",
+    "difficulty": "normal",
+    "playerWinRate": 0.52,
+    "avgBattleDuration": 320,
+    "tpAchievementRate": 0.68,
+    "playerDeathRatio": 0.52,
+    "enemyDeathRatio": 0.78,
+    "totalBattles": 68,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "nagashino_hard": {
+    "scenario": "nagashino",
+    "difficulty": "hard",
+    "playerWinRate": 0.35,
+    "avgBattleDuration": 420,
+    "tpAchievementRate": 0.42,
+    "playerDeathRatio": 0.68,
+    "enemyDeathRatio": 0.62,
+    "totalBattles": 40,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "honnoJi_easy": {
+    "scenario": "honnoJi",
+    "difficulty": "easy",
+    "playerWinRate": 0.88,
+    "avgBattleDuration": 280,
+    "tpAchievementRate": 0.95,
+    "playerDeathRatio": 0.20,
+    "enemyDeathRatio": 0.98,
+    "totalBattles": 55,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "honnoJi_normal": {
+    "scenario": "honnoJi",
+    "difficulty": "normal",
+    "playerWinRate": 0.44,
+    "avgBattleDuration": 360,
+    "tpAchievementRate": 0.58,
+    "playerDeathRatio": 0.62,
+    "enemyDeathRatio": 0.75,
+    "totalBattles": 70,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "honnoJi_hard": {
+    "scenario": "honnoJi",
+    "difficulty": "hard",
+    "playerWinRate": 0.28,
+    "avgBattleDuration": 480,
+    "tpAchievementRate": 0.32,
+    "playerDeathRatio": 0.78,
+    "enemyDeathRatio": 0.55,
+    "totalBattles": 50,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "sekigahara_easy": {
+    "scenario": "sekigahara",
+    "difficulty": "easy",
+    "playerWinRate": 0.80,
+    "avgBattleDuration": 300,
+    "tpAchievementRate": 0.85,
+    "playerDeathRatio": 0.35,
+    "enemyDeathRatio": 0.90,
+    "totalBattles": 50,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "sekigahara_normal": {
+    "scenario": "sekigahara",
+    "difficulty": "normal",
+    "playerWinRate": 0.50,
+    "avgBattleDuration": 380,
+    "tpAchievementRate": 0.62,
+    "playerDeathRatio": 0.50,
+    "enemyDeathRatio": 0.78,
+    "totalBattles": 65,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "sekigahara_hard": {
+    "scenario": "sekigahara",
+    "difficulty": "hard",
+    "playerWinRate": 0.33,
+    "avgBattleDuration": 450,
+    "tpAchievementRate": 0.40,
+    "playerDeathRatio": 0.70,
+    "enemyDeathRatio": 0.60,
+    "totalBattles": 48,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "kawanakajima_easy": {
+    "scenario": "kawanakajima",
+    "difficulty": "easy",
+    "playerWinRate": 0.83,
+    "avgBattleDuration": 220,
+    "tpAchievementRate": 0.90,
+    "playerDeathRatio": 0.28,
+    "enemyDeathRatio": 0.93,
+    "totalBattles": 42,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "kawanakajima_normal": {
+    "scenario": "kawanakajima",
+    "difficulty": "normal",
+    "playerWinRate": 0.46,
+    "avgBattleDuration": 300,
+    "tpAchievementRate": 0.60,
+    "playerDeathRatio": 0.58,
+    "enemyDeathRatio": 0.76,
+    "totalBattles": 62,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  },
+  "kawanakajima_hard": {
+    "scenario": "kawanakajima",
+    "difficulty": "hard",
+    "playerWinRate": 0.30,
+    "avgBattleDuration": 400,
+    "tpAchievementRate": 0.35,
+    "playerDeathRatio": 0.75,
+    "enemyDeathRatio": 0.58,
+    "totalBattles": 45,
+    "lastUpdated": "2026-09-11T00:00:00Z"
+  }
+}

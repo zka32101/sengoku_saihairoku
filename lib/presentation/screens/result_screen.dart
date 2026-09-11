@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
+import '../../data/models/difficulty_mode.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
+import '../../data/repositories/daily_challenge_repository.dart';
+import '../../domain/challenges/challenge_service.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
 
 class ResultScreenArgs {
   final Scenario scenario;
+  final DifficultyMode difficulty;
   final BattleStateData data;
 
-  ResultScreenArgs({required this.scenario, required this.data});
+  ResultScreenArgs({
+    required this.scenario,
+    required this.difficulty,
+    required this.data,
+  });
 }
 
 class ResultScreen extends StatefulWidget {
@@ -25,10 +33,15 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  late DailyChallengeRepository _challengeRepo;
+  bool _challengeCompleted = false;
+
   @override
   void initState() {
     super.initState();
+    _challengeRepo = DailyChallengeRepository();
     _saveBattleResult();
+    _checkChallengeCompletion();
   }
 
   Future<void> _saveBattleResult() async {
@@ -63,6 +76,24 @@ class _ResultScreenState extends State<ResultScreen> {
     await FirebaseService().saveBattleResult(resultData);
   }
 
+  Future<void> _checkChallengeCompletion() async {
+    final todayChallenge = _challengeRepo.getTodayChallenge();
+    if (todayChallenge == null) return;
+
+    final isMet = ChallengeService.isChallengeMet(
+      todayChallenge,
+      widget.args.data,
+      widget.args.data.turnCount,
+    );
+
+    if (isMet) {
+      await _challengeRepo.completeChallenge(todayChallenge.id);
+      setState(() {
+        _challengeCompleted = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = widget.args.data;
@@ -78,6 +109,11 @@ class _ResultScreenState extends State<ResultScreen> {
             children: [
               _ResultHeader(won: data.won),
               const SizedBox(height: 24),
+              if (_challengeCompleted)
+                _ChallengeCompletionBanner()
+              else
+                const SizedBox.shrink(),
+              if (_challengeCompleted) const SizedBox(height: 16),
               _ScoreCard(breakdown: data.scoreBreakdown),
               const SizedBox(height: 16),
               _TurningPointCard(
@@ -303,6 +339,51 @@ class _ActionButtons extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ChallengeCompletionBanner extends StatelessWidget {
+  const _ChallengeCompletionBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.green.withOpacity(0.15),
+        border: Border.all(color: Colors.green, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.card_giftcard, color: Colors.green, size: 28),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '本日のチャレンジ達成！',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '報酬を受け取るにはホーム画面から獲得してください',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

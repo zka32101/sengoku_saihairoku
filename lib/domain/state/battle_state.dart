@@ -7,6 +7,7 @@ import '../ai/enemy_ai.dart';
 import '../scoring/battle_event_log.dart';
 import '../scoring/score_calculator.dart';
 import '../scoring/turning_point_evaluator.dart';
+import './battle_momentum.dart';
 
 enum BattlePhase { waiting, active, ended }
 
@@ -164,6 +165,7 @@ class BattleState {
   late final TurningPointEvaluator tpEvaluator;
   final BattleEventLog eventLog = BattleEventLog();
   final ScoreCalculator _scoreCalc = ScoreCalculator();
+  final BattleMomentum momentum = BattleMomentum();
 
   double elapsedTime = 0;
   BattlePhase phase = BattlePhase.waiting;
@@ -239,6 +241,10 @@ class BattleState {
     }
     enemyAI.update(dt);
     _updateCombat(dt);
+
+    // 戦闘の勢いを更新
+    momentum.update(dt, playerArmy.getStrengthRatio(), enemyArmy.getStrengthRatio());
+
     _evaluateTurningPoints();
     _checkBattleEnd();
   }

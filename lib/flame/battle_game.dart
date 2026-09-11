@@ -183,6 +183,10 @@ class BattleGame extends FlameGame {
   double get comboMultiplier =>
       _ready ? _battleState.commandHandler.comboMultiplier : 1.0;
 
+  // 戦闘勢い（0.0 = 敵優勢, 0.5 = イーブン, 1.0 = プレイヤー優勢）
+  double get battleMomentum =>
+      _ready ? _battleState.momentum.playerMomentum : 0.5;
+
   BattlePhase get phase =>
       _ready ? _battleState.phase : BattlePhase.waiting;
 }

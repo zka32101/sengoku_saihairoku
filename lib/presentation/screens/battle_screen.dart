@@ -196,6 +196,7 @@ class _BattleScreenState extends State<BattleScreen> {
       '/result',
       arguments: ResultScreenArgs(
         scenario: widget.scenario,
+        difficulty: widget.difficultyMode,
         data: data,
       ),
     );

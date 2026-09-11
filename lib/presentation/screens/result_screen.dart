@@ -2,17 +2,26 @@ import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
+import '../../data/models/difficulty_mode.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
+import '../../domain/ranking/turn_rank_calculator.dart';
+import '../../data/repositories/turn_rank_repository.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
+import '../widgets/turn_rank_badge.dart';
 import 'message_screen.dart';
 
 class ResultScreenArgs {
   final Scenario scenario;
+  final DifficultyMode difficulty;
   final BattleStateData data;
 
-  ResultScreenArgs({required this.scenario, required this.data});
+  ResultScreenArgs({
+    required this.scenario,
+    required this.difficulty,
+    required this.data,
+  });
 }
 
 class ResultScreen extends StatefulWidget {
@@ -25,9 +34,12 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  late final TurnRankRepository _turnRankRepo;
+
   @override
   void initState() {
     super.initState();
+    _turnRankRepo = TurnRankRepository();
     _saveBattleResult();
   }
 
@@ -67,6 +79,20 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     final data = widget.args.data;
 
+    // ターンランクを計算
+    final criteria = _turnRankRepo.getCriteria(
+      widget.args.scenario,
+      widget.args.difficulty,
+    );
+
+    final turnRankResult = criteria != null
+        ? TurnRankCalculator.calculateTurnRank(
+            data.turnCount,
+            criteria,
+            data.totalScore,
+          )
+        : null;
+
     return Scaffold(
       appBar: AppBar(title: const Text('戦闘結果')),
       body: ScreenTransition(
@@ -78,6 +104,10 @@ class _ResultScreenState extends State<ResultScreen> {
             children: [
               _ResultHeader(won: data.won),
               const SizedBox(height: 24),
+              if (turnRankResult != null) ...[
+                TurnRankPanel(rankResult: turnRankResult),
+                const SizedBox(height: 16),
+              ],
               _ScoreCard(breakdown: data.scoreBreakdown),
               const SizedBox(height: 16),
               _TurningPointCard(

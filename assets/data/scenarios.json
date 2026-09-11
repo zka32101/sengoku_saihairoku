@@ -122,6 +122,23 @@
           "rewardPoints": 5000
         }
       ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
     }
   },
   "nagashino": {
@@ -247,6 +264,23 @@
           "rewardPoints": 5000
         }
       ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
     }
   },
   "honnoJi": {
@@ -360,6 +394,23 @@
           "rewardPoints": 6000
         }
       ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
     }
   },
   "sekigahara": {
@@ -521,6 +572,23 @@
           "rewardPoints": 3000
         }
       ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
     }
   },
   "kawanakajima": {
@@ -646,6 +714,23 @@
           "rewardPoints": 5000
         }
       ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
     }
   }
 }

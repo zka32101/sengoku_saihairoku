@@ -4,6 +4,7 @@ import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
+import '../widgets/screen_transition.dart';
 import 'message_screen.dart';
 
 class ResultScreenArgs {
@@ -67,22 +68,25 @@ class _ResultScreenState extends State<ResultScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('戦闘結果')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _ResultHeader(won: data.won),
-            const SizedBox(height: 24),
-            _ScoreCard(breakdown: data.scoreBreakdown),
-            const SizedBox(height: 16),
-            _TurningPointCard(
-              achievements: data.tpAchievements,
-              scenario: widget.args.scenario,
-            ),
-            const SizedBox(height: 24),
-            _ActionButtons(args: widget.args),
-          ],
+      body: ScreenTransition(
+        duration: const Duration(milliseconds: 600),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _ResultHeader(won: data.won),
+              const SizedBox(height: 24),
+              _ScoreCard(breakdown: data.scoreBreakdown),
+              const SizedBox(height: 16),
+              _TurningPointCard(
+                achievements: data.tpAchievements,
+                scenario: widget.args.scenario,
+              ),
+              const SizedBox(height: 24),
+              _ActionButtons(args: widget.args),
+            ],
+          ),
         ),
       ),
     );

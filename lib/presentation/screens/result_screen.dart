@@ -5,6 +5,7 @@ import '../../data/models/scenario_data.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
 import '../widgets/screen_transition.dart';
+import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
 
 class ResultScreenArgs {
@@ -172,54 +173,18 @@ class _ScoreCard extends StatelessWidget {
               ],
             ),
             const Divider(color: Color(0xFF8B6914)),
-            _ScoreLine('勝敗スコア', breakdown.victoryScore, 40000),
-            _ScoreLine('効率スコア', breakdown.efficiencyScore, 20000),
-            _ScoreLine('采配スコア', breakdown.commandScore, 15000),
-            _ScoreLine('TP ボーナス', breakdown.turningPointScore, 15000),
-            _ScoreLine('歴史ボーナス', breakdown.historyBonus, 10000),
+            AnimatedScoreLine('勝敗スコア', breakdown.victoryScore, 40000,
+                delayMillis: 100),
+            AnimatedScoreLine('効率スコア', breakdown.efficiencyScore, 20000,
+                delayMillis: 200),
+            AnimatedScoreLine('采配スコア', breakdown.commandScore, 15000,
+                delayMillis: 300),
+            AnimatedScoreLine('TP ボーナス', breakdown.turningPointScore, 15000,
+                delayMillis: 400),
+            AnimatedScoreLine('歴史ボーナス', breakdown.historyBonus, 10000,
+                delayMillis: 500),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _ScoreLine extends StatelessWidget {
-  final String label;
-  final int score;
-  final int maxScore;
-
-  const _ScoreLine(this.label, this.score, this.maxScore);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(label, style: const TextStyle(fontSize: 13)),
-          ),
-          Text(
-            '$score pt',
-            style: const TextStyle(color: Color(0xFFFFD700), fontSize: 13),
-          ),
-          const SizedBox(width: 8),
-          SizedBox(
-            width: 80,
-            child: LinearProgressIndicator(
-              value: score / maxScore,
-              backgroundColor: const Color(0xFF2A2A2A),
-              valueColor: AlwaysStoppedAnimation(
-                score > maxScore * 0.7
-                    ? Colors.green
-                    : score > maxScore * 0.4
-                        ? Colors.orange
-                        : Colors.red,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

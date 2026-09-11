@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import '../../data/models/scenario_data.dart';
+import '../../data/models/difficulty_mode.dart';
 import '../../data/repositories/scenario_repository.dart';
 import '../../domain/scoring/battle_event_log.dart';
 import '../../domain/state/battle_state.dart';
@@ -13,11 +14,13 @@ import 'result_screen.dart';
 class BattleScreen extends StatefulWidget {
   final Scenario scenario;
   final String? alternativePerspectiveId;
+  final DifficultyMode difficultyMode;
 
   const BattleScreen({
     super.key,
     required this.scenario,
     this.alternativePerspectiveId,
+    this.difficultyMode = DifficultyMode.normal,
   });
 
   @override
@@ -84,6 +87,9 @@ class _BattleScreenState extends State<BattleScreen> {
         );
       }
 
+      // Apply difficulty multipliers
+      data = _applyDifficultyMultipliers(data, widget.difficultyMode);
+
       final game = BattleGame(scenarioData: data);
       game.onBattleEnd = _onBattleEnd;
       game.onTurningPointAchieved = (tp, idx) {
@@ -127,6 +133,58 @@ class _BattleScreenState extends State<BattleScreen> {
         });
       }
     }
+  }
+
+  /// 難易度に基づいてユニット兵力を調整
+  ScenarioData _applyDifficultyMultipliers(
+    ScenarioData data,
+    DifficultyMode mode,
+  ) {
+    if (mode == DifficultyMode.normal) {
+      return data; // ノーマルは調整なし
+    }
+
+    // プレイヤーユニットの兵力を調整
+    final adjustedPlayerUnits = data.playerUnits.map((unit) {
+      return UnitDataSnapshot(
+        id: unit.id,
+        name: unit.name,
+        type: unit.type,
+        strength: (unit.strength * mode.unitStrengthMultiplier).toInt(),
+      );
+    }).toList();
+
+    // 敵ユニットの兵力を調整
+    final adjustedEnemyUnits = data.enemyUnits.map((unit) {
+      return UnitDataSnapshot(
+        id: unit.id,
+        name: unit.name,
+        type: unit.type,
+        strength: (unit.strength * mode.enemyUnitStrengthMultiplier).toInt(),
+      );
+    }).toList();
+
+    // 調整されたユニットから初期兵力を再計算
+    final playerInitialStrength =
+        adjustedPlayerUnits.fold(0, (sum, u) => sum + u.strength);
+    final enemyInitialStrength =
+        adjustedEnemyUnits.fold(0, (sum, u) => sum + u.strength);
+
+    return ScenarioData(
+      id: data.id,
+      displayName: data.displayName,
+      year: data.year,
+      description: data.description,
+      playerInitialStrength: playerInitialStrength,
+      enemyInitialStrength: enemyInitialStrength,
+      difficulty: data.difficulty,
+      estimatedDuration: data.estimatedDuration,
+      backgroundImage: data.backgroundImage,
+      turningPoints: data.turningPoints,
+      playerUnits: adjustedPlayerUnits,
+      enemyUnits: adjustedEnemyUnits,
+      alternativePerspective: data.alternativePerspective,
+    );
   }
 
   void _onBattleEnd(BattleStateData data) {

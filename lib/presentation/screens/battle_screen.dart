@@ -9,6 +9,7 @@ import '../../domain/scoring/battle_event_log.dart';
 import '../../domain/state/battle_state.dart';
 import '../../core/services/audio_manager.dart';
 import '../../flame/battle_game.dart';
+import '../widgets/help_modal.dart';
 import 'result_screen.dart';
 
 class BattleScreen extends StatefulWidget {
@@ -238,6 +239,8 @@ class _BattleScreenState extends State<BattleScreen> {
               enemyRatio: _enemyRatio,
               elapsed: _elapsed,
               battleMomentum: _battleMomentum,
+              context: context,
+              difficultyMode: widget.difficultyMode,
             ),
             Expanded(
               child: Stack(
@@ -290,6 +293,8 @@ class _BattleStatusBar extends StatelessWidget {
   final double enemyRatio;
   final double elapsed;
   final double battleMomentum;
+  final BuildContext context;
+  final DifficultyMode difficultyMode;
 
   const _BattleStatusBar({
     required this.displayName,
@@ -297,6 +302,8 @@ class _BattleStatusBar extends StatelessWidget {
     required this.enemyRatio,
     required this.elapsed,
     required this.battleMomentum,
+    required this.context,
+    required this.difficultyMode,
   });
 
   String _formatTime(double seconds) {
@@ -358,37 +365,57 @@ class _BattleStatusBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: remaining < 60
-                      ? Colors.red.withValues(alpha: 0.2)
-                      : Colors.orange.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: remaining < 60 ? Colors.red : Colors.orange,
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      size: 16,
-                      color: remaining < 60 ? Colors.red : Colors.orange,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      _formatTime(elapsed),
-                      style: TextStyle(
-                        color: remaining < 60 ? Colors.red : Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: remaining < 60
+                          ? Colors.red.withValues(alpha: 0.2)
+                          : Colors.orange.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: remaining < 60 ? Colors.red : Colors.orange,
+                        width: 1,
                       ),
                     ),
-                  ],
-                ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.timer,
+                          size: 16,
+                          color: remaining < 60 ? Colors.red : Colors.orange,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          _formatTime(elapsed),
+                          style: TextStyle(
+                            color: remaining < 60 ? Colors.red : Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => HelpModal(
+                          initialTab: 'tactics',
+                          difficultyMode: difficultyMode.name,
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.help_outline, color: Color(0xFFFFD700), size: 20),
+                    constraints: const BoxConstraints(),
+                    padding: EdgeInsets.zero,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ],
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
 
 class _ScenarioEntry {
@@ -41,7 +42,23 @@ class ScenarioSelectScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('シナリオを選ぶ')),
+      appBar: AppBar(
+        title: const Text('シナリオを選ぶ'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) => const HelpModal(
+                  initialTab: 'tutorial',
+                ),
+              );
+            },
+            icon: const Icon(Icons.help_outline),
+            tooltip: 'ヘルプ',
+          ),
+        ],
+      ),
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: _scenarios.length,

@@ -1,0 +1,218 @@
+{
+  "first_victory": {
+    "id": "first_victory",
+    "name": "初陣",
+    "description": "初めての勝利を手にする",
+    "icon": "🎊",
+    "category": "beginner",
+    "points": 10,
+    "condition": {
+      "type": "win_count",
+      "parameters": {"required": 1}
+    }
+  },
+  "ten_victories": {
+    "id": "ten_victories",
+    "name": "十戦十勝",
+    "description": "10回の勝利を達成する",
+    "icon": "⚔️",
+    "category": "victory",
+    "points": 50,
+    "condition": {
+      "type": "win_count",
+      "parameters": {"required": 10}
+    }
+  },
+  "fifty_victories": {
+    "id": "fifty_victories",
+    "name": "五十連勝",
+    "description": "50回の勝利を達成する",
+    "icon": "🏆",
+    "category": "mastery",
+    "points": 200,
+    "condition": {
+      "type": "win_count",
+      "parameters": {"required": 50}
+    }
+  },
+  "odigahara_victor": {
+    "id": "odigahara_victor",
+    "name": "桶狭間の鬼才",
+    "description": "桶狭間の戦で勝利する",
+    "icon": "🗻",
+    "category": "victory",
+    "points": 30,
+    "condition": {
+      "type": "scenario",
+      "parameters": {"scenarios": ["odigahara"]}
+    }
+  },
+  "nagashino_victor": {
+    "id": "nagashino_victor",
+    "name": "長篠の勇士",
+    "description": "長篠の戦で勝利する",
+    "icon": "🔫",
+    "category": "victory",
+    "points": 35,
+    "condition": {
+      "type": "scenario",
+      "parameters": {"scenarios": ["nagashino"]}
+    }
+  },
+  "honnoji_victor": {
+    "id": "honnoji_victor",
+    "name": "本能寺の英雄",
+    "description": "本能寺の変で勝利する",
+    "icon": "🔥",
+    "category": "victory",
+    "points": 40,
+    "condition": {
+      "type": "scenario",
+      "parameters": {"scenarios": ["honnoJi"]}
+    }
+  },
+  "sekigahara_victor": {
+    "id": "sekigahara_victor",
+    "name": "関ヶ原の支配者",
+    "description": "関ヶ原の戦で勝利する",
+    "icon": "👑",
+    "category": "victory",
+    "points": 50,
+    "condition": {
+      "type": "scenario",
+      "parameters": {"scenarios": ["sekigahara"]}
+    }
+  },
+  "kawanakajima_victor": {
+    "id": "kawanakajima_victor",
+    "name": "川中島の猛将",
+    "description": "川中島の戦で勝利する",
+    "icon": "⚡",
+    "category": "victory",
+    "points": 40,
+    "condition": {
+      "type": "scenario",
+      "parameters": {"scenarios": ["kawanakajima"]}
+    }
+  },
+  "easy_master": {
+    "id": "easy_master",
+    "name": "Easy制覇",
+    "description": "Easy難易度で全シナリオに勝利する",
+    "icon": "📚",
+    "category": "mastery",
+    "points": 100,
+    "condition": {
+      "type": "difficulty",
+      "parameters": {"difficulty": "easy"}
+    }
+  },
+  "normal_master": {
+    "id": "normal_master",
+    "name": "Normal制覇",
+    "description": "Normal難易度で全シナリオに勝利する",
+    "icon": "⚖️",
+    "category": "mastery",
+    "points": 150,
+    "condition": {
+      "type": "difficulty",
+      "parameters": {"difficulty": "normal"}
+    }
+  },
+  "hard_master": {
+    "id": "hard_master",
+    "name": "Hard制覇",
+    "description": "Hard難易度で全シナリオに勝利する",
+    "icon": "💎",
+    "category": "mastery",
+    "points": 250,
+    "condition": {
+      "type": "difficulty",
+      "parameters": {"difficulty": "hard"}
+    }
+  },
+  "perfect_victory": {
+    "id": "perfect_victory",
+    "name": "完全勝利",
+    "description": "全ターニングポイントを達成して勝利する",
+    "icon": "✨",
+    "category": "skill",
+    "points": 80,
+    "condition": {
+      "type": "tp_count",
+      "parameters": {"required": 4}
+    }
+  },
+  "swift_warrior": {
+    "id": "swift_warrior",
+    "name": "神速の采配",
+    "description": "3分以内に戦闘を完了する",
+    "icon": "⚡",
+    "category": "skill",
+    "points": 60,
+    "condition": {
+      "type": "time",
+      "parameters": {"seconds": 180}
+    }
+  },
+  "combo_master": {
+    "id": "combo_master",
+    "name": "連携の達人",
+    "description": "10連のコンボを成功させる",
+    "icon": "🔥",
+    "category": "skill",
+    "points": 70,
+    "condition": {
+      "type": "combo",
+      "parameters": {"required": 10}
+    }
+  },
+  "explorer": {
+    "id": "explorer",
+    "name": "歴史探究者",
+    "description": "全シナリオの逆側視点でプレイする",
+    "icon": "🔍",
+    "category": "exploration",
+    "points": 100,
+    "condition": {
+      "type": "exploration",
+      "parameters": {"requirement": "all_perspectives"}
+    }
+  },
+  "historian": {
+    "id": "historian",
+    "name": "歴史家",
+    "description": "全シナリオのメッセージを読む",
+    "icon": "📖",
+    "category": "exploration",
+    "points": 80,
+    "condition": {
+      "type": "exploration",
+      "parameters": {"requirement": "all_messages"}
+    }
+  },
+  "tutorial_master": {
+    "id": "tutorial_master",
+    "name": "チュートリアルマスター",
+    "description": "ゲームの全ヘルプコンテンツを閲覧する",
+    "icon": "🎓",
+    "category": "beginner",
+    "points": 30,
+    "condition": {
+      "type": "exploration",
+      "parameters": {"requirement": "all_help"}
+    }
+  },
+  "collector": {
+    "id": "collector",
+    "name": "コレクター",
+    "description": "10個のアチーブメントを解除する",
+    "icon": "🏅",
+    "category": "challenge",
+    "points": 120,
+    "condition": {
+      "type": "achievement_count",
+      "parameters": {"required": 10}
+    }
+  }
+}

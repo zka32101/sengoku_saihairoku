@@ -17,6 +17,8 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     _buildSpotBattleCard(context),
                     const SizedBox(height: 16),
+                    _buildReplayCard(context),
+                    const SizedBox(height: 16),
                     _buildRankingCard(context),
                   ],
                 ),
@@ -112,6 +114,59 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildReplayCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.videocam, color: Color(0xFFFFD700), size: 28),
+                SizedBox(width: 8),
+                Text(
+                  'バトルリプレイ',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '過去のバトルを再生・分析する',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'すべてのバトルは自動で記録されます',
+              style: TextStyle(color: Colors.grey[500], fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/replay'),
+                icon: const Icon(Icons.play_circle, color: Color(0xFFFFD700)),
+                label: const Text(
+                  'リプレイを見る',
+                  style: TextStyle(color: Color(0xFFFFD700)),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Color(0xFFFFD700)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildRankingCard(BuildContext context) {
     return Card(
       child: Padding(
@@ -166,12 +221,16 @@ class HomeScreen extends StatelessWidget {
         border: Border(top: BorderSide(color: Color(0xFF8B6914), width: 1)),
         color: Color(0xFF2A1A0A),
       ),
-      child: Row(
-        children: [
-          _navItem(context, Icons.home, 'ホーム', '/home', selected: true),
-          _navItem(context, Icons.leaderboard, 'ランキング', '/ranking'),
-          _navItem(context, Icons.settings, '設定', '/settings'),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            _navItem(context, Icons.home, 'ホーム', '/home', selected: true),
+            _navItem(context, Icons.videocam, 'リプレイ', '/replay'),
+            _navItem(context, Icons.leaderboard, 'ランキング', '/ranking'),
+            _navItem(context, Icons.settings, '設定', '/settings'),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/game_statistics.dart';
 import '../../data/models/achievement.dart';
+import '../screens/advanced_statistics_screen.dart';
 
 /// ゲーム統計ダッシュボード
 class StatisticsDashboard extends StatelessWidget {
@@ -78,6 +79,25 @@ class StatisticsDashboard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _TPStatisticsCard(statistics: statistics),
+          const SizedBox(height: 24),
+
+          // 詳細統計ボタン
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AdvancedStatisticsScreen(),
+                ),
+              ),
+              icon: const Icon(Icons.analytics),
+              label: const Text('詳細統計を見る'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+            ),
+          ),
         ],
       ),
     );

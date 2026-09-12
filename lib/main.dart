@@ -12,6 +12,7 @@ import 'presentation/screens/settings_screen.dart';
 import 'presentation/screens/challenge_history_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
+import 'data/repositories/reward_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,10 @@ void main() async {
   // Initialize ProgressionRepository
   final progressionRepo = ProgressionRepository();
   await progressionRepo.initialize();
+
+  // Initialize RewardRepository
+  final rewardRepo = RewardRepository();
+  await rewardRepo.initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }

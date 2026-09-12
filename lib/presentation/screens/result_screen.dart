@@ -3,10 +3,12 @@ import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../../data/models/cosmetic.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
 import '../../data/repositories/progression_repository.dart';
+import '../../data/repositories/reward_repository.dart';
 import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../widgets/screen_transition.dart';
@@ -37,16 +39,20 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   late DailyChallengeRepository _challengeRepo;
   late ProgressionRepository _progressionRepo;
+  late RewardRepository _rewardRepo;
   bool _challengeCompleted = false;
   int _xpGained = 0;
   bool _leveledUp = false;
   int? _newLevel;
+  bool _cosmeticUnlocked = false;
+  Cosmetic? _unlockedCosmetic;
 
   @override
   void initState() {
     super.initState();
     _challengeRepo = DailyChallengeRepository();
     _progressionRepo = ProgressionRepository();
+    _rewardRepo = RewardRepository();
     _saveBattleResult();
     _checkChallengeCompletion();
     _recordProgressionXp();
@@ -145,9 +151,39 @@ class _ResultScreenState extends State<ResultScreen> {
           _leveledUp = true;
           _newLevel = newProgression.currentLevel;
         });
+
+        // レベルマイルストーン達成時のコスメティック解放
+        await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
       }
     } catch (e) {
       print('Error recording progression XP: $e');
+    }
+  }
+
+  /// レベルマイルストーンに達した場合、コスメティックを解放
+  Future<void> _unlockMilestoneCosmeticIfEarned(
+    String userId,
+    int newLevel,
+  ) async {
+    try {
+      final milestoneReward = _rewardRepo.getMilestoneRewardForLevel(newLevel);
+      if (milestoneReward == null) return;
+
+      // コスメティック解放
+      await _rewardRepo.unlockMilestoneCosmetic(
+        userId,
+        newLevel,
+        milestoneReward.cosmeticId,
+      );
+
+      // UIに反映
+      final unlockedCosmetic = _rewardRepo.getCosmeticInfo(milestoneReward.cosmeticId);
+      setState(() {
+        _cosmeticUnlocked = true;
+        _unlockedCosmetic = unlockedCosmetic;
+      });
+    } catch (e) {
+      print('Error unlocking milestone cosmetic: $e');
     }
   }
 
@@ -171,6 +207,11 @@ class _ResultScreenState extends State<ResultScreen> {
               else
                 const SizedBox.shrink(),
               if (_leveledUp) const SizedBox(height: 16),
+              if (_cosmeticUnlocked && _unlockedCosmetic != null)
+                _CosmeticUnlockBanner(cosmetic: _unlockedCosmetic!)
+              else
+                const SizedBox.shrink(),
+              if (_cosmeticUnlocked) const SizedBox(height: 16),
               if (_xpGained > 0)
                 _XpGainCard(xpGained: _xpGained)
               else
@@ -541,6 +582,62 @@ class _LevelUpBanner extends StatelessWidget {
               fontSize: 16,
               color: Colors.amber,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CosmeticUnlockBanner extends StatelessWidget {
+  final Cosmetic cosmetic;
+
+  const _CosmeticUnlockBanner({required this.cosmetic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.purple.withOpacity(0.2),
+            Colors.pink.withOpacity(0.2),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.purple, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'コスメティック解放！',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.purple,
+              letterSpacing: 1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            cosmetic.name,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.purple,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            cosmetic.description,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

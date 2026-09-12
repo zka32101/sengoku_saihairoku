@@ -11,6 +11,7 @@ import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
+import '../../domain/achievement_checking/achievement_checker.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
@@ -40,12 +41,14 @@ class _ResultScreenState extends State<ResultScreen> {
   late DailyChallengeRepository _challengeRepo;
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
+  late AchievementChecker _achievementChecker;
   bool _challengeCompleted = false;
   int _xpGained = 0;
   bool _leveledUp = false;
   int? _newLevel;
   bool _cosmeticUnlocked = false;
   Cosmetic? _unlockedCosmetic;
+  List<dynamic> _unlockedAchievements = [];
 
   @override
   void initState() {
@@ -53,6 +56,7 @@ class _ResultScreenState extends State<ResultScreen> {
     _challengeRepo = DailyChallengeRepository();
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
+    _achievementChecker = AchievementChecker();
     _saveBattleResult();
     _checkChallengeCompletion();
     _recordProgressionXp();
@@ -60,9 +64,11 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Future<void> _saveBattleResult() async {
     final data = widget.args.data;
+    final userId = FirebaseService().userId;
+
     final resultData = BattleResultData(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      userId: FirebaseService().userId ?? 'anonymous',
+      userId: userId ?? 'anonymous',
       scenarioId: widget.args.scenario,
       playedAt: DateTime.now(),
       duration: data.elapsedTime.toInt(),
@@ -88,6 +94,36 @@ class _ResultScreenState extends State<ResultScreen> {
     );
 
     await FirebaseService().saveBattleResult(resultData);
+
+    // Check battle achievements
+    if (userId != null) {
+      await _checkBattleAchievements(data);
+    }
+  }
+
+  Future<void> _checkBattleAchievements(BattleStateData data) async {
+    try {
+      final userId = FirebaseService().userId;
+      if (userId == null) return;
+
+      final unlockedAchievements = await _achievementChecker.checkBattleAchievements(
+        userId: userId,
+        scenarioId: widget.args.scenario,
+        won: data.won,
+        casualtyRate: data.casualtyRate,
+        turnCount: data.turnCount,
+        totalScore: data.totalScore,
+        battleDuration: data.elapsedTime.toInt(),
+      );
+
+      if (unlockedAchievements.isNotEmpty) {
+        setState(() {
+          _unlockedAchievements.addAll(unlockedAchievements);
+        });
+      }
+    } catch (e) {
+      print('Error checking battle achievements: $e');
+    }
   }
 
   Future<void> _checkChallengeCompletion() async {
@@ -154,6 +190,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
         // レベルマイルストーン達成時のコスメティック解放
         await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
+
+        // レベルアップ時に関連実績をチェック
+        await _checkLevelAchievements(userId, newProgression.currentLevel);
       }
     } catch (e) {
       print('Error recording progression XP: $e');
@@ -182,8 +221,28 @@ class _ResultScreenState extends State<ResultScreen> {
         _cosmeticUnlocked = true;
         _unlockedCosmetic = unlockedCosmetic;
       });
+
+      // コスメティック解放時に関連実績をチェック
+      // TODO: 総解放数を取得して checkCosmeticAchievements を呼び出す
     } catch (e) {
       print('Error unlocking milestone cosmetic: $e');
+    }
+  }
+
+  Future<void> _checkLevelAchievements(String userId, int newLevel) async {
+    try {
+      final unlockedAchievements = await _achievementChecker.checkLevelAchievements(
+        userId: userId,
+        newLevel: newLevel,
+      );
+
+      if (unlockedAchievements.isNotEmpty) {
+        setState(() {
+          _unlockedAchievements.addAll(unlockedAchievements);
+        });
+      }
+    } catch (e) {
+      print('Error checking level achievements: $e');
     }
   }
 

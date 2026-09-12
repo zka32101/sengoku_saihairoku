@@ -10,6 +10,8 @@ import 'presentation/screens/message_screen.dart';
 import 'presentation/screens/ranking_screen.dart';
 import 'presentation/screens/settings_screen.dart';
 import 'presentation/screens/challenge_history_screen.dart';
+import 'presentation/screens/profile_screen.dart';
+import 'presentation/screens/statistics_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
@@ -49,6 +51,8 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/ranking': (_) => const RankingScreen(),
         '/settings': (_) => const SettingsScreen(),
         '/challenge_history': (_) => const ChallengeHistoryScreen(),
+        '/profile': (_) => const ProfileScreen(),
+        '/statistics': (_) => const StatisticsScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

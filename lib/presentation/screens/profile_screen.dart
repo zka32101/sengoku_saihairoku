@@ -85,6 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 16),
               _ProgressionDetailsCard(progression: progression),
               const SizedBox(height: 24),
+              _ActionButtonsCard(context: context, progression: progression),
+              const SizedBox(height: 24),
             ],
           ),
         ),
@@ -570,6 +572,70 @@ class _DetailRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ActionButtonsCard extends StatelessWidget {
+  final BuildContext context;
+  final UserProgression progression;
+
+  const _ActionButtonsCard({
+    required this.context,
+    required this.progression,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'アクション',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFD700),
+              ),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton.icon(
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/cosmetics_equipment'),
+              icon: const Icon(Icons.palette),
+              label: const Text('コスメティック設定'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+            ),
+            const SizedBox(height: 8),
+            if (progression.currentLevel >= 100)
+              ElevatedButton.icon(
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/prestige_reset'),
+                icon: const Icon(Icons.star),
+                label: const Text('プレスティジ'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber[700],
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              )
+            else
+              ElevatedButton.icon(
+                onPressed: null,
+                icon: const Icon(Icons.lock),
+                label: const Text('プレスティジ (Lv.100で解放)'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

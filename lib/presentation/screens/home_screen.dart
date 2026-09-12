@@ -328,6 +328,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: [
             _navItem(context, Icons.home, 'ホーム', '/home', selected: true),
+            _navItem(context, Icons.person, 'プロフィール', '/profile'),
+            _navItem(context, Icons.bar_chart, '統計', '/statistics'),
             _navItem(context, Icons.videocam, 'リプレイ', '/replay'),
             _navItem(context, Icons.leaderboard, 'ランキング', '/ranking'),
             _navItem(context, Icons.settings, '設定', '/settings'),

@@ -1,184 +1,155 @@
-/// ゲーム内アチーブメント（実績）システム
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+/// 実績のカテゴリー
+enum AchievementCategory {
+  combat,      // 戦闘関連
+  progression, // 進行度関連
+  prestige,    // プレスティジ関連
+  cosmetic,    // コスメティック関連
+  milestone,   // マイルストーン関連
+  event,       // イベント関連
+}
+
+/// 実績の難易度
+enum AchievementDifficulty {
+  bronze,  // 簡単
+  silver,  // 普通
+  gold,    // 難しい
+  diamond, // 非常に難しい
+}
+
+/// 実績の獲得条件タイプ
+enum AchievementConditionType {
+  battleWins,        // 戦闘勝利回数
+  levelReached,      // レベル到達
+  prestigeRank,      // プレスティジランク到達
+  turnEfficiency,    // ターン効率
+  cosmeticUnlocked,  // コスメティック解放数
+  totalPlayTime,     // 総プレイ時間
+  scenarioCleared,   // シナリオクリア
+  perfectBattle,     // パーフェクト戦闘
+}
+
+/// 実績定義
 class Achievement {
   final String id;
   final String name;
   final String description;
-  final String icon; // emoji or icon name
+  final String? icon; // emoji or asset path
   final AchievementCategory category;
-  final int points; // ポイント（表彰用）
-  final AchievementCondition condition;
+  final AchievementDifficulty difficulty;
+  final AchievementConditionType conditionType;
+  final int conditionValue;
+  final String? reward; // cosmetic id or special reward
+  final int? points; // achievement points for ranking
 
   const Achievement({
     required this.id,
     required this.name,
     required this.description,
-    required this.icon,
+    this.icon,
     required this.category,
-    required this.points,
-    required this.condition,
+    required this.difficulty,
+    required this.conditionType,
+    required this.conditionValue,
+    this.reward,
+    this.points,
   });
 
+  /// JSON からの生成
   factory Achievement.fromJson(Map<String, dynamic> json) {
     return Achievement(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
-      icon: json['icon'] as String,
+      icon: json['icon'] as String?,
       category: AchievementCategory.values.byName(json['category'] as String),
-      points: json['points'] as int,
-      condition: AchievementCondition.fromJson(
-        json['condition'] as Map<String, dynamic>,
-      ),
+      difficulty: AchievementDifficulty.values.byName(json['difficulty'] as String),
+      conditionType: AchievementConditionType.values.byName(json['conditionType'] as String),
+      conditionValue: json['conditionValue'] as int,
+      reward: json['reward'] as String?,
+      points: json['points'] as int?,
     );
   }
 
+  /// JSON への変換
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'icon': icon,
-        'category': category.name,
-        'points': points,
-        'condition': condition.toJson(),
-      };
+    'id': id,
+    'name': name,
+    'description': description,
+    'icon': icon,
+    'category': category.name,
+    'difficulty': difficulty.name,
+    'conditionType': conditionType.name,
+    'conditionValue': conditionValue,
+    'reward': reward,
+    'points': points,
+  };
 }
 
-/// アチーブメントの条件
-class AchievementCondition {
-  final String type; // 'win_count', 'scenario', 'difficulty', 'tp_count', 'time', 'combo'
-  final Map<String, dynamic> parameters;
-
-  AchievementCondition({
-    required this.type,
-    required this.parameters,
-  });
-
-  factory AchievementCondition.fromJson(Map<String, dynamic> json) {
-    return AchievementCondition(
-      type: json['type'] as String,
-      parameters: json['parameters'] as Map<String, dynamic>,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'type': type,
-        'parameters': parameters,
-      };
-
-  /// 条件が満たされているか確認
-  bool isMet(AchievementProgress progress) {
-    return switch (type) {
-      'win_count' => progress.totalWins >= (parameters['required'] as int),
-      'scenario' => (parameters['scenarios'] as List?)
-              ?.contains(progress.lastScenario) ??
-          false,
-      'difficulty' => parameters['difficulty'] == progress.lastDifficulty,
-      'tp_count' => progress.maxTPsAchieved >= (parameters['required'] as int),
-      'time' => progress.fastestBattleTime <= (parameters['seconds'] as int),
-      'combo' => progress.maxCombo >= (parameters['required'] as int),
-      _ => false,
-    };
-  }
-}
-
-/// アチーブメントカテゴリ
-enum AchievementCategory {
-  beginner('初心者向け', '👶'),
-  victory('勝利', '⚔️'),
-  mastery('マスター', '🏆'),
-  challenge('チャレンジ', '💪'),
-  exploration('発見', '🔍'),
-  skill('スキル', '✨');
-
-  final String displayName;
-  final String icon;
-
-  const AchievementCategory(this.displayName, this.icon);
-}
-
-/// ユーザーのアチーブメント進捗
+/// ユーザーの実績進捗
 class AchievementProgress {
+  final String userId;
   final String achievementId;
-  final bool unlocked;
+  final bool isUnlocked;
   final DateTime? unlockedAt;
-  final int progressValue; // 進捗値（0-100）
+  final int? progress; // 進捗値（0-100など）
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  // 進捗追跡用のフィールド
-  final int totalWins;
-  final int totalBattles;
-  final String? lastScenario;
-  final String? lastDifficulty;
-  final int maxTPsAchieved;
-  final int fastestBattleTime; // 秒単位
-  final int maxCombo;
-
-  AchievementProgress({
+  const AchievementProgress({
+    required this.userId,
     required this.achievementId,
-    required this.unlocked,
+    required this.isUnlocked,
     this.unlockedAt,
-    this.progressValue = 0,
-    this.totalWins = 0,
-    this.totalBattles = 0,
-    this.lastScenario,
-    this.lastDifficulty,
-    this.maxTPsAchieved = 0,
-    this.fastestBattleTime = 999999,
-    this.maxCombo = 0,
+    this.progress,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  factory AchievementProgress.fromJson(Map<String, dynamic> json) {
+  /// Firestore ドキュメントからの生成
+  factory AchievementProgress.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
     return AchievementProgress(
-      achievementId: json['achievementId'] as String,
-      unlocked: json['unlocked'] as bool,
-      unlockedAt: json['unlockedAt'] != null
-          ? DateTime.parse(json['unlockedAt'] as String)
+      userId: data['userId'] as String,
+      achievementId: data['achievementId'] as String,
+      isUnlocked: data['isUnlocked'] as bool? ?? false,
+      unlockedAt: data['unlockedAt'] != null
+          ? (data['unlockedAt'] as Timestamp).toDate()
           : null,
-      progressValue: json['progressValue'] as int? ?? 0,
-      totalWins: json['totalWins'] as int? ?? 0,
-      totalBattles: json['totalBattles'] as int? ?? 0,
-      lastScenario: json['lastScenario'] as String?,
-      lastDifficulty: json['lastDifficulty'] as String?,
-      maxTPsAchieved: json['maxTPsAchieved'] as int? ?? 0,
-      fastestBattleTime: json['fastestBattleTime'] as int? ?? 999999,
-      maxCombo: json['maxCombo'] as int? ?? 0,
+      progress: data['progress'] as int?,
+      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      updatedAt: (data['updatedAt'] as Timestamp).toDate(),
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'achievementId': achievementId,
-        'unlocked': unlocked,
-        if (unlockedAt != null) 'unlockedAt': unlockedAt!.toIso8601String(),
-        'progressValue': progressValue,
-        'totalWins': totalWins,
-        'totalBattles': totalBattles,
-        if (lastScenario != null) 'lastScenario': lastScenario,
-        if (lastDifficulty != null) 'lastDifficulty': lastDifficulty,
-        'maxTPsAchieved': maxTPsAchieved,
-        'fastestBattleTime': fastestBattleTime,
-        'maxCombo': maxCombo,
-      };
-
-  /// 進捗パーセンテージを取得（テーブル用）
-  double get progressPercent => (progressValue / 100).clamp(0.0, 1.0);
+  /// Firestore ドキュメントへの変換
+  Map<String, dynamic> toFirestore() => {
+    'userId': userId,
+    'achievementId': achievementId,
+    'isUnlocked': isUnlocked,
+    'unlockedAt': unlockedAt != null ? Timestamp.fromDate(unlockedAt!) : null,
+    'progress': progress,
+    'createdAt': Timestamp.fromDate(createdAt),
+    'updatedAt': Timestamp.fromDate(updatedAt),
+  };
 }
 
-/// アチーブメントの進捗バッジ
-class AchievementBadge {
-  final String achievementId;
-  final String name;
-  final String icon;
-  final int points;
-  final bool unlocked;
-  final DateTime? unlockedAt;
-  final double progress; // 0.0 ～ 1.0
+/// 実績統計情報
+class AchievementStats {
+  final int totalAchievements;
+  final int unlockedCount;
+  final double unlockedPercentage;
+  final int totalPoints;
+  final Map<AchievementCategory, int> categoryProgress;
+  final DateTime lastUnlockedAt;
 
-  AchievementBadge({
-    required this.achievementId,
-    required this.name,
-    required this.icon,
-    required this.points,
-    required this.unlocked,
-    this.unlockedAt,
-    this.progress = 0.0,
+  const AchievementStats({
+    required this.totalAchievements,
+    required this.unlockedCount,
+    required this.unlockedPercentage,
+    required this.totalPoints,
+    required this.categoryProgress,
+    required this.lastUnlockedAt,
   });
 }

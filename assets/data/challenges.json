@@ -1,0 +1,646 @@
+{
+  "challenges": [
+    {
+      "id": "challenge_001",
+      "title": "桶狭間: 急襲作戦",
+      "description": "敵の大軍を奇襲で圧倒する",
+      "scenario": "odigahara",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 20
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_002",
+      "title": "桶狭間: 完全勝利",
+      "description": "敵軍を無傷で撃破する",
+      "scenario": "odigahara",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "noDefeats",
+          "value": 0
+        }
+      ],
+      "baseReward": 150,
+      "achievementPoints": 75,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_003",
+      "title": "長篠: 鉄砲隊の力",
+      "description": "銃火で敵騎馬隊を撃退する",
+      "scenario": "nagashino",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 25
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_004",
+      "title": "長篠: 高速決着",
+      "description": "敵をできるだけ早く撃破する",
+      "scenario": "nagashino",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 15
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_005",
+      "title": "本能寺: 絶望の逆転",
+      "description": "圧倒的不利を跳ね返す",
+      "scenario": "honnoJi",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 50000
+        }
+      ],
+      "baseReward": 200,
+      "achievementPoints": 100,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_006",
+      "title": "本能寺: 素早い脱出",
+      "description": "短時間で脱出経路を確保する",
+      "scenario": "honnoJi",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 18
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_007",
+      "title": "関ヶ原: 豊臣の救援",
+      "description": "西軍の豊臣武将を守り抜く",
+      "scenario": "sekigahara",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "noDefeats",
+          "value": 0
+        }
+      ],
+      "baseReward": 200,
+      "achievementPoints": 100,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_008",
+      "title": "関ヶ原: 決定的な勝利",
+      "description": "高スコアで敵を圧倒する",
+      "scenario": "sekigahara",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 55000
+        }
+      ],
+      "baseReward": 150,
+      "achievementPoints": 75,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_009",
+      "title": "川中島: 夜明けの奇襲",
+      "description": "敵の本陣を素早く崩す",
+      "scenario": "kawanakajima",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 22
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_010",
+      "title": "川中島: 挟撃成功",
+      "description": "複合的な戦術で敵を挟み撃つ",
+      "scenario": "kawanakajima",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 60000
+        }
+      ],
+      "baseReward": 200,
+      "achievementPoints": 100,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_011",
+      "title": "桶狭間: タイムアタック",
+      "description": "最小ターン数でクリアする",
+      "scenario": "odigahara",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 12
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_012",
+      "title": "長篠: 防御戦",
+      "description": "敵の攻撃に耐えて勝利する",
+      "scenario": "nagashino",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "noDefeats",
+          "value": 0
+        }
+      ],
+      "baseReward": 150,
+      "achievementPoints": 75,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_013",
+      "title": "本能寺: TP達成",
+      "description": "複数のターニングポイントを達成する",
+      "scenario": "honnoJi",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "tpTarget",
+          "value": 3
+        }
+      ],
+      "baseReward": 125,
+      "achievementPoints": 60,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_014",
+      "title": "関ヶ原: 高スコアチャレンジ",
+      "description": "高いスコアで敵を撃破する",
+      "scenario": "sekigahara",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 45000
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_015",
+      "title": "川中島: TP完全達成",
+      "description": "全てのターニングポイントを達成する",
+      "scenario": "kawanakajima",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "tpTarget",
+          "value": 4
+        }
+      ],
+      "baseReward": 150,
+      "achievementPoints": 75,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_016",
+      "title": "桶狭間: スコア達成",
+      "description": "高得点を獲得する",
+      "scenario": "odigahara",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 45000
+        }
+      ],
+      "baseReward": 125,
+      "achievementPoints": 60,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_017",
+      "title": "長篠: TP達成",
+      "description": "戦闘中のターニングポイントを達成する",
+      "scenario": "nagashino",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "tpTarget",
+          "value": 2
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_018",
+      "title": "本能寺: 高速クリア",
+      "description": "素早く敵を撃破する",
+      "scenario": "honnoJi",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 20
+        }
+      ],
+      "baseReward": 125,
+      "achievementPoints": 60,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_019",
+      "title": "関ヶ原: 速攻",
+      "description": "短時間で決定的な勝利をおさめる",
+      "scenario": "sekigahara",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 28
+        }
+      ],
+      "baseReward": 125,
+      "achievementPoints": 60,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_020",
+      "title": "川中島: 無傷勝利",
+      "description": "兵力を失わずに敵を撃破する",
+      "scenario": "kawanakajima",
+      "difficulty": "normal",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "noDefeats",
+          "value": 0
+        }
+      ],
+      "baseReward": 150,
+      "achievementPoints": 75,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_021",
+      "title": "桶狭間: マスター",
+      "description": "複合条件を達成する",
+      "scenario": "odigahara",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 18
+        },
+        {
+          "type": "scoreTarget",
+          "value": 50000
+        }
+      ],
+      "baseReward": 200,
+      "achievementPoints": 100,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_022",
+      "title": "長篠: エキスパート",
+      "description": "高難度で総合的に勝利する",
+      "scenario": "nagashino",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 20
+        }
+      ],
+      "baseReward": 175,
+      "achievementPoints": 85,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_023",
+      "title": "本能寺: 伝説",
+      "description": "最高難度での完全勝利",
+      "scenario": "honnoJi",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 22
+        },
+        {
+          "type": "scoreTarget",
+          "value": 60000
+        }
+      ],
+      "baseReward": 250,
+      "achievementPoints": 125,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_024",
+      "title": "関ヶ原: 最高難度",
+      "description": "ハードモードでの完全支配",
+      "scenario": "sekigahara",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "scoreTarget",
+          "value": 65000
+        }
+      ],
+      "baseReward": 200,
+      "achievementPoints": 100,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_025",
+      "title": "川中島: 極難",
+      "description": "最高の難易度に挑む",
+      "scenario": "kawanakajima",
+      "difficulty": "hard",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 25
+        },
+        {
+          "type": "scoreTarget",
+          "value": 65000
+        }
+      ],
+      "baseReward": 250,
+      "achievementPoints": 125,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_026",
+      "title": "桶狭般: 短期決戦",
+      "description": "10ターン以内に勝利する",
+      "scenario": "odigahara",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 10
+        }
+      ],
+      "baseReward": 100,
+      "achievementPoints": 50,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_027",
+      "title": "長篠: 完勝",
+      "description": "敵に十分な抵抗をさせない",
+      "scenario": "nagashino",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 12
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_028",
+      "title": "本能寺: 軽快",
+      "description": "簡潔に敵を倒す",
+      "scenario": "honnoJi",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 14
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_029",
+      "title": "関ヶ原: 陣頭指揮",
+      "description": "臨機応変に敵を撃破する",
+      "scenario": "sekigahara",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 24
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    },
+    {
+      "id": "challenge_030",
+      "title": "川中島: 初心者向け",
+      "description": "この戦いに勝つ",
+      "scenario": "kawanakajima",
+      "difficulty": "easy",
+      "conditions": [
+        {
+          "type": "victory",
+          "value": 0
+        },
+        {
+          "type": "turnLimit",
+          "value": 30
+        }
+      ],
+      "baseReward": 75,
+      "achievementPoints": 40,
+      "availableFrom": "2026-01-01T00:00:00Z",
+      "availableUntil": "2099-12-31T23:59:59Z"
+    }
+  ]
+}

@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
+import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/models/daily_challenge.dart';
+import '../widgets/challenge_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late DailyChallengeRepository _challengeRepo;
+  DailyChallenge? _todayChallenge;
+  ChallengeProgress? _todayProgress;
+
+  @override
+  void initState() {
+    super.initState();
+    _challengeRepo = DailyChallengeRepository();
+    _loadTodayChallenge();
+  }
+
+  Future<void> _loadTodayChallenge() async {
+    final challenge = _challengeRepo.getTodayChallenge();
+    final progress = _challengeRepo.getTodayProgress();
+    setState(() {
+      _todayChallenge = challenge;
+      _todayProgress = progress;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +43,36 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
+                    if (_todayChallenge != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            '本日のチャレンジ',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          ChallengeCard(
+                            challenge: _todayChallenge!,
+                            progress: _todayProgress,
+                            onTap: () {
+                              // チャレンジ詳細表示（後で実装）
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
                     _buildSpotBattleCard(context),
                     const SizedBox(height: 16),
                     _buildReplayCard(context),
                     const SizedBox(height: 16),
                     _buildRankingCard(context),
+                    const SizedBox(height: 16),
+                    _buildChallengeHistoryCard(context),
                   ],
                 ),
               ),
@@ -201,6 +254,55 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(Icons.bar_chart, color: Color(0xFFFFD700)),
                 label: const Text(
                   'ランキングを見る',
+                  style: TextStyle(color: Color(0xFFFFD700)),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Color(0xFFFFD700)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChallengeHistoryCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.card_giftcard, color: Color(0xFFFFD700), size: 28),
+                SizedBox(width: 8),
+                Text(
+                  'チャレンジ履歴',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '過去7日間のチャレンジを確認',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/challenge_history'),
+                icon: const Icon(Icons.history, color: Color(0xFFFFD700)),
+                label: const Text(
+                  'チャレンジ履歴を見る',
                   style: TextStyle(color: Color(0xFFFFD700)),
                 ),
                 style: OutlinedButton.styleFrom(

@@ -9,11 +9,18 @@ import 'presentation/screens/result_screen.dart';
 import 'presentation/screens/message_screen.dart';
 import 'presentation/screens/ranking_screen.dart';
 import 'presentation/screens/settings_screen.dart';
+import 'presentation/screens/challenge_history_screen.dart';
+import 'data/repositories/daily_challenge_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseService().initialize();
+
+  // Initialize DailyChallengeRepository
+  final challengeRepo = DailyChallengeRepository();
+  await challengeRepo.initialize();
+
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }
 
@@ -31,6 +38,7 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/scenario_select': (_) => const ScenarioSelectScreen(),
         '/ranking': (_) => const RankingScreen(),
         '/settings': (_) => const SettingsScreen(),
+        '/challenge_history': (_) => const ChallengeHistoryScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

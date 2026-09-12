@@ -1,0 +1,87 @@
+{
+  "unit_skin_bronze": {
+    "id": "unit_skin_bronze",
+    "name": "青年期ユニットスキン",
+    "description": "若き日の兵士たちの姿。成長の第一歩。",
+    "type": "unitSkin",
+    "acquisitionMethod": "levelMilestone",
+    "requiredLevel": 10,
+    "imageAsset": "assets/images/cosmetics/unit_skin_bronze.png"
+  },
+  "ui_theme_autumn": {
+    "id": "ui_theme_autumn",
+    "name": "紅葉UIテーマ",
+    "description": "秋の京都をテーマにしたUIテーマ。暖かみのある配色。",
+    "type": "uiTheme",
+    "acquisitionMethod": "levelMilestone",
+    "requiredLevel": 25,
+    "imageAsset": "assets/images/cosmetics/ui_theme_autumn.png"
+  },
+  "ui_theme_night": {
+    "id": "ui_theme_night",
+    "name": "夜間UIテーマ",
+    "description": "夜間作戦用の暗めのUIテーマ。眼の疲れが少ない。",
+    "type": "uiTheme",
+    "acquisitionMethod": "levelMilestone",
+    "requiredLevel": 50,
+    "imageAsset": "assets/images/cosmetics/ui_theme_night.png"
+  },
+  "unit_skin_elite": {
+    "id": "unit_skin_elite",
+    "name": "エリートユニットスキン",
+    "description": "精鋭部隊の装いに変わる。勇敢な兵士たちの姿。",
+    "type": "unitSkin",
+    "acquisitionMethod": "levelMilestone",
+    "requiredLevel": 75,
+    "imageAsset": "assets/images/cosmetics/unit_skin_elite.png"
+  },
+  "ui_theme_legendary": {
+    "id": "ui_theme_legendary",
+    "name": "伝説的UIテーマ",
+    "description": "金と紫の輝きに包まれたテーマ。伝説の指揮官へ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "levelMilestone",
+    "requiredLevel": 100,
+    "imageAsset": "assets/images/cosmetics/ui_theme_legendary.png"
+  },
+  "unit_skin_prestige_silver": {
+    "id": "unit_skin_prestige_silver",
+    "name": "シルバープレスティジスキン",
+    "description": "プレスティジランク『シルバー』達成時に解放される誇りある装い。",
+    "type": "unitSkin",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/unit_skin_prestige_silver.png"
+  },
+  "unit_skin_prestige_gold": {
+    "id": "unit_skin_prestige_gold",
+    "name": "ゴールドプレスティジスキン",
+    "description": "プレスティジランク『ゴールド』達成時に解放される華麗な装い。",
+    "type": "unitSkin",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/unit_skin_prestige_gold.png"
+  },
+  "unit_skin_prestige_platinum": {
+    "id": "unit_skin_prestige_platinum",
+    "name": "プラチナプレスティジスキン",
+    "description": "プレスティジランク『プラチナ』達成時に解放される高貴な装い。",
+    "type": "unitSkin",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/unit_skin_prestige_platinum.png"
+  },
+  "unit_skin_prestige_diamond": {
+    "id": "unit_skin_prestige_diamond",
+    "name": "ダイヤモンドプレスティジスキン",
+    "description": "プレスティジランク『ダイヤモンド』達成時のみ解放される至高の装い。",
+    "type": "unitSkin",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/unit_skin_prestige_diamond.png"
+  },
+  "ui_theme_prestige": {
+    "id": "ui_theme_prestige",
+    "name": "プレスティジUIテーマ",
+    "description": "プレスティジシステム解放時に得られる特別なテーマ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "levelMilestone",
+    "imageAsset": "assets/images/cosmetics/ui_theme_prestige.png"
+  }
+}

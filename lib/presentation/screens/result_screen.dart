@@ -3,9 +3,13 @@ import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../../data/models/cosmetic.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/repositories/progression_repository.dart';
+import '../../data/repositories/reward_repository.dart';
+import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
@@ -34,14 +38,24 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   late DailyChallengeRepository _challengeRepo;
+  late ProgressionRepository _progressionRepo;
+  late RewardRepository _rewardRepo;
   bool _challengeCompleted = false;
+  int _xpGained = 0;
+  bool _leveledUp = false;
+  int? _newLevel;
+  bool _cosmeticUnlocked = false;
+  Cosmetic? _unlockedCosmetic;
 
   @override
   void initState() {
     super.initState();
     _challengeRepo = DailyChallengeRepository();
+    _progressionRepo = ProgressionRepository();
+    _rewardRepo = RewardRepository();
     _saveBattleResult();
     _checkChallengeCompletion();
+    _recordProgressionXp();
   }
 
   Future<void> _saveBattleResult() async {
@@ -94,6 +108,85 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  Future<void> _recordProgressionXp() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    try {
+      // 現在のプログレッションを取得
+      final currentProgression =
+          await _progressionRepo.getUserProgression(userId);
+      if (currentProgression == null) return;
+
+      final oldLevel = currentProgression.currentLevel;
+
+      // XP獲得を計算
+      _xpGained = ProgressionCalculator.calculateXpGain(
+        battleResult: widget.args.data,
+        difficulty: widget.args.difficulty,
+        currentChallengeStreak: 0, // TODO: チャレンジストリークを取得
+        isFirstClearOnDifficulty: false, // TODO: 難易度別クリア状況を確認
+        turnCount: widget.args.data.turnCount,
+      );
+
+      if (_xpGained <= 0) return;
+
+      // XP獲得を記録
+      await _progressionRepo.recordXpGain(
+        userId: userId,
+        xpGained: _xpGained,
+        source: 'battle',
+        multipliers: {
+          'difficulty': ProgressionCalculator._getDifficultyMultiplier(
+            widget.args.difficulty,
+          ),
+        },
+      );
+
+      // 新しいプログレッションを取得してレベルアップを確認
+      final newProgression =
+          await _progressionRepo.getUserProgression(userId);
+      if (newProgression != null && newProgression.currentLevel > oldLevel) {
+        setState(() {
+          _leveledUp = true;
+          _newLevel = newProgression.currentLevel;
+        });
+
+        // レベルマイルストーン達成時のコスメティック解放
+        await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
+      }
+    } catch (e) {
+      print('Error recording progression XP: $e');
+    }
+  }
+
+  /// レベルマイルストーンに達した場合、コスメティックを解放
+  Future<void> _unlockMilestoneCosmeticIfEarned(
+    String userId,
+    int newLevel,
+  ) async {
+    try {
+      final milestoneReward = _rewardRepo.getMilestoneRewardForLevel(newLevel);
+      if (milestoneReward == null) return;
+
+      // コスメティック解放
+      await _rewardRepo.unlockMilestoneCosmetic(
+        userId,
+        newLevel,
+        milestoneReward.cosmeticId,
+      );
+
+      // UIに反映
+      final unlockedCosmetic = _rewardRepo.getCosmeticInfo(milestoneReward.cosmeticId);
+      setState(() {
+        _cosmeticUnlocked = true;
+        _unlockedCosmetic = unlockedCosmetic;
+      });
+    } catch (e) {
+      print('Error unlocking milestone cosmetic: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = widget.args.data;
@@ -109,6 +202,21 @@ class _ResultScreenState extends State<ResultScreen> {
             children: [
               _ResultHeader(won: data.won),
               const SizedBox(height: 24),
+              if (_leveledUp && _newLevel != null)
+                _LevelUpBanner(newLevel: _newLevel!)
+              else
+                const SizedBox.shrink(),
+              if (_leveledUp) const SizedBox(height: 16),
+              if (_cosmeticUnlocked && _unlockedCosmetic != null)
+                _CosmeticUnlockBanner(cosmetic: _unlockedCosmetic!)
+              else
+                const SizedBox.shrink(),
+              if (_cosmeticUnlocked) const SizedBox(height: 16),
+              if (_xpGained > 0)
+                _XpGainCard(xpGained: _xpGained)
+              else
+                const SizedBox.shrink(),
+              if (_xpGained > 0) const SizedBox(height: 16),
               if (_challengeCompleted)
                 _ChallengeCompletionBanner()
               else
@@ -381,6 +489,155 @@ class _ChallengeCompletionBanner extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _XpGainCard extends StatelessWidget {
+  final int xpGained;
+
+  const _XpGainCard({required this.xpGained});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: const Color(0xFF1A2A1A),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '経験値獲得',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.amber,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  '獲得XP:',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  '+$xpGained',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LevelUpBanner extends StatelessWidget {
+  final int newLevel;
+
+  const _LevelUpBanner({required this.newLevel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.amber.withOpacity(0.2),
+            Colors.orange.withOpacity(0.2),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.amber, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'レベルアップ！',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.amber,
+              letterSpacing: 2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'レベル $newLevel に到達しました',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.amber,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CosmeticUnlockBanner extends StatelessWidget {
+  final Cosmetic cosmetic;
+
+  const _CosmeticUnlockBanner({required this.cosmetic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.purple.withOpacity(0.2),
+            Colors.pink.withOpacity(0.2),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.purple, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'コスメティック解放！',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.purple,
+              letterSpacing: 1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            cosmetic.name,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.purple,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            cosmetic.description,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

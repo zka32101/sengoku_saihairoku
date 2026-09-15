@@ -16,6 +16,7 @@ import '../../domain/achievement_checking/achievement_notification_service.dart'
 import '../../data/repositories/achievement_repository.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/models/battle_pass.dart';
+import '../../domain/battle_pass/battle_pass_notification_service.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
@@ -49,6 +50,7 @@ class _ResultScreenState extends State<ResultScreen> {
   late AchievementNotificationService _notificationService;
   late AchievementRepository _achievementRepo;
   late BattlePassRepository _battlePassRepo;
+  late BattlePassNotificationService _battlePassNotificationService;
   bool _challengeCompleted = false;
   int _xpGained = 0;
   bool _leveledUp = false;
@@ -70,10 +72,12 @@ class _ResultScreenState extends State<ResultScreen> {
     _notificationService = AchievementNotificationService();
     _achievementRepo = AchievementRepository();
     _battlePassRepo = BattlePassRepository();
+    _battlePassNotificationService = BattlePassNotificationService();
 
-    // Initialize notification service with context
+    // Initialize notification services with context
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _notificationService.initialize(context);
+      _battlePassNotificationService.initialize(context);
     });
 
     _saveBattleResult();
@@ -305,6 +309,18 @@ class _ResultScreenState extends State<ResultScreen> {
           _battlePassTierUp = true;
           _newBattlePassTier = newProgress.currentTier;
         });
+
+        // ティアアップ通知を表示
+        if (mounted) {
+          final tierData =
+              _battlePassRepo.getTierData(newProgress.currentTier);
+          if (tierData != null) {
+            await _battlePassNotificationService.showTierUpNotification(
+              newProgress.currentTier,
+              tierData,
+            );
+          }
+        }
       }
     } catch (e) {
       print('Error recording battle pass XP: $e');
@@ -313,8 +329,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   void dispose() {
-    // Clean up notification service
+    // Clean up notification services
     _notificationService.clear();
+    _battlePassNotificationService.clear();
     super.dispose();
   }
 

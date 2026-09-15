@@ -12,6 +12,8 @@ import '../../data/repositories/reward_repository.dart';
 import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
+import '../../domain/achievement_checking/achievement_notification_service.dart';
+import '../../data/repositories/achievement_repository.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
@@ -42,6 +44,8 @@ class _ResultScreenState extends State<ResultScreen> {
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
   late AchievementChecker _achievementChecker;
+  late AchievementNotificationService _notificationService;
+  late AchievementRepository _achievementRepo;
   bool _challengeCompleted = false;
   int _xpGained = 0;
   bool _leveledUp = false;
@@ -57,6 +61,14 @@ class _ResultScreenState extends State<ResultScreen> {
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
     _achievementChecker = AchievementChecker();
+    _notificationService = AchievementNotificationService();
+    _achievementRepo = AchievementRepository();
+
+    // Initialize notification service with context
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _notificationService.initialize(context);
+    });
+
     _saveBattleResult();
     _checkChallengeCompletion();
     _recordProgressionXp();
@@ -120,6 +132,13 @@ class _ResultScreenState extends State<ResultScreen> {
         setState(() {
           _unlockedAchievements.addAll(unlockedAchievements);
         });
+
+        // Show notifications for each unlocked achievement
+        if (mounted) {
+          for (final achievement in unlockedAchievements) {
+            await _notificationService.showAchievementUnlockNotification(achievement);
+          }
+        }
       }
     } catch (e) {
       print('Error checking battle achievements: $e');
@@ -240,10 +259,24 @@ class _ResultScreenState extends State<ResultScreen> {
         setState(() {
           _unlockedAchievements.addAll(unlockedAchievements);
         });
+
+        // Show notifications for each unlocked achievement
+        if (mounted) {
+          for (final achievement in unlockedAchievements) {
+            await _notificationService.showAchievementUnlockNotification(achievement);
+          }
+        }
       }
     } catch (e) {
       print('Error checking level achievements: $e');
     }
+  }
+
+  @override
+  void dispose() {
+    // Clean up notification service
+    _notificationService.clear();
+    super.dispose();
   }
 
   @override

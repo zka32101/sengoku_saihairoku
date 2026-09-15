@@ -4,6 +4,7 @@ import '../../data/models/user_progression.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../../data/repositories/achievement_repository.dart';
 import '../widgets/screen_transition.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,8 +17,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
+  late AchievementRepository _achievementRepo;
   UserProgression? _userProgression;
   List<Cosmetic> _userCosmetics = [];
+  int _unlockedAchievementCount = 0;
+  int _totalAchievementCount = 0;
   bool _isLoading = true;
 
   @override
@@ -25,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
+    _achievementRepo = AchievementRepository();
     _loadUserData();
   }
 
@@ -38,10 +43,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final progression = await _progressionRepo.getUserProgression(userId);
       final cosmetics = await _rewardRepo.getUserCosmetics(userId);
+      final userAchievements = await _achievementRepo.getUserAchievements(userId);
+      final unlockedCount = userAchievements.where((a) => a.isUnlocked).length;
+      final totalCount = _achievementRepo.getAllAchievements().length;
 
       setState(() {
         _userProgression = progression;
         _userCosmetics = cosmetics;
+        _unlockedAchievementCount = unlockedCount;
+        _totalAchievementCount = totalCount;
         _isLoading = false;
       });
     } catch (e) {
@@ -80,6 +90,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _LevelCard(progression: progression),
               const SizedBox(height: 16),
               _PrestigeCard(progression: progression),
+              const SizedBox(height: 16),
+              _AchievementStatsCard(
+                unlockedCount: _unlockedAchievementCount,
+                totalCount: _totalAchievementCount,
+                onViewAll: () => Navigator.pushNamed(context, '/achievements'),
+              ),
               const SizedBox(height: 16),
               _CosmeticsCard(cosmetics: _userCosmetics),
               const SizedBox(height: 16),
@@ -633,6 +649,90 @@ class _ActionButtonsCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AchievementStatsCard extends StatelessWidget {
+  final int unlockedCount;
+  final int totalCount;
+  final VoidCallback onViewAll;
+
+  const _AchievementStatsCard({
+    required this.unlockedCount,
+    required this.totalCount,
+    required this.onViewAll,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final percentage = totalCount > 0 ? (unlockedCount / totalCount * 100).toInt() : 0;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  '実績',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+                Text(
+                  '$unlockedCount / $totalCount',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFE8D5B0),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: LinearProgressIndicator(
+                value: totalCount > 0 ? unlockedCount / totalCount : 0,
+                minHeight: 8,
+                backgroundColor: Colors.grey[800],
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  percentage >= 80
+                      ? Colors.green
+                      : percentage >= 50
+                          ? Colors.yellow
+                          : Colors.red,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '$percentage%',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFFE8D5B0),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: onViewAll,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
+                child: const Text('すべての実績を表示'),
+              ),
+            ),
           ],
         ),
       ),

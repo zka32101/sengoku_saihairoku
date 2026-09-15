@@ -1,0 +1,513 @@
+{
+  "current": {
+    "id": "season_1",
+    "season": "Season 1: 戦国の野望",
+    "name": "第一シーズン：戦国の野望",
+    "description": "シーズン1のバトルパス。戦闘を通じてXPを獲得し、ティアを進めてコスメティックや通貨を獲得しましょう。",
+    "startDate": "2026-09-01T00:00:00Z",
+    "endDate": "2026-12-01T00:00:00Z",
+    "maxTier": 50,
+    "tiers": [
+      {
+        "tierNumber": 1,
+        "xpRequired": 1000,
+        "rewardId": "currency_free_1",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "100ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 2,
+        "xpRequired": 1200,
+        "rewardId": "cosmetic_free_samurai_helm_1",
+        "rewardType": "cosmetic",
+        "rewardName": "侍の兜",
+        "rewardDescription": "プレイヤーアイコン: 侍の兜",
+        "track": "free",
+        "icon": "🎎"
+      },
+      {
+        "tierNumber": 3,
+        "xpRequired": 1200,
+        "rewardId": "currency_free_2",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "150ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 4,
+        "xpRequired": 1500,
+        "rewardId": "cosmetic_free_banner_1",
+        "rewardType": "cosmetic",
+        "rewardName": "軍旗",
+        "rewardDescription": "バナー: 赤い軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 5,
+        "xpRequired": 1500,
+        "rewardId": "currency_free_3",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "200ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 6,
+        "xpRequired": 1800,
+        "rewardId": "cosmetic_premium_daimyo_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "大名甲冑",
+        "rewardDescription": "プレミアム限定: 大名甲冑コスメティック",
+        "track": "premium",
+        "icon": "🛡️"
+      },
+      {
+        "tierNumber": 7,
+        "xpRequired": 1800,
+        "rewardId": "currency_free_4",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "250ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 8,
+        "xpRequired": 2000,
+        "rewardId": "cosmetic_free_banner_2",
+        "rewardType": "cosmetic",
+        "rewardName": "金の軍旗",
+        "rewardDescription": "バナー: 金色の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 9,
+        "xpRequired": 2000,
+        "rewardId": "currency_free_5",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "300ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 10,
+        "xpRequired": 2200,
+        "rewardId": "cosmetic_premium_legendary_title",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "伝説の大将",
+        "rewardDescription": "プレミアム限定: 伝説の大将タイトル",
+        "track": "premium",
+        "icon": "👑"
+      },
+      {
+        "tierNumber": 11,
+        "xpRequired": 2200,
+        "rewardId": "currency_free_6",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "350ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 12,
+        "xpRequired": 2400,
+        "rewardId": "cosmetic_free_helmet_2",
+        "rewardType": "cosmetic",
+        "rewardName": "武士の被り物",
+        "rewardDescription": "プレイヤーアイコン: 武士の被り物",
+        "track": "free",
+        "icon": "🎎"
+      },
+      {
+        "tierNumber": 13,
+        "xpRequired": 2400,
+        "rewardId": "currency_free_7",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "400ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 14,
+        "xpRequired": 2600,
+        "rewardId": "cosmetic_premium_shadow_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "忍者装束",
+        "rewardDescription": "プレミアム限定: 忍者装束コスメティック",
+        "track": "premium",
+        "icon": "🥷"
+      },
+      {
+        "tierNumber": 15,
+        "xpRequired": 2600,
+        "rewardId": "currency_free_8",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "450ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 16,
+        "xpRequired": 2800,
+        "rewardId": "cosmetic_free_banner_3",
+        "rewardType": "cosmetic",
+        "rewardName": "紫の軍旗",
+        "rewardDescription": "バナー: 紫色の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 17,
+        "xpRequired": 2800,
+        "rewardId": "currency_free_9",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "500ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 18,
+        "xpRequired": 3000,
+        "rewardId": "cosmetic_premium_platinum_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "プラチナ甲冑",
+        "rewardDescription": "プレミアム限定: プラチナ甲冑コスメティック",
+        "track": "premium",
+        "icon": "✨"
+      },
+      {
+        "tierNumber": 19,
+        "xpRequired": 3000,
+        "rewardId": "currency_free_10",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "550ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 20,
+        "xpRequired": 3200,
+        "rewardId": "cosmetic_free_helmet_3",
+        "rewardType": "cosmetic",
+        "rewardName": "将軍の冠",
+        "rewardDescription": "プレイヤーアイコン: 将軍の冠",
+        "track": "free",
+        "icon": "👑"
+      },
+      {
+        "tierNumber": 21,
+        "xpRequired": 3200,
+        "rewardId": "currency_free_11",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "600ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 22,
+        "xpRequired": 3400,
+        "rewardId": "cosmetic_free_banner_4",
+        "rewardType": "cosmetic",
+        "rewardName": "黒い軍旗",
+        "rewardDescription": "バナー: 黒色の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 23,
+        "xpRequired": 3400,
+        "rewardId": "currency_free_12",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "650ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 24,
+        "xpRequired": 3600,
+        "rewardId": "cosmetic_premium_ghost_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "幽霊将軍",
+        "rewardDescription": "プレミアム限定: 幽霊将軍コスメティック",
+        "track": "premium",
+        "icon": "👻"
+      },
+      {
+        "tierNumber": 25,
+        "xpRequired": 3600,
+        "rewardId": "currency_free_13",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "700ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 26,
+        "xpRequired": 3800,
+        "rewardId": "cosmetic_free_helmet_4",
+        "rewardType": "cosmetic",
+        "rewardName": "龍の冠",
+        "rewardDescription": "プレイヤーアイコン: 龍の冠",
+        "track": "free",
+        "icon": "🐉"
+      },
+      {
+        "tierNumber": 27,
+        "xpRequired": 3800,
+        "rewardId": "currency_free_14",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "750ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 28,
+        "xpRequired": 4000,
+        "rewardId": "cosmetic_free_banner_5",
+        "rewardType": "cosmetic",
+        "rewardName": "龍の軍旗",
+        "rewardDescription": "バナー: 龍の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 29,
+        "xpRequired": 4000,
+        "rewardId": "currency_free_15",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "800ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 30,
+        "xpRequired": 4200,
+        "rewardId": "cosmetic_premium_celestial_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "天界の甲冑",
+        "rewardDescription": "プレミアム限定: 天界の甲冑コスメティック",
+        "track": "premium",
+        "icon": "⛩️"
+      },
+      {
+        "tierNumber": 31,
+        "xpRequired": 4200,
+        "rewardId": "currency_free_16",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "850ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 32,
+        "xpRequired": 4400,
+        "rewardId": "cosmetic_free_helmet_5",
+        "rewardType": "cosmetic",
+        "rewardName": "星の冠",
+        "rewardDescription": "プレイヤーアイコン: 星の冠",
+        "track": "free",
+        "icon": "⭐"
+      },
+      {
+        "tierNumber": 33,
+        "xpRequired": 4400,
+        "rewardId": "currency_free_17",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "900ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 34,
+        "xpRequired": 4600,
+        "rewardId": "cosmetic_premium_inferno_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "炎獄甲冑",
+        "rewardDescription": "プレミアム限定: 炎獄甲冑コスメティック",
+        "track": "premium",
+        "icon": "🔥"
+      },
+      {
+        "tierNumber": 35,
+        "xpRequired": 4600,
+        "rewardId": "currency_free_18",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "950ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 36,
+        "xpRequired": 4800,
+        "rewardId": "cosmetic_free_banner_6",
+        "rewardType": "cosmetic",
+        "rewardName": "光の軍旗",
+        "rewardDescription": "バナー: 光の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 37,
+        "xpRequired": 4800,
+        "rewardId": "currency_free_19",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1000ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 38,
+        "xpRequired": 5000,
+        "rewardId": "cosmetic_premium_void_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "虚無の甲冑",
+        "rewardDescription": "プレミアム限定: 虚無の甲冑コスメティック",
+        "track": "premium",
+        "icon": "🌌"
+      },
+      {
+        "tierNumber": 39,
+        "xpRequired": 5000,
+        "rewardId": "currency_free_20",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1050ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 40,
+        "xpRequired": 5200,
+        "rewardId": "cosmetic_free_helmet_6",
+        "rewardType": "cosmetic",
+        "rewardName": "最高司令官の冠",
+        "rewardDescription": "プレイヤーアイコン: 最高司令官の冠",
+        "track": "free",
+        "icon": "🏆"
+      },
+      {
+        "tierNumber": 41,
+        "xpRequired": 5200,
+        "rewardId": "currency_free_21",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1100ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 42,
+        "xpRequired": 5400,
+        "rewardId": "cosmetic_free_banner_7",
+        "rewardType": "cosmetic",
+        "rewardName": "虹色の軍旗",
+        "rewardDescription": "バナー: 虹色の軍旗",
+        "track": "free",
+        "icon": "🚩"
+      },
+      {
+        "tierNumber": 43,
+        "xpRequired": 5400,
+        "rewardId": "currency_free_22",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1150ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 44,
+        "xpRequired": 5600,
+        "rewardId": "cosmetic_premium_eternal_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "永遠の甲冑",
+        "rewardDescription": "プレミアム限定: 永遠の甲冑コスメティック",
+        "track": "premium",
+        "icon": "♾️"
+      },
+      {
+        "tierNumber": 45,
+        "xpRequired": 5600,
+        "rewardId": "currency_free_23",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1200ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 46,
+        "xpRequired": 5800,
+        "rewardId": "cosmetic_free_helmet_7",
+        "rewardType": "cosmetic",
+        "rewardName": "伝説の王冠",
+        "rewardDescription": "プレイヤーアイコン: 伝説の王冠",
+        "track": "free",
+        "icon": "👑"
+      },
+      {
+        "tierNumber": 47,
+        "xpRequired": 5800,
+        "rewardId": "currency_free_24",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1250ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 48,
+        "xpRequired": 6000,
+        "rewardId": "cosmetic_premium_ascension_armor",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "昇天の甲冑",
+        "rewardDescription": "プレミアム限定: 昇天の甲冑コスメティック",
+        "track": "premium",
+        "icon": "🌟"
+      },
+      {
+        "tierNumber": 49,
+        "xpRequired": 6000,
+        "rewardId": "currency_free_25",
+        "rewardType": "currency",
+        "rewardName": "ゴールド",
+        "rewardDescription": "1300ゴールド",
+        "track": "free",
+        "icon": "💰"
+      },
+      {
+        "tierNumber": 50,
+        "xpRequired": 6200,
+        "rewardId": "cosmetic_premium_ultimate_title",
+        "rewardType": "cosmetic_exclusive",
+        "rewardName": "最高の戦国大名",
+        "rewardDescription": "プレミアム限定: シーズン1最高の大名タイトル",
+        "track": "premium",
+        "icon": "🎌"
+      }
+    ]
+  }
+}

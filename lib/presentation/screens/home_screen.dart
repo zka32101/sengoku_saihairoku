@@ -73,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildRankingCard(context),
                     const SizedBox(height: 16),
                     _buildChallengeHistoryCard(context),
+                    const SizedBox(height: 16),
+                    _buildBattlePassCard(context),
                   ],
                 ),
               ),
@@ -307,6 +309,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBattlePassCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.card_membership, color: Colors.cyan, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  'バトルパス',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.cyan,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'シーズンを通してティアをアップ',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/battle_pass'),
+                icon: const Icon(Icons.trending_up, color: Colors.cyan),
+                label: const Text(
+                  'バトルパスを見る',
+                  style: TextStyle(color: Colors.cyan),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.cyan),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),

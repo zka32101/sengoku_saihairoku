@@ -14,6 +14,8 @@ import '../../domain/challenges/challenge_service.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
 import '../../data/repositories/achievement_repository.dart';
+import '../../data/repositories/battle_pass_repository.dart';
+import '../../data/models/battle_pass.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import 'message_screen.dart';
@@ -46,6 +48,7 @@ class _ResultScreenState extends State<ResultScreen> {
   late AchievementChecker _achievementChecker;
   late AchievementNotificationService _notificationService;
   late AchievementRepository _achievementRepo;
+  late BattlePassRepository _battlePassRepo;
   bool _challengeCompleted = false;
   int _xpGained = 0;
   bool _leveledUp = false;
@@ -53,6 +56,9 @@ class _ResultScreenState extends State<ResultScreen> {
   bool _cosmeticUnlocked = false;
   Cosmetic? _unlockedCosmetic;
   List<dynamic> _unlockedAchievements = [];
+  int _battlePassXpGained = 0;
+  bool _battlePassTierUp = false;
+  int? _newBattlePassTier;
 
   @override
   void initState() {
@@ -63,6 +69,7 @@ class _ResultScreenState extends State<ResultScreen> {
     _achievementChecker = AchievementChecker();
     _notificationService = AchievementNotificationService();
     _achievementRepo = AchievementRepository();
+    _battlePassRepo = BattlePassRepository();
 
     // Initialize notification service with context
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -213,6 +220,9 @@ class _ResultScreenState extends State<ResultScreen> {
         // レベルアップ時に関連実績をチェック
         await _checkLevelAchievements(userId, newProgression.currentLevel);
       }
+
+      // バトルパスXPを記録
+      await _recordBattlePassXp();
     } catch (e) {
       print('Error recording progression XP: $e');
     }
@@ -272,6 +282,35 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  /// バトルパスXPを獲得して進捗を更新
+  Future<void> _recordBattlePassXp() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    try {
+      // バトルパスXPを計算（プログレッションXPの約30-40%）
+      _battlePassXpGained = (_xpGained * 0.35).toInt();
+
+      if (_battlePassXpGained <= 0) return;
+
+      // 現在のバトルパス進捗を取得
+      final currentProgress = await _battlePassRepo.getUserBattlePassProgress(userId);
+      final oldTier = currentProgress?.currentTier ?? 1;
+
+      // バトルパスXPを獲得
+      final newProgress = await _battlePassRepo.gainXp(userId, _battlePassXpGained);
+
+      if (newProgress != null && newProgress.currentTier > oldTier) {
+        setState(() {
+          _battlePassTierUp = true;
+          _newBattlePassTier = newProgress.currentTier;
+        });
+      }
+    } catch (e) {
+      print('Error recording battle pass XP: $e');
+    }
+  }
+
   @override
   void dispose() {
     // Clean up notification service
@@ -299,6 +338,11 @@ class _ResultScreenState extends State<ResultScreen> {
               else
                 const SizedBox.shrink(),
               if (_leveledUp) const SizedBox(height: 16),
+              if (_battlePassTierUp && _newBattlePassTier != null)
+                _BattlePassTierUpBanner(newTier: _newBattlePassTier!)
+              else
+                const SizedBox.shrink(),
+              if (_battlePassTierUp) const SizedBox(height: 16),
               if (_cosmeticUnlocked && _unlockedCosmetic != null)
                 _CosmeticUnlockBanner(cosmetic: _unlockedCosmetic!)
               else
@@ -673,6 +717,52 @@ class _LevelUpBanner extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               color: Colors.amber,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BattlePassTierUpBanner extends StatelessWidget {
+  final int newTier;
+
+  const _BattlePassTierUpBanner({required this.newTier});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.cyan.withOpacity(0.2),
+            Colors.blue.withOpacity(0.2),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.cyan, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'バトルパス ティアアップ！',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.cyan,
+              letterSpacing: 2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'ティア $newTier に到達しました',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.cyan,
             ),
           ),
         ],

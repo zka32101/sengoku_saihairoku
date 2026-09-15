@@ -15,6 +15,7 @@ import 'presentation/screens/statistics_screen.dart';
 import 'presentation/screens/cosmetics_equipment_screen.dart';
 import 'presentation/screens/prestige_reset_screen.dart';
 import 'presentation/screens/achievement_list_screen.dart';
+import 'presentation/screens/battle_pass_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
@@ -69,6 +70,7 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/cosmetics_equipment': (_) => const CosmeticsEquipmentScreen(),
         '/prestige_reset': (_) => const PrestigeResetScreen(),
         '/achievements': (_) => const AchievementListScreen(),
+        '/battle_pass': (_) => const BattlePassScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

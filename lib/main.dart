@@ -19,6 +19,7 @@ import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
 import 'data/repositories/achievement_repository.dart';
+import 'data/repositories/battle_pass_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,10 @@ void main() async {
   // Initialize AchievementRepository
   final achievementRepo = AchievementRepository();
   await achievementRepo.initialize();
+
+  // Initialize BattlePassRepository
+  final battlePassRepo = BattlePassRepository();
+  await battlePassRepo.initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }

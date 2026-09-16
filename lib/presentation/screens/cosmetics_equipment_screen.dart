@@ -3,6 +3,7 @@ import '../../core/services/firebase_service.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../widgets/screen_transition.dart';
+import 'dart:async';
 
 /// コスメティック装備・変更画面
 class CosmeticsEquipmentScreen extends StatefulWidget {
@@ -259,7 +260,8 @@ class _CosmeticCategorySection extends StatelessWidget {
             final cosmetic = cosmetics[index];
             final isEquipped = equippedId == cosmetic.id;
 
-            return _CosmeticEquipmentCard(
+            return _AnimatedCosmeticCard(
+              index: index,
               cosmetic: cosmetic,
               isEquipped: isEquipped,
               onEquip: () => onEquip(cosmetic.id),
@@ -267,6 +269,74 @@ class _CosmeticCategorySection extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _AnimatedCosmeticCard extends StatefulWidget {
+  final int index;
+  final Cosmetic cosmetic;
+  final bool isEquipped;
+  final VoidCallback onEquip;
+
+  const _AnimatedCosmeticCard({
+    required this.index,
+    required this.cosmetic,
+    required this.isEquipped,
+    required this.onEquip,
+  });
+
+  @override
+  State<_AnimatedCosmeticCard> createState() => _AnimatedCosmeticCardState();
+}
+
+class _AnimatedCosmeticCardState extends State<_AnimatedCosmeticCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    Future.delayed(Duration(milliseconds: widget.index * 100), () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: _CosmeticEquipmentCard(
+          cosmetic: widget.cosmetic,
+          isEquipped: widget.isEquipped,
+          onEquip: widget.onEquip,
+        ),
+      ),
     );
   }
 }

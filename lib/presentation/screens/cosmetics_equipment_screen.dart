@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/cosmetic.dart';
+import '../../data/models/user_progression.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../../data/repositories/progression_repository.dart';
 import '../widgets/screen_transition.dart';
 
 /// コスメティック装備・変更画面
@@ -15,14 +17,17 @@ class CosmeticsEquipmentScreen extends StatefulWidget {
 
 class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
   late RewardRepository _rewardRepo;
+  late ProgressionRepository _progressionRepo;
   List<Cosmetic> _userCosmetics = [];
   EquippedCosmetics? _equippedCosmetics;
+  UserProgression? _userProgression;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _rewardRepo = RewardRepository();
+    _progressionRepo = ProgressionRepository();
     _loadCosmeticsData();
   }
 
@@ -36,10 +41,12 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
     try {
       final cosmetics = await _rewardRepo.getUserCosmetics(userId);
       final equipped = await _rewardRepo.getEquippedCosmetics(userId);
+      final progression = await _progressionRepo.getUserProgression(userId);
 
       setState(() {
         _userCosmetics = cosmetics;
         _equippedCosmetics = equipped;
+        _userProgression = progression;
         _isLoading = false;
       });
     } catch (e) {
@@ -121,6 +128,12 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (_userProgression != null)
+                _PrestigeTierBadge(progression: _userProgression!)
+              else
+                const SizedBox.shrink(),
+              if (_userProgression != null)
+                const SizedBox(height: 20),
               if (unitSkins.isNotEmpty)
                 _CosmeticCategorySection(
                   title: 'ユニットスキン',
@@ -372,6 +385,123 @@ class _CosmeticEquipmentCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PrestigeTierBadge extends StatelessWidget {
+  final UserProgression progression;
+
+  const _PrestigeTierBadge({required this.progression});
+
+  String _getTierEmoji(PrestigeTier tier) {
+    return switch (tier) {
+      PrestigeTier.bronze => '🥉',
+      PrestigeTier.silver => '🥈',
+      PrestigeTier.gold => '🥇',
+      PrestigeTier.platinum => '💎',
+      PrestigeTier.diamond => '👑',
+    };
+  }
+
+  Color _getTierColor(PrestigeTier tier) {
+    return Color(tier.color);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tier = progression.prestigeRank;
+    final resetCount = progression.prestigeResetCount;
+    final points = progression.prestigePoints;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            _getTierColor(tier).withOpacity(0.3),
+            _getTierColor(tier).withOpacity(0.1),
+          ],
+        ),
+        border: Border.all(
+          color: _getTierColor(tier),
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                _getTierEmoji(tier),
+                style: const TextStyle(fontSize: 32),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'プレスティジランク',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[400],
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      tier.displayName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: _getTierColor(tier),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.black38,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'リセット回数: $resetCount',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    Text(
+                      'ポイント: $points',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: _getTierColor(tier),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

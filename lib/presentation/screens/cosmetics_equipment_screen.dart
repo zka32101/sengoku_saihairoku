@@ -123,6 +123,11 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
             c.type == CosmeticType.unitSkin &&
             c.acquisitionMethod == AcquisitionMethod.prestigeReward)
         .toList();
+    final prestigeThemes = _userCosmetics
+        .where((c) =>
+            c.type == CosmeticType.uiTheme &&
+            c.acquisitionMethod == AcquisitionMethod.prestigeReward)
+        .toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('コスメティック設定')),
@@ -161,10 +166,23 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
               if (_userProgression != null)
                 _PrestigeCosmeticsSection(
                   progression: _userProgression!,
+                  title: 'プレスティジユニットスキン',
                   prestigeCosmetics: prestigeSkins,
                   equippedId: _equippedCosmetics?.unitSkinId,
+                  cosmeticType: CosmeticType.unitSkin,
                   onEquip: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.unitSkin),
+                ),
+              const SizedBox(height: 24),
+              if (_userProgression != null)
+                _PrestigeCosmeticsSection(
+                  progression: _userProgression!,
+                  title: 'プレスティジUIテーマ',
+                  prestigeCosmetics: prestigeThemes,
+                  equippedId: _equippedCosmetics?.uiThemeId,
+                  cosmeticType: CosmeticType.uiTheme,
+                  onEquip: (cosmeticId) =>
+                      _equipCosmetic(cosmeticId, CosmeticType.uiTheme),
                 ),
             ],
           ),
@@ -443,14 +461,18 @@ class _NoCosmeticsCard extends StatelessWidget {
 
 class _PrestigeCosmeticsSection extends StatelessWidget {
   final UserProgression progression;
+  final String title;
   final List<Cosmetic> prestigeCosmetics;
   final String? equippedId;
+  final CosmeticType cosmeticType;
   final Function(String) onEquip;
 
   const _PrestigeCosmeticsSection({
     required this.progression,
+    required this.title,
     required this.prestigeCosmetics,
     required this.equippedId,
+    required this.cosmeticType,
     required this.onEquip,
   });
 
@@ -476,9 +498,9 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
                 color: Colors.amber[600],
               ),
               const SizedBox(height: 12),
-              const Text(
-                'プレスティジコスメティック',
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFFE8D5B0),
@@ -507,9 +529,9 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
           children: [
             Icon(Icons.star, color: Colors.amber[600], size: 24),
             const SizedBox(width: 8),
-            const Text(
-              'プレスティジコスメティック',
-              style: TextStyle(
+            Text(
+              title,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),

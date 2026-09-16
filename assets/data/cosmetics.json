@@ -83,5 +83,37 @@
     "type": "uiTheme",
     "acquisitionMethod": "levelMilestone",
     "imageAsset": "assets/images/cosmetics/ui_theme_prestige.png"
+  },
+  "ui_theme_prestige_silver": {
+    "id": "ui_theme_prestige_silver",
+    "name": "シルバープレスティジテーマ",
+    "description": "プレスティジランク『シルバー』達成時に解放される上品なUIテーマ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/ui_theme_prestige_silver.png"
+  },
+  "ui_theme_prestige_gold": {
+    "id": "ui_theme_prestige_gold",
+    "name": "ゴールドプレスティジテーマ",
+    "description": "プレスティジランク『ゴールド』達成時に解放される豪華なUIテーマ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/ui_theme_prestige_gold.png"
+  },
+  "ui_theme_prestige_platinum": {
+    "id": "ui_theme_prestige_platinum",
+    "name": "プラチナプレスティジテーマ",
+    "description": "プレスティジランク『プラチナ』達成時に解放される究極のUIテーマ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/ui_theme_prestige_platinum.png"
+  },
+  "ui_theme_prestige_diamond": {
+    "id": "ui_theme_prestige_diamond",
+    "name": "ダイヤモンドプレスティジテーマ",
+    "description": "プレスティジランク『ダイヤモンド』達成時のみ解放される最高峰のUIテーマ。",
+    "type": "uiTheme",
+    "acquisitionMethod": "prestigeReward",
+    "imageAsset": "assets/images/cosmetics/ui_theme_prestige_diamond.png"
   }
 }

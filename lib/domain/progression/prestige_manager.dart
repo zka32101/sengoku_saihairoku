@@ -72,14 +72,25 @@ class PrestigeManager {
     return PrestigeTier.bronze;
   }
 
-  /// プレスティジランクに対応するコスメティックを取得
-  String? getCosmeticForPrestigeTier(PrestigeTier tier) {
+  /// プレスティジランクに対応するユニットスキンを取得
+  String? getUnitSkinForPrestigeTier(PrestigeTier tier) {
     return switch (tier) {
       PrestigeTier.bronze => null,
       PrestigeTier.silver => 'unit_skin_prestige_silver',
       PrestigeTier.gold => 'unit_skin_prestige_gold',
       PrestigeTier.platinum => 'unit_skin_prestige_platinum',
       PrestigeTier.diamond => 'unit_skin_prestige_diamond',
+    };
+  }
+
+  /// プレスティジランクに対応するUIテーマを取得
+  String? getUiThemeForPrestigeTier(PrestigeTier tier) {
+    return switch (tier) {
+      PrestigeTier.bronze => null,
+      PrestigeTier.silver => 'ui_theme_prestige_silver',
+      PrestigeTier.gold => 'ui_theme_prestige_gold',
+      PrestigeTier.platinum => 'ui_theme_prestige_platinum',
+      PrestigeTier.diamond => 'ui_theme_prestige_diamond',
     };
   }
 
@@ -105,13 +116,23 @@ class PrestigeManager {
       // プレスティジリセット実行
       await _progressionRepo.performPrestige(userId);
 
-      // 新しいランク用コスメティック解放
-      final cosmeticId = getCosmeticForPrestigeTier(newPrestigeRank);
-      if (cosmeticId != null) {
+      // 新しいランク用コスメティック解放（ユニットスキン）
+      final unitSkinId = getUnitSkinForPrestigeTier(newPrestigeRank);
+      if (unitSkinId != null) {
         await _rewardRepo.unlockPrestigeCosmetic(
           userId,
           currentProgression.prestigeResetCount + 1,
-          cosmeticId,
+          unitSkinId,
+        );
+      }
+
+      // 新しいランク用UIテーマも解放
+      final uiThemeId = getUiThemeForPrestigeTier(newPrestigeRank);
+      if (uiThemeId != null) {
+        await _rewardRepo.unlockPrestigeCosmetic(
+          userId,
+          currentProgression.prestigeResetCount + 1,
+          uiThemeId,
         );
       }
 

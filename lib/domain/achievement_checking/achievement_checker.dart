@@ -211,6 +211,35 @@ class AchievementChecker {
     return unlockedAchievements;
   }
 
+  /// プレスティジリセット回数に基づいて実績を確認
+  /// [userId] ユーザーID
+  /// [prestigeResetCount] プレスティジリセット回数
+  Future<List<Achievement>> checkPrestigeResetAchievements({
+    required String userId,
+    required int prestigeResetCount,
+  }) async {
+    final unlockedAchievements = <Achievement>[];
+    final allAchievements = _achievementRepo.getAllAchievements();
+
+    for (final achievement in allAchievements) {
+      if (achievement.category != AchievementCategory.prestige) continue;
+      if (achievement.conditionType != AchievementConditionType.prestigeResetCount) {
+        continue;
+      }
+
+      // すでに獲得していたら確認する必要はない
+      if (await _isAchievementUnlocked(userId, achievement.id)) continue;
+
+      // プレスティジリセット回数を確認
+      if (prestigeResetCount >= achievement.conditionValue) {
+        await _achievementRepo.unlockAchievement(userId, achievement.id);
+        unlockedAchievements.add(achievement);
+      }
+    }
+
+    return unlockedAchievements;
+  }
+
   /// 戦闘勝利数条件を確認
   /// 内部的に過去の戦闘勝利数をカウント
   Future<bool> _checkBattleWinsCondition(

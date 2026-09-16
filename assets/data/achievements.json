@@ -165,6 +165,50 @@
       "conditionType": "totalPlayTime",
       "conditionValue": 600,
       "points": 70
+    },
+    {
+      "id": "first_prestige",
+      "name": "初めてのプレスティジ",
+      "description": "初めてプレスティジリセットを行う",
+      "icon": "🔄",
+      "category": "prestige",
+      "difficulty": "silver",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 1,
+      "points": 50
+    },
+    {
+      "id": "prestige_repeat",
+      "name": "転生の道",
+      "description": "5回プレスティジリセットを行う",
+      "icon": "♻️",
+      "category": "prestige",
+      "difficulty": "gold",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 5,
+      "points": 100
+    },
+    {
+      "id": "prestige_master",
+      "name": "転生の達人",
+      "description": "10回プレスティジリセットを行う",
+      "icon": "🌀",
+      "category": "prestige",
+      "difficulty": "diamond",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 10,
+      "points": 200
+    },
+    {
+      "id": "prestige_legend",
+      "name": "転生の伝説",
+      "description": "25回プレスティジリセットを行う",
+      "icon": "⭐",
+      "category": "prestige",
+      "difficulty": "diamond",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 25,
+      "points": 500
     }
   ]
 }

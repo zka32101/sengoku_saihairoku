@@ -139,6 +139,19 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (prestigeSkins.isNotEmpty || prestigeThemes.isNotEmpty)
+                _CosmeticsShowcaseSection(
+                  progression: _userProgression!,
+                  prestigeSkins: prestigeSkins,
+                  prestigeThemes: prestigeThemes,
+                  equippedUnitSkinId: _equippedCosmetics?.unitSkinId,
+                  equippedUiThemeId: _equippedCosmetics?.uiThemeId,
+                  onEquipUnitSkin: (cosmeticId) =>
+                      _equipCosmetic(cosmeticId, CosmeticType.unitSkin),
+                  onEquipUiTheme: (cosmeticId) =>
+                      _equipCosmetic(cosmeticId, CosmeticType.uiTheme),
+                ),
+              const SizedBox(height: 24),
               if (unitSkins.isNotEmpty)
                 _CosmeticCategorySection(
                   title: 'ユニットスキン',
@@ -391,8 +404,31 @@ class _CosmeticEquipmentCard extends StatelessWidget {
     required this.onEquip,
   });
 
+  String _getAcquisitionMethodLabel(AcquisitionMethod method) {
+    return switch (method) {
+      AcquisitionMethod.levelMilestone => 'レベル報酬',
+      AcquisitionMethod.achievement => 'アチーブメント',
+      AcquisitionMethod.prestigeReward => 'プレスティジ報酬',
+      AcquisitionMethod.battlePass => 'バトルパス',
+      AcquisitionMethod.other => 'その他',
+    };
+  }
+
+  Color _getAcquisitionMethodColor(AcquisitionMethod method) {
+    return switch (method) {
+      AcquisitionMethod.levelMilestone => Colors.cyan,
+      AcquisitionMethod.achievement => Colors.purple,
+      AcquisitionMethod.prestigeReward => Colors.amber,
+      AcquisitionMethod.battlePass => Colors.blue,
+      AcquisitionMethod.other => Colors.grey,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
+    final acquisitionLabel = _getAcquisitionMethodLabel(cosmetic.acquisitionMethod);
+    final acquisitionColor = _getAcquisitionMethodColor(cosmetic.acquisitionMethod);
+
     return Card(
       color: isEquipped
           ? const Color(0xFF8B1A1A).withOpacity(0.3)
@@ -423,6 +459,29 @@ class _CosmeticEquipmentCard extends StatelessWidget {
                               ),
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: acquisitionColor.withOpacity(0.2),
+                              border: Border.all(
+                                color: acquisitionColor,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              acquisitionLabel,
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: acquisitionColor,
+                              ),
+                            ),
+                          ),
                           if (isEquipped)
                             Container(
                               margin: const EdgeInsets.only(left: 8),
@@ -450,13 +509,15 @@ class _CosmeticEquipmentCard extends StatelessWidget {
                             ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                       Text(
                         cosmetic.description,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[400],
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -524,6 +585,186 @@ class _NoCosmeticsCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CosmeticsShowcaseSection extends StatelessWidget {
+  final UserProgression progression;
+  final List<Cosmetic> prestigeSkins;
+  final List<Cosmetic> prestigeThemes;
+  final String? equippedUnitSkinId;
+  final String? equippedUiThemeId;
+  final Function(String) onEquipUnitSkin;
+  final Function(String) onEquipUiTheme;
+
+  const _CosmeticsShowcaseSection({
+    required this.progression,
+    required this.prestigeSkins,
+    required this.prestigeThemes,
+    required this.equippedUnitSkinId,
+    required this.equippedUiThemeId,
+    required this.onEquipUnitSkin,
+    required this.onEquipUiTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Cosmetic? findEquipped(List<Cosmetic> cosmetics, String? equippedId) {
+      if (equippedId == null) return null;
+      try {
+        return cosmetics.firstWhere((c) => c.id == equippedId);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    final equippedSkin = findEquipped(prestigeSkins, equippedUnitSkinId);
+    final equippedTheme = findEquipped(prestigeThemes, equippedUiThemeId);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.amber.withOpacity(0.15),
+                Colors.orange.withOpacity(0.1),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(
+              color: Colors.amber.withOpacity(0.3),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.star, color: Colors.amber[600], size: 28),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'プレスティジコスメティック',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFFD700),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'ランク: ${progression.prestigeRank.displayName}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(progression.prestigeRank.color),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              if (equippedSkin != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _ShowcaseItem(
+                    label: '装備中のユニットスキン',
+                    cosmetic: equippedSkin,
+                    isEquipped: true,
+                  ),
+                ),
+              if (equippedTheme != null)
+                _ShowcaseItem(
+                  label: '装備中のUIテーマ',
+                  cosmetic: equippedTheme,
+                  isEquipped: true,
+                ),
+              if (equippedSkin == null && equippedTheme == null)
+                Center(
+                  child: Text(
+                    'プレスティジコスメティックがまだ装備されていません',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[400],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ShowcaseItem extends StatelessWidget {
+  final String label;
+  final Cosmetic cosmetic;
+  final bool isEquipped;
+
+  const _ShowcaseItem({
+    required this.label,
+    required this.cosmetic,
+    required this.isEquipped,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        border: Border.all(
+          color: Colors.amber.withOpacity(0.2),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey[500],
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            cosmetic.name,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFFFD700),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            cosmetic.description,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[400],
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

@@ -67,9 +67,26 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.4.0
   hive_generator: ^2.0.0
+  flutter_launcher_icons: ^0.14.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+# flutter_launcher_icons設定：
+# `flutter pub get` の後に `dart run flutter_launcher_icons` を実行すると
+# assets/icon/app_icon.png から Android/iOS 各解像度のアプリアイコンが生成される。
+#
+# 注意：現在のソース画像は背景色が絵柄に焼き込まれた1枚絵のため、
+# Android Adaptive Icon 用の前景/背景レイヤー分離設定はあえて行っていない
+# （レイヤーを分離しない場合、Android 8+ でも通常の正方形アイコンとして
+# 安全にマスク内に収まる。将来的に背景透過の前景素材を用意できれば
+# adaptive_icon_background / adaptive_icon_foreground を追加すること）
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:

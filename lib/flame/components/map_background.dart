@@ -13,6 +13,37 @@ class MapBackground extends PositionComponent {
     _drawBase(canvas);
     _drawTerrain(canvas);
     _drawBorderLines(canvas);
+    _drawAtmosphericHaze(canvas);
+    _drawVignette(canvas);
+  }
+
+  /// 奥（画面上部）ほど霞んで見える大気遠近感
+  void _drawAtmosphericHaze(Canvas canvas) {
+    final hazePaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.center,
+        colors: [
+          Colors.white.withValues(alpha: 0.10),
+          Colors.white.withValues(alpha: 0.0),
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, 360, 640));
+    canvas.drawRect(Rect.fromLTWH(0, 0, 360, 260), hazePaint);
+  }
+
+  /// 画面端を暗くして臨場感・没入感を高めるビネット
+  void _drawVignette(Canvas canvas) {
+    final vignettePaint = Paint()
+      ..shader = RadialGradient(
+        center: Alignment.center,
+        radius: 0.95,
+        colors: [
+          Colors.black.withValues(alpha: 0),
+          Colors.black.withValues(alpha: 0.35),
+        ],
+        stops: const [0.6, 1.0],
+      ).createShader(Rect.fromLTWH(0, 0, 360, 640));
+    canvas.drawRect(Rect.fromLTWH(0, 0, 360, 640), vignettePaint);
   }
 
   void _drawBase(Canvas canvas) {
@@ -108,15 +139,21 @@ class MapBackground extends PositionComponent {
     _drawLabel(canvas, '八幡原', 150, 300, const Color(0xFFAAAAAA));
   }
 
+  // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで
+  // 見下ろし視点に高さのある立体を置いたような2.5D的な見え方にする
+  static const _groundSquash = 0.55;
+
   void _drawHill(Canvas canvas, double cx, double cy, double r) {
-    // 影
+    final footprint =
+        Rect.fromCenter(center: Offset(cx, cy), width: r * 2, height: r * 2 * _groundSquash);
+
+    // 接地影：楕円の足元にさらに伸びた影を落として高さを演出
     final shadowPaint = Paint()
       ..color = Colors.black.withValues(alpha: 0.4)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
-    canvas.drawCircle(Offset(cx, cy + 2), r, shadowPaint);
+    canvas.drawOval(footprint.shift(const Offset(2, 4)), shadowPaint);
 
-    // 外輪郭：グラデーション
-    final outerRect = Rect.fromCircle(center: Offset(cx, cy), radius: r);
+    // 外輪郭：グラデーション（楕円の足元）
     final outerPaint = Paint()
       ..shader = RadialGradient(
         center: Alignment(cx / 180 - 1, cy / 320 - 1),
@@ -125,66 +162,115 @@ class MapBackground extends PositionComponent {
           const Color(0xFF3A4A2A),
           const Color(0xFF1A2A0A),
         ],
-      ).createShader(outerRect);
-    canvas.drawCircle(Offset(cx, cy), r, outerPaint);
+      ).createShader(footprint);
+    canvas.drawOval(footprint, outerPaint);
 
-    // 内側のハイライト（左上から光）
+    // 稜線ドーム：足元より一回り小さく、上にずらした楕円で「盛り上がり」を表現
+    final domeRect = Rect.fromCenter(
+      center: Offset(cx, cy - r * 0.25),
+      width: r * 1.5,
+      height: r * 1.5 * _groundSquash,
+    );
+    canvas.drawOval(domeRect, Paint()..color = const Color(0xFF4A5A3A));
+
+    // 内側のハイライト（左上から光が当たっている稜線）
     final highlightPaint = Paint()
-      ..color = const Color(0xFF4A5A3A).withValues(alpha: 0.6)
+      ..color = const Color(0xFF5F7A4A).withValues(alpha: 0.7)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
-    canvas.drawCircle(Offset(cx - r * 0.3, cy - r * 0.3), r * 0.5, highlightPaint);
-
-    // 中央の明るい部分
-    canvas.drawCircle(
-      Offset(cx, cy),
-      r * 0.6,
-      Paint()..color = const Color(0xFF4A5A3A),
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(cx - r * 0.25, cy - r * 0.45),
+        width: r * 0.9,
+        height: r * 0.9 * _groundSquash,
+      ),
+      highlightPaint,
     );
   }
 
   void _drawForest(Canvas canvas, double cx, double cy, double r) {
-    // 影
+    final footprint =
+        Rect.fromCenter(center: Offset(cx, cy), width: r * 2, height: r * 2 * _groundSquash);
+
+    // 接地影
     final shadowPaint = Paint()
       ..color = Colors.black.withValues(alpha: 0.3)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
-    canvas.drawCircle(Offset(cx, cy + 1), r, shadowPaint);
+    canvas.drawOval(footprint.shift(const Offset(1, 3)), shadowPaint);
 
-    // 外側：濃い森
+    // 外側：濃い森（足元の楕円）
     final outerPaint = Paint()
       ..shader = RadialGradient(
         colors: [
           const Color(0xFF2A4A0A),
           const Color(0xFF0A2A00),
         ],
-      ).createShader(Rect.fromCircle(center: Offset(cx, cy), radius: r));
-    canvas.drawCircle(Offset(cx, cy), r, outerPaint);
+      ).createShader(footprint);
+    canvas.drawOval(footprint, outerPaint);
 
-    // 内側：明るい部分
-    canvas.drawCircle(
-      Offset(cx, cy),
-      r * 0.7,
-      Paint()..color = const Color(0xFF1A3A0A),
+    // 樹冠：足元より高い位置にドーム状に重ねて木立の高さを演出
+    final canopyRect = Rect.fromCenter(
+      center: Offset(cx, cy - r * 0.35),
+      width: r * 1.4,
+      height: r * 1.4 * _groundSquash,
     );
+    canvas.drawOval(canopyRect, Paint()..color = const Color(0xFF1A3A0A));
 
-    // 樹の質感：3つの小さな円で立体感
+    // 樹の質感：3つの小さな樹冠で立体感（それぞれわずかに高さをずらす）
     final treePaint = Paint()
       ..color = const Color(0xFF0A2A00).withValues(alpha: 0.5);
     for (int i = 0; i < 3; i++) {
       final angle = (i * 120) * pi / 180;
       final dist = r * 0.4;
       final tx = cx + dist * cos(angle);
-      final ty = cy + dist * sin(angle);
-      canvas.drawCircle(Offset(tx, ty), r * 0.3, treePaint);
+      final ty = cy - r * 0.3 + dist * sin(angle) * _groundSquash;
+      canvas.drawCircle(Offset(tx, ty), r * 0.28, treePaint);
     }
+
+    // 頂点ハイライト
+    canvas.drawCircle(
+      Offset(cx - r * 0.15, cy - r * 0.5),
+      r * 0.22,
+      Paint()..color = const Color(0xFF3A5A1A).withValues(alpha: 0.6),
+    );
   }
 
   void _drawBuilding(Canvas canvas, double x, double y, double w, double h) {
+    // 接地影
     canvas.drawRect(
-      Rect.fromLTWH(x, y, w, h),
-      Paint()..color = const Color(0xFF4A2A0A),
+      Rect.fromLTWH(x - 1, y + h - 4, w + 6, 10),
+      Paint()
+        ..color = Colors.black.withValues(alpha: 0.35)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+    );
+
+    // 屋根（奥行きを持たせた台形で建物の高さを表現）
+    final roofDepth = h * 0.35;
+    final roofPath = Path()
+      ..moveTo(x - 4, y)
+      ..lineTo(x + w + 4, y)
+      ..lineTo(x + w - 6, y - roofDepth)
+      ..lineTo(x + 6, y - roofDepth)
+      ..close();
+    canvas.drawPath(roofPath, Paint()..color = const Color(0xFF6B3A14));
+    canvas.drawPath(
+      roofPath,
+      Paint()
+        ..color = const Color(0xFF8B6914)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
+
+    // 壁面（グラデーションで左右の陰影）
+    final wallRect = Rect.fromLTWH(x, y, w, h);
+    canvas.drawRect(
+      wallRect,
+      Paint()
+        ..shader = LinearGradient(
+          colors: [const Color(0xFF5A340F), const Color(0xFF3A1E08)],
+        ).createShader(wallRect),
     );
     canvas.drawRect(
-      Rect.fromLTWH(x, y, w, h),
+      wallRect,
       Paint()
         ..color = const Color(0xFF8B6914)
         ..style = PaintingStyle.stroke

@@ -139,6 +139,12 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (_userProgression != null)
+                _PrestigeTierBadge(progression: _userProgression!)
+              else
+                const SizedBox.shrink(),
+              if (_userProgression != null)
+                const SizedBox(height: 20),
               if (prestigeSkins.isNotEmpty || prestigeThemes.isNotEmpty)
                 _CosmeticsShowcaseSection(
                   progression: _userProgression!,
@@ -542,6 +548,123 @@ class _CosmeticEquipmentCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PrestigeTierBadge extends StatelessWidget {
+  final UserProgression progression;
+
+  const _PrestigeTierBadge({required this.progression});
+
+  String _getTierEmoji(PrestigeTier tier) {
+    return switch (tier) {
+      PrestigeTier.bronze => '🥉',
+      PrestigeTier.silver => '🥈',
+      PrestigeTier.gold => '🥇',
+      PrestigeTier.platinum => '💎',
+      PrestigeTier.diamond => '👑',
+    };
+  }
+
+  Color _getTierColor(PrestigeTier tier) {
+    return Color(tier.color);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tier = progression.prestigeRank;
+    final resetCount = progression.prestigeResetCount;
+    final points = progression.prestigePoints;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            _getTierColor(tier).withOpacity(0.3),
+            _getTierColor(tier).withOpacity(0.1),
+          ],
+        ),
+        border: Border.all(
+          color: _getTierColor(tier),
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                _getTierEmoji(tier),
+                style: const TextStyle(fontSize: 32),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'プレスティジランク',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[400],
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      tier.displayName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: _getTierColor(tier),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.black38,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'リセット回数: $resetCount',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    Text(
+                      'ポイント: $points',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: _getTierColor(tier),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

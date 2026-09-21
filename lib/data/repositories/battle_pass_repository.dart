@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import '../models/battle_pass.dart';
+import 'currency_repository.dart';
 
 /// バトルパスデータを管理するリポジトリ
 class BattlePassRepository {
@@ -9,6 +10,7 @@ class BattlePassRepository {
 
   late BattlePass _currentBattlePass;
   bool _initialized = false;
+  final CurrencyRepository _currencyRepo = CurrencyRepository();
 
   factory BattlePassRepository() {
     return _instance;
@@ -111,6 +113,7 @@ class BattlePassRepository {
       int newTotalXp = progress.totalXp + xpAmount;
       int newTier = progress.currentTier;
       List<String> newUnlockedRewards = List.from(progress.unlockedRewards);
+      final List<BattlePassTier> newlyGrantedTiers = [];
 
       // ティアアップの判定
       while (newTier < _currentBattlePass.maxTier) {
@@ -125,12 +128,7 @@ class BattlePassRepository {
           final nextTierData = _currentBattlePass.tiers[newTier - 1];
           if (!newUnlockedRewards.contains(nextTierData.rewardId)) {
             newUnlockedRewards.add(nextTierData.rewardId);
-          }
-
-          // フリートラックの報酬もアンロック
-          if (nextTierData.track == BattlePassTrack.free &&
-              !newUnlockedRewards.contains(nextTierData.rewardId)) {
-            newUnlockedRewards.add(nextTierData.rewardId);
+            newlyGrantedTiers.add(nextTierData);
           }
         } else {
           break;
@@ -164,11 +162,39 @@ class BattlePassRepository {
           .doc(_currentBattlePass.id)
           .set(updatedProgress.toFirestore());
 
+      // 新規獲得したゴールド報酬をウォレットへ反映
+      await _creditCurrencyRewards(userId, newlyGrantedTiers, progress.hasPremium);
+
       return updatedProgress;
     } catch (e) {
       print('Error gaining XP: $e');
       return null;
     }
+  }
+
+  /// ティアアップで新たに解放された通貨報酬をゴールドウォレットへ加算する。
+  /// プレミアム限定報酬は hasPremium のユーザーにのみ付与する。
+  Future<void> _creditCurrencyRewards(
+    String userId,
+    List<BattlePassTier> tiers,
+    bool hasPremium,
+  ) async {
+    for (final tier in tiers) {
+      if (tier.rewardType != RewardType.currency) continue;
+      if (tier.track == BattlePassTrack.premium && !hasPremium) continue;
+
+      final amount = _parseGoldAmount(tier.rewardDescription ?? tier.rewardName);
+      if (amount <= 0) continue;
+
+      await _currencyRepo.addGold(userId, amount, source: 'battle_pass_tier_${tier.tierNumber}');
+    }
+  }
+
+  /// "100ゴールド" のような報酬説明文から数量を抽出する
+  int _parseGoldAmount(String text) {
+    final match = RegExp(r'(\d+)').firstMatch(text);
+    if (match == null) return 0;
+    return int.tryParse(match.group(1)!) ?? 0;
   }
 
   /// プレミアムアクティベーション

@@ -75,6 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildChallengeHistoryCard(context),
                     const SizedBox(height: 16),
                     _buildBattlePassCard(context),
+                    const SizedBox(height: 16),
+                    _buildGoldShopCard(context),
                   ],
                 ),
               ),
@@ -309,6 +311,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGoldShopCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.monetization_on, color: Colors.amber, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  'ゴールドショップ',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'ゴールドを購入してバトルパスの進行を加速',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/gold_shop'),
+                icon: const Icon(Icons.monetization_on, color: Colors.amber),
+                label: const Text(
+                  'ショップを見る',
+                  style: TextStyle(color: Colors.amber),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.amber),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),

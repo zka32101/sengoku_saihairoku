@@ -1,17 +1,21 @@
 import '../../data/models/user_progression.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../achievement_checking/prestige_achievement_handler.dart';
 
 /// プレスティジシステム管理
 class PrestigeManager {
   final ProgressionRepository _progressionRepo;
   final RewardRepository _rewardRepo;
+  final PrestigeAchievementHandler _achievementHandler;
 
   PrestigeManager({
     required ProgressionRepository progressionRepository,
     required RewardRepository rewardRepository,
+    PrestigeAchievementHandler? achievementHandler,
   })  : _progressionRepo = progressionRepository,
-        _rewardRepo = rewardRepository;
+        _rewardRepo = rewardRepository,
+        _achievementHandler = achievementHandler ?? PrestigeAchievementHandler();
 
   /// プレスティジ可能か確認
   Future<bool> canPrestige(String userId) async {
@@ -116,12 +120,14 @@ class PrestigeManager {
       // プレスティジリセット実行
       await _progressionRepo.performPrestige(userId);
 
+      final newResetCount = currentProgression.prestigeResetCount + 1;
+
       // 新しいランク用コスメティック解放（ユニットスキン）
       final unitSkinId = getUnitSkinForPrestigeTier(newPrestigeRank);
       if (unitSkinId != null) {
         await _rewardRepo.unlockPrestigeCosmetic(
           userId,
-          currentProgression.prestigeResetCount + 1,
+          newResetCount,
           unitSkinId,
         );
       }
@@ -131,13 +137,24 @@ class PrestigeManager {
       if (uiThemeId != null) {
         await _rewardRepo.unlockPrestigeCosmetic(
           userId,
-          currentProgression.prestigeResetCount + 1,
+          newResetCount,
           uiThemeId,
         );
       }
 
+      // プレスティジリセット実績を確認・解放
+      final unlockedAchievements =
+          await _achievementHandler.checkPrestigeResetAchievements(
+        userId,
+        newResetCount,
+      );
+      if (unlockedAchievements.isNotEmpty) {
+        print(
+            '✓ Achievements unlocked: ${unlockedAchievements.map((a) => a.name).join(", ")}');
+      }
+
       print(
-          '✓ Prestige performed: $userId reset #${currentProgression.prestigeResetCount + 1} (Tier: ${newPrestigeRank.displayName})');
+          '✓ Prestige performed: $userId reset #$newResetCount (Tier: ${newPrestigeRank.displayName})');
     } catch (e) {
       print('Error performing prestige: $e');
       rethrow;

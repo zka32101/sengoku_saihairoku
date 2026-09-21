@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
+import 'data/repositories/turn_rank_repository.dart';
 import 'firebase_options.dart';
 import 'presentation/screens/home_screen.dart';
 import 'presentation/screens/scenario_select_screen.dart';
@@ -26,6 +27,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseService().initialize();
+
+  // ターンランクリポジトリを初期化
+  final turnRankRepo = TurnRankRepository();
+  await turnRankRepo.initialize();
 
   // Initialize DailyChallengeRepository
   final challengeRepo = DailyChallengeRepository();

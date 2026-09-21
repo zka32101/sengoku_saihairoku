@@ -140,6 +140,7 @@ class BattleStateData {
   final List<CommandRecord> commands;
   final int totalScore;
   final ScoreBreakdownResult scoreBreakdown;
+  final int turnCount; // ターン数（プレイヤーコマンド数またはゲーム時間から推定）
 
   BattleStateData({
     required this.won,
@@ -150,6 +151,7 @@ class BattleStateData {
     required this.commands,
     required this.totalScore,
     required this.scoreBreakdown,
+    required this.turnCount,
   });
 }
 
@@ -355,6 +357,9 @@ class BattleState {
 
     final breakdown = _scoreCalc.calculate(scoreInput);
 
+    // ターン数を計算（コマンド数 + 1 をベースに、敵のターンも考慮して推定）
+    final estimatedTurnCount = (commandHandler.commandHistory.length / 1).ceil() + 1;
+
     onBattleEnd?.call(BattleStateData(
       won: won,
       result: r,
@@ -364,6 +369,7 @@ class BattleState {
       commands: List.from(commandHandler.commandHistory),
       totalScore: breakdown.total,
       scoreBreakdown: breakdown,
+      turnCount: estimatedTurnCount,
     ));
   }
 

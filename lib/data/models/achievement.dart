@@ -23,6 +23,7 @@ enum AchievementConditionType {
   battleWins,        // 戦闘勝利回数
   levelReached,      // レベル到達
   prestigeRank,      // プレスティジランク到達
+  prestigeResetCount,// プレスティジリセット回数
   turnEfficiency,    // ターン効率
   cosmeticUnlocked,  // コスメティック解放数
   totalPlayTime,     // 総プレイ時間

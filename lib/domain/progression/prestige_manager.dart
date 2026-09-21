@@ -1,17 +1,21 @@
 import '../../data/models/user_progression.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../achievement_checking/prestige_achievement_handler.dart';
 
 /// プレスティジシステム管理
 class PrestigeManager {
   final ProgressionRepository _progressionRepo;
   final RewardRepository _rewardRepo;
+  final PrestigeAchievementHandler _achievementHandler;
 
   PrestigeManager({
     required ProgressionRepository progressionRepository,
     required RewardRepository rewardRepository,
+    PrestigeAchievementHandler? achievementHandler,
   })  : _progressionRepo = progressionRepository,
-        _rewardRepo = rewardRepository;
+        _rewardRepo = rewardRepository,
+        _achievementHandler = achievementHandler ?? PrestigeAchievementHandler();
 
   /// プレスティジ可能か確認
   Future<bool> canPrestige(String userId) async {
@@ -33,6 +37,30 @@ class PrestigeManager {
     return 1000 + (prestigeResetCount * 500);
   }
 
+  /// ユーザーの現在のプレスティジランクを取得（統計情報から）
+  PrestigeTier getCurrentPrestigeTierForUser(UserProgression progression) {
+    // プレスティジポイントに基づいてランクを決定
+    // これは実績ベース（ターン効率ではなく、獲得したプレスティジポイント）
+    final points = progression.prestigePoints;
+
+    if (points >= 5000) return PrestigeTier.diamond;
+    if (points >= 3500) return PrestigeTier.platinum;
+    if (points >= 2000) return PrestigeTier.gold;
+    if (points >= 1000) return PrestigeTier.silver;
+    return PrestigeTier.bronze;
+  }
+
+  /// リセット回数に基づいて新しいプレスティジランクを計算
+  /// （簡略版：リセット回数が増えるにつれてランクが上昇）
+  PrestigeTier calculateNewPrestigeTierForReset(int prestigeResetCount) {
+    // 最初のリセット（回数0→1）後はシルバー以上を目指す
+    // 以降のリセットではランクが上昇するため、前のランクを参照して次のランクへ
+    if (prestigeResetCount == 0) return PrestigeTier.silver;
+    if (prestigeResetCount == 1) return PrestigeTier.gold;
+    if (prestigeResetCount == 2) return PrestigeTier.platinum;
+    return PrestigeTier.diamond;
+  }
+
   /// 次のプレスティジランクを計算（平均ターン数から）
   PrestigeTier calculatePrestigeRank(Map<String, int> averageTurnsByScenario) {
     if (averageTurnsByScenario.isEmpty) return PrestigeTier.bronze;
@@ -48,14 +76,25 @@ class PrestigeManager {
     return PrestigeTier.bronze;
   }
 
-  /// プレスティジランクに対応するコスメティックを取得
-  String? getCosmeticForPrestigeTier(PrestigeTier tier) {
+  /// プレスティジランクに対応するユニットスキンを取得
+  String? getUnitSkinForPrestigeTier(PrestigeTier tier) {
     return switch (tier) {
       PrestigeTier.bronze => null,
       PrestigeTier.silver => 'unit_skin_prestige_silver',
       PrestigeTier.gold => 'unit_skin_prestige_gold',
       PrestigeTier.platinum => 'unit_skin_prestige_platinum',
       PrestigeTier.diamond => 'unit_skin_prestige_diamond',
+    };
+  }
+
+  /// プレスティジランクに対応するUIテーマを取得
+  String? getUiThemeForPrestigeTier(PrestigeTier tier) {
+    return switch (tier) {
+      PrestigeTier.bronze => null,
+      PrestigeTier.silver => 'ui_theme_prestige_silver',
+      PrestigeTier.gold => 'ui_theme_prestige_gold',
+      PrestigeTier.platinum => 'ui_theme_prestige_platinum',
+      PrestigeTier.diamond => 'ui_theme_prestige_diamond',
     };
   }
 
@@ -74,24 +113,48 @@ class PrestigeManager {
         throw Exception('Cannot prestige: conditions not met');
       }
 
-      // リセット時のランク計算用データ取得（TODO: 実装時に戦闘履歴から計算）
-      final newPrestigeRank = PrestigeTier.bronze; // 初回リセット
+      // 次のプレスティジランクを計算（リセット回数に基づく）
+      final newPrestigeRank =
+          calculateNewPrestigeTierForReset(currentProgression.prestigeResetCount);
 
       // プレスティジリセット実行
       await _progressionRepo.performPrestige(userId);
 
-      // 新しいランク用コスメティック解放
-      final cosmeticId = getCosmeticForPrestigeTier(newPrestigeRank);
-      if (cosmeticId != null) {
+      final newResetCount = currentProgression.prestigeResetCount + 1;
+
+      // 新しいランク用コスメティック解放（ユニットスキン）
+      final unitSkinId = getUnitSkinForPrestigeTier(newPrestigeRank);
+      if (unitSkinId != null) {
         await _rewardRepo.unlockPrestigeCosmetic(
           userId,
-          currentProgression.prestigeResetCount + 1,
-          cosmeticId,
+          newResetCount,
+          unitSkinId,
         );
       }
 
+      // 新しいランク用UIテーマも解放
+      final uiThemeId = getUiThemeForPrestigeTier(newPrestigeRank);
+      if (uiThemeId != null) {
+        await _rewardRepo.unlockPrestigeCosmetic(
+          userId,
+          newResetCount,
+          uiThemeId,
+        );
+      }
+
+      // プレスティジリセット実績を確認・解放
+      final unlockedAchievements =
+          await _achievementHandler.checkPrestigeResetAchievements(
+        userId,
+        newResetCount,
+      );
+      if (unlockedAchievements.isNotEmpty) {
+        print(
+            '✓ Achievements unlocked: ${unlockedAchievements.map((a) => a.name).join(", ")}');
+      }
+
       print(
-          '✓ Prestige performed: $userId reset #${currentProgression.prestigeResetCount + 1}');
+          '✓ Prestige performed: $userId reset #$newResetCount (Tier: ${newPrestigeRank.displayName})');
     } catch (e) {
       print('Error performing prestige: $e');
       rethrow;

@@ -38,14 +38,16 @@ class PrestigeAchievementHandler {
   }
 
   /// プレスティジリセット時の特殊実績チェック
-  /// プレスティジリセットのたびに解放される実績（例: "Press to Reset"）
+  /// プレスティジリセット回数に基づいた実績（1回、5回、10回、25回など）
   Future<List<Achievement>> checkPrestigeResetAchievements(
     String userId,
     int resetCount,
   ) async {
     try {
-      // TODO: プレスティジリセット回数に基づいた実績チェック
-      return [];
+      return await _achievementChecker.checkPrestigeResetAchievements(
+        userId: userId,
+        prestigeResetCount: resetCount,
+      );
     } catch (e) {
       print('Error checking prestige reset achievements: $e');
       return [];

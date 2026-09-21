@@ -1,218 +1,214 @@
 {
-  "first_victory": {
-    "id": "first_victory",
-    "name": "初陣",
-    "description": "初めての勝利を手にする",
-    "icon": "🎊",
-    "category": "beginner",
-    "points": 10,
-    "condition": {
-      "type": "win_count",
-      "parameters": {"required": 1}
+  "achievements": [
+    {
+      "id": "first_victory",
+      "name": "初勝利",
+      "description": "初めての戦闘に勝利する",
+      "icon": "🏆",
+      "category": "combat",
+      "difficulty": "bronze",
+      "conditionType": "battleWins",
+      "conditionValue": 1,
+      "points": 10
+    },
+    {
+      "id": "ten_victories",
+      "name": "十戦十勝",
+      "description": "戦闘に10回勝利する",
+      "icon": "⚔️",
+      "category": "combat",
+      "difficulty": "silver",
+      "conditionType": "battleWins",
+      "conditionValue": 10,
+      "points": 25
+    },
+    {
+      "id": "hundred_victories",
+      "name": "百戦百勝",
+      "description": "戦闘に100回勝利する",
+      "icon": "👑",
+      "category": "combat",
+      "difficulty": "gold",
+      "conditionType": "battleWins",
+      "conditionValue": 100,
+      "points": 50
+    },
+    {
+      "id": "level_10",
+      "name": "十段目",
+      "description": "レベル10に到達する",
+      "icon": "📈",
+      "category": "progression",
+      "difficulty": "bronze",
+      "conditionType": "levelReached",
+      "conditionValue": 10,
+      "points": 15
+    },
+    {
+      "id": "level_50",
+      "name": "五十段目",
+      "description": "レベル50に到達する",
+      "icon": "📊",
+      "category": "progression",
+      "difficulty": "silver",
+      "conditionType": "levelReached",
+      "conditionValue": 50,
+      "points": 35
+    },
+    {
+      "id": "level_100",
+      "name": "百段の頂点",
+      "description": "レベル100に到達する",
+      "icon": "🌟",
+      "category": "progression",
+      "difficulty": "gold",
+      "conditionType": "levelReached",
+      "conditionValue": 100,
+      "points": 75,
+      "reward": "ui_theme_legendary"
+    },
+    {
+      "id": "prestige_bronze",
+      "name": "青銅の武将",
+      "description": "プレスティジランク・ブロンズに到達する",
+      "icon": "🥉",
+      "category": "prestige",
+      "difficulty": "silver",
+      "conditionType": "prestigeRank",
+      "conditionValue": 0,
+      "points": 40
+    },
+    {
+      "id": "prestige_silver",
+      "name": "銀色の武将",
+      "description": "プレスティジランク・シルバーに到達する",
+      "icon": "🥈",
+      "category": "prestige",
+      "difficulty": "gold",
+      "conditionType": "prestigeRank",
+      "conditionValue": 1,
+      "points": 60
+    },
+    {
+      "id": "prestige_gold",
+      "name": "黄金の武将",
+      "description": "プレスティジランク・ゴールドに到達する",
+      "icon": "🥇",
+      "category": "prestige",
+      "difficulty": "diamond",
+      "conditionType": "prestigeRank",
+      "conditionValue": 2,
+      "points": 100
+    },
+    {
+      "id": "efficient_tactician",
+      "name": "効率の鬼",
+      "description": "ターン効率80%以上でクリアする",
+      "icon": "⚡",
+      "category": "combat",
+      "difficulty": "gold",
+      "conditionType": "turnEfficiency",
+      "conditionValue": 80,
+      "points": 45
+    },
+    {
+      "id": "master_tactician",
+      "name": "戦術の大家",
+      "description": "ターン効率95%以上でクリアする",
+      "icon": "✨",
+      "category": "combat",
+      "difficulty": "diamond",
+      "conditionType": "turnEfficiency",
+      "conditionValue": 95,
+      "points": 80
+    },
+    {
+      "id": "cosmetic_collector",
+      "name": "装飾の蒐集家",
+      "description": "コスメティックを5個解放する",
+      "icon": "🎨",
+      "category": "cosmetic",
+      "difficulty": "silver",
+      "conditionType": "cosmeticUnlocked",
+      "conditionValue": 5,
+      "points": 20
+    },
+    {
+      "id": "ultimate_collector",
+      "name": "究極の蒐集家",
+      "description": "すべてのコスメティックを解放する",
+      "icon": "🖼️",
+      "category": "cosmetic",
+      "difficulty": "diamond",
+      "conditionType": "cosmeticUnlocked",
+      "conditionValue": 10,
+      "points": 150
+    },
+    {
+      "id": "battle_hardened",
+      "name": "戦闘経験者",
+      "description": "総プレイ時間1時間に到達",
+      "icon": "⏱️",
+      "category": "progression",
+      "difficulty": "bronze",
+      "conditionType": "totalPlayTime",
+      "conditionValue": 60,
+      "points": 15
+    },
+    {
+      "id": "veteran",
+      "name": "大ベテラン",
+      "description": "総プレイ時間10時間に到達",
+      "icon": "🎖️",
+      "category": "progression",
+      "difficulty": "gold",
+      "conditionType": "totalPlayTime",
+      "conditionValue": 600,
+      "points": 70
+    },
+    {
+      "id": "first_prestige",
+      "name": "初めてのプレスティジ",
+      "description": "初めてプレスティジリセットを行う",
+      "icon": "🔄",
+      "category": "prestige",
+      "difficulty": "silver",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 1,
+      "points": 50
+    },
+    {
+      "id": "prestige_repeat",
+      "name": "転生の道",
+      "description": "5回プレスティジリセットを行う",
+      "icon": "♻️",
+      "category": "prestige",
+      "difficulty": "gold",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 5,
+      "points": 100
+    },
+    {
+      "id": "prestige_master",
+      "name": "転生の達人",
+      "description": "10回プレスティジリセットを行う",
+      "icon": "🌀",
+      "category": "prestige",
+      "difficulty": "diamond",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 10,
+      "points": 200
+    },
+    {
+      "id": "prestige_legend",
+      "name": "転生の伝説",
+      "description": "25回プレスティジリセットを行う",
+      "icon": "⭐",
+      "category": "prestige",
+      "difficulty": "diamond",
+      "conditionType": "prestigeResetCount",
+      "conditionValue": 25,
+      "points": 500
     }
-  },
-  "ten_victories": {
-    "id": "ten_victories",
-    "name": "十戦十勝",
-    "description": "10回の勝利を達成する",
-    "icon": "⚔️",
-    "category": "victory",
-    "points": 50,
-    "condition": {
-      "type": "win_count",
-      "parameters": {"required": 10}
-    }
-  },
-  "fifty_victories": {
-    "id": "fifty_victories",
-    "name": "五十連勝",
-    "description": "50回の勝利を達成する",
-    "icon": "🏆",
-    "category": "mastery",
-    "points": 200,
-    "condition": {
-      "type": "win_count",
-      "parameters": {"required": 50}
-    }
-  },
-  "odigahara_victor": {
-    "id": "odigahara_victor",
-    "name": "桶狭間の鬼才",
-    "description": "桶狭間の戦で勝利する",
-    "icon": "🗻",
-    "category": "victory",
-    "points": 30,
-    "condition": {
-      "type": "scenario",
-      "parameters": {"scenarios": ["odigahara"]}
-    }
-  },
-  "nagashino_victor": {
-    "id": "nagashino_victor",
-    "name": "長篠の勇士",
-    "description": "長篠の戦で勝利する",
-    "icon": "🔫",
-    "category": "victory",
-    "points": 35,
-    "condition": {
-      "type": "scenario",
-      "parameters": {"scenarios": ["nagashino"]}
-    }
-  },
-  "honnoji_victor": {
-    "id": "honnoji_victor",
-    "name": "本能寺の英雄",
-    "description": "本能寺の変で勝利する",
-    "icon": "🔥",
-    "category": "victory",
-    "points": 40,
-    "condition": {
-      "type": "scenario",
-      "parameters": {"scenarios": ["honnoJi"]}
-    }
-  },
-  "sekigahara_victor": {
-    "id": "sekigahara_victor",
-    "name": "関ヶ原の支配者",
-    "description": "関ヶ原の戦で勝利する",
-    "icon": "👑",
-    "category": "victory",
-    "points": 50,
-    "condition": {
-      "type": "scenario",
-      "parameters": {"scenarios": ["sekigahara"]}
-    }
-  },
-  "kawanakajima_victor": {
-    "id": "kawanakajima_victor",
-    "name": "川中島の猛将",
-    "description": "川中島の戦で勝利する",
-    "icon": "⚡",
-    "category": "victory",
-    "points": 40,
-    "condition": {
-      "type": "scenario",
-      "parameters": {"scenarios": ["kawanakajima"]}
-    }
-  },
-  "easy_master": {
-    "id": "easy_master",
-    "name": "Easy制覇",
-    "description": "Easy難易度で全シナリオに勝利する",
-    "icon": "📚",
-    "category": "mastery",
-    "points": 100,
-    "condition": {
-      "type": "difficulty",
-      "parameters": {"difficulty": "easy"}
-    }
-  },
-  "normal_master": {
-    "id": "normal_master",
-    "name": "Normal制覇",
-    "description": "Normal難易度で全シナリオに勝利する",
-    "icon": "⚖️",
-    "category": "mastery",
-    "points": 150,
-    "condition": {
-      "type": "difficulty",
-      "parameters": {"difficulty": "normal"}
-    }
-  },
-  "hard_master": {
-    "id": "hard_master",
-    "name": "Hard制覇",
-    "description": "Hard難易度で全シナリオに勝利する",
-    "icon": "💎",
-    "category": "mastery",
-    "points": 250,
-    "condition": {
-      "type": "difficulty",
-      "parameters": {"difficulty": "hard"}
-    }
-  },
-  "perfect_victory": {
-    "id": "perfect_victory",
-    "name": "完全勝利",
-    "description": "全ターニングポイントを達成して勝利する",
-    "icon": "✨",
-    "category": "skill",
-    "points": 80,
-    "condition": {
-      "type": "tp_count",
-      "parameters": {"required": 4}
-    }
-  },
-  "swift_warrior": {
-    "id": "swift_warrior",
-    "name": "神速の采配",
-    "description": "3分以内に戦闘を完了する",
-    "icon": "⚡",
-    "category": "skill",
-    "points": 60,
-    "condition": {
-      "type": "time",
-      "parameters": {"seconds": 180}
-    }
-  },
-  "combo_master": {
-    "id": "combo_master",
-    "name": "連携の達人",
-    "description": "10連のコンボを成功させる",
-    "icon": "🔥",
-    "category": "skill",
-    "points": 70,
-    "condition": {
-      "type": "combo",
-      "parameters": {"required": 10}
-    }
-  },
-  "explorer": {
-    "id": "explorer",
-    "name": "歴史探究者",
-    "description": "全シナリオの逆側視点でプレイする",
-    "icon": "🔍",
-    "category": "exploration",
-    "points": 100,
-    "condition": {
-      "type": "exploration",
-      "parameters": {"requirement": "all_perspectives"}
-    }
-  },
-  "historian": {
-    "id": "historian",
-    "name": "歴史家",
-    "description": "全シナリオのメッセージを読む",
-    "icon": "📖",
-    "category": "exploration",
-    "points": 80,
-    "condition": {
-      "type": "exploration",
-      "parameters": {"requirement": "all_messages"}
-    }
-  },
-  "tutorial_master": {
-    "id": "tutorial_master",
-    "name": "チュートリアルマスター",
-    "description": "ゲームの全ヘルプコンテンツを閲覧する",
-    "icon": "🎓",
-    "category": "beginner",
-    "points": 30,
-    "condition": {
-      "type": "exploration",
-      "parameters": {"requirement": "all_help"}
-    }
-  },
-  "collector": {
-    "id": "collector",
-    "name": "コレクター",
-    "description": "10個のアチーブメントを解除する",
-    "icon": "🏅",
-    "category": "challenge",
-    "points": 120,
-    "condition": {
-      "type": "achievement_count",
-      "parameters": {"required": 10}
-    }
-  }
+  ]
 }

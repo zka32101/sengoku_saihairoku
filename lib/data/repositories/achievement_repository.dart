@@ -1,144 +1,246 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 import '../models/achievement.dart';
 
-/// アチーブメント管理リポジトリ
+/// 実績データリポジトリ
 class AchievementRepository {
-  static final AchievementRepository _instance =
-      AchievementRepository._internal();
+  static AchievementRepository? _instance;
+  
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late Map<String, Achievement> _achievementsCache;
+  bool _initialized = false;
+
+  AchievementRepository._();
 
   factory AchievementRepository() {
-    return _instance;
+    _instance ??= AchievementRepository._();
+    return _instance!;
   }
 
-  AchievementRepository._internal();
+  /// 初期化: achievements.json を読み込む
+  Future<void> initialize() async {
+    if (_initialized) return;
 
-  Map<String, dynamic>? _cachedAchievements;
-
-  /// 全アチーブメントを取得
-  Future<Map<String, Achievement>> getAllAchievements() async {
     try {
-      _cachedAchievements ??= jsonDecode(
-        await rootBundle.loadString('assets/data/achievements.json'),
-      ) as Map<String, dynamic>;
-
-      final result = <String, Achievement>{};
-      for (final entry in _cachedAchievements!.entries) {
-        result[entry.key] = Achievement.fromJson(
-          entry.value as Map<String, dynamic>,
-        );
+      final String jsonString = await rootBundle.loadString('assets/data/achievements.json');
+      final Map<String, dynamic> jsonData = json.decode(jsonString);
+      
+      _achievementsCache = {};
+      if (jsonData['achievements'] is List) {
+        for (var item in jsonData['achievements']) {
+          final achievement = Achievement.fromJson(item);
+          _achievementsCache[achievement.id] = achievement;
+        }
       }
-      return result;
+      
+      _initialized = true;
     } catch (e) {
-      print('Error loading achievements: $e');
-      return {};
+      print('Error initializing achievements: $e');
+      _achievementsCache = {};
+      _initialized = true;
     }
   }
 
-  /// IDでアチーブメントを取得
-  Future<Achievement?> getAchievementById(String id) async {
-    try {
-      final all = await getAllAchievements();
-      return all[id];
-    } catch (e) {
-      print('Error getting achievement $id: $e');
-      return null;
-    }
+  /// すべての実績を取得
+  List<Achievement> getAllAchievements() {
+    return _achievementsCache.values.toList();
   }
 
-  /// カテゴリ別のアチーブメントを取得
-  Future<List<Achievement>> getByCategory(AchievementCategory category) async {
+  /// 実績 ID から実績を取得
+  Achievement? getAchievementById(String achievementId) {
+    return _achievementsCache[achievementId];
+  }
+
+  /// カテゴリーで実績をフィルタリング
+  List<Achievement> getAchievementsByCategory(AchievementCategory category) {
+    return _achievementsCache.values
+        .where((a) => a.category == category)
+        .toList();
+  }
+
+  /// ユーザーのすべての実績進捗を取得
+  Future<List<AchievementProgress>> getUserAchievements(String userId) async {
     try {
-      final all = await getAllAchievements();
-      return all.values.where((a) => a.category == category).toList();
+      final snapshot = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('achievements')
+          .get();
+
+      return snapshot.docs
+          .map((doc) => AchievementProgress.fromFirestore(doc))
+          .toList();
     } catch (e) {
-      print('Error getting achievements by category: $e');
+      print('Error getting user achievements: $e');
       return [];
     }
   }
 
-  /// 総ポイント数を計算
-  Future<int> getTotalPoints(List<AchievementProgress> progresses) async {
+  /// ユーザーの実績進捗を取得（実績 ID で）
+  Future<AchievementProgress?> getAchievementProgress(
+    String userId,
+    String achievementId,
+  ) async {
     try {
-      final achievements = await getAllAchievements();
-      var total = 0;
-      for (final progress in progresses) {
-        if (progress.unlocked) {
-          final achievement = achievements[progress.achievementId];
-          if (achievement != null) {
-            total += achievement.points;
-          }
-        }
-      }
-      return total;
+      final doc = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('achievements')
+          .doc(achievementId)
+          .get();
+
+      if (!doc.exists) return null;
+      return AchievementProgress.fromFirestore(doc);
     } catch (e) {
-      print('Error calculating total points: $e');
-      return 0;
+      print('Error getting achievement progress: $e');
+      return null;
     }
   }
 
-  /// アチーブメント統計を取得
-  Future<AchievementStats> getStats(List<AchievementProgress> progresses) async {
+  /// 実績をアンロック
+  Future<void> unlockAchievement(
+    String userId,
+    String achievementId,
+  ) async {
     try {
-      final achievements = await getAllAchievements();
-      final byCategory = <AchievementCategory, int>{};
-      var totalUnlocked = 0;
-      var totalPoints = 0;
+      final now = DateTime.now();
+      
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('achievements')
+          .doc(achievementId)
+          .set({
+        'userId': userId,
+        'achievementId': achievementId,
+        'isUnlocked': true,
+        'unlockedAt': Timestamp.fromDate(now),
+        'progress': 100,
+        'createdAt': Timestamp.fromDate(now),
+        'updatedAt': Timestamp.fromDate(now),
+      });
+    } catch (e) {
+      print('Error unlocking achievement: $e');
+      rethrow;
+    }
+  }
 
-      for (final category in AchievementCategory.values) {
-        byCategory[category] = 0;
-      }
+  /// 実績の進捗を更新
+  Future<void> updateAchievementProgress(
+    String userId,
+    String achievementId,
+    int progress,
+  ) async {
+    try {
+      final now = DateTime.now();
+      final achievement = getAchievementById(achievementId);
+      
+      // 進捗が 100% になったらアンロック
+      final isUnlocked = progress >= 100;
+      
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('achievements')
+          .doc(achievementId)
+          .set({
+        'userId': userId,
+        'achievementId': achievementId,
+        'isUnlocked': isUnlocked,
+        'unlockedAt': isUnlocked ? Timestamp.fromDate(now) : null,
+        'progress': progress,
+        'createdAt': Timestamp.fromDate(now),
+        'updatedAt': Timestamp.fromDate(now),
+      }, SetOptions(merge: true));
+    } catch (e) {
+      print('Error updating achievement progress: $e');
+      rethrow;
+    }
+  }
 
-      for (final progress in progresses) {
-        final achievement = achievements[progress.achievementId];
-        if (achievement != null && progress.unlocked) {
-          totalUnlocked++;
-          totalPoints += achievement.points;
-          byCategory[achievement.category] =
-              (byCategory[achievement.category] ?? 0) + 1;
+  /// ユーザーの実績統計を計算
+  Future<AchievementStats> getAchievementStats(String userId) async {
+    try {
+      final achievements = await getUserAchievements(userId);
+      final allAchievements = getAllAchievements();
+      
+      int unlockedCount = 0;
+      int totalPoints = 0;
+      final categoryProgress = <AchievementCategory, int>{};
+      DateTime? lastUnlockedAt;
+
+      for (final ach in allAchievements) {
+        final progress = achievements.firstWhere(
+          (p) => p.achievementId == ach.id,
+          orElse: () => AchievementProgress(
+            userId: userId,
+            achievementId: ach.id,
+            isUnlocked: false,
+            progress: 0,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ),
+        );
+
+        if (progress.isUnlocked) {
+          unlockedCount++;
+          totalPoints += ach.points ?? 0;
+          
+          if (lastUnlockedAt == null ||
+              (progress.unlockedAt != null &&
+                  progress.unlockedAt!.isAfter(lastUnlockedAt))) {
+            lastUnlockedAt = progress.unlockedAt;
+          }
         }
+
+        // カテゴリー進捗を集計
+        categoryProgress[ach.category] =
+            (categoryProgress[ach.category] ?? 0) +
+                (progress.isUnlocked ? 1 : 0);
       }
+
+      final unlockedPercentage = allAchievements.isEmpty
+          ? 0.0
+          : (unlockedCount / allAchievements.length) * 100;
 
       return AchievementStats(
-        totalAchievements: achievements.length,
-        unlockedCount: totalUnlocked,
+        totalAchievements: allAchievements.length,
+        unlockedCount: unlockedCount,
+        unlockedPercentage: unlockedPercentage,
         totalPoints: totalPoints,
-        byCategory: byCategory,
-        completionPercent: achievements.isNotEmpty
-            ? (totalUnlocked / achievements.length * 100).toStringAsFixed(1)
-            : '0.0',
+        categoryProgress: categoryProgress,
+        lastUnlockedAt: lastUnlockedAt ?? DateTime.now(),
       );
     } catch (e) {
       print('Error getting achievement stats: $e');
-      return AchievementStats(
-        totalAchievements: 0,
-        unlockedCount: 0,
-        totalPoints: 0,
-        byCategory: {},
-        completionPercent: '0.0',
-      );
+      rethrow;
     }
   }
-}
 
-/// アチーブメント統計
-class AchievementStats {
-  final int totalAchievements;
-  final int unlockedCount;
-  final int totalPoints;
-  final Map<AchievementCategory, int> byCategory;
-  final String completionPercent;
+  /// 実績履歴を取得
+  Future<List<Map<String, dynamic>>> getAchievementHistory(
+    String userId, {
+    int limit = 20,
+  }) async {
+    try {
+      final achievements = await getUserAchievements(userId);
+      
+      final history = achievements
+          .where((a) => a.isUnlocked && a.unlockedAt != null)
+          .toList()
+          ..sort((a, b) => b.unlockedAt!.compareTo(a.unlockedAt!));
 
-  AchievementStats({
-    required this.totalAchievements,
-    required this.unlockedCount,
-    required this.totalPoints,
-    required this.byCategory,
-    required this.completionPercent,
-  });
-
-  int get lockedCount => totalAchievements - unlockedCount;
-
-  String get summary =>
-      '$unlockedCount / $totalAchievements ($completionPercent%)';
+      return history.take(limit).map((p) {
+        final achievement = getAchievementById(p.achievementId);
+        return {
+          'achievement': achievement,
+          'unlockedAt': p.unlockedAt,
+        };
+      }).toList();
+    } catch (e) {
+      print('Error getting achievement history: $e');
+      return [];
+    }
+  }
 }

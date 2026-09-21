@@ -10,6 +10,18 @@ import 'presentation/screens/result_screen.dart';
 import 'presentation/screens/message_screen.dart';
 import 'presentation/screens/ranking_screen.dart';
 import 'presentation/screens/settings_screen.dart';
+import 'presentation/screens/challenge_history_screen.dart';
+import 'presentation/screens/profile_screen.dart';
+import 'presentation/screens/statistics_screen.dart';
+import 'presentation/screens/cosmetics_equipment_screen.dart';
+import 'presentation/screens/prestige_reset_screen.dart';
+import 'presentation/screens/achievement_list_screen.dart';
+import 'presentation/screens/battle_pass_screen.dart';
+import 'data/repositories/daily_challenge_repository.dart';
+import 'data/repositories/progression_repository.dart';
+import 'data/repositories/reward_repository.dart';
+import 'data/repositories/achievement_repository.dart';
+import 'data/repositories/battle_pass_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +31,26 @@ void main() async {
   // ターンランクリポジトリを初期化
   final turnRankRepo = TurnRankRepository();
   await turnRankRepo.initialize();
+
+  // Initialize DailyChallengeRepository
+  final challengeRepo = DailyChallengeRepository();
+  await challengeRepo.initialize();
+
+  // Initialize ProgressionRepository
+  final progressionRepo = ProgressionRepository();
+  await progressionRepo.initialize();
+
+  // Initialize RewardRepository
+  final rewardRepo = RewardRepository();
+  await rewardRepo.initialize();
+
+  // Initialize AchievementRepository
+  final achievementRepo = AchievementRepository();
+  await achievementRepo.initialize();
+
+  // Initialize BattlePassRepository
+  final battlePassRepo = BattlePassRepository();
+  await battlePassRepo.initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }
@@ -37,6 +69,13 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/scenario_select': (_) => const ScenarioSelectScreen(),
         '/ranking': (_) => const RankingScreen(),
         '/settings': (_) => const SettingsScreen(),
+        '/challenge_history': (_) => const ChallengeHistoryScreen(),
+        '/profile': (_) => const ProfileScreen(),
+        '/statistics': (_) => const StatisticsScreen(),
+        '/cosmetics_equipment': (_) => const CosmeticsEquipmentScreen(),
+        '/prestige_reset': (_) => const PrestigeResetScreen(),
+        '/achievements': (_) => const AchievementListScreen(),
+        '/battle_pass': (_) => const BattlePassScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

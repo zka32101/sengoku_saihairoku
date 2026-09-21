@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
+import 'core/services/purchase_service.dart';
 import 'firebase_options.dart';
 import 'presentation/screens/home_screen.dart';
 import 'presentation/screens/scenario_select_screen.dart';
@@ -46,6 +47,10 @@ void main() async {
   // Initialize BattlePassRepository
   final battlePassRepo = BattlePassRepository();
   await battlePassRepo.initialize();
+
+  // Initialize PurchaseService（起動直後に購入ストリームを購読し、
+  // 未完了の購入・復元を取りこぼさないようにする）
+  await PurchaseService().initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }

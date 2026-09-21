@@ -17,6 +17,12 @@ class UnitComponent extends PositionComponent {
   bool _wasColliding = false;
   bool _wasDead = false;
 
+  // 奥行きスケール：奥（画面上部）は小さく遠く、手前（画面下部）は大きく近く見せる
+  static const _minDepthScale = 0.72;
+  static const _maxDepthScale = 1.2;
+  static const _fieldHeight = 640.0;
+  double _depthScale = 1.0;
+
   UnitComponent({
     required this.unit,
     required this.isPlayer,
@@ -27,6 +33,16 @@ class UnitComponent extends PositionComponent {
   void update(double dt) {
     super.update(dt);
     position = Vector2(unit.posX, unit.posY);
+
+    // Y座標に応じた擬似遠近スケーリング（2.5D感）
+    final depthT = (unit.posY / _fieldHeight).clamp(0.0, 1.0);
+    _depthScale = _minDepthScale + (_maxDepthScale - _minDepthScale) * depthT;
+
+    // 手前のユニットが奥のユニットより前面に描画されるよう優先度をY座標で並べ替え
+    final newPriority = unit.posY.toInt();
+    if (priority != newPriority) {
+      priority = newPriority;
+    }
 
     final nowColliding = unit.isColliding;
     final nowDead = unit.isDead;
@@ -65,19 +81,36 @@ class UnitComponent extends PositionComponent {
         ? Colors.white.withValues(alpha: 0.9)
         : _baseColor.withValues(alpha: 0.85);
 
+    // 地面への接地影は遠近の影響を受けず独立して描画（スケールしても不自然にならない）
+    _drawGroundShadow(canvas);
+
+    canvas.save();
+    canvas.scale(_depthScale);
     _drawBody(canvas, fill);
     _drawHealthBar(canvas, ratio);
     _drawIcon(canvas);
+    canvas.restore();
+  }
+
+  void _drawGroundShadow(Canvas canvas) {
+    // 手前（近い）ほど地面から離れて見えるよう影を下にずらし、遠いほど小さく薄く
+    final dropOffset = 3 + (_depthScale - _minDepthScale) * 6;
+    final shadowRadius = (_halfSize + 2) * _depthScale;
+    final shadowPaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.35 * _depthScale)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(0, dropOffset),
+        width: shadowRadius * 2.1,
+        height: shadowRadius * 0.9,
+      ),
+      shadowPaint,
+    );
   }
 
   void _drawBody(Canvas canvas, Color fill) {
     final borderColor = isPlayer ? const Color(0xFFFFD700) : const Color(0xFFAA4444);
-
-    // 影
-    final shadowPaint = Paint()
-      ..color = Colors.black.withValues(alpha: 0.4)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
-    canvas.drawCircle(const Offset(1, 2), _halfSize + 2, shadowPaint);
 
     // グロー
     final glowPaint = Paint()

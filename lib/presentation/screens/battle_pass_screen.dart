@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import '../../core/services/firebase_service.dart';
+import '../../core/services/purchase_service.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/models/battle_pass.dart';
 
@@ -13,17 +16,43 @@ class BattlePassScreen extends StatefulWidget {
 class _BattlePassScreenState extends State<BattlePassScreen> {
   late BattlePassRepository _battlePassRepo;
   late FirebaseService _firebaseService;
+  late PurchaseService _purchaseService;
+  StreamSubscription<PurchaseState>? _purchaseSub;
 
   BattlePass? _currentBattlePass;
   BattlePassProgress? _userProgress;
   bool _loading = true;
+  PurchaseState _purchaseState = PurchaseState.idle;
 
   @override
   void initState() {
     super.initState();
     _battlePassRepo = BattlePassRepository();
     _firebaseService = FirebaseService();
+    _purchaseService = PurchaseService();
     _loadBattlePassData();
+
+    _purchaseSub = _purchaseService.purchaseStateStream.listen((state) {
+      if (!mounted) return;
+      setState(() => _purchaseState = state);
+
+      if (state == PurchaseState.success) {
+        _loadBattlePassData();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('プレミアムトラックを解放しました！')),
+        );
+      } else if (state == PurchaseState.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('購入に失敗しました: ${_purchaseService.lastError ?? "不明なエラー"}')),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _purchaseSub?.cancel();
+    super.dispose();
   }
 
   Future<void> _loadBattlePassData() async {
@@ -80,6 +109,19 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
               ),
             ),
             const SizedBox(height: 24),
+
+            if (!progress.hasPremium)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _PremiumUpsellCard(
+                  product: _purchaseService.battlePassPremiumProduct,
+                  isStoreAvailable: _purchaseService.isAvailable,
+                  isPurchasing: _purchaseState == PurchaseState.pending,
+                  onBuy: () => _purchaseService.buyPremiumBattlePass(),
+                  onRestore: () => _purchaseService.restorePurchases(),
+                ),
+              ),
+            if (!progress.hasPremium) const SizedBox(height: 24),
 
             // Tier List
             Padding(
@@ -212,6 +254,104 @@ class _SeasonHeader extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PremiumUpsellCard extends StatelessWidget {
+  final ProductDetails? product;
+  final bool isStoreAvailable;
+  final bool isPurchasing;
+  final VoidCallback onBuy;
+  final VoidCallback onRestore;
+
+  const _PremiumUpsellCard({
+    required this.product,
+    required this.isStoreAvailable,
+    required this.isPurchasing,
+    required this.onBuy,
+    required this.onRestore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final priceLabel = product?.price ?? (isStoreAvailable ? '---' : 'ストア利用不可');
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.purple.withOpacity(0.25),
+            Colors.deepPurple.withOpacity(0.15),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.purple, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.workspace_premium, color: Colors.purple, size: 28),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text(
+                  'プレミアムトラックを解放',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            '現在のティアまでのプレミアム限定報酬をすべて即座に獲得し、'
+            '以降のティアアップでも継続してプレミアム報酬を受け取れます。',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: (isStoreAvailable && product != null && !isPurchasing)
+                  ? onBuy
+                  : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              child: isPurchasing
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text('$priceLabel で解放する'),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Center(
+            child: TextButton(
+              onPressed: isPurchasing ? null : onRestore,
+              child: const Text(
+                '購入を復元',
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            ),
           ),
         ],
       ),

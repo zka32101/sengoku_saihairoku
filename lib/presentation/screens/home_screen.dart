@@ -4,10 +4,12 @@ import '../../core/services/notification_service.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/currency_repository.dart';
+import '../../data/repositories/daily_login_repository.dart';
 import '../../data/models/daily_challenge.dart';
 import '../../data/models/event_challenge.dart';
 import '../widgets/challenge_card.dart';
 import '../widgets/event_banner.dart';
+import '../widgets/daily_login_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,6 +33,26 @@ class _HomeScreenState extends State<HomeScreen> {
     _eventChallengeRepo = EventChallengeRepository();
     _loadTodayChallenge();
     _loadActiveEvent();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkDailyLoginBonus());
+  }
+
+  Future<void> _checkDailyLoginBonus() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    final status = await DailyLoginRepository().getStatus(userId);
+    if (status.claimedToday || !mounted) return;
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => DailyLoginDialog(
+        status: status,
+        onClaim: () async {
+          await DailyLoginRepository().claim(userId);
+        },
+      ),
+    );
   }
 
   Future<void> _loadActiveEvent() async {

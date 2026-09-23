@@ -77,6 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildBattlePassCard(context),
                     const SizedBox(height: 16),
                     _buildGoldShopCard(context),
+                    const SizedBox(height: 16),
+                    _buildFriendsCard(context),
                   ],
                 ),
               ),
@@ -311,6 +313,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFriendsCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.people, color: Colors.lightGreenAccent, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  'フレンド',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightGreenAccent,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'フレンドコードを交換してランキングを競おう',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/friends'),
+                icon: const Icon(Icons.people, color: Colors.lightGreenAccent),
+                label: const Text(
+                  'フレンドを見る',
+                  style: TextStyle(color: Colors.lightGreenAccent),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.lightGreenAccent),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),

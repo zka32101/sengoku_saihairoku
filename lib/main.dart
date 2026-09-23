@@ -19,6 +19,7 @@ import 'presentation/screens/prestige_reset_screen.dart';
 import 'presentation/screens/achievement_list_screen.dart';
 import 'presentation/screens/battle_pass_screen.dart';
 import 'presentation/screens/gold_shop_screen.dart';
+import 'presentation/screens/friends_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
@@ -83,6 +84,7 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/achievements': (_) => const AchievementListScreen(),
         '/battle_pass': (_) => const BattlePassScreen(),
         '/gold_shop': (_) => const GoldShopScreen(),
+        '/friends': (_) => const FriendsScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

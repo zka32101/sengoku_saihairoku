@@ -84,6 +84,8 @@ class MapBackground extends PositionComponent {
         _drawSekigahara(canvas);
       case Scenario.kawanakajima:
         _drawKawanakajima(canvas);
+      case Scenario.itsukushima:
+        _drawItsukushima(canvas);
     }
   }
 
@@ -137,6 +139,25 @@ class MapBackground extends PositionComponent {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
     canvas.drawRect(Rect.fromLTWH(0, 150, 360, 340), mistPaint);
     _drawLabel(canvas, '八幡原', 150, 300, const Color(0xFFAAAAAA));
+  }
+
+  void _drawItsukushima(Canvas canvas) {
+    // 狭い島を挟む瀬戸内海（左右）
+    final seaPaint = Paint()..color = const Color(0xFF0A2A3A);
+    canvas.drawRect(Rect.fromLTWH(0, 0, 80, 640), seaPaint);
+    canvas.drawRect(Rect.fromLTWH(280, 0, 80, 640), seaPaint);
+    _drawLabel(canvas, '瀬戸内海', 15, 20, const Color(0xFF64B5F6));
+
+    // 宮尾城（本陣）
+    _drawBuilding(canvas, 160, 280, 40, 40);
+    _drawLabel(canvas, '宮尾城', 148, 330, const Color(0xFFFF6644));
+
+    // 暴風雨の嵐（奇襲を覆い隠す暗雲）
+    final stormPaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.25)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25);
+    canvas.drawRect(Rect.fromLTWH(0, 100, 360, 300), stormPaint);
+    _drawLabel(canvas, '暴風雨', 150, 150, const Color(0xFFAAAAAA));
   }
 
   // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで

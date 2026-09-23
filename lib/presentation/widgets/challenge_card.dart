@@ -39,6 +39,7 @@ class ChallengeCard extends StatelessWidget {
       Scenario.honnoJi => '本能寺',
       Scenario.sekigahara => '関ヶ原',
       Scenario.kawanakajima => '川中島',
+      Scenario.itsukushima => '厳島',
     };
   }
 

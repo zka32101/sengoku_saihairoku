@@ -71,4 +71,15 @@ class EventChallengeRepository {
   Future<void> claimReward(String userId, String eventId) async {
     await _progressRef(userId).doc(eventId).update({'claimed': true});
   }
+
+  /// 累計イベントチャレンジ達成数を取得（実績判定用）
+  Future<int> getCompletedEventCount(String userId) async {
+    try {
+      final snapshot = await _progressRef(userId).count().get();
+      return snapshot.count ?? 0;
+    } catch (e) {
+      print('Error counting completed events: $e');
+      return 0;
+    }
+  }
 }

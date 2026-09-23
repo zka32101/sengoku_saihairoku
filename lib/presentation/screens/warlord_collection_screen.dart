@@ -4,6 +4,8 @@ import '../../data/models/warlord_data.dart';
 import '../../data/repositories/warlord_repository.dart';
 import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/currency_repository.dart';
+import '../../domain/achievement_checking/achievement_checker.dart';
+import '../../domain/achievement_checking/achievement_notification_service.dart';
 
 /// 武将図鑑（コレクション）画面
 class WarlordCollectionScreen extends StatefulWidget {
@@ -18,6 +20,8 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
   final _warlordRepo = WarlordRepository();
   final _collectionRepo = WarlordCollectionRepository();
   final _currencyRepo = CurrencyRepository();
+  final _achievementChecker = AchievementChecker();
+  final _achievementNotificationService = AchievementNotificationService();
 
   List<Warlord> _allWarlords = [];
   Set<String> _unlockedIds = {};
@@ -30,6 +34,9 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
   void initState() {
     super.initState();
     _load();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _achievementNotificationService.initialize(context);
+    });
   }
 
   Future<void> _load() async {
@@ -95,6 +102,26 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
     if (drawnId != null) {
       final warlord = _allWarlords.firstWhere((w) => w.id == drawnId);
       _showUnlockDialog(warlord);
+      await _checkCollectionAchievements(userId);
+    }
+  }
+
+  Future<void> _checkCollectionAchievements(String userId) async {
+    try {
+      final unlockedAchievements =
+          await _achievementChecker.checkWarlordCollectionAchievements(
+        userId: userId,
+        totalWarlordsUnlocked: _unlockedIds.length,
+      );
+
+      if (unlockedAchievements.isNotEmpty && mounted) {
+        for (final achievement in unlockedAchievements) {
+          await _achievementNotificationService
+              .showAchievementUnlockNotification(achievement);
+        }
+      }
+    } catch (e) {
+      print('Error checking warlord collection achievements: $e');
     }
   }
 

@@ -205,6 +205,34 @@ class _ResultScreenState extends State<ResultScreen> {
 
     if (isMet) {
       await _eventChallengeRepo.completeEvent(userId, event.id);
+      await _checkEventChallengeAchievements(userId);
+    }
+  }
+
+  Future<void> _checkEventChallengeAchievements(String userId) async {
+    try {
+      final totalCompleted =
+          await _eventChallengeRepo.getCompletedEventCount(userId);
+
+      final unlockedAchievements =
+          await _achievementChecker.checkEventChallengeAchievements(
+        userId: userId,
+        totalEventChallengesCompleted: totalCompleted,
+      );
+
+      if (unlockedAchievements.isNotEmpty) {
+        setState(() {
+          _unlockedAchievements.addAll(unlockedAchievements);
+        });
+
+        if (mounted) {
+          for (final achievement in unlockedAchievements) {
+            await _notificationService.showAchievementUnlockNotification(achievement);
+          }
+        }
+      }
+    } catch (e) {
+      print('Error checking event challenge achievements: $e');
     }
   }
 

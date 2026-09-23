@@ -209,6 +209,83 @@
       "conditionType": "prestigeResetCount",
       "conditionValue": 25,
       "points": 500
+    },
+    {
+      "id": "event_first_clear",
+      "name": "限定戦線",
+      "description": "期間限定イベントチャレンジを1回達成する",
+      "icon": "🎯",
+      "category": "event",
+      "difficulty": "bronze",
+      "conditionType": "eventChallengeCompleted",
+      "conditionValue": 1,
+      "points": 15
+    },
+    {
+      "id": "event_veteran",
+      "name": "常連武将",
+      "description": "期間限定イベントチャレンジを5回達成する",
+      "icon": "🎖️",
+      "category": "event",
+      "difficulty": "silver",
+      "conditionType": "eventChallengeCompleted",
+      "conditionValue": 5,
+      "points": 40
+    },
+    {
+      "id": "event_master",
+      "name": "百戦不敗の常連",
+      "description": "期間限定イベントチャレンジを15回達成する",
+      "icon": "🏵️",
+      "category": "event",
+      "difficulty": "gold",
+      "conditionType": "eventChallengeCompleted",
+      "conditionValue": 15,
+      "points": 80
+    },
+    {
+      "id": "warlord_collector_novice",
+      "name": "武将発掘家",
+      "description": "武将を5体解放する",
+      "icon": "🗺️",
+      "category": "milestone",
+      "difficulty": "bronze",
+      "conditionType": "warlordsCollected",
+      "conditionValue": 5,
+      "points": 15
+    },
+    {
+      "id": "warlord_collector_adept",
+      "name": "群雄割拠",
+      "description": "武将を20体解放する",
+      "icon": "🏯",
+      "category": "milestone",
+      "difficulty": "silver",
+      "conditionType": "warlordsCollected",
+      "conditionValue": 20,
+      "points": 40
+    },
+    {
+      "id": "warlord_collector_master",
+      "name": "天下の采配者",
+      "description": "武将を50体解放する",
+      "icon": "👑",
+      "category": "milestone",
+      "difficulty": "gold",
+      "conditionType": "warlordsCollected",
+      "conditionValue": 50,
+      "points": 100
+    },
+    {
+      "id": "warlord_collector_complete",
+      "name": "戦国絵巻の完成",
+      "description": "すべての武将（102体）を解放する",
+      "icon": "🌟",
+      "category": "milestone",
+      "difficulty": "diamond",
+      "conditionType": "warlordsCollected",
+      "conditionValue": 102,
+      "points": 300
     }
   ]
 }

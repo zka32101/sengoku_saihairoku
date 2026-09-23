@@ -240,6 +240,62 @@ class AchievementChecker {
     return unlockedAchievements;
   }
 
+  /// 期間限定イベントチャレンジ達成時に実績を確認
+  /// [userId] ユーザーID
+  /// [totalEventChallengesCompleted] 累計イベントチャレンジ達成数
+  Future<List<Achievement>> checkEventChallengeAchievements({
+    required String userId,
+    required int totalEventChallengesCompleted,
+  }) async {
+    final unlockedAchievements = <Achievement>[];
+    final allAchievements = _achievementRepo.getAllAchievements();
+
+    for (final achievement in allAchievements) {
+      if (achievement.category != AchievementCategory.event) continue;
+      if (achievement.conditionType !=
+          AchievementConditionType.eventChallengeCompleted) {
+        continue;
+      }
+
+      if (await _isAchievementUnlocked(userId, achievement.id)) continue;
+
+      if (totalEventChallengesCompleted >= achievement.conditionValue) {
+        await _achievementRepo.unlockAchievement(userId, achievement.id);
+        unlockedAchievements.add(achievement);
+      }
+    }
+
+    return unlockedAchievements;
+  }
+
+  /// 武将図鑑の解放数に基づいて実績を確認
+  /// [userId] ユーザーID
+  /// [totalWarlordsUnlocked] 累計解放済み武将数
+  Future<List<Achievement>> checkWarlordCollectionAchievements({
+    required String userId,
+    required int totalWarlordsUnlocked,
+  }) async {
+    final unlockedAchievements = <Achievement>[];
+    final allAchievements = _achievementRepo.getAllAchievements();
+
+    for (final achievement in allAchievements) {
+      if (achievement.category != AchievementCategory.milestone) continue;
+      if (achievement.conditionType !=
+          AchievementConditionType.warlordsCollected) {
+        continue;
+      }
+
+      if (await _isAchievementUnlocked(userId, achievement.id)) continue;
+
+      if (totalWarlordsUnlocked >= achievement.conditionValue) {
+        await _achievementRepo.unlockAchievement(userId, achievement.id);
+        unlockedAchievements.add(achievement);
+      }
+    }
+
+    return unlockedAchievements;
+  }
+
   /// 戦闘勝利数条件を確認
   /// 内部的に過去の戦闘勝利数をカウント
   Future<bool> _checkBattleWinsCondition(

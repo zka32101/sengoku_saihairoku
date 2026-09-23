@@ -37,6 +37,9 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseService().initialize();
 
+  // オフライン時に送信できず端末内に溜まっていたバトル結果があれば再送する
+  await FirebaseService().flushPendingBattleResults();
+
   // ターンランクリポジトリを初期化
   final turnRankRepo = TurnRankRepository();
   await turnRankRepo.initialize();

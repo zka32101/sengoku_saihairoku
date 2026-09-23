@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/models/battle_result_data.dart';
+import '../../data/repositories/pending_battle_result_queue.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -30,24 +31,47 @@ class FirebaseService {
     if (_userId == null) return;
 
     try {
-      await _firestore
-          .collection('users')
-          .doc(_userId)
-          .collection('battles')
-          .doc(result.id)
-          .set(result.toJson());
-
-      // Also add to global rankings
-      await _firestore.collection('rankings').doc(result.id).set({
-        'userId': _userId,
-        'scenarioId': result.scenarioId.name,
-        'score': result.totalScore,
-        'won': result.won,
-        'playedAt': result.playedAt,
-        'duration': result.duration,
-      });
+      await _writeBattleResult(result);
     } catch (e) {
-      // Silently fail in offline mode
+      // オフライン等で書き込みに失敗した場合、スコアを失わないよう
+      // 端末内キューに保存し、次回のflushPendingBattleResults()で再送する。
+      await PendingBattleResultQueue().enqueue(result);
+    }
+  }
+
+  Future<void> _writeBattleResult(BattleResultData result) async {
+    await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('battles')
+        .doc(result.id)
+        .set(result.toJson());
+
+    // Also add to global rankings
+    await _firestore.collection('rankings').doc(result.id).set({
+      'userId': _userId,
+      'scenarioId': result.scenarioId.name,
+      'score': result.totalScore,
+      'won': result.won,
+      'playedAt': result.playedAt,
+      'duration': result.duration,
+    });
+  }
+
+  /// 端末内キューに溜まった未送信のバトル結果を再送する。
+  /// アプリ起動時に呼び出すことを想定（main.dartから呼ばれる）。
+  Future<void> flushPendingBattleResults() async {
+    if (_userId == null) return;
+
+    final pending = await PendingBattleResultQueue().getAll();
+    for (final result in pending) {
+      try {
+        await _writeBattleResult(result);
+        await PendingBattleResultQueue().remove(result.id);
+      } catch (e) {
+        // まだオフラインの可能性が高いので、このエントリは次回に持ち越す
+        break;
+      }
     }
   }
 

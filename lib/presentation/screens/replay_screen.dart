@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_replay.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../data/repositories/replay_repository.dart';
+import '../../data/repositories/shared_replay_repository.dart';
 import '../widgets/replay_player.dart';
 
 /// リプレイ一覧・再生画面
@@ -15,6 +18,7 @@ class ReplayScreen extends StatefulWidget {
 
 class _ReplayScreenState extends State<ReplayScreen> {
   final _replayRepo = ReplayRepository();
+  final _sharedReplayRepo = SharedReplayRepository();
   late Future<List<BattleReplay>> _replays;
   late Future<ReplayStats> _stats;
   int _selectedFilter = 0; // 0=全部, 1=勝利, 2=敗北
@@ -66,12 +70,146 @@ class _ReplayScreenState extends State<ReplayScreen> {
     );
   }
 
+  Future<void> _shareReplay(BattleReplay replay) async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 16),
+            Text('共有コードを発行中...'),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final code = await _sharedReplayRepo.shareReplay(replay, userId);
+      if (!mounted) return;
+      Navigator.pop(context); // 発行中ダイアログを閉じる
+
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('共有コード'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                code,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 4,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text('このコードをフレンドに伝えると観戦できます'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('閉じる'),
+            ),
+            TextButton(
+              onPressed: () {
+                SharePlus.instance.share(ShareParams(
+                  text: '戦国采配録のリプレイを見てください！\n共有コード: $code',
+                ));
+              },
+              child: const Text('共有する'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('共有に失敗しました: $e')),
+      );
+    }
+  }
+
+  void _showCodeEntryDialog() {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('共有コードで観戦'),
+        content: TextField(
+          controller: controller,
+          textCapitalization: TextCapitalization.characters,
+          maxLength: 6,
+          decoration: const InputDecoration(hintText: '例: A3F9QZ'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('キャンセル'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final code = controller.text.trim();
+              Navigator.pop(ctx);
+              if (code.isEmpty) return;
+              await _viewSharedReplay(code);
+            },
+            child: const Text('観戦する'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _viewSharedReplay(String code) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const AlertDialog(
+        content: Row(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(width: 16),
+            Text('リプレイを取得中...'),
+          ],
+        ),
+      ),
+    );
+
+    final replay = await _sharedReplayRepo.getReplayByCode(code);
+    if (!mounted) return;
+    Navigator.pop(context); // 取得中ダイアログを閉じる
+
+    if (replay == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('リプレイが見つかりませんでした')),
+      );
+      return;
+    }
+
+    _showReplayPlayer(replay);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('バトルリプレイ'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.remove_red_eye),
+            tooltip: '共有コードで観戦',
+            onPressed: _showCodeEntryDialog,
+          ),
+        ],
       ),
       body: FutureBuilder<List<BattleReplay>>(
         future: _replays,
@@ -170,6 +308,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                         replay: replay,
                         onTap: () => _showReplayPlayer(replay),
                         onDelete: () => _deleteReplay(replay.id),
+                        onShare: () => _shareReplay(replay),
                       );
                     },
                     childCount: replays.length,
@@ -339,11 +478,13 @@ class _ReplayListTile extends StatelessWidget {
   final BattleReplay replay;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final VoidCallback onShare;
 
   const _ReplayListTile({
     required this.replay,
     required this.onTap,
     required this.onDelete,
+    required this.onShare,
   });
 
   @override
@@ -382,6 +523,10 @@ class _ReplayListTile extends StatelessWidget {
         ),
         trailing: PopupMenuButton(
           itemBuilder: (ctx) => [
+            PopupMenuItem(
+              child: const Text('共有'),
+              onTap: onShare,
+            ),
             PopupMenuItem(
               child: const Text('削除'),
               onTap: onDelete,

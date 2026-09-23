@@ -50,6 +50,7 @@ dependencies:
   # Local Storage
   hive: ^2.2.0
   hive_flutter: ^1.1.0
+  shared_preferences: ^2.3.0
 
   # UI & Animation
   intl: ^0.18.0
@@ -62,7 +63,10 @@ dependencies:
   in_app_purchase: ^3.2.0
 
   # Sharing (ランキング/フレンドコード共有)
-  share_plus: ^10.1.4
+  # 注: SharePlus.instance.share(ShareParams(...)) API を使用しているため、
+  # そのAPIを含むバージョンが必要（^10.1.4では undefined_identifier エラーに
+  # なることをCIで確認したため引き上げ）。
+  share_plus: ^11.0.0
 
   # Local Notifications（リテンション用リマインダー）
   flutter_local_notifications: ^18.0.1

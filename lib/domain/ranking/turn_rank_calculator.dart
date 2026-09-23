@@ -32,7 +32,7 @@ class TurnRankCalculator {
   static TurnEfficiencyStats calculateEfficiencyStats(
     Scenario scenario,
     List<BattleReplay> replays,
-    Map<Difficulty, TurnRankingCriteria> criteriaMap,
+    Map<DifficultyMode, TurnRankingCriteria> criteriaMap,
   ) {
     final results = <TurnRankResult>[];
 

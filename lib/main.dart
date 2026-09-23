@@ -5,6 +5,7 @@ import 'core/services/firebase_service.dart';
 import 'core/services/notification_service.dart';
 import 'core/services/purchase_service.dart';
 import 'core/services/ad_service.dart';
+import 'core/services/push_notification_service.dart';
 import 'data/repositories/turn_rank_repository.dart';
 import 'firebase_options.dart';
 import 'presentation/screens/home_screen.dart';
@@ -68,6 +69,13 @@ void main() async {
 
   // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
   await AdService().initialize();
+
+  // Initialize PushNotificationService（サーバーサイドイベント通知の受信設定）
+  await PushNotificationService().initialize();
+  final currentUserId = FirebaseService().userId;
+  if (currentUserId != null) {
+    await PushNotificationService().registerToken(currentUserId);
+  }
 
   // 初回起動オンボーディングが必要か確認
   final needsOnboarding =

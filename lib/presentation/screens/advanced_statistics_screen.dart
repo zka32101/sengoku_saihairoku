@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/advanced_statistics.dart';
 import '../../data/services/statistics_service.dart';
 import '../widgets/advanced_statistics_display.dart';
+import '../widgets/trend_sparkline.dart';
 
 /// 高度な統計分析画面
 class AdvancedStatisticsScreen extends StatefulWidget {
@@ -242,6 +243,20 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                         _getTrendIcon(summary.performanceTrend.trend),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  TrendSparkline(
+                    label: '勝率の推移',
+                    points: summary.performanceTrend.winRateTrend,
+                    color: Colors.blue,
+                    valueFormatter: (v) => '${(v * 100).toStringAsFixed(0)}%',
+                  ),
+                  const SizedBox(height: 12),
+                  TrendSparkline(
+                    label: 'スコアの推移',
+                    points: summary.performanceTrend.scoreTrend,
+                    color: Colors.amber,
+                    valueFormatter: (v) => v.toStringAsFixed(0),
                   ),
                 ],
               ),

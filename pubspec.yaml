@@ -60,6 +60,10 @@ dependencies:
   # In-App Purchases
   in_app_purchase: ^3.2.0
 
+  # Local Notifications（リテンション用リマインダー）
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.9.4
+
   # Ads (rewarded video)
   google_mobile_ads: ^5.1.0
 

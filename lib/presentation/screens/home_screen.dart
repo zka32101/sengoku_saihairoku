@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/services/notification_service.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
 import '../../data/models/daily_challenge.dart';
 import '../widgets/challenge_card.dart';
@@ -29,6 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
       _todayChallenge = challenge;
       _todayProgress = progress;
     });
+
+    // 未達成なら翌日にリマインダー通知を予約、達成済みなら解除
+    if (challenge != null && (progress == null || !progress.isCompleted)) {
+      await NotificationService().scheduleDailyChallengeReminder();
+    } else {
+      await NotificationService().cancelDailyChallengeReminder();
+    }
   }
 
   @override

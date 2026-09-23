@@ -21,6 +21,8 @@ import 'presentation/screens/prestige_reset_screen.dart';
 import 'presentation/screens/achievement_list_screen.dart';
 import 'presentation/screens/battle_pass_screen.dart';
 import 'presentation/screens/gold_shop_screen.dart';
+import 'presentation/screens/onboarding_screen.dart';
+import 'data/repositories/onboarding_repository.dart';
 import 'presentation/screens/friends_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
@@ -67,20 +69,31 @@ void main() async {
   // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
   await AdService().initialize();
 
-  runApp(const ProviderScope(child: SengokuSaihairokuApp()));
+  // 初回起動オンボーディングが必要か確認
+  final needsOnboarding =
+      await OnboardingRepository().needsOnboarding(FirebaseService().userId);
+
+  runApp(ProviderScope(
+    child: SengokuSaihairokuApp(
+      initialRoute: needsOnboarding ? '/onboarding' : '/home',
+    ),
+  ));
 }
 
 class SengokuSaihairokuApp extends StatelessWidget {
-  const SengokuSaihairokuApp({super.key});
+  final String initialRoute;
+
+  const SengokuSaihairokuApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '戦国采配録',
       theme: _buildTheme(),
-      initialRoute: '/home',
+      initialRoute: initialRoute,
       routes: {
         '/home': (_) => const HomeScreen(),
+        '/onboarding': (_) => const OnboardingScreen(),
         '/scenario_select': (_) => const ScenarioSelectScreen(),
         '/ranking': (_) => const RankingScreen(),
         '/settings': (_) => const SettingsScreen(),

@@ -160,6 +160,12 @@ class BattleState {
   static const double combatRange = 50.0;
 
   final ScenarioData scenario;
+  // 出陣武将の統率ステータスから算出する自軍兵力の倍率（未選出時は1.0）。
+  // 収集要素と戦闘を薄く接続するための小幅な補正であり、コマンドによる
+  // 戦術介入の重要性を損なわない範囲（統率値のスケール上、最大+約10%）に
+  // 抑えている。CLAUDE.mdの「無介入シミュレーションだけで判断しない」との
+  // 方針を踏まえ、大きな数値は設定しないこと。
+  final double playerStrengthMultiplier;
   late final Army playerArmy;
   late final Army enemyArmy;
   late final EnemyAI enemyAI;
@@ -178,7 +184,7 @@ class BattleState {
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
 
-  BattleState({required this.scenario}) {
+  BattleState({required this.scenario, this.playerStrengthMultiplier = 1.0}) {
     _initializeArmies();
     enemyAI = EnemyAI(enemyArmy: enemyArmy, playerArmy: playerArmy);
     commandHandler = PlayerCommandHandler(
@@ -199,8 +205,9 @@ class BattleState {
     final playerUnits = scenario.playerUnits.asMap().entries.map((e) {
       final data = e.value;
       final type = _parseUnitType(data.type);
+      final strength = (data.strength * playerStrengthMultiplier).round();
       return createUnitFromType(
-        data.id, data.name, type, data.strength,
+        data.id, data.name, type, strength,
         px + e.key * 60, py,
       );
     }).toList();

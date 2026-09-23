@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../../data/models/warlord_data.dart';
+import '../../data/repositories/warlord_repository.dart';
+import '../../data/repositories/warlord_collection_repository.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
 
@@ -210,10 +214,38 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   DifficultyMode _selectedDifficulty = DifficultyMode.normal;
   bool _loading = true;
 
+  List<Warlord> _unlockedWarlords = [];
+  Warlord? _selectedWarlord;
+
   @override
   void initState() {
     super.initState();
     _loadScenario();
+    _loadUnlockedWarlords();
+  }
+
+  Future<void> _loadUnlockedWarlords() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    final allWarlords = await WarlordRepository().getAllWarlords();
+    final unlockedIds =
+        await WarlordCollectionRepository().getUnlockedWarlordIds(userId);
+
+    if (!mounted) return;
+    setState(() {
+      _unlockedWarlords =
+          allWarlords.where((w) => unlockedIds.contains(w.id)).toList();
+    });
+  }
+
+  // 出陣武将の統率ステータスから兵力倍率を算出する。
+  // 統率90〜97程度の上位武将でも+9〜10%程度に収まる緩やかな補正。
+  double get _warlordStrengthMultiplier {
+    final warlord = _selectedWarlord;
+    if (warlord == null) return 1.0;
+    final bonus = (warlord.leadership / 1000.0).clamp(0.0, 0.10);
+    return 1.0 + bonus;
   }
 
   Future<void> _loadScenario() async {
@@ -255,6 +287,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
           scenario: widget.scenario,
           alternativePerspectiveId: perspective,
           difficultyMode: difficulty,
+          warlordStrengthMultiplier: _warlordStrengthMultiplier,
         ),
       ),
     );
@@ -348,6 +381,50 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                     setState(() => _selectedPerspectiveId =
                         mainPerspective.alternativePerspective!.id);
                   },
+                ),
+                const SizedBox(height: 24),
+                const Divider(color: Color(0xFF8B6914)),
+                const SizedBox(height: 24),
+              ],
+              // Warlord Selection
+              if (_unlockedWarlords.isNotEmpty) ...[
+                const Text(
+                  '出陣武将を選ぶ（任意）',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '統率ステータスに応じて自軍の兵力がわずかに上昇します',
+                  style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 40,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ChoiceChip(
+                        label: const Text('なし'),
+                        selected: _selectedWarlord == null,
+                        onSelected: (_) =>
+                            setState(() => _selectedWarlord = null),
+                      ),
+                      const SizedBox(width: 8),
+                      ..._unlockedWarlords.map((w) => Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ChoiceChip(
+                              label: Text('${w.name} (統率${w.leadership})'),
+                              selected: _selectedWarlord?.id == w.id,
+                              onSelected: (_) =>
+                                  setState(() => _selectedWarlord = w),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 24),
                 const Divider(color: Color(0xFF8B6914)),

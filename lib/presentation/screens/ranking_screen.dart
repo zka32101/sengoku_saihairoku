@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
 
@@ -38,6 +39,16 @@ class _RankingScreenState extends State<RankingScreen> {
       appBar: AppBar(
         title: const Text('ランキング'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            tooltip: 'ランキングを共有',
+            onPressed: () => SharePlus.instance.share(
+              ShareParams(
+                text: '戦国采配録でランキングに挑戦中！あなたも采配を振るってみない？\n'
+                    '#戦国采配録',
+              ),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadRankings,

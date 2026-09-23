@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
@@ -585,6 +586,19 @@ class _ActionButtons extends StatelessWidget {
 
   const _ActionButtons({required this.args});
 
+  void _shareResult(BuildContext context) {
+    final data = args.data;
+    final resultText = data.won ? '勝利' : '敗北';
+    final tpCount = data.tpAchievements.where((a) => a).length;
+    SharePlus.instance.share(
+      ShareParams(
+        text: '戦国采配録『${args.scenario.displayNameJa}』で$resultText！\n'
+            'スコア: ${data.totalScore} pts / ターニングポイント $tpCount/${data.tpAchievements.length}\n'
+            '#戦国采配録',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -608,6 +622,19 @@ class _ActionButtons extends StatelessWidget {
           onPressed: () => Navigator.pushNamed(context, '/ranking'),
           icon: const Icon(Icons.leaderboard),
           label: const Text('ランキングを見る'),
+        ),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          onPressed: () => _shareResult(context),
+          icon: const Icon(Icons.share, color: Colors.cyan),
+          label: const Text(
+            '結果をシェア',
+            style: TextStyle(color: Colors.cyan),
+          ),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.cyan),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(

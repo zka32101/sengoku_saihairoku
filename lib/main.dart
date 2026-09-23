@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
+import 'core/services/notification_service.dart';
 import 'core/services/purchase_service.dart';
+import 'core/services/ad_service.dart';
 import 'data/repositories/turn_rank_repository.dart';
 import 'firebase_options.dart';
 import 'presentation/screens/home_screen.dart';
@@ -21,6 +23,7 @@ import 'presentation/screens/battle_pass_screen.dart';
 import 'presentation/screens/gold_shop_screen.dart';
 import 'presentation/screens/onboarding_screen.dart';
 import 'data/repositories/onboarding_repository.dart';
+import 'presentation/screens/friends_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
@@ -60,6 +63,12 @@ void main() async {
   // 未完了の購入・復元を取りこぼさないようにする）
   await PurchaseService().initialize();
 
+  // Initialize NotificationService（ローカル通知の権限リクエスト・初期化）
+  await NotificationService().initialize();
+
+  // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
+  await AdService().initialize();
+
   // 初回起動オンボーディングが必要か確認
   final needsOnboarding =
       await OnboardingRepository().needsOnboarding(FirebaseService().userId);
@@ -96,6 +105,7 @@ class SengokuSaihairokuApp extends StatelessWidget {
         '/achievements': (_) => const AchievementListScreen(),
         '/battle_pass': (_) => const BattlePassScreen(),
         '/gold_shop': (_) => const GoldShopScreen(),
+        '/friends': (_) => const FriendsScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

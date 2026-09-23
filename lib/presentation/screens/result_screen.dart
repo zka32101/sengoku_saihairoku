@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
@@ -525,6 +526,7 @@ class _TurningPointCard extends StatelessWidget {
     Scenario.honnoJi: ['敵の包囲を突破', '援軍到着まで生存', '援軍到着後の反撃', '敵総大将討死'],
     Scenario.sekigahara: ['序盤は慎重に', '味方のモラル維持', '側面を奇襲', '敵将討死', '豊臣武将生存'],
     Scenario.kawanakajima: ['夜明けの奇襲に備える', '別働隊到着まで凌ぐ', '挟撃を成功させる', '敵将討死'],
+    Scenario.itsukushima: ['暴風雨に乗じた奇襲', '宮尾城を死守', '退路を断ち包囲', '敵将討死'],
   };
 
   @override
@@ -584,6 +586,19 @@ class _ActionButtons extends StatelessWidget {
 
   const _ActionButtons({required this.args});
 
+  void _shareResult(BuildContext context) {
+    final data = args.data;
+    final resultText = data.won ? '勝利' : '敗北';
+    final tpCount = data.tpAchievements.where((a) => a).length;
+    SharePlus.instance.share(
+      ShareParams(
+        text: '戦国采配録『${args.scenario.displayNameJa}』で$resultText！\n'
+            'スコア: ${data.totalScore} pts / ターニングポイント $tpCount/${data.tpAchievements.length}\n'
+            '#戦国采配録',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -607,6 +622,19 @@ class _ActionButtons extends StatelessWidget {
           onPressed: () => Navigator.pushNamed(context, '/ranking'),
           icon: const Icon(Icons.leaderboard),
           label: const Text('ランキングを見る'),
+        ),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          onPressed: () => _shareResult(context),
+          icon: const Icon(Icons.share, color: Colors.cyan),
+          label: const Text(
+            '結果をシェア',
+            style: TextStyle(color: Colors.cyan),
+          ),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.cyan),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(

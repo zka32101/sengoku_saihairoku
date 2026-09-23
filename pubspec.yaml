@@ -60,6 +60,9 @@ dependencies:
   # In-App Purchases
   in_app_purchase: ^3.2.0
 
+  # Ads (rewarded video)
+  google_mobile_ads: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

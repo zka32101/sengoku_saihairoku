@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/purchase_service.dart';
+import '../../core/services/notification_service.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/models/battle_pass.dart';
 
@@ -72,6 +73,14 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
         _userProgress = progress;
         _loading = false;
       });
+
+      // シーズン終了が近い場合はリマインダーを予約、そうでなければ解除
+      final daysRemaining = _battlePassRepo.getDaysRemaining();
+      if (daysRemaining > 0 && daysRemaining <= 3) {
+        await NotificationService().scheduleBattlePassExpiryReminder(daysRemaining);
+      } else {
+        await NotificationService().cancelBattlePassExpiryReminder();
+      }
     } catch (e) {
       print('Error loading battle pass data: $e');
       setState(() => _loading = false);

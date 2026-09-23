@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
+import 'core/services/notification_service.dart';
 import 'core/services/purchase_service.dart';
 import 'data/repositories/turn_rank_repository.dart';
 import 'firebase_options.dart';
@@ -57,6 +58,9 @@ void main() async {
   // Initialize PurchaseService（起動直後に購入ストリームを購読し、
   // 未完了の購入・復元を取りこぼさないようにする）
   await PurchaseService().initialize();
+
+  // Initialize NotificationService（ローカル通知の権限リクエスト・初期化）
+  await NotificationService().initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }

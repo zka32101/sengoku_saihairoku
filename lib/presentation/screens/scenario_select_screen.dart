@@ -37,6 +37,7 @@ class ScenarioSelectScreen extends StatelessWidget {
     _ScenarioEntry(Scenario.honnoJi, '本能寺の変', 1582, 3, '5〜7分', '500 vs 13,000 — 絶望的状況からの逆転', true),
     _ScenarioEntry(Scenario.sekigahara, '関ヶ原の戦', 1600, 4, '6〜8分', '天下分け目 — 複雑な戦局を制せよ', true),
     _ScenarioEntry(Scenario.kawanakajima, '川中島の戦', 1561, 3, '4〜6分', '夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ', true),
+    _ScenarioEntry(Scenario.itsukushima, '厳島の戦', 1555, 3, '4〜5分', '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ', true),
   ];
 
   @override

@@ -140,6 +140,22 @@ class TurningPointEvaluator {
             // 上杉謙信を討ち取る
             return enemyCommanderKilled;
         }
+        break;
+      case Scenario.itsukushima:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に奇襲コマンドを実行する
+            return eventLog.hasCommandBefore(PlayerCommand.ambush, 30.0);
+          case 'tp2':
+            // 盾陣で敵の猛攻を耐え抜く
+            return eventLog.lastCommand == PlayerCommand.shield && inCombat;
+          case 'tp3':
+            // 敵将の兵力を50%以下に低下させる
+            return enemyStrengthRatio <= 0.5;
+          case 'tp4':
+            // 陶晴賢を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

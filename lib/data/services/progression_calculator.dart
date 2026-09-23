@@ -1,6 +1,7 @@
 import '../../domain/state/battle_state.dart';
 import '../../data/models/daily_challenge.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../models/user_progression.dart';
 
 /// 戦闘結果からXP獲得を計算するサービス
 class ProgressionCalculator {
@@ -147,6 +148,3 @@ class PrestigeCalculator {
     return (totalPoints / averageTurnsByScenario.length).toInt();
   }
 }
-
-// PrestigeTierを外部から参照可能にするためのインポート
-import '../models/user_progression.dart';

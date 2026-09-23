@@ -142,6 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildGoldShopCard(context),
                     const SizedBox(height: 16),
                     _buildFriendsCard(context),
+                    const SizedBox(height: 16),
+                    _buildWarlordCollectionCard(context),
                   ],
                 ),
               ),
@@ -424,6 +426,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.lightGreenAccent),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWarlordCollectionCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.military_tech, color: Colors.orangeAccent, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  '武将図鑑',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orangeAccent,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'ゴールドで武将を発掘し、図鑑をコンプリートしよう',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/warlords'),
+                icon: const Icon(Icons.military_tech,
+                    color: Colors.orangeAccent),
+                label: const Text(
+                  '図鑑を見る',
+                  style: TextStyle(color: Colors.orangeAccent),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.orangeAccent),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),

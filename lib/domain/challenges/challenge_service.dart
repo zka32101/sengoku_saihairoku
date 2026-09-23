@@ -11,8 +11,17 @@ class ChallengeService {
     BattleStateData battleResult,
     int turnCount,
   ) {
+    return areConditionsMet(challenge.conditions, battleResult, turnCount);
+  }
+
+  /// 条件リストがバトル結果を満たしているか判定（日替わり/期間限定イベント共通）
+  static bool areConditionsMet(
+    List<ChallengeCondition> conditions,
+    BattleStateData battleResult,
+    int turnCount,
+  ) {
     // 全ての条件を満たす必要がある（AND判定）
-    for (final condition in challenge.conditions) {
+    for (final condition in conditions) {
       if (!_checkCondition(condition, battleResult, turnCount)) {
         return false;
       }

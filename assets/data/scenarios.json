@@ -732,5 +732,147 @@
         "bronze": 40
       }
     }
+  },
+  "itsukushima": {
+    "id": "itsukushima",
+    "displayName": "厳島の戦",
+    "year": 1555,
+    "description": "毛利元就がわずかな兵で、宮尾城に誘い込んだ陶晴賢の大軍を暴風雨に乗じて奇襲する。狭い島に追い詰め、殲滅を狙う大逆転劇。",
+    "playerInitialStrength": 4000,
+    "enemyInitialStrength": 15000,
+    "difficulty": 3,
+    "estimatedDuration": 300,
+    "backgroundImage": "assets/images/maps/itsukushima_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "暴風雨に乗じた奇襲",
+        "description": "開戦直後(30秒以内)に奇襲コマンドを実行する",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "宮尾城を死守",
+        "description": "盾陣で敵の猛攻を耐え抜く",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp3",
+        "name": "退路を断ち包囲",
+        "description": "敵将の兵力を50%以下に低下させる",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "陶晴賢を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_spear_1",
+        "name": "毛利槍隊",
+        "type": "spear",
+        "strength": 2500
+      },
+      {
+        "id": "player_archer_1",
+        "name": "毛利弓隊",
+        "type": "archer",
+        "strength": 1500
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "陶騎馬隊",
+        "type": "cavalry",
+        "strength": 8000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "陶槍兵隊",
+        "type": "spear",
+        "strength": 7000
+      }
+    ],
+    "alternativePerspective": {
+      "id": "itsukushima_sue",
+      "displayName": "厳島の戦（陶晴賢視点）",
+      "description": "陶晴賢の大軍が宮尾城を攻略中、暴風雨の闇に乗じた毛利元就の奇襲を受ける。狭い島から脱出し、体勢を立て直せるか。",
+      "difficulty": 2,
+      "playerUnits": [
+        {
+          "id": "player_cavalry_1",
+          "name": "陶騎馬隊",
+          "type": "cavalry",
+          "strength": 8000
+        },
+        {
+          "id": "player_spear_1",
+          "name": "陶槍兵隊",
+          "type": "spear",
+          "strength": 7000
+        }
+      ],
+      "enemyUnits": [
+        {
+          "id": "enemy_spear_1",
+          "name": "毛利槍隊",
+          "type": "spear",
+          "strength": 2500
+        },
+        {
+          "id": "enemy_archer_1",
+          "name": "毛利弓隊",
+          "type": "archer",
+          "strength": 1500
+        }
+      ],
+      "turningPoints": [
+        {
+          "id": "tp1",
+          "name": "上陸を強行する",
+          "description": "開戦直後(30秒以内)に進軍コマンドを実行する",
+          "rewardPoints": 3000
+        },
+        {
+          "id": "tp2",
+          "name": "暴風雨の混乱に耐える",
+          "description": "待機コマンドで奇襲の混乱をやり過ごす",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp3",
+          "name": "毛利本隊を突破する",
+          "description": "突撃コマンドで包囲を突破する",
+          "rewardPoints": 4000
+        },
+        {
+          "id": "tp4",
+          "name": "敵将討死",
+          "description": "毛利元就を討ち取る",
+          "rewardPoints": 5000
+        }
+      ]
+    },
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
+    }
   }
 }

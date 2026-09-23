@@ -525,6 +525,7 @@ class _TurningPointCard extends StatelessWidget {
     Scenario.honnoJi: ['敵の包囲を突破', '援軍到着まで生存', '援軍到着後の反撃', '敵総大将討死'],
     Scenario.sekigahara: ['序盤は慎重に', '味方のモラル維持', '側面を奇襲', '敵将討死', '豊臣武将生存'],
     Scenario.kawanakajima: ['夜明けの奇襲に備える', '別働隊到着まで凌ぐ', '挟撃を成功させる', '敵将討死'],
+    Scenario.itsukushima: ['暴風雨に乗じた奇襲', '宮尾城を死守', '退路を断ち包囲', '敵将討死'],
   };
 
   @override

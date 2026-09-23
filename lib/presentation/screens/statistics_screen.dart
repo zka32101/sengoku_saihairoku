@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../widgets/screen_transition.dart';
+import 'advanced_statistics_screen.dart';
 
 /// ユーザーの統計情報画面
 class StatisticsScreen extends StatefulWidget {
@@ -53,7 +54,23 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('統計')),
+      appBar: AppBar(
+        title: const Text('統計'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.bar_chart),
+            tooltip: '詳細統計（シナリオ別・トレンド）',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const AdvancedStatisticsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(

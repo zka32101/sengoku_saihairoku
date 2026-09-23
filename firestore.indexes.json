@@ -1,0 +1,14 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "rankings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "userId", "order": "ASCENDING"},
+        {"fieldPath": "scenarioId", "order": "ASCENDING"},
+        {"fieldPath": "score", "order": "DESCENDING"}
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

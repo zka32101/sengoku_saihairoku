@@ -67,23 +67,5 @@ service cloud.firestore {
       allow read: if signedIn();
       allow write: if false;
     }
-
-    // battle_results/{id}, message_records/{id}：FirebaseManager が
-    // 定義しているが現状どこからも呼び出されていないレガシーコレクション。
-    // 将来使われる場合に備え、他コレクションと同じ所有者ベースの制限を
-    // かけておく。
-    match /battle_results/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn()
-        && request.resource.data.userId == request.auth.uid;
-      allow update, delete: if false;
-    }
-
-    match /message_records/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn()
-        && request.resource.data.userId == request.auth.uid;
-      allow update, delete: if false;
-    }
   }
 }

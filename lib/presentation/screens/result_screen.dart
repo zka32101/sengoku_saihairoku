@@ -10,6 +10,7 @@ import '../../domain/ranking/turn_rank_calculator.dart';
 import '../../data/repositories/turn_rank_repository.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../../data/services/progression_calculator.dart';
@@ -49,6 +50,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   late final TurnRankRepository _turnRankRepo;
   late DailyChallengeRepository _challengeRepo;
+  late EventChallengeRepository _eventChallengeRepo;
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
   late AchievementChecker _achievementChecker;
@@ -72,6 +74,7 @@ class _ResultScreenState extends State<ResultScreen> {
     super.initState();
     _turnRankRepo = TurnRankRepository();
     _challengeRepo = DailyChallengeRepository();
+    _eventChallengeRepo = EventChallengeRepository();
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
     _achievementChecker = AchievementChecker();
@@ -88,6 +91,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     _saveBattleResult();
     _checkChallengeCompletion();
+    _checkEventChallengeCompletion();
     _recordProgressionXp();
   }
 
@@ -177,6 +181,30 @@ class _ResultScreenState extends State<ResultScreen> {
       setState(() {
         _challengeCompleted = true;
       });
+    }
+  }
+
+  Future<void> _checkEventChallengeCompletion() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    final event = await _eventChallengeRepo.getActiveEvent();
+    if (event == null) return;
+    if (event.scenario != widget.args.scenario) return;
+    if (event.difficulty != widget.args.difficulty) return;
+
+    final existingProgress =
+        await _eventChallengeRepo.getProgress(userId, event.id);
+    if (existingProgress != null) return; // 既に達成済み
+
+    final isMet = ChallengeService.areConditionsMet(
+      event.conditions,
+      widget.args.data,
+      widget.args.data.turnCount,
+    );
+
+    if (isMet) {
+      await _eventChallengeRepo.completeEvent(userId, event.id);
     }
   }
 

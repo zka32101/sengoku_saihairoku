@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../core/services/firebase_service.dart';
 import '../../core/services/notification_service.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/repositories/event_challenge_repository.dart';
+import '../../data/repositories/currency_repository.dart';
 import '../../data/models/daily_challenge.dart';
+import '../../data/models/event_challenge.dart';
 import '../widgets/challenge_card.dart';
+import '../widgets/event_banner.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,14 +18,52 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late DailyChallengeRepository _challengeRepo;
+  late EventChallengeRepository _eventChallengeRepo;
   DailyChallenge? _todayChallenge;
   ChallengeProgress? _todayProgress;
+  EventChallenge? _activeEvent;
+  EventChallengeProgress? _eventProgress;
 
   @override
   void initState() {
     super.initState();
     _challengeRepo = DailyChallengeRepository();
+    _eventChallengeRepo = EventChallengeRepository();
     _loadTodayChallenge();
+    _loadActiveEvent();
+  }
+
+  Future<void> _loadActiveEvent() async {
+    final event = await _eventChallengeRepo.getActiveEvent();
+    if (event == null) {
+      setState(() => _activeEvent = null);
+      return;
+    }
+
+    final userId = FirebaseService().userId;
+    final progress = userId != null
+        ? await _eventChallengeRepo.getProgress(userId, event.id)
+        : null;
+
+    if (!mounted) return;
+    setState(() {
+      _activeEvent = event;
+      _eventProgress = progress;
+    });
+  }
+
+  Future<void> _claimEventReward() async {
+    final event = _activeEvent;
+    final userId = FirebaseService().userId;
+    if (event == null || userId == null) return;
+
+    await CurrencyRepository().addGold(
+      userId,
+      (event.baseReward * event.rewardMultiplier).round(),
+      source: 'event_challenge_${event.id}',
+    );
+    await _eventChallengeRepo.claimReward(userId, event.id);
+    await _loadActiveEvent();
   }
 
   Future<void> _loadTodayChallenge() async {
@@ -51,6 +94,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
+                    if (_activeEvent != null)
+                      EventBanner(
+                        event: _activeEvent!,
+                        progress: _eventProgress,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/scenario_select',
+                          );
+                        },
+                        onClaim: _claimEventReward,
+                      ),
                     if (_todayChallenge != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

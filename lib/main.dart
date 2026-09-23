@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
 import 'core/services/notification_service.dart';
 import 'core/services/purchase_service.dart';
+import 'core/services/ad_service.dart';
 import 'data/repositories/turn_rank_repository.dart';
 import 'firebase_options.dart';
 import 'presentation/screens/home_screen.dart';
@@ -61,6 +62,9 @@ void main() async {
 
   // Initialize NotificationService（ローカル通知の権限リクエスト・初期化）
   await NotificationService().initialize();
+
+  // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
+  await AdService().initialize();
 
   runApp(const ProviderScope(child: SengokuSaihairokuApp()));
 }

@@ -29,6 +29,8 @@ enum AchievementConditionType {
   totalPlayTime,     // 総プレイ時間
   scenarioCleared,   // シナリオクリア
   perfectBattle,     // パーフェクト戦闘
+  eventChallengeCompleted, // 期間限定イベントチャレンジ達成数
+  warlordsCollected,       // 武将図鑑の解放数
 }
 
 /// 実績定義

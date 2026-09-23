@@ -98,6 +98,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: 'その他',
             children: [
               ListTile(
+                leading: const Icon(Icons.school, color: Colors.grey),
+                title: const Text('チュートリアルをもう一度見る',
+                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                onTap: () => Navigator.pushNamed(context, '/onboarding'),
+              ),
+              ListTile(
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
                 title: const Text('プライバシーポリシー',
                     style: TextStyle(color: Color(0xFFE8D5B0))),

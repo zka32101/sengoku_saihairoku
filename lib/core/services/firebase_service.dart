@@ -75,9 +75,14 @@ class FirebaseService {
     }
   }
 
-  Future<List<RankingEntry>> getGlobalRankings({
+  /// グローバルランキングをページ単位で取得する。
+  /// [startAfter] に前回取得分の最後のドキュメントを渡すと続きから取得する
+  /// （初回取得時はnull）。[rankOffset] は表示用の順位の開始値（0始まり）。
+  Future<RankingPage> getGlobalRankingsPage({
     String? scenarioId,
-    int limit = 100,
+    int limit = 20,
+    DocumentSnapshot? startAfter,
+    int rankOffset = 0,
   }) async {
     try {
       Query query = _firestore.collection('rankings').orderBy('score', descending: true);
@@ -86,14 +91,18 @@ class FirebaseService {
         query = query.where('scenarioId', isEqualTo: scenarioId);
       }
 
+      if (startAfter != null) {
+        query = query.startAfterDocument(startAfter);
+      }
+
       query = query.limit(limit);
 
       final snapshot = await query.get();
-      return snapshot.docs
+      final entries = snapshot.docs
           .asMap()
           .entries
           .map((e) => RankingEntry(
-                rank: e.key + 1,
+                rank: rankOffset + e.key + 1,
                 userId: e.value['userId'] as String? ?? 'Anonymous',
                 scenarioId: e.value['scenarioId'] as String? ?? '',
                 score: e.value['score'] as int? ?? 0,
@@ -104,8 +113,14 @@ class FirebaseService {
                 duration: e.value['duration'] as int? ?? 0,
               ))
           .toList();
+
+      return RankingPage(
+        entries: entries,
+        lastDocument: snapshot.docs.isNotEmpty ? snapshot.docs.last : null,
+        hasMore: snapshot.docs.length == limit,
+      );
     } catch (e) {
-      return [];
+      return RankingPage(entries: [], lastDocument: null, hasMore: false);
     }
   }
 
@@ -163,6 +178,21 @@ class FirebaseService {
       await doc.reference.delete();
     }
   }
+}
+
+/// グローバルランキングの1ページ分の取得結果。
+/// [lastDocument] を次回の [FirebaseService.getGlobalRankingsPage] 呼び出しの
+/// [startAfter] に渡すことで続きのページを取得できる。
+class RankingPage {
+  final List<RankingEntry> entries;
+  final DocumentSnapshot? lastDocument;
+  final bool hasMore;
+
+  RankingPage({
+    required this.entries,
+    required this.lastDocument,
+    required this.hasMore,
+  });
 }
 
 class RankingEntry {

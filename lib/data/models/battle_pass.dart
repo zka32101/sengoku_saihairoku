@@ -116,8 +116,18 @@ class BattlePass {
   };
 }
 
+/// `BattlePassProgress`と、進捗未取得時に使うプレースホルダーを
+/// 同一の型として扱うためのインターフェース（画面側の表示ロジックが
+/// どちらが渡されても共通コードで扱えるようにする）
+abstract class BattlePassProgressView {
+  int get currentTier;
+  int get currentXp;
+  List<String> get unlockedRewards;
+  bool get hasPremium;
+}
+
 /// ユーザーのバトルパス進捗
-class BattlePassProgress {
+class BattlePassProgress implements BattlePassProgressView {
   final String userId;
   final String battlePassId;
   final int currentTier;

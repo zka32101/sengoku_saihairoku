@@ -369,7 +369,7 @@ class _PremiumUpsellCard extends StatelessWidget {
 }
 
 class _CurrentTierCard extends StatelessWidget {
-  final _IBattlePassProgress progress;
+  final BattlePassProgressView progress;
   final BattlePass battlePass;
 
   const _CurrentTierCard({
@@ -519,7 +519,7 @@ class _TierRewardCard extends StatelessWidget {
   final BattlePassTier tier;
   final bool isUnlocked;
   final bool isCurrentTier;
-  final _IBattlePassProgress currentProgress;
+  final BattlePassProgressView currentProgress;
   final bool userHasPremium;
 
   const _TierRewardCard({
@@ -672,16 +672,8 @@ class _TierRewardCard extends StatelessWidget {
   }
 }
 
-/// Abstract interface for flexible progress display
-abstract class _IBattlePassProgress {
-  int get currentTier;
-  int get currentXp;
-  List<String> get unlockedRewards;
-  bool get hasPremium;
-}
-
 /// Placeholder for when no progress is loaded
-class _BattlePassProgressPlaceholder implements _IBattlePassProgress {
+class _BattlePassProgressPlaceholder implements BattlePassProgressView {
   @override
   int get currentTier => 1;
 
@@ -694,5 +686,3 @@ class _BattlePassProgressPlaceholder implements _IBattlePassProgress {
   @override
   bool get hasPremium => false;
 }
-
-extension on BattlePassProgress implements _IBattlePassProgress {}

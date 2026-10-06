@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/repositories/onboarding_repository.dart';
+import 'tutorial_battle_screen.dart';
 
 class _OnboardingPage {
   final IconData icon;
@@ -87,8 +88,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeOut,
       );
     } else {
-      _finish();
+      _startTutorialBattle();
     }
+  }
+
+  void _startTutorialBattle() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => TutorialBattleScreen(onFinished: _finish),
+      ),
+    );
   }
 
   @override

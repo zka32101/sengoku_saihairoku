@@ -68,14 +68,20 @@ class NotificationService {
 
   /// 本日のデイリーチャレンジが未達成の場合、翌日の朝にリマインダーを予約する。
   /// 既に予約済みなら上書き、達成済みなら [cancelDailyChallengeReminder] で解除すること。
-  Future<void> scheduleDailyChallengeReminder() async {
+  ///
+  /// [currentStreak] が1以上の場合（連続達成中）は、ストリークが途切れる旨を
+  /// 通知文に含めて継続を促す。
+  Future<void> scheduleDailyChallengeReminder({int currentStreak = 0}) async {
     if (!_initialized) return;
 
     final tomorrow = _nextInstanceOfHour(10, daysFromNow: 1);
+    final body = currentStreak > 0
+        ? '$currentStreak日連続達成中！今日挑戦しないとストリークが途切れてしまいます。'
+        : '新しいデイリーチャレンジに挑戦しましょう！';
     await _plugin.zonedSchedule(
       _dailyChallengeNotificationId,
       '本日のデイリーチャレンジ',
-      '新しいデイリーチャレンジに挑戦しましょう！',
+      body,
       tomorrow,
       _reminderDetails,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

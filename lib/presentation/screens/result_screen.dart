@@ -90,9 +90,10 @@ class _ResultScreenState extends State<ResultScreen> {
     });
 
     _saveBattleResult();
-    _checkChallengeCompletion();
     _checkEventChallengeCompletion();
-    _recordProgressionXp();
+    // XP計算でストリークボーナスを正しく反映するため、
+    // チャレンジ達成判定（ストリーク更新を含む）の完了を待ってから実行する
+    _checkChallengeCompletion().then((_) => _recordProgressionXp());
   }
 
   Future<void> _saveBattleResult() async {
@@ -252,7 +253,7 @@ class _ResultScreenState extends State<ResultScreen> {
       _xpGained = ProgressionCalculator.calculateXpGain(
         battleResult: widget.args.data,
         difficulty: widget.args.difficulty,
-        currentChallengeStreak: 0, // TODO: チャレンジストリークを取得
+        currentChallengeStreak: _challengeRepo.getCurrentStreak(),
         isFirstClearOnDifficulty: false, // TODO: 難易度別クリア状況を確認
         turnCount: widget.args.data.turnCount,
       );

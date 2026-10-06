@@ -13,6 +13,8 @@ class DailyChallengeRepository {
 
   // SharedPreferences キー
   static const String _progressKey = 'daily_challenge_progress';
+  static const String _streakCountKey = 'daily_challenge_streak_count';
+  static const String _streakLastDateKey = 'daily_challenge_streak_last_date';
 
   factory DailyChallengeRepository() {
     return _instance;
@@ -115,7 +117,37 @@ class DailyChallengeRepository {
     }
 
     await _prefs.setString(_progressKey, jsonEncode(progressList));
+    await _recordStreakCompletion(today);
     print('✓ Challenge $challengeId completed on $today');
+  }
+
+  /// 連続達成日数（ストリーク）を更新する。
+  /// 前回の達成日が「昨日」ならストリークを+1、それ以外（初回/途切れ後）なら1にリセット。
+  /// 同日に複数回達成が記録された場合は何もしない。
+  Future<void> _recordStreakCompletion(String today) async {
+    final lastDate = _prefs.getString(_streakLastDateKey);
+    if (lastDate == today) return;
+
+    final yesterday = _formatDate(DateTime.now().subtract(const Duration(days: 1)));
+    final currentStreak = _prefs.getInt(_streakCountKey) ?? 0;
+    final newStreak = lastDate == yesterday ? currentStreak + 1 : 1;
+
+    await _prefs.setInt(_streakCountKey, newStreak);
+    await _prefs.setString(_streakLastDateKey, today);
+  }
+
+  /// 現在のデイリーチャレンジ連続達成日数を取得する。
+  /// 最後の達成日が今日でも昨日でもない場合（1日以上空いた場合）はストリークが
+  /// 途切れているため0を返す。
+  int getCurrentStreak() {
+    final lastDate = _prefs.getString(_streakLastDateKey);
+    if (lastDate == null) return 0;
+
+    final today = _getTodayKey();
+    final yesterday = _formatDate(DateTime.now().subtract(const Duration(days: 1)));
+    if (lastDate != today && lastDate != yesterday) return 0;
+
+    return _prefs.getInt(_streakCountKey) ?? 0;
   }
 
   /// チャレンジ報酬受け取りを記録

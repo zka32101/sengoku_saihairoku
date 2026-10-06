@@ -8,6 +8,14 @@
         {"fieldPath": "scenarioId", "order": "ASCENDING"},
         {"fieldPath": "score", "order": "DESCENDING"}
       ]
+    },
+    {
+      "collectionGroup": "rankings",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "userId", "order": "ASCENDING"},
+        {"fieldPath": "playedAt", "order": "DESCENDING"}
+      ]
     }
   ],
   "fieldOverrides": []

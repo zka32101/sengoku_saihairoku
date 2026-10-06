@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
+import '../../data/models/scenario_data.dart';
 import '../../data/repositories/friend_repository.dart';
 
 /// フレンド管理画面：自分のフレンドコード表示・共有、
@@ -20,6 +21,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
   String? _myCode;
   List<FriendInfo> _friends = [];
   List<FriendRankingEntry> _ranking = [];
+  List<FriendActivityEntry> _activity = [];
   bool _loading = true;
   bool _isAddingFriend = false;
   String? _errorMessage;
@@ -46,14 +48,26 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final code = await _friendRepo.getOrCreateMyFriendCode(userId);
     final friends = await _friendRepo.getFriends(userId);
     final ranking = await _friendRepo.getFriendsRanking(userId);
+    final activity = await _friendRepo.getFriendsActivity(userId);
 
     if (!mounted) return;
     setState(() {
       _myCode = code;
       _friends = friends;
       _ranking = ranking;
+      _activity = activity;
       _loading = false;
     });
+  }
+
+  /// アクティビティフィード表示用：userIdからフレンドコードを解決する
+  /// （自分自身はnullを返し、呼び出し側で「あなた」と表示させる）
+  String? _friendCodeFor(String userId) {
+    if (userId == FirebaseService().userId) return null;
+    for (final friend in _friends) {
+      if (friend.userId == userId) return friend.friendCode;
+    }
+    return null;
   }
 
   Future<void> _addFriend() async {
@@ -162,6 +176,33 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             isMe: entry.value.userId == myUserId,
                           ),
                         ),
+                  const SizedBox(height: 24),
+                  Text(
+                    '最近の戦績',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFFD700),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  if (_activity.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Center(
+                        child: Text(
+                          'まだ戦績がありません',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                    )
+                  else
+                    ..._activity.map(
+                      (entry) => _ActivityRow(
+                        entry: entry,
+                        friendCode: _friendCodeFor(entry.userId),
+                      ),
+                    ),
                   const SizedBox(height: 24),
                   Text(
                     'フレンド一覧 (${_friends.length})',
@@ -389,6 +430,46 @@ class _RankingRow extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActivityRow extends StatelessWidget {
+  final FriendActivityEntry entry;
+  final String? friendCode; // nullなら自分自身
+
+  const _ActivityRow({required this.entry, required this.friendCode});
+
+  String get _scenarioLabel {
+    try {
+      return Scenario.values.byName(entry.scenarioId).displayNameJa;
+    } catch (_) {
+      return entry.scenarioId;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final playerLabel = friendCode ?? 'あなた';
+    final minutesAgo = DateTime.now().difference(entry.playedAt).inMinutes;
+    final timeLabel = minutesAgo < 60
+        ? '$minutesAgo分前'
+        : '${entry.playedAt.month}月${entry.playedAt.day}日';
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        leading: Icon(
+          entry.won ? Icons.emoji_events : Icons.close,
+          color: entry.won ? Colors.amber : Colors.grey,
+        ),
+        title: Text('$playerLabel が$_scenarioLabelで${entry.won ? '勝利' : '敗北'}'),
+        subtitle: Text(timeLabel, style: const TextStyle(fontSize: 12)),
+        trailing: Text(
+          '${entry.score} pt',
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.cyan),
         ),
       ),
     );

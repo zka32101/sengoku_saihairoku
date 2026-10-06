@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sengoku_saihairoku/data/models/daily_challenge.dart';
+import 'package:sengoku_saihairoku/data/models/difficulty_mode.dart';
+import 'package:sengoku_saihairoku/data/models/scenario_data.dart';
 import 'package:sengoku_saihairoku/domain/challenges/challenge_service.dart';
 import 'package:sengoku_saihairoku/domain/scoring/score_calculator.dart';
 import 'package:sengoku_saihairoku/domain/state/battle_state.dart';

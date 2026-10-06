@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/user_progression.dart';
 import '../../data/repositories/progression_repository.dart';
+import '../../data/repositories/reward_repository.dart';
 import '../../domain/progression/prestige_manager.dart';
 import '../widgets/screen_transition.dart';
 
@@ -26,7 +27,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
     _progressionRepo = ProgressionRepository();
     _prestigeManager = PrestigeManager(
       progressionRepository: _progressionRepo,
-      rewardRepository: _progressionRepo,
+      rewardRepository: RewardRepository(),
     );
     _loadUserData();
   }

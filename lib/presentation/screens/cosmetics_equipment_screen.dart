@@ -416,7 +416,7 @@ class _CosmeticEquipmentCard extends StatelessWidget {
       AcquisitionMethod.achievement => 'アチーブメント',
       AcquisitionMethod.prestigeReward => 'プレスティジ報酬',
       AcquisitionMethod.battlePass => 'バトルパス',
-      AcquisitionMethod.other => 'その他',
+      AcquisitionMethod.eventReward => 'イベント報酬',
     };
   }
 
@@ -426,7 +426,7 @@ class _CosmeticEquipmentCard extends StatelessWidget {
       AcquisitionMethod.achievement => Colors.purple,
       AcquisitionMethod.prestigeReward => Colors.amber,
       AcquisitionMethod.battlePass => Colors.blue,
-      AcquisitionMethod.other => Colors.grey,
+      AcquisitionMethod.eventReward => Colors.green,
     };
   }
 

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
@@ -11,25 +12,78 @@ class RankingScreen extends StatefulWidget {
 }
 
 class _RankingScreenState extends State<RankingScreen> {
+  static const int _pageSize = 20;
+
   Scenario? _selectedScenario;
   bool _isGlobal = true;
-  late Future<List<RankingEntry>> _rankingFuture;
+  final _scrollController = ScrollController();
+
+  // グローバルランキング（ページネーション対応）
+  final List<RankingEntry> _globalRankings = [];
+  DocumentSnapshot? _lastDocument;
+  bool _hasMoreGlobal = true;
+  bool _isLoadingGlobal = false;
+  bool _globalLoadFailed = false;
+
+  // マイプレイ（件数が少ないため単発取得のまま）
+  Future<List<RankingEntry>>? _userRankingFuture;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     _loadRankings();
   }
 
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_isGlobal || _isLoadingGlobal || !_hasMoreGlobal) return;
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      _loadMoreGlobalRankings();
+    }
+  }
+
   void _loadRankings() {
+    if (_isGlobal) {
+      setState(() {
+        _globalRankings.clear();
+        _lastDocument = null;
+        _hasMoreGlobal = true;
+        _globalLoadFailed = false;
+      });
+      _loadMoreGlobalRankings();
+    } else {
+      setState(() {
+        _userRankingFuture = FirebaseService().getUserRankings();
+      });
+    }
+  }
+
+  Future<void> _loadMoreGlobalRankings() async {
+    if (_isLoadingGlobal || !_hasMoreGlobal) return;
+    setState(() => _isLoadingGlobal = true);
+
+    final page = await FirebaseService().getGlobalRankingsPage(
+      scenarioId: _selectedScenario?.name,
+      limit: _pageSize,
+      startAfter: _lastDocument,
+      rankOffset: _globalRankings.length,
+    );
+
+    if (!mounted) return;
     setState(() {
-      if (_isGlobal) {
-        _rankingFuture = FirebaseService().getGlobalRankings(
-          scenarioId: _selectedScenario?.name,
-        );
-      } else {
-        _rankingFuture = FirebaseService().getUserRankings();
-      }
+      _globalRankings.addAll(page.entries);
+      _lastDocument = page.lastDocument;
+      _hasMoreGlobal = page.hasMore;
+      _isLoadingGlobal = false;
+      _globalLoadFailed = page.entries.isEmpty && _globalRankings.isEmpty;
     });
   }
 
@@ -98,37 +152,66 @@ class _RankingScreenState extends State<RankingScreen> {
               ),
             ),
           Expanded(
-            child: FutureBuilder<List<RankingEntry>>(
-              future: _rankingFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text(
-                      snapshot.hasError
-                          ? 'エラーが発生しました'
-                          : 'ランキングデータはまだありません',
-                    ),
-                  );
-                }
-
-                final rankings = snapshot.data!;
-                return ListView.builder(
-                  itemCount: rankings.length,
-                  itemBuilder: (context, index) {
-                    final entry = rankings[index];
-                    return _RankingCard(entry: entry, index: index);
-                  },
-                );
-              },
-            ),
+            child: _isGlobal ? _buildGlobalRankingList() : _buildUserRankingList(),
           ),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(context),
+    );
+  }
+
+  Widget _buildGlobalRankingList() {
+    if (_globalLoadFailed) {
+      return const Center(child: Text('エラーが発生しました'));
+    }
+    if (_globalRankings.isEmpty && _isLoadingGlobal) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (_globalRankings.isEmpty) {
+      return const Center(child: Text('ランキングデータはまだありません'));
+    }
+
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: _globalRankings.length + (_hasMoreGlobal ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index >= _globalRankings.length) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final entry = _globalRankings[index];
+        return _RankingCard(entry: entry, index: index);
+      },
+    );
+  }
+
+  Widget _buildUserRankingList() {
+    return FutureBuilder<List<RankingEntry>>(
+      future: _userRankingFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Text(
+              snapshot.hasError ? 'エラーが発生しました' : 'ランキングデータはまだありません',
+            ),
+          );
+        }
+
+        final rankings = snapshot.data!;
+        return ListView.builder(
+          itemCount: rankings.length,
+          itemBuilder: (context, index) {
+            final entry = rankings[index];
+            return _RankingCard(entry: entry, index: index);
+          },
+        );
+      },
     );
   }
 

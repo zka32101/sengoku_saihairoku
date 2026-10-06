@@ -20,7 +20,7 @@ class StatisticsDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final playerRank = PlayerRank.fromPoints(totalAchievementPoints);
     final unlockedAchievements =
-        achievements.where((a) => a.unlocked).length;
+        achievements.where((a) => a.isUnlocked).length;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

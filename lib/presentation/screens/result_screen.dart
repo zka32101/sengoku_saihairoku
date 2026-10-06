@@ -266,7 +266,7 @@ class _ResultScreenState extends State<ResultScreen> {
         xpGained: _xpGained,
         source: 'battle',
         multipliers: {
-          'difficulty': ProgressionCalculator._getDifficultyMultiplier(
+          'difficulty': ProgressionCalculator.getDifficultyMultiplier(
             widget.args.difficulty,
           ),
         },

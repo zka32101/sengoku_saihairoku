@@ -19,7 +19,7 @@ class ProgressionCalculator {
     final baseXp = (battleResult.totalScore / 10).toInt();
 
     // 難易度ボーナス
-    final difficultyMultiplier = _getDifficultyMultiplier(difficulty);
+    final difficultyMultiplier = getDifficultyMultiplier(difficulty);
 
     // パフォーマンスボーナス
     final turnEfficiency = _calculateTurnEfficiency(turnCount);
@@ -44,7 +44,7 @@ class ProgressionCalculator {
   }
 
   /// 難易度別のXP倍率
-  static double _getDifficultyMultiplier(DifficultyMode difficulty) {
+  static double getDifficultyMultiplier(DifficultyMode difficulty) {
     return switch (difficulty) {
       DifficultyMode.easy => 0.7,
       DifficultyMode.normal => 1.0,

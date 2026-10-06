@@ -542,7 +542,9 @@ class _TierRewardCard extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Container(
+      child: Opacity(
+        opacity: canAccess ? 1.0 : 0.6,
+        child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isUnlocked
@@ -555,7 +557,6 @@ class _TierRewardCard extends StatelessWidget {
             width: 1,
           ),
           borderRadius: BorderRadius.circular(8),
-          opacity: canAccess ? 1.0 : 0.6,
         ),
         child: Row(
           children: [
@@ -666,6 +667,7 @@ class _TierRewardCard extends StatelessWidget {
                 size: 24,
               ),
           ],
+        ),
         ),
       ),
     );

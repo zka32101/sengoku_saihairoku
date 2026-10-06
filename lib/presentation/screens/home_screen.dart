@@ -98,7 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 未達成なら翌日にリマインダー通知を予約、達成済みなら解除
     if (challenge != null && (progress == null || !progress.isCompleted)) {
-      await NotificationService().scheduleDailyChallengeReminder();
+      await NotificationService().scheduleDailyChallengeReminder(
+        currentStreak: _challengeRepo.getCurrentStreak(),
+      );
     } else {
       await NotificationService().cancelDailyChallengeReminder();
     }

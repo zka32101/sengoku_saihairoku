@@ -72,6 +72,12 @@ class AchievementDetailView extends StatelessWidget {
         return 'シナリオクリア';
       case AchievementConditionType.perfectBattle:
         return 'パーフェクト戦闘';
+      case AchievementConditionType.prestigeResetCount:
+        return 'プレスティジリセット回数';
+      case AchievementConditionType.eventChallengeCompleted:
+        return 'イベントチャレンジ達成';
+      case AchievementConditionType.warlordsCollected:
+        return '武将図鑑解放数';
     }
   }
 
@@ -96,6 +102,12 @@ class AchievementDetailView extends StatelessWidget {
         return 'シナリオをクリア';
       case AchievementConditionType.perfectBattle:
         return 'ユニットロスなしでクリア';
+      case AchievementConditionType.prestigeResetCount:
+        return '$conditionValue 回プレスティジリセット';
+      case AchievementConditionType.eventChallengeCompleted:
+        return '$conditionValue 個のイベントチャレンジを達成';
+      case AchievementConditionType.warlordsCollected:
+        return '$conditionValue 人の武将を図鑑に登録';
     }
   }
 

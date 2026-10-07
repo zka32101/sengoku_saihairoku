@@ -3,6 +3,7 @@ import '../../data/models/achievement.dart';
 import '../../data/repositories/achievement_repository.dart';
 import '../../core/services/firebase_service.dart';
 import '../widgets/achievement_display.dart';
+import 'achievement_detail_view.dart';
 
 class AchievementListScreen extends StatefulWidget {
   const AchievementListScreen({super.key});

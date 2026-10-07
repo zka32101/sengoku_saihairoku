@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/advanced_statistics.dart';
+import '../../data/models/difficulty_mode.dart';
 import '../../data/services/statistics_service.dart';
 import '../widgets/advanced_statistics_display.dart';
 import '../widgets/trend_sparkline.dart';
@@ -212,7 +213,8 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: _getTrendColor(summary.performanceTrend.trend)[50],
+                      color: _getTrendColor(summary.performanceTrend.trend)
+                          .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(

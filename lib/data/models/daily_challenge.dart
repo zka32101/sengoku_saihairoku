@@ -122,7 +122,7 @@ class DailyChallenge {
 /// チャレンジ達成状態
 class ChallengeProgress {
   final String challengeId;
-  final DateTime completedAt; // 達成日時、nullなら未達成
+  final DateTime? completedAt; // 達成日時、nullなら未達成
   final bool claimed; // 報酬受け取り済みか
 
   ChallengeProgress({

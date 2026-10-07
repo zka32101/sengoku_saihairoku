@@ -174,6 +174,44 @@ class FriendRepository {
       return [];
     }
   }
+
+  /// 自分とフレンドの最近の戦績をまとめたアクティビティフィードを取得する。
+  Future<List<FriendActivityEntry>> getFriendsActivity(
+    String userId, {
+    int limit = 20,
+  }) async {
+    try {
+      final friends = await getFriends(userId);
+      final targetIds = <String>{userId, ...friends.map((f) => f.userId)};
+      if (targetIds.isEmpty) return [];
+
+      // Firestoreの whereIn は最大30件まで
+      final idList = targetIds.take(30).toList();
+
+      final snapshot = await _firestore
+          .collection('rankings')
+          .where('userId', whereIn: idList)
+          .orderBy('playedAt', descending: true)
+          .limit(limit)
+          .get();
+
+      return snapshot.docs.map((doc) {
+        final data = doc.data();
+        return FriendActivityEntry(
+          userId: data['userId'] as String? ?? '',
+          scenarioId: data['scenarioId'] as String? ?? '',
+          score: data['score'] as int? ?? 0,
+          won: data['won'] as bool? ?? false,
+          playedAt: data['playedAt'] != null
+              ? (data['playedAt'] as Timestamp).toDate()
+              : DateTime.now(),
+        );
+      }).toList();
+    } catch (e) {
+      print('Error getting friends activity: $e');
+      return [];
+    }
+  }
 }
 
 class FriendRankingEntry {
@@ -181,4 +219,21 @@ class FriendRankingEntry {
   final int totalScore;
 
   const FriendRankingEntry({required this.userId, required this.totalScore});
+}
+
+/// フレンドアクティビティフィードの1件（1戦闘分の戦績）
+class FriendActivityEntry {
+  final String userId;
+  final String scenarioId;
+  final int score;
+  final bool won;
+  final DateTime playedAt;
+
+  const FriendActivityEntry({
+    required this.userId,
+    required this.scenarioId,
+    required this.score,
+    required this.won,
+    required this.playedAt,
+  });
 }

@@ -1,5 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../data/models/achievement.dart';
+
+/// この難易度以上の実績解放時はシェアボタンを表示する
+/// （誰でも獲れるbronze/silverで毎回シェアを促すとノイズになるため、
+/// 希少な実績に限定する）
+const _shareableDifficulties = {
+  AchievementDifficulty.gold,
+  AchievementDifficulty.diamond,
+};
+
+void _shareAchievement(Achievement achievement) {
+  SharePlus.instance.share(
+    ShareParams(
+      text: '戦国采配録で実績「${achievement.name}」を解放した！\n'
+          '${achievement.description}\n'
+          '#戦国采配録',
+    ),
+  );
+}
 
 /// 実績解放通知を管理するサービス
 class AchievementNotificationService {
@@ -290,6 +309,23 @@ class _AchievementNotificationWidgetState
                             ),
                           ),
                         ],
+                      ),
+                    ],
+
+                    if (_shareableDifficulties.contains(widget.achievement.difficulty)) ...[
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () => _shareAchievement(widget.achievement),
+                          icon: const Icon(Icons.share, size: 16),
+                          label: const Text('シェアする'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: const Color(0xFFFFD700),
+                            side: const BorderSide(color: Color(0xFFFFD700)),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                        ),
                       ),
                     ],
                   ],

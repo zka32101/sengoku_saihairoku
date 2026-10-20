@@ -193,6 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     _buildSpotBattleCard(context),
                     const SizedBox(height: 16),
+                    _buildChainBattleCard(context),
+                    const SizedBox(height: 16),
                     _buildReplayCard(context),
                     const SizedBox(height: 16),
                     _buildRankingCard(context),
@@ -292,6 +294,55 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.pushNamed(context, '/scenario_select'),
                 icon: const Icon(Icons.play_arrow),
                 label: const Text('シナリオを選ぶ'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChainBattleCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.whatshot, color: Colors.redAccent, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  '連戦モード',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '休憩なしで全シナリオを攻略する高難度の縛りプレイ',
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/chain_battle'),
+                icon: const Icon(Icons.whatshot, color: Colors.redAccent),
+                label: const Text(
+                  '連戦に挑む',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.redAccent),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
               ),
             ),
           ],

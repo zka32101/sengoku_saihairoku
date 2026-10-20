@@ -14,6 +14,7 @@ import '../../data/repositories/weekly_challenge_repository.dart';
 import '../../data/repositories/friend_challenge_repository.dart';
 import '../../data/repositories/friend_repository.dart';
 import '../../data/repositories/ranking_repository.dart';
+import '../../data/repositories/warlord_progress_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
@@ -34,11 +35,13 @@ class ResultScreenArgs {
   final Scenario scenario;
   final DifficultyMode difficulty;
   final BattleStateData data;
+  final List<String> sortiedWarlordIds;
 
   ResultScreenArgs({
     required this.scenario,
     required this.difficulty,
     required this.data,
+    this.sortiedWarlordIds = const [],
   });
 }
 
@@ -148,6 +151,11 @@ class _ResultScreenState extends State<ResultScreen> {
         achievedAt: DateTime.now(),
         turningPointsAchieved: data.tpAchievements.where((a) => a).length,
       );
+
+      if (widget.args.sortiedWarlordIds.isNotEmpty) {
+        await WarlordProgressRepository()
+            .addExpToWarlords(userId, widget.args.sortiedWarlordIds);
+      }
     }
 
     // Check battle achievements

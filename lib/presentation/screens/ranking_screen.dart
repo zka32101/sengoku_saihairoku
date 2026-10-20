@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
+import '../../data/repositories/ranking_repository.dart';
 
 class RankingScreen extends StatefulWidget {
   const RankingScreen({super.key});
@@ -188,28 +189,73 @@ class _RankingScreenState extends State<RankingScreen> {
   }
 
   Widget _buildUserRankingList() {
-    return FutureBuilder<List<RankingEntry>>(
-      future: _userRankingFuture,
+    return Column(
+      children: [
+        if (_selectedScenario != null) _buildSeasonBestCard(_selectedScenario!),
+        Expanded(
+          child: FutureBuilder<List<RankingEntry>>(
+            future: _userRankingFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (snapshot.hasError ||
+                  !snapshot.hasData ||
+                  snapshot.data!.isEmpty) {
+                return Center(
+                  child: Text(
+                    snapshot.hasError ? 'エラーが発生しました' : 'ランキングデータはまだありません',
+                  ),
+                );
+              }
+
+              final rankings = snapshot.data!;
+              return ListView.builder(
+                itemCount: rankings.length,
+                itemBuilder: (context, index) {
+                  final entry = rankings[index];
+                  return _RankingCard(entry: entry, index: index);
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSeasonBestCard(Scenario scenario) {
+    final userId = FirebaseService().userId;
+    if (userId == null) return const SizedBox.shrink();
+
+    return FutureBuilder<int?>(
+      future: RankingRepository().getMySeasonBestScore(userId, scenario),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
-            child: Text(
-              snapshot.hasError ? 'エラーが発生しました' : 'ランキングデータはまだありません',
+        final bestScore = snapshot.data;
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          child: Card(
+            color: const Color(0xFF2A1A0A),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  const Icon(Icons.emoji_events, color: Color(0xFFFFD700)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      bestScore == null
+                          ? '${RankingRepository().currentSeasonLabel}: まだ記録がありません'
+                          : '${RankingRepository().currentSeasonLabel}: '
+                              '自己ベスト $bestScore点',
+                      style: const TextStyle(color: Color(0xFFE8D5B0)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          );
-        }
-
-        final rankings = snapshot.data!;
-        return ListView.builder(
-          itemCount: rankings.length,
-          itemBuilder: (context, index) {
-            final entry = rankings[index];
-            return _RankingCard(entry: entry, index: index);
-          },
+          ),
         );
       },
     );

@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/repositories/friend_repository.dart';
+import '../../data/repositories/friend_challenge_repository.dart';
 
 /// フレンド管理画面：自分のフレンドコード表示・共有、
 /// フレンド追加、フレンド限定ランキング表示
@@ -102,6 +103,53 @@ class _FriendsScreenState extends State<FriendsScreen> {
     if (userId == null) return;
     await _friendRepo.removeFriend(userId, friendUserId);
     await _loadData();
+  }
+
+  Future<void> _challengeFriend(FriendInfo friend) async {
+    final scenario = await showDialog<Scenario>(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: const Text('挑戦するシナリオを選ぶ'),
+        children: Scenario.values
+            .map((s) => SimpleDialogOption(
+                  onPressed: () => Navigator.pop(ctx, s),
+                  child: Text(s.displayNameJa),
+                ))
+            .toList(),
+      ),
+    );
+    if (scenario == null || !mounted) return;
+
+    final bestScore =
+        await _friendRepo.getFriendBestScore(friend.userId, scenario.name);
+    if (!mounted) return;
+
+    if (bestScore == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('このフレンドはまだこのシナリオの記録がありません')),
+      );
+      return;
+    }
+
+    await FriendChallengeRepository().setChallenge(
+      FriendChallengeTarget(
+        friendUserId: friend.userId,
+        friendLabel: friend.friendCode,
+        scenario: scenario,
+        targetScore: bestScore,
+      ),
+    );
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '目標設定: ${friend.friendCode}の${scenario.displayNameJa}スコア '
+          '$bestScore点を超えよう！シナリオ選択から出陣してください',
+        ),
+        duration: const Duration(seconds: 4),
+      ),
+    );
   }
 
   void _shareMyCode() {
@@ -228,6 +276,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       (friend) => _FriendRow(
                         friend: friend,
                         onRemove: () => _removeFriend(friend.userId),
+                        onChallenge: () => _challengeFriend(friend),
                       ),
                     ),
                 ],
@@ -479,8 +528,13 @@ class _ActivityRow extends StatelessWidget {
 class _FriendRow extends StatelessWidget {
   final FriendInfo friend;
   final VoidCallback onRemove;
+  final VoidCallback onChallenge;
 
-  const _FriendRow({required this.friend, required this.onRemove});
+  const _FriendRow({
+    required this.friend,
+    required this.onRemove,
+    required this.onChallenge,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -488,9 +542,19 @@ class _FriendRow extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.person, color: Color(0xFFFFD700)),
         title: Text(friend.friendCode),
-        trailing: IconButton(
-          icon: const Icon(Icons.person_remove, color: Colors.grey),
-          onPressed: onRemove,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.sports_kabaddi, color: Color(0xFFFFD700)),
+              tooltip: '挑戦する',
+              onPressed: onChallenge,
+            ),
+            IconButton(
+              icon: const Icon(Icons.person_remove, color: Colors.grey),
+              onPressed: onRemove,
+            ),
+          ],
         ),
       ),
     );

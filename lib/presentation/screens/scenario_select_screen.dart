@@ -288,6 +288,22 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     return multiplier;
   }
 
+  // 配属武将ごとの担当部隊（先鋒/本隊）に武勇ステータスを反映した
+  // ユニット単位の追加兵力倍率。2人選んでいる場合のみ意味を持つ
+  // （1人以下なら全ユニット均一のため_warlordStrengthMultiplierのみで十分）。
+  List<double>? get _perUnitStrengthMultipliers {
+    if (_selectedWarlords.length < 2) return null;
+    final unitCount = _scenarioData?.playerUnits.length ?? 0;
+    if (unitCount == 0) return null;
+
+    return List.generate(unitCount, (index) {
+      // 偶数インデックス=先鋒隊は1人目、奇数インデックス=本隊は2人目が指揮する
+      final warlord = _selectedWarlords[index.isEven ? 0 : 1];
+      final bonus = (warlord.valor / 800.0).clamp(0.0, 0.15);
+      return 1.0 + bonus;
+    });
+  }
+
   Future<void> _loadScenario() async {
     try {
       final scenarioJson = await DefaultAssetBundle.of(context)
@@ -331,6 +347,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
           alternativePerspectiveId: perspective,
           difficultyMode: difficulty,
           warlordStrengthMultiplier: _warlordStrengthMultiplier,
+          perUnitStrengthMultipliers: _perUnitStrengthMultipliers,
         ),
       ),
     );
@@ -441,8 +458,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '統率ステータスに応じて自軍の兵力が上昇します。'
-                  '2名選ぶと相性（同勢力・知略シナジー・統率差）が兵力に反映されます',
+                  '統率ステータスに応じて自軍全体の兵力が上昇します。'
+                  '2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、'
+                  '1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます',
                   style: TextStyle(fontSize: 11, color: Colors.grey[500]),
                 ),
                 const SizedBox(height: 12),

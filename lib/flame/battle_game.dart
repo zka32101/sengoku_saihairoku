@@ -12,6 +12,7 @@ import 'components/unit_component.dart';
 class BattleGame extends FlameGame {
   final ScenarioData scenarioData;
   final double playerStrengthMultiplier;
+  final List<double>? perUnitStrengthMultipliers;
 
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
@@ -20,7 +21,11 @@ class BattleGame extends FlameGame {
   final _ScaledWorld _world = _ScaledWorld();
   bool _ready = false;
 
-  BattleGame({required this.scenarioData, this.playerStrengthMultiplier = 1.0});
+  BattleGame({
+    required this.scenarioData,
+    this.playerStrengthMultiplier = 1.0,
+    this.perUnitStrengthMultipliers,
+  });
 
   @override
   Future<void> onLoad() async {
@@ -34,6 +39,7 @@ class BattleGame extends FlameGame {
     _battleState = BattleState(
       scenario: scenarioData,
       playerStrengthMultiplier: playerStrengthMultiplier,
+      perUnitStrengthMultipliers: perUnitStrengthMultipliers,
     );
     _battleState.onBattleEnd = (data) {
       pauseEngine();

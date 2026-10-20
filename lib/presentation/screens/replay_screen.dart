@@ -353,7 +353,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
   }
 }
 
-/// 共有コードで観戦中のリプレイに「いいね」を送るバー
+/// 共有コードで観戦中のリプレイに「いいね」とコメントを送るバー
 class _ReplayLikeBar extends StatefulWidget {
   final String code;
   final SharedReplayRepository repo;
@@ -368,6 +368,9 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
   int? _likeCount;
   bool _liked = false;
   bool _loading = false;
+  List<ReplayComment> _comments = [];
+  final _commentController = TextEditingController();
+  bool _postingComment = false;
 
   @override
   void initState() {
@@ -375,6 +378,18 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
     widget.repo.getLikeCount(widget.code).then((count) {
       if (mounted) setState(() => _likeCount = count);
     });
+    _loadComments();
+  }
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadComments() async {
+    final comments = await widget.repo.getComments(widget.code);
+    if (mounted) setState(() => _comments = comments);
   }
 
   Future<void> _onLike() async {
@@ -389,20 +404,66 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
     });
   }
 
+  Future<void> _onPostComment() async {
+    final text = _commentController.text.trim();
+    if (text.isEmpty || _postingComment) return;
+
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    setState(() => _postingComment = true);
+    await widget.repo.postComment(widget.code, userId, text);
+    _commentController.clear();
+    await _loadComments();
+    if (mounted) setState(() => _postingComment = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconButton(
-            onPressed: _onLike,
-            icon: Icon(
-              _liked ? Icons.favorite : Icons.favorite_border,
-              color: Colors.redAccent,
-            ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: _onLike,
+                icon: Icon(
+                  _liked ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.redAccent,
+                ),
+              ),
+              Text(_likeCount == null ? '...' : '$_likeCount いいね'),
+            ],
           ),
-          Text(_likeCount == null ? '...' : '$_likeCount いいね'),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _commentController,
+                  maxLength: 140,
+                  decoration: const InputDecoration(
+                    hintText: 'コメントを残す',
+                    isDense: true,
+                    counterText: '',
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: _postingComment ? null : _onPostComment,
+                icon: const Icon(Icons.send),
+              ),
+            ],
+          ),
+          for (final comment in _comments)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                comment.text,
+                style: const TextStyle(fontSize: 13),
+              ),
+            ),
         ],
       ),
     );

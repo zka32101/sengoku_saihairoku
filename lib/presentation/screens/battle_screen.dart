@@ -17,6 +17,7 @@ class BattleScreen extends StatefulWidget {
   final String? alternativePerspectiveId;
   final DifficultyMode difficultyMode;
   final double warlordStrengthMultiplier;
+  final List<double>? perUnitStrengthMultipliers;
 
   const BattleScreen({
     super.key,
@@ -24,6 +25,7 @@ class BattleScreen extends StatefulWidget {
     this.alternativePerspectiveId,
     this.difficultyMode = DifficultyMode.normal,
     this.warlordStrengthMultiplier = 1.0,
+    this.perUnitStrengthMultipliers,
   });
 
   @override
@@ -96,6 +98,7 @@ class _BattleScreenState extends State<BattleScreen> {
       final game = BattleGame(
         scenarioData: data,
         playerStrengthMultiplier: widget.warlordStrengthMultiplier,
+        perUnitStrengthMultipliers: widget.perUnitStrengthMultipliers,
       );
       game.onBattleEnd = _onBattleEnd;
       game.onTurningPointAchieved = (tp, idx) {

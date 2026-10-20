@@ -71,7 +71,14 @@ class TutorialBattleScreen extends StatefulWidget {
   State<TutorialBattleScreen> createState() => _TutorialBattleScreenState();
 }
 
+/// チュートリアルの進め方。「じっくり」は各コマンドの解説文を表示し、
+/// 「駆け足」は解説を省いてコマンドボタンだけを並べ、テンポよく進める。
+/// どちらも同じ4コマンド・同じ結果に到達する（戦術的な難易度差ではなく、
+/// 既にゲームに慣れたプレイヤー向けのテンポ差）。
+enum _TutorialPace { thorough, brisk }
+
 class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
+  _TutorialPace? _pace;
   int _stepIndex = 0;
   int _enemyHp = 100;
   String? _lastResultMessage;
@@ -99,24 +106,70 @@ class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              _EnemyHpBar(enemyHp: _enemyHp),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Center(
-                  child: _isVictory
-                      ? _VictoryPanel(onFinished: widget.onFinished)
-                      : _StepPanel(
-                          step: _steps[_stepIndex],
-                          lastResultMessage: _lastResultMessage,
-                          onExecute: _executeCurrentStep,
-                        ),
+          child: _pace == null
+              ? _PaceSelector(
+                  onSelected: (pace) => setState(() => _pace = pace),
+                )
+              : Column(
+                  children: [
+                    _EnemyHpBar(enemyHp: _enemyHp),
+                    const SizedBox(height: 24),
+                    Expanded(
+                      child: Center(
+                        child: _isVictory
+                            ? _VictoryPanel(onFinished: widget.onFinished)
+                            : _StepPanel(
+                                step: _steps[_stepIndex],
+                                lastResultMessage: _lastResultMessage,
+                                showPrompt: _pace == _TutorialPace.thorough,
+                                onExecute: _executeCurrentStep,
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
+      ),
+    );
+  }
+}
+
+class _PaceSelector extends StatelessWidget {
+  final ValueChanged<_TutorialPace> onSelected;
+
+  const _PaceSelector({required this.onSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            '進め方を選ぶ',
+            style: TextStyle(
+              color: Color(0xFFFFD700),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => onSelected(_TutorialPace.thorough),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text('じっくり学ぶ（解説つき）'),
+            ),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: () => onSelected(_TutorialPace.brisk),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text('駆け足で済ませる（解説なし）'),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -154,12 +207,14 @@ class _EnemyHpBar extends StatelessWidget {
 class _StepPanel extends StatelessWidget {
   final _TutorialStep step;
   final String? lastResultMessage;
+  final bool showPrompt;
   final VoidCallback onExecute;
 
   const _StepPanel({
     required this.step,
     required this.lastResultMessage,
     required this.onExecute,
+    this.showPrompt = true,
   });
 
   @override
@@ -167,7 +222,7 @@ class _StepPanel extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (lastResultMessage != null) ...[
+        if (showPrompt && lastResultMessage != null) ...[
           Text(
             lastResultMessage!,
             textAlign: TextAlign.center,
@@ -175,15 +230,16 @@ class _StepPanel extends StatelessWidget {
           ),
           const SizedBox(height: 16),
         ],
-        Text(
-          step.prompt,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFFE8D5B0),
-            fontSize: 16,
-            height: 1.6,
+        if (showPrompt)
+          Text(
+            step.prompt,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFFE8D5B0),
+              fontSize: 16,
+              height: 1.6,
+            ),
           ),
-        ),
         const SizedBox(height: 32),
         ElevatedButton.icon(
           onPressed: onExecute,

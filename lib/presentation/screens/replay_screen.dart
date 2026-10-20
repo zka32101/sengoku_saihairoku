@@ -194,7 +194,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
       return;
     }
 
-    _showReplayPlayer(replay);
+    _showReplayPlayer(replay, sharedCode: code);
   }
 
   @override
@@ -321,7 +321,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
     );
   }
 
-  void _showReplayPlayer(BattleReplay replay) {
+  void _showReplayPlayer(BattleReplay replay, {String? sharedCode}) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -336,9 +336,74 @@ class _ReplayScreenState extends State<ReplayScreen> {
           ),
           child: SingleChildScrollView(
             controller: scrollController,
-            child: ReplayPlayer(replay: replay),
+            child: Column(
+              children: [
+                if (sharedCode != null)
+                  _ReplayLikeBar(
+                    code: sharedCode,
+                    repo: _sharedReplayRepo,
+                  ),
+                ReplayPlayer(replay: replay),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// 共有コードで観戦中のリプレイに「いいね」を送るバー
+class _ReplayLikeBar extends StatefulWidget {
+  final String code;
+  final SharedReplayRepository repo;
+
+  const _ReplayLikeBar({required this.code, required this.repo});
+
+  @override
+  State<_ReplayLikeBar> createState() => _ReplayLikeBarState();
+}
+
+class _ReplayLikeBarState extends State<_ReplayLikeBar> {
+  int? _likeCount;
+  bool _liked = false;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.repo.getLikeCount(widget.code).then((count) {
+      if (mounted) setState(() => _likeCount = count);
+    });
+  }
+
+  Future<void> _onLike() async {
+    if (_liked || _loading) return;
+    setState(() => _loading = true);
+    final count = await widget.repo.likeReplay(widget.code);
+    if (!mounted) return;
+    setState(() {
+      _likeCount = count;
+      _liked = true;
+      _loading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: _onLike,
+            icon: Icon(
+              _liked ? Icons.favorite : Icons.favorite_border,
+              color: Colors.redAccent,
+            ),
+          ),
+          Text(_likeCount == null ? '...' : '$_likeCount いいね'),
+        ],
       ),
     );
   }

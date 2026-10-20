@@ -6,6 +6,8 @@ import '../../data/models/difficulty_mode.dart';
 import '../../data/models/warlord_data.dart';
 import '../../data/repositories/warlord_repository.dart';
 import '../../data/repositories/warlord_collection_repository.dart';
+import '../../data/repositories/scenario_difficulty_repository.dart';
+import '../../domain/warlord/warlord_compatibility.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
 
@@ -214,14 +216,37 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   DifficultyMode _selectedDifficulty = DifficultyMode.normal;
   bool _loading = true;
 
+  static const int _maxSortiedWarlords = 2;
+
   List<Warlord> _unlockedWarlords = [];
-  Warlord? _selectedWarlord;
+  final List<Warlord> _selectedWarlords = [];
 
   @override
   void initState() {
     super.initState();
     _loadScenario();
     _loadUnlockedWarlords();
+    _loadLastDifficulty();
+  }
+
+  Future<void> _loadLastDifficulty() async {
+    final difficulty = await ScenarioDifficultyRepository()
+        .getLastDifficulty(widget.scenario);
+    if (!mounted) return;
+    setState(() => _selectedDifficulty = difficulty);
+  }
+
+  void _toggleWarlord(Warlord warlord) {
+    setState(() {
+      if (_selectedWarlords.any((w) => w.id == warlord.id)) {
+        _selectedWarlords.removeWhere((w) => w.id == warlord.id);
+        return;
+      }
+      if (_selectedWarlords.length >= _maxSortiedWarlords) {
+        _selectedWarlords.removeAt(0);
+      }
+      _selectedWarlords.add(warlord);
+    });
   }
 
   Future<void> _loadUnlockedWarlords() async {
@@ -241,11 +266,26 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
 
   // 出陣武将の統率ステータスから兵力倍率を算出する。
   // 統率90〜97程度の上位武将でも+9〜10%程度に収まる緩やかな補正。
+  // 2人以上を同時出陣させた場合は、WarlordCompatibilityによる相性倍率
+  // （同勢力ボーナス・知略シナジー・統率差ペナルティ）も掛け合わせる。
   double get _warlordStrengthMultiplier {
-    final warlord = _selectedWarlord;
-    if (warlord == null) return 1.0;
-    final bonus = (warlord.leadership / 1000.0).clamp(0.0, 0.10);
-    return 1.0 + bonus;
+    if (_selectedWarlords.isEmpty) return 1.0;
+
+    double multiplier = 1.0;
+    for (final warlord in _selectedWarlords) {
+      final bonus = (warlord.leadership / 1000.0).clamp(0.0, 0.10);
+      multiplier += bonus;
+    }
+
+    if (_selectedWarlords.length >= 2) {
+      final compatibility = WarlordCompatibility.multiplier(
+        _selectedWarlords[0],
+        _selectedWarlords[1],
+      );
+      multiplier *= compatibility;
+    }
+
+    return multiplier;
   }
 
   Future<void> _loadScenario() async {
@@ -278,6 +318,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   void _startBattle() {
     final perspective = _selectedPerspectiveId;
     final difficulty = _selectedDifficulty;
+
+    ScenarioDifficultyRepository()
+        .setLastDifficulty(widget.scenario, difficulty);
 
     Navigator.pop(context);
     Navigator.push(
@@ -389,7 +432,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
               // Warlord Selection
               if (_unlockedWarlords.isNotEmpty) ...[
                 const Text(
-                  '出陣武将を選ぶ（任意）',
+                  '出陣武将を選ぶ（任意・最大2名）',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -398,7 +441,8 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '統率ステータスに応じて自軍の兵力がわずかに上昇します',
+                  '統率ステータスに応じて自軍の兵力が上昇します。'
+                  '2名選ぶと相性（同勢力・知略シナジー・統率差）が兵力に反映されます',
                   style: TextStyle(fontSize: 11, color: Colors.grey[500]),
                 ),
                 const SizedBox(height: 12),
@@ -406,26 +450,39 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                   height: 40,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      ChoiceChip(
-                        label: const Text('なし'),
-                        selected: _selectedWarlord == null,
-                        onSelected: (_) =>
-                            setState(() => _selectedWarlord = null),
-                      ),
-                      const SizedBox(width: 8),
-                      ..._unlockedWarlords.map((w) => Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: ChoiceChip(
-                              label: Text('${w.name} (統率${w.leadership})'),
-                              selected: _selectedWarlord?.id == w.id,
-                              onSelected: (_) =>
-                                  setState(() => _selectedWarlord = w),
-                            ),
-                          )),
-                    ],
+                    children: _unlockedWarlords
+                        .map((w) => Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: FilterChip(
+                                label: Text('${w.name} (統率${w.leadership})'),
+                                selected: _selectedWarlords
+                                    .any((sw) => sw.id == w.id),
+                                onSelected: (_) => _toggleWarlord(w),
+                              ),
+                            ))
+                        .toList(),
                   ),
                 ),
+                if (_selectedWarlords.length >= 2) ...[
+                  const SizedBox(height: 8),
+                  Builder(builder: (context) {
+                    final compatibility = WarlordCompatibility.multiplier(
+                      _selectedWarlords[0],
+                      _selectedWarlords[1],
+                    );
+                    final isPositive = compatibility >= 1.0;
+                    return Text(
+                      '相性倍率: ×${compatibility.toStringAsFixed(2)}'
+                      '${isPositive ? '（好相性）' : '（不協和）'}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isPositive
+                            ? Colors.lightGreenAccent
+                            : Colors.orangeAccent,
+                      ),
+                    );
+                  }),
+                ],
                 const SizedBox(height: 24),
                 const Divider(color: Color(0xFF8B6914)),
                 const SizedBox(height: 24),

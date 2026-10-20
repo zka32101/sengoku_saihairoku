@@ -55,11 +55,39 @@ service cloud.firestore {
     // shared_replays/{code}：共有コードを知っていれば誰でも観戦できる
     // 仕様のため read は認証済みなら誰でも許可。作成は自分自身が
     // sharedBy として記録される新規ドキュメントのみ許可する。
+    // likes フィールドのみ、サインイン済みなら誰でもインクリメント更新できる
+    // （観戦者からの「いいね」用。他フィールドの改ざんはhasOnlyで防ぐ）。
     match /shared_replays/{code} {
       allow read: if signedIn();
       allow create: if signedIn()
         && request.resource.data.sharedBy == request.auth.uid;
-      allow update, delete: if false;
+      allow update: if signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']);
+      allow delete: if false;
+
+      // shared_replays/{code}/comments/{commentId}：観戦者からの短い
+      // コメント。読み取りは親ドキュメントと同様誰でも可、投稿は
+      // 自分自身がauthorUserIdとして記録される新規ドキュメントのみ許可。
+      match /comments/{commentId} {
+        allow read: if signedIn();
+        allow create: if signedIn()
+          && request.resource.data.authorUserId == request.auth.uid;
+        allow update, delete: if false;
+      }
+    }
+
+    // rankings_{scenario}_{yyyy-MM}：シーズン制（月次）の自己ベストランキング。
+    // コレクション名にシナリオ・シーズンを埋め込むことでシーズンごとの
+    // 実質リセットを実現している（RankingRepository参照）。読み取りは
+    // サインイン済みなら誰でも可、書き込みは自分のドキュメント
+    // （{userId}_{scenarioId}）のみ許可する。
+    match /{collectionId}/{docId} {
+      allow read: if signedIn() && collectionId.matches('^rankings_.*');
+      allow create, update: if signedIn()
+        && collectionId.matches('^rankings_.*')
+        && request.resource.data.userId == request.auth.uid
+        && docId == request.auth.uid + '_' + request.resource.data.scenarioId;
+      allow delete: if false;
     }
 
     // config/{doc}：アプリ設定。運営のみが更新する読み取り専用データ。

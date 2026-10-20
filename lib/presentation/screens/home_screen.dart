@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/notification_service.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/repositories/weekly_challenge_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/currency_repository.dart';
 import '../../data/repositories/daily_login_repository.dart';
@@ -20,9 +21,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late DailyChallengeRepository _challengeRepo;
+  late WeeklyChallengeRepository _weeklyChallengeRepo;
   late EventChallengeRepository _eventChallengeRepo;
   DailyChallenge? _todayChallenge;
   ChallengeProgress? _todayProgress;
+  DailyChallenge? _weeklyChallenge;
+  ChallengeProgress? _weeklyProgress;
   EventChallenge? _activeEvent;
   EventChallengeProgress? _eventProgress;
 
@@ -30,8 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _challengeRepo = DailyChallengeRepository();
+    _weeklyChallengeRepo = WeeklyChallengeRepository();
     _eventChallengeRepo = EventChallengeRepository();
     _loadTodayChallenge();
+    _loadWeeklyChallenge();
     _loadActiveEvent();
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkDailyLoginBonus());
   }
@@ -106,6 +112,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _loadWeeklyChallenge() async {
+    await _weeklyChallengeRepo.initialize(_challengeRepo.getAllChallenges());
+    final challenge = _weeklyChallengeRepo.getThisWeekChallenge();
+    final progress = _weeklyChallengeRepo.getThisWeekProgress();
+    if (!mounted) return;
+    setState(() {
+      _weeklyChallenge = challenge;
+      _weeklyProgress = progress;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,6 +166,27 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               // チャレンジ詳細表示（後で実装）
                             },
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    if (_weeklyChallenge != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            '今週のチャレンジ',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          ChallengeCard(
+                            challenge: _weeklyChallenge!,
+                            progress: _weeklyProgress,
+                            onTap: () {},
                           ),
                           const SizedBox(height: 16),
                         ],

@@ -175,6 +175,30 @@ class FriendRepository {
     }
   }
 
+  /// 指定フレンドの指定シナリオにおける自己ベストスコアを取得する
+  /// （非同期対戦「フレンドに挑戦」の目標スコアとして使う）。
+  Future<int?> getFriendBestScore(String friendUserId, String scenarioId) async {
+    try {
+      final snapshot = await _firestore
+          .collection('rankings')
+          .where('userId', isEqualTo: friendUserId)
+          .where('scenarioId', isEqualTo: scenarioId)
+          .get();
+
+      if (snapshot.docs.isEmpty) return null;
+
+      int best = 0;
+      for (final doc in snapshot.docs) {
+        final score = (doc.data() as Map<String, dynamic>)['score'] as int? ?? 0;
+        if (score > best) best = score;
+      }
+      return best;
+    } catch (e) {
+      print('Error getting friend best score: $e');
+      return null;
+    }
+  }
+
   /// 自分とフレンドの最近の戦績をまとめたアクティビティフィードを取得する。
   Future<List<FriendActivityEntry>> getFriendsActivity(
     String userId, {

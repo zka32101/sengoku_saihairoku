@@ -10,6 +10,10 @@ import '../../domain/ranking/turn_rank_calculator.dart';
 import '../../data/repositories/turn_rank_repository.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
+import '../../data/repositories/weekly_challenge_repository.dart';
+import '../../data/repositories/friend_challenge_repository.dart';
+import '../../data/repositories/friend_repository.dart';
+import '../../data/repositories/ranking_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
@@ -50,6 +54,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   late final TurnRankRepository _turnRankRepo;
   late DailyChallengeRepository _challengeRepo;
+  late WeeklyChallengeRepository _weeklyChallengeRepo;
   late EventChallengeRepository _eventChallengeRepo;
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
@@ -68,12 +73,15 @@ class _ResultScreenState extends State<ResultScreen> {
   int _battlePassXpGained = 0;
   bool _battlePassTierUp = false;
   int? _newBattlePassTier;
+  FriendChallengeTarget? _friendChallengeResult;
+  bool _friendChallengeBeaten = false;
 
   @override
   void initState() {
     super.initState();
     _turnRankRepo = TurnRankRepository();
     _challengeRepo = DailyChallengeRepository();
+    _weeklyChallengeRepo = WeeklyChallengeRepository();
     _eventChallengeRepo = EventChallengeRepository();
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
@@ -91,6 +99,8 @@ class _ResultScreenState extends State<ResultScreen> {
 
     _saveBattleResult();
     _checkEventChallengeCompletion();
+    _checkWeeklyChallengeCompletion();
+    _checkFriendChallengeResult();
     // XP計算でストリークボーナスを正しく反映するため、
     // チャレンジ達成判定（ストリーク更新を含む）の完了を待ってから実行する
     _checkChallengeCompletion().then((_) => _recordProgressionXp());
@@ -128,6 +138,17 @@ class _ResultScreenState extends State<ResultScreen> {
     );
 
     await FirebaseService().saveBattleResult(resultData);
+
+    if (userId != null && data.won) {
+      await RankingRepository().submitIfSeasonBest(
+        userId: userId,
+        displayName: FriendRepository().codeForUserId(userId),
+        scenario: widget.args.scenario,
+        score: data.totalScore,
+        achievedAt: DateTime.now(),
+        turningPointsAchieved: data.tpAchievements.where((a) => a).length,
+      );
+    }
 
     // Check battle achievements
     if (userId != null) {
@@ -183,6 +204,42 @@ class _ResultScreenState extends State<ResultScreen> {
         _challengeCompleted = true;
       });
     }
+  }
+
+  Future<void> _checkWeeklyChallengeCompletion() async {
+    await _weeklyChallengeRepo.initialize(_challengeRepo.getAllChallenges());
+
+    final weekly = _weeklyChallengeRepo.getThisWeekChallenge();
+    if (weekly == null) return;
+    if (weekly.scenario != widget.args.scenario) return;
+
+    final alreadyCompleted = _weeklyChallengeRepo.getThisWeekProgress() != null;
+    if (alreadyCompleted) return;
+
+    final isMet = ChallengeService.isChallengeMet(
+      weekly,
+      widget.args.data,
+      widget.args.data.turnCount,
+    );
+
+    if (isMet) {
+      await _weeklyChallengeRepo.completeChallenge(weekly.id);
+    }
+  }
+
+  Future<void> _checkFriendChallengeResult() async {
+    final challenge = await FriendChallengeRepository().getChallenge();
+    if (challenge == null) return;
+    if (challenge.scenario != widget.args.scenario) return;
+
+    final beaten = widget.args.data.totalScore > challenge.targetScore;
+    await FriendChallengeRepository().clearChallenge();
+
+    if (!mounted) return;
+    setState(() {
+      _friendChallengeResult = challenge;
+      _friendChallengeBeaten = beaten;
+    });
   }
 
   Future<void> _checkEventChallengeCompletion() async {
@@ -456,6 +513,15 @@ class _ResultScreenState extends State<ResultScreen> {
               else
                 const SizedBox.shrink(),
               if (_challengeCompleted) const SizedBox(height: 16),
+              if (_friendChallengeResult != null)
+                _FriendChallengeResultBanner(
+                  friendLabel: _friendChallengeResult!.friendLabel,
+                  targetScore: _friendChallengeResult!.targetScore,
+                  beaten: _friendChallengeBeaten,
+                )
+              else
+                const SizedBox.shrink(),
+              if (_friendChallengeResult != null) const SizedBox(height: 16),
               _ScoreCard(breakdown: data.scoreBreakdown),
               const SizedBox(height: 16),
               _TurningPointCard(
@@ -708,6 +774,63 @@ class _ActionButtons extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _FriendChallengeResultBanner extends StatelessWidget {
+  final String friendLabel;
+  final int targetScore;
+  final bool beaten;
+
+  const _FriendChallengeResultBanner({
+    required this.friendLabel,
+    required this.targetScore,
+    required this.beaten,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = beaten ? Colors.amber : Colors.blueGrey;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.15),
+        border: Border.all(color: color, width: 2),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            beaten ? Icons.emoji_events : Icons.sports_kabaddi,
+            color: color,
+            size: 28,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  beaten
+                      ? '$friendLabelへの挑戦、成功！'
+                      : '$friendLabelへの挑戦、届かず',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '目標スコア: $targetScore点',
+                  style: TextStyle(fontSize: 12, color: Colors.grey[400]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

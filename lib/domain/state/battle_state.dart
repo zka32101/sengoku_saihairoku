@@ -184,7 +184,16 @@ class BattleState {
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
 
-  BattleState({required this.scenario, this.playerStrengthMultiplier = 1.0}) {
+  /// 自軍ユニットのインデックスごとの追加兵力倍率（[playerStrengthMultiplier]に
+  /// 乗算で重ねがけされる）。配属武将ごとに担当部隊を分けるために使う。
+  /// nullまたはインデックスに対応する要素が無い場合は1.0として扱う。
+  final List<double>? perUnitStrengthMultipliers;
+
+  BattleState({
+    required this.scenario,
+    this.playerStrengthMultiplier = 1.0,
+    this.perUnitStrengthMultipliers,
+  }) {
     _initializeArmies();
     enemyAI = EnemyAI(enemyArmy: enemyArmy, playerArmy: playerArmy);
     commandHandler = PlayerCommandHandler(
@@ -205,7 +214,12 @@ class BattleState {
     final playerUnits = scenario.playerUnits.asMap().entries.map((e) {
       final data = e.value;
       final type = _parseUnitType(data.type);
-      final strength = (data.strength * playerStrengthMultiplier).round();
+      final perUnitMultiplier =
+          (perUnitStrengthMultipliers != null && e.key < perUnitStrengthMultipliers!.length)
+              ? perUnitStrengthMultipliers![e.key]
+              : 1.0;
+      final strength =
+          (data.strength * playerStrengthMultiplier * perUnitMultiplier).round();
       return createUnitFromType(
         data.id, data.name, type, strength,
         px + e.key * 60, py,

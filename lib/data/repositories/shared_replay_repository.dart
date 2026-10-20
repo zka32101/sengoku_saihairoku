@@ -84,4 +84,61 @@ class SharedReplayRepository {
     }
     return getLikeCount(code);
   }
+
+  /// 共有リプレイに短いコメントを投稿する
+  Future<void> postComment(
+    String code,
+    String authorUserId,
+    String text,
+  ) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return;
+    final limited = trimmed.length > 140 ? trimmed.substring(0, 140) : trimmed;
+
+    await _sharedRepliesRef
+        .doc(code.trim().toUpperCase())
+        .collection('comments')
+        .add({
+      'authorUserId': authorUserId,
+      'text': limited,
+      'postedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  /// 共有リプレイへのコメント一覧を新しい順に取得する
+  Future<List<ReplayComment>> getComments(String code) async {
+    try {
+      final snapshot = await _sharedRepliesRef
+          .doc(code.trim().toUpperCase())
+          .collection('comments')
+          .orderBy('postedAt', descending: true)
+          .limit(50)
+          .get();
+
+      return snapshot.docs.map((doc) {
+        final data = doc.data();
+        return ReplayComment(
+          authorUserId: data['authorUserId'] as String? ?? '',
+          text: data['text'] as String? ?? '',
+          postedAt: (data['postedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+        );
+      }).toList();
+    } catch (e) {
+      print('Error fetching replay comments: $e');
+      return [];
+    }
+  }
+}
+
+/// 共有リプレイへのコメント1件
+class ReplayComment {
+  final String authorUserId;
+  final String text;
+  final DateTime postedAt;
+
+  const ReplayComment({
+    required this.authorUserId,
+    required this.text,
+    required this.postedAt,
+  });
 }

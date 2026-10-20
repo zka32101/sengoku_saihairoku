@@ -59,4 +59,29 @@ class SharedReplayRepository {
       return null;
     }
   }
+
+  /// 共有リプレイの現在のいいね数を取得する
+  Future<int> getLikeCount(String code) async {
+    try {
+      final doc =
+          await _sharedRepliesRef.doc(code.trim().toUpperCase()).get();
+      if (!doc.exists) return 0;
+      final data = doc.data() as Map<String, dynamic>;
+      return (data['likes'] as num?)?.toInt() ?? 0;
+    } catch (e) {
+      print('Error fetching like count: $e');
+      return 0;
+    }
+  }
+
+  /// 共有リプレイに「いいね」を1件加算する
+  Future<int> likeReplay(String code) async {
+    final docRef = _sharedRepliesRef.doc(code.trim().toUpperCase());
+    try {
+      await docRef.update({'likes': FieldValue.increment(1)});
+    } catch (e) {
+      print('Error liking replay: $e');
+    }
+    return getLikeCount(code);
+  }
 }

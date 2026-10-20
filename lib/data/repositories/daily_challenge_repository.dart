@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/daily_challenge.dart';
+import '../models/difficulty_mode.dart';
+import '../models/scenario_data.dart';
 
 /// 日替わりチャレンジ管理リポジトリ
 class DailyChallengeRepository {
@@ -190,8 +192,8 @@ class DailyChallengeRepository {
       final claimedRewards = <String>[];
       int totalRewardPoints = 0;
       int totalAchievementPoints = 0;
-      final completionByScenario = <String, int>{};
-      final completionByDifficulty = <String, int>{};
+      final completionByScenario = <Scenario, int>{};
+      final completionByDifficulty = <DifficultyMode, int>{};
 
       for (final progress in progressList) {
         final challengeId = progress['challengeId'] as String;
@@ -212,8 +214,8 @@ class DailyChallengeRepository {
             totalAchievementPoints += challenge.achievementPoints;
 
             // シナリオ別・難易度別の達成数を集計
-            final scenarioKey = challenge.scenario.name;
-            final difficultyKey = challenge.difficulty.name;
+            final scenarioKey = challenge.scenario;
+            final difficultyKey = challenge.difficulty;
 
             completionByScenario[scenarioKey] =
                 (completionByScenario[scenarioKey] ?? 0) + 1;

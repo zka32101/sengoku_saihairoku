@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/notification_service.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
@@ -695,6 +696,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBottomNav(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: Color(0xFF8B6914), width: 1)),
@@ -704,12 +706,12 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _navItem(context, Icons.home, 'ホーム', '/home', selected: true),
-            _navItem(context, Icons.person, 'プロフィール', '/profile'),
-            _navItem(context, Icons.bar_chart, '統計', '/statistics'),
-            _navItem(context, Icons.videocam, 'リプレイ', '/replay'),
-            _navItem(context, Icons.leaderboard, 'ランキング', '/ranking'),
-            _navItem(context, Icons.settings, '設定', '/settings'),
+            _navItem(context, Icons.home, l10n.navHome, '/home', selected: true),
+            _navItem(context, Icons.person, l10n.navProfile, '/profile'),
+            _navItem(context, Icons.bar_chart, l10n.navStatistics, '/statistics'),
+            _navItem(context, Icons.videocam, l10n.navReplay, '/replay'),
+            _navItem(context, Icons.leaderboard, l10n.navRanking, '/ranking'),
+            _navItem(context, Icons.settings, l10n.navSettings, '/settings'),
           ],
         ),
       ),

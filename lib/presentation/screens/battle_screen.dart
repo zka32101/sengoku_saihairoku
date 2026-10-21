@@ -18,6 +18,8 @@ class BattleScreen extends StatefulWidget {
   final DifficultyMode difficultyMode;
   final double warlordStrengthMultiplier;
   final List<double>? perUnitStrengthMultipliers;
+  final List<String> sortiedWarlordIds;
+  final void Function(BattleStateData)? onChainBattleEnd;
 
   const BattleScreen({
     super.key,
@@ -26,6 +28,8 @@ class BattleScreen extends StatefulWidget {
     this.difficultyMode = DifficultyMode.normal,
     this.warlordStrengthMultiplier = 1.0,
     this.perUnitStrengthMultipliers,
+    this.sortiedWarlordIds = const [],
+    this.onChainBattleEnd,
   });
 
   @override
@@ -199,6 +203,12 @@ class _BattleScreenState extends State<BattleScreen> {
   void _onBattleEnd(BattleStateData data) {
     _uiTimer?.cancel();
     if (!mounted) return;
+
+    if (widget.onChainBattleEnd != null) {
+      widget.onChainBattleEnd!(data);
+      return;
+    }
+
     Navigator.pushReplacementNamed(
       context,
       '/result',
@@ -206,6 +216,7 @@ class _BattleScreenState extends State<BattleScreen> {
         scenario: widget.scenario,
         difficulty: widget.difficultyMode,
         data: data,
+        sortiedWarlordIds: widget.sortiedWarlordIds,
       ),
     );
   }

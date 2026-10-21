@@ -7,6 +7,7 @@ import '../../data/models/warlord_data.dart';
 import '../../data/repositories/warlord_repository.dart';
 import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/scenario_difficulty_repository.dart';
+import '../../data/repositories/warlord_progress_repository.dart';
 import '../../domain/warlord/warlord_compatibility.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
@@ -219,6 +220,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   static const int _maxSortiedWarlords = 2;
 
   List<Warlord> _unlockedWarlords = [];
+  Map<String, int> _warlordExp = {};
   final List<Warlord> _selectedWarlords = [];
 
   @override
@@ -256,13 +258,18 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     final allWarlords = await WarlordRepository().getAllWarlords();
     final unlockedIds =
         await WarlordCollectionRepository().getUnlockedWarlordIds(userId);
+    final exp = await WarlordProgressRepository().getAllExp(userId);
 
     if (!mounted) return;
     setState(() {
       _unlockedWarlords =
           allWarlords.where((w) => unlockedIds.contains(w.id)).toList();
+      _warlordExp = exp;
     });
   }
+
+  int _levelOf(Warlord warlord) =>
+      WarlordProgressRepository().levelForExp(_warlordExp[warlord.id] ?? 0);
 
   // 出陣武将の統率ステータスから兵力倍率を算出する。
   // 統率90〜97程度の上位武将でも+9〜10%程度に収まる緩やかな補正。
@@ -275,6 +282,8 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     for (final warlord in _selectedWarlords) {
       final bonus = (warlord.leadership / 1000.0).clamp(0.0, 0.10);
       multiplier += bonus;
+      multiplier *= WarlordProgressRepository()
+          .strengthBonusForLevel(_levelOf(warlord));
     }
 
     if (_selectedWarlords.length >= 2) {
@@ -348,6 +357,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
           difficultyMode: difficulty,
           warlordStrengthMultiplier: _warlordStrengthMultiplier,
           perUnitStrengthMultipliers: _perUnitStrengthMultipliers,
+          sortiedWarlordIds: _selectedWarlords.map((w) => w.id).toList(),
         ),
       ),
     );
@@ -472,7 +482,11 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                         .map((w) => Padding(
                               padding: const EdgeInsets.only(right: 8),
                               child: FilterChip(
-                                label: Text('${w.name} (統率${w.leadership})'),
+                                label: Text(
+                                  '${w.name} Lv.${_levelOf(w)}'
+                                  '${WarlordProgressRepository().isAwakened(_levelOf(w)) ? '覚醒' : ''}'
+                                  ' (統率${w.leadership})',
+                                ),
                                 selected: _selectedWarlords
                                     .any((sw) => sw.id == w.id),
                                 onSelected: (_) => _toggleWarlord(w),

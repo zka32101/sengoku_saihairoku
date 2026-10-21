@@ -4,6 +4,7 @@ import '../../data/models/warlord_data.dart';
 import '../../data/repositories/warlord_repository.dart';
 import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/currency_repository.dart';
+import '../../data/repositories/warlord_progress_repository.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
 
@@ -25,6 +26,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
 
   List<Warlord> _allWarlords = [];
   Set<String> _unlockedIds = {};
+  Map<String, int> _warlordExp = {};
   int _gold = 0;
   bool _loading = true;
   bool _drawing = false;
@@ -47,14 +49,99 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
         : <String>{};
     final wallet =
         userId != null ? await _currencyRepo.getWallet(userId) : null;
+    final exp = userId != null
+        ? await WarlordProgressRepository().getAllExp(userId)
+        : <String, int>{};
 
     if (!mounted) return;
     setState(() {
       _allWarlords = warlords;
       _unlockedIds = unlocked;
       _gold = wallet?.gold ?? 0;
+      _warlordExp = exp;
       _loading = false;
     });
+  }
+
+  /// ステータスの傾向から武将の「型」を簡易的に表すフレーバーラベルを生成する。
+  /// 個別の史実テキストは持たせず、統率・武勇・知略の相対的な高さから
+  /// 動的に導くことで、102名全員分を手作業で書かずに図鑑を拡充する。
+  String _archetypeFor(Warlord warlord) {
+    final stats = {
+      '采配の名手': warlord.leadership,
+      '猛将': warlord.valor,
+      '智将': warlord.intelligence,
+    };
+    final maxEntry =
+        stats.entries.reduce((a, b) => a.value >= b.value ? a : b);
+    if (warlord.totalStat >= 260) return '伝説の$maxEntry.key';
+    return maxEntry.key;
+  }
+
+  void _showDetailDialog(Warlord warlord) {
+    final exp = _warlordExp[warlord.id] ?? 0;
+    final progressRepo = WarlordProgressRepository();
+    final level = progressRepo.levelForExp(exp);
+    final awakened = progressRepo.isAwakened(level);
+    final expInLevel = exp % WarlordProgressRepository.expPerLevel;
+    final expProgress = awakened
+        ? 1.0
+        : expInLevel / WarlordProgressRepository.expPerLevel;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Expanded(child: Text(warlord.name)),
+            if (awakened)
+              const Icon(Icons.auto_awesome, color: Color(0xFFFFD700)),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(warlord.faction),
+            const SizedBox(height: 4),
+            Text(
+              _archetypeFor(warlord),
+              style: const TextStyle(
+                fontStyle: FontStyle.italic,
+                color: Colors.orangeAccent,
+              ),
+            ),
+            const SizedBox(height: 12),
+            _StatRow(label: '統率', value: warlord.leadership),
+            _StatRow(label: '武勇', value: warlord.valor),
+            _StatRow(label: '知略', value: warlord.intelligence),
+            const SizedBox(height: 12),
+            Text(awakened ? '覚醒済み（Lv.${WarlordProgressRepository.maxLevel}）' : 'Lv.$level'),
+            const SizedBox(height: 4),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: LinearProgressIndicator(
+                value: expProgress,
+                minHeight: 8,
+                backgroundColor: Colors.grey[800],
+                valueColor: const AlwaysStoppedAnimation(Color(0xFFFFD700)),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '出陣させて勝利するとEXPを獲得します',
+              style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('閉じる'),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _drawGacha() async {
@@ -244,7 +331,12 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
                       final warlord = filtered[index];
                       final unlocked = _unlockedIds.contains(warlord.id);
                       return _WarlordCard(
-                          warlord: warlord, unlocked: unlocked);
+                        warlord: warlord,
+                        unlocked: unlocked,
+                        onTap: unlocked
+                            ? () => _showDetailDialog(warlord)
+                            : null,
+                      );
                     },
                   ),
                 ),
@@ -278,42 +370,50 @@ class _StatRow extends StatelessWidget {
 class _WarlordCard extends StatelessWidget {
   final Warlord warlord;
   final bool unlocked;
+  final VoidCallback? onTap;
 
-  const _WarlordCard({required this.warlord, required this.unlocked});
+  const _WarlordCard({
+    required this.warlord,
+    required this.unlocked,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: unlocked ? null : Colors.grey[850],
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              unlocked ? Icons.person : Icons.person_outline,
-              size: 36,
-              color: unlocked ? const Color(0xFFFFD700) : Colors.grey[600],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              unlocked ? warlord.name : '???',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: unlocked ? null : Colors.grey[600],
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                unlocked ? Icons.person : Icons.person_outline,
+                size: 36,
+                color: unlocked ? const Color(0xFFFFD700) : Colors.grey[600],
               ),
-            ),
-            Text(
-              unlocked ? warlord.faction : '未発掘',
-              style: TextStyle(fontSize: 11, color: Colors.grey[500]),
-            ),
-            const Spacer(),
-            if (unlocked)
+              const SizedBox(height: 8),
               Text(
-                '総合力 ${warlord.totalStat}',
-                style: const TextStyle(fontSize: 11),
+                unlocked ? warlord.name : '???',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: unlocked ? null : Colors.grey[600],
+                ),
               ),
-          ],
+              Text(
+                unlocked ? warlord.faction : '未発掘',
+                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+              ),
+              const Spacer(),
+              if (unlocked)
+                Text(
+                  '総合力 ${warlord.totalStat}',
+                  style: const TextStyle(fontSize: 11),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "appTitle": "Sengoku Saihairoku",
+  "navHome": "Home",
+  "navProfile": "Profile",
+  "navStatistics": "Stats",
+  "navReplay": "Replay",
+  "navRanking": "Ranking",
+  "navSettings": "Settings",
+  "commonClose": "Close",
+  "commonCancel": "Cancel",
+  "commonConfirm": "Confirm",
+  "commonSortie": "Sortie",
+  "commonRetry": "Retry",
+  "commonLoading": "Loading...",
+  "commonError": "An error occurred"
+}

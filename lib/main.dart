@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/firebase_service.dart';
+import 'core/services/locale_controller.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'core/services/notification_service.dart';
 import 'core/services/purchase_service.dart';
 import 'core/services/ad_service.dart';
@@ -37,6 +40,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseService().initialize();
+  await LocaleController.instance.loadSaved();
 
   // オフライン時に送信できず端末内に溜まっていたバトル結果があれば再送する
   await FirebaseService().flushPendingBattleResults();
@@ -93,17 +97,46 @@ void main() async {
   ));
 }
 
-class SengokuSaihairokuApp extends StatelessWidget {
+class SengokuSaihairokuApp extends StatefulWidget {
   final String initialRoute;
 
   const SengokuSaihairokuApp({super.key, required this.initialRoute});
+
+  @override
+  State<SengokuSaihairokuApp> createState() => _SengokuSaihairokuAppState();
+}
+
+class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
+  @override
+  void initState() {
+    super.initState();
+    LocaleController.instance.addListener(_onLocaleChanged);
+  }
+
+  @override
+  void dispose() {
+    LocaleController.instance.removeListener(_onLocaleChanged);
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    if (mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '戦国采配録',
       theme: _buildTheme(),
-      initialRoute: initialRoute,
+      locale: LocaleController.instance.value,
+      supportedLocales: LocaleController.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      initialRoute: widget.initialRoute,
       routes: {
         '/home': (_) => const HomeScreen(),
         '/onboarding': (_) => const OnboardingScreen(),

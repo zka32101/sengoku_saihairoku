@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../core/services/audio_manager.dart';
 import '../../core/services/firebase_service.dart';
+import '../../core/services/locale_controller.dart';
 import '../widgets/balance_diagnostic_panel.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
@@ -52,6 +53,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     AudioManager().resumeBgm();
                   }
                 },
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _Section(
+            title: '言語 / Language',
+            children: [
+              ListTile(
+                leading: const Icon(Icons.language, color: Color(0xFFFFD700)),
+                title: const Text('表示言語',
+                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                trailing: ValueListenableBuilder<Locale?>(
+                  valueListenable: LocaleController.instance,
+                  builder: (context, locale, _) {
+                    return DropdownButton<String>(
+                      value: locale?.languageCode ?? 'system',
+                      dropdownColor: const Color(0xFF2A1A0A),
+                      underline: const SizedBox.shrink(),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'system',
+                          child: Text('端末の設定に従う',
+                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                        ),
+                        DropdownMenuItem(
+                          value: 'ja',
+                          child: Text('日本語',
+                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                        ),
+                        DropdownMenuItem(
+                          value: 'en',
+                          child: Text('English',
+                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        LocaleController.instance.setLocale(
+                          value == null || value == 'system'
+                              ? null
+                              : Locale(value),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

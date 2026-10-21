@@ -12,15 +12,37 @@ service cloud.firestore {
     }
 
     // users/{userId} とそのサブコレクション（battles, battle_pass, wallet,
-    // wallet_transactions, ad_rewards, friends, purchases, achievements,
+    // wallet_transactions, ad_rewards, friends, achievements,
     // milestones, event_progress, collection/warlords 等）はすべて
     // 本人のみが読み書きできる。Cloud Functions（管理者権限）は
     // このルールをバイパスして fcmToken 等を参照・更新できる。
+    //
+    // purchases サブコレクションのみ例外。IAPレシートのサーバー検証
+    // （functions/index.js の onPurchaseRecordCreated）が完了するまで
+    // statusを'pending'のまま保ち、verified/rejectedへの更新は
+    // Cloud Functions（管理者権限、本ルールの適用対象外）のみが行う。
+    // クライアントが直接 status を 'verified' に書き換えて不正にゴールド等を
+    // 自己付与することを防ぐため、以下の2点を明示的に禁止する：
+    //   1. 汎用ワイルドカード（22行目以降）から purchases を除外
+    //   2. purchases専用ルールで、status自体の更新を一切許可しない
+    //      （クライアントが書けるのは作成時と、付与済みフラグgrantedのみ）
     match /users/{userId} {
       allow read, write: if isOwner(userId);
 
+      match /purchases/{purchaseId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && request.resource.data.status == 'pending'
+          && !('granted' in request.resource.data);
+        allow update: if isOwner(userId)
+          && resource.data.status == 'verified'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['granted'])
+          && request.resource.data.granted == true;
+        allow delete: if false;
+      }
+
       match /{subcollection}/{document=**} {
-        allow read, write: if isOwner(userId);
+        allow read, write: if isOwner(userId) && subcollection != 'purchases';
       }
     }
 

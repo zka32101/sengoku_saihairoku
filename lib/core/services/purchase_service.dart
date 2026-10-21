@@ -12,11 +12,16 @@ enum PurchaseState { idle, pending, success, error }
 ///
 /// 現在対応している商品：
 /// - バトルパス プレミアムトラック（非消耗型・買い切り）
+/// - ゴールドパック（消耗型・3種）
 ///
-/// 注意：ここでのレシート保存はクライアント側の記録に過ぎない。
-/// 本番運用では Cloud Functions 等でストアのレシートをサーバー検証し、
-/// 検証済みの場合のみ `activatePremium` を呼ぶ構成に強化すること
-/// （クライアントのみの実装は改ざん・リプレイに対して脆弱）。
+/// レシートはクライアントから`users/{userId}/purchases/{id}`へ
+/// `status: 'pending'`で記録するのみで、ゴールド付与・バトルパス有効化は
+/// 行わない。実際の検証と付与判定は`functions/index.js`の
+/// `onPurchaseRecordCreated`（Cloud Functions、Play Developer API /
+/// App Store verifyReceiptでサーバー検証）がstatusを
+/// 'verified'/'rejected'に更新してから行う。firestore.rulesにより
+/// クライアントはstatus自体を書き換えられないため、改ざんによる
+/// 自己付与はできない。
 class PurchaseService {
   static final PurchaseService _instance = PurchaseService._internal();
   factory PurchaseService() => _instance;
@@ -196,6 +201,9 @@ class PurchaseService {
     }
   }
 
+  /// 検証待ちの購入ごとのリスナー（二重購読防止）
+  final Map<String, StreamSubscription> _verificationListeners = {};
+
   Future<void> _deliverProduct(PurchaseDetails purchase) async {
     final userId = FirebaseService().userId;
     if (userId == null) {
@@ -209,7 +217,10 @@ class PurchaseService {
     if (!isPremiumPass && goldAmount == null) return;
 
     try {
-      // 購入記録を保存（監査・重複付与防止用）
+      // 購入記録を保存（監査・重複付与防止用）。実際の付与は
+      // functions/index.js の onPurchaseRecordCreated がレシートを
+      // サーバー検証し、status を 'verified' に更新してから行う
+      // （firestore.rulesによりクライアントはstatusを直接書き換えられない）。
       final recordId = purchase.purchaseID ??
           '${purchase.productID}_${purchase.transactionDate ?? DateTime.now().millisecondsSinceEpoch}';
 
@@ -220,20 +231,62 @@ class PurchaseService {
           .doc(recordId);
 
       final existing = await recordRef.get();
-      if (existing.exists) {
-        // すでに処理済みの購入（同一イベントの重複配信/重複付与を防止）
-        _stateController.add(PurchaseState.success);
+      if (!existing.exists) {
+        await recordRef.set({
+          'productId': purchase.productID,
+          'verificationSource': purchase.verificationData.source,
+          'serverVerificationData':
+              purchase.verificationData.serverVerificationData,
+          'transactionDate': purchase.transactionDate,
+          'recordedAt': FieldValue.serverTimestamp(),
+          'status': 'pending',
+        });
+      }
+
+      _stateController.add(PurchaseState.pending);
+      _awaitVerificationAndGrant(
+        userId: userId,
+        recordRef: recordRef,
+        isPremiumPass: isPremiumPass,
+        goldAmount: goldAmount,
+        productId: purchase.productID,
+      );
+    } catch (e) {
+      _lastError = e.toString();
+      _stateController.add(PurchaseState.error);
+    }
+  }
+
+  /// サーバー側のレシート検証結果（status: 'verified'/'rejected'）を待ち受け、
+  /// 検証成功後に初めてゴールド付与・バトルパス有効化を行う。
+  void _awaitVerificationAndGrant({
+    required String userId,
+    required DocumentReference recordRef,
+    required bool isPremiumPass,
+    required int? goldAmount,
+    required String productId,
+  }) {
+    final key = recordRef.path;
+    _verificationListeners[key]?.cancel();
+
+    _verificationListeners[key] = recordRef.snapshots().listen((snap) async {
+      final data = snap.data() as Map<String, dynamic>?;
+      final status = data?['status'] as String?;
+      if (status == null || status == 'pending') return; // サーバー検証待ち
+
+      await _verificationListeners.remove(key)?.cancel();
+
+      if (status != 'verified') {
+        _lastError = 'レシートの検証に失敗しました。時間をおいて再度お試しください';
+        _stateController.add(PurchaseState.error);
         return;
       }
 
-      await recordRef.set({
-        'productId': purchase.productID,
-        'verificationSource': purchase.verificationData.source,
-        'serverVerificationData':
-            purchase.verificationData.serverVerificationData,
-        'transactionDate': purchase.transactionDate,
-        'recordedAt': FieldValue.serverTimestamp(),
-      });
+      if (data?['granted'] == true) {
+        // 既に付与済み（別セッションでの再検証等）
+        _stateController.add(PurchaseState.success);
+        return;
+      }
 
       if (isPremiumPass) {
         await _battlePassRepo.activatePremium(userId);
@@ -241,18 +294,23 @@ class PurchaseService {
         await _currencyRepo.addGold(
           userId,
           goldAmount,
-          source: 'iap:${purchase.productID}',
+          source: 'iap:$productId',
         );
       }
+      await recordRef.set({'granted': true}, SetOptions(merge: true));
       _stateController.add(PurchaseState.success);
-    } catch (e) {
-      _lastError = e.toString();
+    }, onError: (Object error) {
+      _lastError = error.toString();
       _stateController.add(PurchaseState.error);
-    }
+    });
   }
 
   void dispose() {
     _subscription?.cancel();
+    for (final sub in _verificationListeners.values) {
+      sub.cancel();
+    }
+    _verificationListeners.clear();
     _stateController.close();
   }
 }

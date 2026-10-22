@@ -991,6 +991,132 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{seconds}秒'**
   String rankingDurationSeconds(int seconds);
+
+  /// No description provided for @warlordCollectionTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将図鑑'**
+  String get warlordCollectionTitle;
+
+  /// No description provided for @warlordCollectionUnlockedCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'{unlocked} / {total} 解放済み'**
+  String warlordCollectionUnlockedCount(int unlocked, int total);
+
+  /// No description provided for @warlordCollectionDrawing.
+  ///
+  /// In ja, this message translates to:
+  /// **'発掘中...'**
+  String get warlordCollectionDrawing;
+
+  /// No description provided for @warlordCollectionDrawButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将を発掘する（{cost}ゴールド）'**
+  String warlordCollectionDrawButton(int cost);
+
+  /// No description provided for @warlordCollectionAllFilter.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべて'**
+  String get warlordCollectionAllFilter;
+
+  /// No description provided for @warlordCollectionAllUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべての武将を解放済みです'**
+  String get warlordCollectionAllUnlocked;
+
+  /// No description provided for @warlordCollectionGoldShortage.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドが不足しています'**
+  String get warlordCollectionGoldShortage;
+
+  /// No description provided for @warlordCollectionLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'???'**
+  String get warlordCollectionLocked;
+
+  /// No description provided for @warlordCollectionUndiscovered.
+  ///
+  /// In ja, this message translates to:
+  /// **'未発掘'**
+  String get warlordCollectionUndiscovered;
+
+  /// No description provided for @warlordCollectionTotalStat.
+  ///
+  /// In ja, this message translates to:
+  /// **'総合力 {stat}'**
+  String warlordCollectionTotalStat(int stat);
+
+  /// No description provided for @warlordDetailLeadership.
+  ///
+  /// In ja, this message translates to:
+  /// **'統率'**
+  String get warlordDetailLeadership;
+
+  /// No description provided for @warlordDetailValor.
+  ///
+  /// In ja, this message translates to:
+  /// **'武勇'**
+  String get warlordDetailValor;
+
+  /// No description provided for @warlordDetailIntelligence.
+  ///
+  /// In ja, this message translates to:
+  /// **'知略'**
+  String get warlordDetailIntelligence;
+
+  /// No description provided for @warlordDetailAwakenedLevel.
+  ///
+  /// In ja, this message translates to:
+  /// **'覚醒済み（Lv.{level}）'**
+  String warlordDetailAwakenedLevel(int level);
+
+  /// No description provided for @warlordDetailLevel.
+  ///
+  /// In ja, this message translates to:
+  /// **'Lv.{level}'**
+  String warlordDetailLevel(int level);
+
+  /// No description provided for @warlordDetailExpHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'出陣させて勝利するとEXPを獲得します'**
+  String get warlordDetailExpHint;
+
+  /// No description provided for @warlordDiscoveredTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将を発見！'**
+  String get warlordDiscoveredTitle;
+
+  /// No description provided for @warlordArchetypeLeadership.
+  ///
+  /// In ja, this message translates to:
+  /// **'采配の名手'**
+  String get warlordArchetypeLeadership;
+
+  /// No description provided for @warlordArchetypeValor.
+  ///
+  /// In ja, this message translates to:
+  /// **'猛将'**
+  String get warlordArchetypeValor;
+
+  /// No description provided for @warlordArchetypeIntelligence.
+  ///
+  /// In ja, this message translates to:
+  /// **'智将'**
+  String get warlordArchetypeIntelligence;
+
+  /// No description provided for @warlordArchetypeLegendary.
+  ///
+  /// In ja, this message translates to:
+  /// **'伝説の{archetype}'**
+  String warlordArchetypeLegendary(String archetype);
 }
 
 class _AppLocalizationsDelegate

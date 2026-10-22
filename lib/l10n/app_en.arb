@@ -202,5 +202,47 @@
   "rankingDurationSeconds": "{seconds}s",
   "@rankingDurationSeconds": {
     "placeholders": { "seconds": { "type": "int" } }
+  },
+  "warlordCollectionTitle": "Warlord Collection",
+  "warlordCollectionUnlockedCount": "{unlocked} / {total} Unlocked",
+  "@warlordCollectionUnlockedCount": {
+    "placeholders": {
+      "unlocked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "warlordCollectionDrawing": "Discovering...",
+  "warlordCollectionDrawButton": "Discover a Warlord ({cost} Gold)",
+  "@warlordCollectionDrawButton": {
+    "placeholders": { "cost": { "type": "int" } }
+  },
+  "warlordCollectionAllFilter": "All",
+  "warlordCollectionAllUnlocked": "All warlords have been unlocked",
+  "warlordCollectionGoldShortage": "Not enough gold",
+  "warlordCollectionLocked": "???",
+  "warlordCollectionUndiscovered": "Undiscovered",
+  "warlordCollectionTotalStat": "Total Power {stat}",
+  "@warlordCollectionTotalStat": {
+    "placeholders": { "stat": { "type": "int" } }
+  },
+  "warlordDetailLeadership": "Leadership",
+  "warlordDetailValor": "Valor",
+  "warlordDetailIntelligence": "Intelligence",
+  "warlordDetailAwakenedLevel": "Awakened (Lv.{level})",
+  "@warlordDetailAwakenedLevel": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "warlordDetailLevel": "Lv.{level}",
+  "@warlordDetailLevel": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "warlordDetailExpHint": "Sortie and win battles to gain EXP",
+  "warlordDiscoveredTitle": "Warlord Discovered!",
+  "warlordArchetypeLeadership": "Master Tactician",
+  "warlordArchetypeValor": "Fierce General",
+  "warlordArchetypeIntelligence": "Wise Strategist",
+  "warlordArchetypeLegendary": "Legendary {archetype}",
+  "@warlordArchetypeLegendary": {
+    "placeholders": { "archetype": { "type": "String" } }
   }
 }

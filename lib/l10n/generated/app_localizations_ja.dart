@@ -486,4 +486,79 @@ class AppLocalizationsJa extends AppLocalizations {
   String rankingDurationSeconds(int seconds) {
     return '$seconds秒';
   }
+
+  @override
+  String get warlordCollectionTitle => '武将図鑑';
+
+  @override
+  String warlordCollectionUnlockedCount(int unlocked, int total) {
+    return '$unlocked / $total 解放済み';
+  }
+
+  @override
+  String get warlordCollectionDrawing => '発掘中...';
+
+  @override
+  String warlordCollectionDrawButton(int cost) {
+    return '武将を発掘する（$costゴールド）';
+  }
+
+  @override
+  String get warlordCollectionAllFilter => 'すべて';
+
+  @override
+  String get warlordCollectionAllUnlocked => 'すべての武将を解放済みです';
+
+  @override
+  String get warlordCollectionGoldShortage => 'ゴールドが不足しています';
+
+  @override
+  String get warlordCollectionLocked => '???';
+
+  @override
+  String get warlordCollectionUndiscovered => '未発掘';
+
+  @override
+  String warlordCollectionTotalStat(int stat) {
+    return '総合力 $stat';
+  }
+
+  @override
+  String get warlordDetailLeadership => '統率';
+
+  @override
+  String get warlordDetailValor => '武勇';
+
+  @override
+  String get warlordDetailIntelligence => '知略';
+
+  @override
+  String warlordDetailAwakenedLevel(int level) {
+    return '覚醒済み（Lv.$level）';
+  }
+
+  @override
+  String warlordDetailLevel(int level) {
+    return 'Lv.$level';
+  }
+
+  @override
+  String get warlordDetailExpHint => '出陣させて勝利するとEXPを獲得します';
+
+  @override
+  String get warlordDiscoveredTitle => '武将を発見！';
+
+  @override
+  String get warlordArchetypeLeadership => '采配の名手';
+
+  @override
+  String get warlordArchetypeValor => '猛将';
+
+  @override
+  String get warlordArchetypeIntelligence => '智将';
+
+  @override
+  String warlordArchetypeLegendary(String archetype) {
+    return '伝説の$archetype';
+  }
 }

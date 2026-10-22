@@ -622,4 +622,104 @@ class AppLocalizationsJa extends AppLocalizations {
   String goldShopGoldAmount(int amount) {
     return '$amount ゴールド';
   }
+
+  @override
+  String get profileTitle => 'プロフィール';
+
+  @override
+  String get profileLoadError => 'ユーザーデータを読み込めませんでした';
+
+  @override
+  String get profileLevelLabel => 'レベル';
+
+  @override
+  String get profileXpLabel => '経験値';
+
+  @override
+  String profileXpSuffix(String xp) {
+    return '$xp XP';
+  }
+
+  @override
+  String get profileNextLevelProgress => '次のレベルまでの進捗';
+
+  @override
+  String get profileMaxLevelReached => '最大レベルに到達！プレスティジでリセットできます';
+
+  @override
+  String get profilePrestigeRank => 'プレスティジランク';
+
+  @override
+  String get profilePrestigePoints => 'プレスティジポイント';
+
+  @override
+  String profilePrestigeResetCount(int count) {
+    return 'リセット回数: $count';
+  }
+
+  @override
+  String get profileCosmeticsTitle => 'コスメティック';
+
+  @override
+  String profileUnitSkinsLabel(int count) {
+    return 'ユニットスキン ($count)';
+  }
+
+  @override
+  String profileUiThemesLabel(int count) {
+    return 'UIテーマ ($count)';
+  }
+
+  @override
+  String get profileCosmeticsEmpty => 'コスメティックはまだ解放されていません';
+
+  @override
+  String get profileProgressionDetailsTitle => 'プログレッション詳細';
+
+  @override
+  String get profileUserIdLabel => 'ユーザーID';
+
+  @override
+  String get profilePlayTimeLabel => 'プレイ時間';
+
+  @override
+  String profilePlayTimeFormat(int hours, int minutes) {
+    return '$hours時間 $minutes分';
+  }
+
+  @override
+  String get profileLastUpdatedLabel => '最終更新';
+
+  @override
+  String profileDateFormat(int year, int month, int day) {
+    return '$year年$month月$day日';
+  }
+
+  @override
+  String get profileUnlockedCosmeticsLabel => 'アンロック済みコスメティック';
+
+  @override
+  String profileUnlockedCosmeticsCount(int count) {
+    return '$count個';
+  }
+
+  @override
+  String get profileActionsTitle => 'アクション';
+
+  @override
+  String get profileCosmeticsSettingsButton => 'コスメティック設定';
+
+  @override
+  String get profilePrestigeButton => 'プレスティジ';
+
+  @override
+  String profilePrestigeLockedButton(int level) {
+    return 'プレスティジ (Lv.$levelで解放)';
+  }
+
+  @override
+  String get profileAchievementsTitle => '実績';
+
+  @override
+  String get profileAchievementsViewAllButton => 'すべての実績を表示';
 }

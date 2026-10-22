@@ -279,5 +279,64 @@
   "goldShopGoldAmount": "{amount} Gold",
   "@goldShopGoldAmount": {
     "placeholders": { "amount": { "type": "int" } }
-  }
+  },
+  "profileTitle": "Profile",
+  "profileLoadError": "Could not load user data",
+  "profileLevelLabel": "Level",
+  "profileXpLabel": "XP",
+  "profileXpSuffix": "{xp} XP",
+  "@profileXpSuffix": {
+    "placeholders": { "xp": { "type": "String" } }
+  },
+  "profileNextLevelProgress": "Progress to Next Level",
+  "profileMaxLevelReached": "Max level reached! You can reset with Prestige.",
+  "profilePrestigeRank": "Prestige Rank",
+  "profilePrestigePoints": "Prestige Points",
+  "profilePrestigeResetCount": "Resets: {count}",
+  "@profilePrestigeResetCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileCosmeticsTitle": "Cosmetics",
+  "profileUnitSkinsLabel": "Unit Skins ({count})",
+  "@profileUnitSkinsLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileUiThemesLabel": "UI Themes ({count})",
+  "@profileUiThemesLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileCosmeticsEmpty": "No cosmetics unlocked yet",
+  "profileProgressionDetailsTitle": "Progression Details",
+  "profileUserIdLabel": "User ID",
+  "profilePlayTimeLabel": "Play Time",
+  "profilePlayTimeFormat": "{hours}h {minutes}m",
+  "@profilePlayTimeFormat": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "profileLastUpdatedLabel": "Last Updated",
+  "profileDateFormat": "{year}/{month}/{day}",
+  "@profileDateFormat": {
+    "placeholders": {
+      "year": { "type": "int" },
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  },
+  "profileUnlockedCosmeticsLabel": "Unlocked Cosmetics",
+  "profileUnlockedCosmeticsCount": "{count}",
+  "@profileUnlockedCosmeticsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileActionsTitle": "Actions",
+  "profileCosmeticsSettingsButton": "Cosmetics Settings",
+  "profilePrestigeButton": "Prestige",
+  "profilePrestigeLockedButton": "Prestige (Unlocks at Lv.{level})",
+  "@profilePrestigeLockedButton": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "profileAchievementsTitle": "Achievements",
+  "profileAchievementsViewAllButton": "View All Achievements"
 }

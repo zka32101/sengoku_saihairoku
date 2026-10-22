@@ -7,6 +7,7 @@ import '../../data/repositories/weekly_challenge_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/currency_repository.dart';
 import '../../data/repositories/daily_login_repository.dart';
+import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/models/daily_challenge.dart';
 import '../../data/models/event_challenge.dart';
 import '../widgets/challenge_card.dart';
@@ -30,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ChallengeProgress? _weeklyProgress;
   EventChallenge? _activeEvent;
   EventChallengeProgress? _eventProgress;
+  late BattlePassRepository _battlePassRepo;
+  int _missedPremiumRewardCount = 0;
 
   @override
   void initState() {
@@ -37,10 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _challengeRepo = DailyChallengeRepository();
     _weeklyChallengeRepo = WeeklyChallengeRepository();
     _eventChallengeRepo = EventChallengeRepository();
+    _battlePassRepo = BattlePassRepository();
     _loadTodayChallenge();
     _loadWeeklyChallenge();
     _loadActiveEvent();
+    _loadBattlePassUpsellState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkDailyLoginBonus());
+  }
+
+  Future<void> _loadBattlePassUpsellState() async {
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    final progress = await _battlePassRepo.getUserBattlePassProgress(userId);
+    if (progress == null || progress.hasPremium) return;
+
+    final battlePass = _battlePassRepo.getCurrentBattlePass();
+    final count = battlePass.missedPremiumRewardCount(progress);
+    if (!mounted || count <= 0) return;
+    setState(() => _missedPremiumRewardCount = count);
   }
 
   Future<void> _checkDailyLoginBonus() async {
@@ -692,6 +710,32 @@ class _HomeScreenState extends State<HomeScreen> {
               'シーズンを通してティアをアップ',
               style: TextStyle(color: Colors.grey[400]),
             ),
+            if (_missedPremiumRewardCount > 0) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.purple.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.warning_amber_rounded,
+                        color: Colors.amber, size: 14),
+                    const SizedBox(width: 6),
+                    Text(
+                      'プレミアム報酬を$_missedPremiumRewardCount件受け取り逃し中',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,

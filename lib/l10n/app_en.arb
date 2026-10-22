@@ -465,5 +465,55 @@
   "resultTpItsukushima1": "Surprise attack amid the storm",
   "resultTpItsukushima2": "Defend Miyao Castle",
   "resultTpItsukushima3": "Cut off the retreat and encircle",
-  "resultTpItsukushima4": "Defeat the enemy general"
+  "resultTpItsukushima4": "Defeat the enemy general",
+  "scenarioSelectTitle": "Choose a Scenario",
+  "scenarioSelectHelpTooltip": "Help",
+  "scenarioYearSuffix": "{year}",
+  "@scenarioYearSuffix": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "scenarioSettingsTitle": "Scenario Settings",
+  "scenarioPerspectiveTitle": "Choose a Perspective",
+  "scenarioWarlordSelectTitle": "Choose Warlords to Sortie (optional, up to 2)",
+  "scenarioWarlordSelectHint": "Your army's overall strength rises based on Leadership. Selecting two also applies compatibility (same faction, intelligence synergy, leadership gap) — the 1st commands the vanguard and the 2nd the main force, reflecting each warlord's Valor in their unit.",
+  "scenarioWarlordAwakenedTag": "Awakened",
+  "scenarioWarlordChipLabel": "{name} Lv.{level}{awakened} (LDR {leadership})",
+  "@scenarioWarlordChipLabel": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "level": { "type": "int" },
+      "awakened": { "type": "String" },
+      "leadership": { "type": "int" }
+    }
+  },
+  "scenarioCompatibilityLabel": "Compatibility: ×{multiplier}{note}",
+  "@scenarioCompatibilityLabel": {
+    "placeholders": {
+      "multiplier": { "type": "String" },
+      "note": { "type": "String" }
+    }
+  },
+  "scenarioCompatibilityPositive": " (Good match)",
+  "scenarioCompatibilityNegative": " (Poor match)",
+  "scenarioDifficultyTitle": "Choose Difficulty",
+  "scenarioLoadingText": "Loading scenario...",
+  "scenarioLoadErrorText": "Failed to load scenario",
+  "scenarioNameOdigahara": "Battle of Okehazama",
+  "scenarioDescOdigahara": "3,500 vs 15,000 — overturn overwhelming odds with cunning tactics",
+  "scenarioPlayTimeOdigahara": "3-5 min",
+  "scenarioNameNagashino": "Battle of Nagashino",
+  "scenarioDescNagashino": "Meet the Takeda cavalry with a defensive formation",
+  "scenarioPlayTimeNagashino": "4-6 min",
+  "scenarioNameHonnoji": "Honno-ji Incident",
+  "scenarioDescHonnoji": "500 vs 13,000 — a reversal from a hopeless situation",
+  "scenarioPlayTimeHonnoji": "5-7 min",
+  "scenarioNameSekigahara": "Battle of Sekigahara",
+  "scenarioDescSekigahara": "The fate of the realm — master a complex battlefield",
+  "scenarioPlayTimeSekigahara": "6-8 min",
+  "scenarioNameKawanakajima": "Battle of Kawanakajima",
+  "scenarioDescKawanakajima": "Hold the line alone after a dawn ambush until the detached unit arrives",
+  "scenarioPlayTimeKawanakajima": "4-6 min",
+  "scenarioNameItsukushima": "Battle of Itsukushima",
+  "scenarioDescItsukushima": "4,000 vs 15,000 — annihilate with a storm-borne surprise attack",
+  "scenarioPlayTimeItsukushima": "4-5 min"
 }

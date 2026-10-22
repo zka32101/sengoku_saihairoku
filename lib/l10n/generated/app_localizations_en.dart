@@ -1040,4 +1040,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resultTpItsukushima4 => 'Defeat the enemy general';
+
+  @override
+  String get scenarioSelectTitle => 'Choose a Scenario';
+
+  @override
+  String get scenarioSelectHelpTooltip => 'Help';
+
+  @override
+  String scenarioYearSuffix(int year) {
+    return '$year';
+  }
+
+  @override
+  String get scenarioSettingsTitle => 'Scenario Settings';
+
+  @override
+  String get scenarioPerspectiveTitle => 'Choose a Perspective';
+
+  @override
+  String get scenarioWarlordSelectTitle =>
+      'Choose Warlords to Sortie (optional, up to 2)';
+
+  @override
+  String get scenarioWarlordSelectHint =>
+      'Your army\'s overall strength rises based on Leadership. Selecting two also applies compatibility (same faction, intelligence synergy, leadership gap) — the 1st commands the vanguard and the 2nd the main force, reflecting each warlord\'s Valor in their unit.';
+
+  @override
+  String get scenarioWarlordAwakenedTag => 'Awakened';
+
+  @override
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  ) {
+    return '$name Lv.$level$awakened (LDR $leadership)';
+  }
+
+  @override
+  String scenarioCompatibilityLabel(String multiplier, String note) {
+    return 'Compatibility: ×$multiplier$note';
+  }
+
+  @override
+  String get scenarioCompatibilityPositive => ' (Good match)';
+
+  @override
+  String get scenarioCompatibilityNegative => ' (Poor match)';
+
+  @override
+  String get scenarioDifficultyTitle => 'Choose Difficulty';
+
+  @override
+  String get scenarioLoadingText => 'Loading scenario...';
+
+  @override
+  String get scenarioLoadErrorText => 'Failed to load scenario';
+
+  @override
+  String get scenarioNameOdigahara => 'Battle of Okehazama';
+
+  @override
+  String get scenarioDescOdigahara =>
+      '3,500 vs 15,000 — overturn overwhelming odds with cunning tactics';
+
+  @override
+  String get scenarioPlayTimeOdigahara => '3-5 min';
+
+  @override
+  String get scenarioNameNagashino => 'Battle of Nagashino';
+
+  @override
+  String get scenarioDescNagashino =>
+      'Meet the Takeda cavalry with a defensive formation';
+
+  @override
+  String get scenarioPlayTimeNagashino => '4-6 min';
+
+  @override
+  String get scenarioNameHonnoji => 'Honno-ji Incident';
+
+  @override
+  String get scenarioDescHonnoji =>
+      '500 vs 13,000 — a reversal from a hopeless situation';
+
+  @override
+  String get scenarioPlayTimeHonnoji => '5-7 min';
+
+  @override
+  String get scenarioNameSekigahara => 'Battle of Sekigahara';
+
+  @override
+  String get scenarioDescSekigahara =>
+      'The fate of the realm — master a complex battlefield';
+
+  @override
+  String get scenarioPlayTimeSekigahara => '6-8 min';
+
+  @override
+  String get scenarioNameKawanakajima => 'Battle of Kawanakajima';
+
+  @override
+  String get scenarioDescKawanakajima =>
+      'Hold the line alone after a dawn ambush until the detached unit arrives';
+
+  @override
+  String get scenarioPlayTimeKawanakajima => '4-6 min';
+
+  @override
+  String get scenarioNameItsukushima => 'Battle of Itsukushima';
+
+  @override
+  String get scenarioDescItsukushima =>
+      '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
+
+  @override
+  String get scenarioPlayTimeItsukushima => '4-5 min';
 }

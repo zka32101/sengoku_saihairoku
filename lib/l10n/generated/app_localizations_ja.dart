@@ -1028,4 +1028,115 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get resultTpItsukushima4 => '敵将討死';
+
+  @override
+  String get scenarioSelectTitle => 'シナリオを選ぶ';
+
+  @override
+  String get scenarioSelectHelpTooltip => 'ヘルプ';
+
+  @override
+  String scenarioYearSuffix(int year) {
+    return '$year年';
+  }
+
+  @override
+  String get scenarioSettingsTitle => 'シナリオ設定';
+
+  @override
+  String get scenarioPerspectiveTitle => '視点を選ぶ';
+
+  @override
+  String get scenarioWarlordSelectTitle => '出陣武将を選ぶ（任意・最大2名）';
+
+  @override
+  String get scenarioWarlordSelectHint =>
+      '統率ステータスに応じて自軍全体の兵力が上昇します。2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます';
+
+  @override
+  String get scenarioWarlordAwakenedTag => '覚醒';
+
+  @override
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  ) {
+    return '$name Lv.$level$awakened (統率$leadership)';
+  }
+
+  @override
+  String scenarioCompatibilityLabel(String multiplier, String note) {
+    return '相性倍率: ×$multiplier$note';
+  }
+
+  @override
+  String get scenarioCompatibilityPositive => '（好相性）';
+
+  @override
+  String get scenarioCompatibilityNegative => '（不協和）';
+
+  @override
+  String get scenarioDifficultyTitle => '難易度を選ぶ';
+
+  @override
+  String get scenarioLoadingText => 'シナリオを読み込み中...';
+
+  @override
+  String get scenarioLoadErrorText => 'シナリオの読み込みに失敗しました';
+
+  @override
+  String get scenarioNameOdigahara => '桶狭間の戦';
+
+  @override
+  String get scenarioDescOdigahara => '3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ';
+
+  @override
+  String get scenarioPlayTimeOdigahara => '3〜5分';
+
+  @override
+  String get scenarioNameNagashino => '長篠の戦';
+
+  @override
+  String get scenarioDescNagashino => '防衛陣形で武田騎馬隊を迎え撃て';
+
+  @override
+  String get scenarioPlayTimeNagashino => '4〜6分';
+
+  @override
+  String get scenarioNameHonnoji => '本能寺の変';
+
+  @override
+  String get scenarioDescHonnoji => '500 vs 13,000 — 絶望的状況からの逆転';
+
+  @override
+  String get scenarioPlayTimeHonnoji => '5〜7分';
+
+  @override
+  String get scenarioNameSekigahara => '関ヶ原の戦';
+
+  @override
+  String get scenarioDescSekigahara => '天下分け目 — 複雑な戦局を制せよ';
+
+  @override
+  String get scenarioPlayTimeSekigahara => '6〜8分';
+
+  @override
+  String get scenarioNameKawanakajima => '川中島の戦';
+
+  @override
+  String get scenarioDescKawanakajima => '夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ';
+
+  @override
+  String get scenarioPlayTimeKawanakajima => '4〜6分';
+
+  @override
+  String get scenarioNameItsukushima => '厳島の戦';
+
+  @override
+  String get scenarioDescItsukushima => '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ';
+
+  @override
+  String get scenarioPlayTimeItsukushima => '4〜5分';
 }

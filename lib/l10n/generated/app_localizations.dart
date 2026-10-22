@@ -1957,6 +1957,209 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'敵将討死'**
   String get resultTpItsukushima4;
+
+  /// No description provided for @scenarioSelectTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオを選ぶ'**
+  String get scenarioSelectTitle;
+
+  /// No description provided for @scenarioSelectHelpTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'ヘルプ'**
+  String get scenarioSelectHelpTooltip;
+
+  /// No description provided for @scenarioYearSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{year}年'**
+  String scenarioYearSuffix(int year);
+
+  /// No description provided for @scenarioSettingsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ設定'**
+  String get scenarioSettingsTitle;
+
+  /// No description provided for @scenarioPerspectiveTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'視点を選ぶ'**
+  String get scenarioPerspectiveTitle;
+
+  /// No description provided for @scenarioWarlordSelectTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'出陣武将を選ぶ（任意・最大2名）'**
+  String get scenarioWarlordSelectTitle;
+
+  /// No description provided for @scenarioWarlordSelectHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'統率ステータスに応じて自軍全体の兵力が上昇します。2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます'**
+  String get scenarioWarlordSelectHint;
+
+  /// No description provided for @scenarioWarlordAwakenedTag.
+  ///
+  /// In ja, this message translates to:
+  /// **'覚醒'**
+  String get scenarioWarlordAwakenedTag;
+
+  /// No description provided for @scenarioWarlordChipLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'{name} Lv.{level}{awakened} (統率{leadership})'**
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  );
+
+  /// No description provided for @scenarioCompatibilityLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'相性倍率: ×{multiplier}{note}'**
+  String scenarioCompatibilityLabel(String multiplier, String note);
+
+  /// No description provided for @scenarioCompatibilityPositive.
+  ///
+  /// In ja, this message translates to:
+  /// **'（好相性）'**
+  String get scenarioCompatibilityPositive;
+
+  /// No description provided for @scenarioCompatibilityNegative.
+  ///
+  /// In ja, this message translates to:
+  /// **'（不協和）'**
+  String get scenarioCompatibilityNegative;
+
+  /// No description provided for @scenarioDifficultyTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度を選ぶ'**
+  String get scenarioDifficultyTitle;
+
+  /// No description provided for @scenarioLoadingText.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオを読み込み中...'**
+  String get scenarioLoadingText;
+
+  /// No description provided for @scenarioLoadErrorText.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオの読み込みに失敗しました'**
+  String get scenarioLoadErrorText;
+
+  /// No description provided for @scenarioNameOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'桶狭間の戦'**
+  String get scenarioNameOdigahara;
+
+  /// No description provided for @scenarioDescOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ'**
+  String get scenarioDescOdigahara;
+
+  /// No description provided for @scenarioPlayTimeOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'3〜5分'**
+  String get scenarioPlayTimeOdigahara;
+
+  /// No description provided for @scenarioNameNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'長篠の戦'**
+  String get scenarioNameNagashino;
+
+  /// No description provided for @scenarioDescNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'防衛陣形で武田騎馬隊を迎え撃て'**
+  String get scenarioDescNagashino;
+
+  /// No description provided for @scenarioPlayTimeNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜6分'**
+  String get scenarioPlayTimeNagashino;
+
+  /// No description provided for @scenarioNameHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'本能寺の変'**
+  String get scenarioNameHonnoji;
+
+  /// No description provided for @scenarioDescHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'500 vs 13,000 — 絶望的状況からの逆転'**
+  String get scenarioDescHonnoji;
+
+  /// No description provided for @scenarioPlayTimeHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'5〜7分'**
+  String get scenarioPlayTimeHonnoji;
+
+  /// No description provided for @scenarioNameSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'関ヶ原の戦'**
+  String get scenarioNameSekigahara;
+
+  /// No description provided for @scenarioDescSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'天下分け目 — 複雑な戦局を制せよ'**
+  String get scenarioDescSekigahara;
+
+  /// No description provided for @scenarioPlayTimeSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'6〜8分'**
+  String get scenarioPlayTimeSekigahara;
+
+  /// No description provided for @scenarioNameKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'川中島の戦'**
+  String get scenarioNameKawanakajima;
+
+  /// No description provided for @scenarioDescKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ'**
+  String get scenarioDescKawanakajima;
+
+  /// No description provided for @scenarioPlayTimeKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜6分'**
+  String get scenarioPlayTimeKawanakajima;
+
+  /// No description provided for @scenarioNameItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'厳島の戦'**
+  String get scenarioNameItsukushima;
+
+  /// No description provided for @scenarioDescItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ'**
+  String get scenarioDescItsukushima;
+
+  /// No description provided for @scenarioPlayTimeItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeItsukushima;
 }
 
 class _AppLocalizationsDelegate

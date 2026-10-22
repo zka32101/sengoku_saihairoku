@@ -925,6 +925,72 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'→ 安定傾向'**
   String get advancedStatsTrendStable;
+
+  /// No description provided for @rankingTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキング'**
+  String get rankingTitle;
+
+  /// No description provided for @rankingShareTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキングを共有'**
+  String get rankingShareTooltip;
+
+  /// No description provided for @rankingShareText.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録でランキングに挑戦中！あなたも采配を振るってみない？\n#戦国采配録'**
+  String get rankingShareText;
+
+  /// No description provided for @rankingGlobal.
+  ///
+  /// In ja, this message translates to:
+  /// **'グローバル'**
+  String get rankingGlobal;
+
+  /// No description provided for @rankingMyPlay.
+  ///
+  /// In ja, this message translates to:
+  /// **'マイプレイ'**
+  String get rankingMyPlay;
+
+  /// No description provided for @rankingAllScenarios.
+  ///
+  /// In ja, this message translates to:
+  /// **'全シナリオ'**
+  String get rankingAllScenarios;
+
+  /// No description provided for @rankingEmpty.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキングデータはまだありません'**
+  String get rankingEmpty;
+
+  /// No description provided for @rankingWon.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get rankingWon;
+
+  /// No description provided for @rankingSeasonBestNone.
+  ///
+  /// In ja, this message translates to:
+  /// **'{season}: まだ記録がありません'**
+  String rankingSeasonBestNone(String season);
+
+  /// No description provided for @rankingSeasonBestScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'{season}: 自己ベスト {score}点'**
+  String rankingSeasonBestScore(String season, int score);
+
+  /// No description provided for @rankingDurationSeconds.
+  ///
+  /// In ja, this message translates to:
+  /// **'{seconds}秒'**
+  String rankingDurationSeconds(int seconds);
 }
 
 class _AppLocalizationsDelegate

@@ -182,5 +182,28 @@
   "advancedStatsScenarioClearStatus": "シナリオ制覇状況",
   "advancedStatsTrendImproving": "📈 上昇傾向",
   "advancedStatsTrendDeclining": "📉 低下傾向",
-  "advancedStatsTrendStable": "→ 安定傾向"
+  "advancedStatsTrendStable": "→ 安定傾向",
+  "rankingTitle": "ランキング",
+  "rankingShareTooltip": "ランキングを共有",
+  "rankingShareText": "戦国采配録でランキングに挑戦中！あなたも采配を振るってみない？\n#戦国采配録",
+  "rankingGlobal": "グローバル",
+  "rankingMyPlay": "マイプレイ",
+  "rankingAllScenarios": "全シナリオ",
+  "rankingEmpty": "ランキングデータはまだありません",
+  "rankingWon": "勝利",
+  "rankingSeasonBestNone": "{season}: まだ記録がありません",
+  "@rankingSeasonBestNone": {
+    "placeholders": { "season": { "type": "String" } }
+  },
+  "rankingSeasonBestScore": "{season}: 自己ベスト {score}点",
+  "@rankingSeasonBestScore": {
+    "placeholders": {
+      "season": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "rankingDurationSeconds": "{seconds}秒",
+  "@rankingDurationSeconds": {
+    "placeholders": { "seconds": { "type": "int" } }
+  }
 }

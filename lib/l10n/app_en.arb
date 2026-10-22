@@ -179,5 +179,28 @@
   "advancedStatsScenarioClearStatus": "Scenario Completion",
   "advancedStatsTrendImproving": "📈 Improving",
   "advancedStatsTrendDeclining": "📉 Declining",
-  "advancedStatsTrendStable": "→ Stable"
+  "advancedStatsTrendStable": "→ Stable",
+  "rankingTitle": "Ranking",
+  "rankingShareTooltip": "Share Ranking",
+  "rankingShareText": "I'm challenging the ranking in Sengoku Saihairoku! Want to try your own command?\n#SengokuSaihairoku",
+  "rankingGlobal": "Global",
+  "rankingMyPlay": "My Plays",
+  "rankingAllScenarios": "All Scenarios",
+  "rankingEmpty": "No ranking data yet",
+  "rankingWon": "Win",
+  "rankingSeasonBestNone": "{season}: No record yet",
+  "@rankingSeasonBestNone": {
+    "placeholders": { "season": { "type": "String" } }
+  },
+  "rankingSeasonBestScore": "{season}: Best {score} pts",
+  "@rankingSeasonBestScore": {
+    "placeholders": {
+      "season": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "rankingDurationSeconds": "{seconds}s",
+  "@rankingDurationSeconds": {
+    "placeholders": { "seconds": { "type": "int" } }
+  }
 }

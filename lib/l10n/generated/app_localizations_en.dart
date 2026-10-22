@@ -49,4 +49,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonError => 'An error occurred';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsGameSection => 'Game Settings';
+
+  @override
+  String get settingsSfx => 'Sound Effects';
+
+  @override
+  String get settingsSfxSubtitle => 'SFX';
+
+  @override
+  String get settingsBgm => 'Music';
+
+  @override
+  String get settingsBgmSubtitle => 'Background music';
+
+  @override
+  String get settingsLanguageSection => 'Language';
+
+  @override
+  String get settingsDisplayLanguage => 'Display Language';
+
+  @override
+  String get settingsLanguageSystem => 'Follow system setting';
+
+  @override
+  String get settingsLanguageJa => '日本語';
+
+  @override
+  String get settingsLanguageEn => 'English';
+
+  @override
+  String get settingsDataSection => 'Data Management';
+
+  @override
+  String get settingsCloudSave => 'Cloud Save';
+
+  @override
+  String get settingsCloudSaveSubtitle => 'A Firebase account is required';
+
+  @override
+  String get settingsDeleteSaveData => 'Delete Save Data';
+
+  @override
+  String get settingsOtherSection => 'Other';
+
+  @override
+  String get settingsReplayTutorial => 'Replay Tutorial';
+
+  @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get settingsTermsOfService => 'Terms of Service';
+
+  @override
+  String get settingsVersion => 'Version';
+
+  @override
+  String get settingsComingSoon => 'Coming soon';
+
+  @override
+  String get settingsDeleteDataTitle => 'Delete your data?';
+
+  @override
+  String get settingsDeleteDataBody => 'This action cannot be undone';
+
+  @override
+  String get settingsDeleteDataConfirm => 'Delete';
+
+  @override
+  String get settingsDeleteDataSuccess => 'Your data has been deleted';
+
+  @override
+  String get settingsDeleteDataFailure => 'Failed to delete your data';
 }

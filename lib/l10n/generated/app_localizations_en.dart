@@ -726,4 +726,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileAchievementsViewAllButton => 'View All Achievements';
+
+  @override
+  String get homeAppTitle => 'Sengoku Saihairoku';
+
+  @override
+  String get homeTagline => 'Conquer the Realm';
+
+  @override
+  String get homeTodayChallengeLabel => 'Today\'s Challenge';
+
+  @override
+  String get homeWeeklyChallengeLabel => 'This Week\'s Challenge';
+
+  @override
+  String get homeSpotBattleTitle => 'Spot Battle';
+
+  @override
+  String get homeSpotBattleSubtitle =>
+      'Choose a famous battle and take command';
+
+  @override
+  String get homeSpotBattlePlayTime => 'Play time: 3-8 min';
+
+  @override
+  String get homeSpotBattleButton => 'Choose a Scenario';
+
+  @override
+  String get homeChainBattleTitle => 'Chain Battle';
+
+  @override
+  String get homeChainBattleSubtitle =>
+      'A high-difficulty mode clearing every scenario back to back';
+
+  @override
+  String get homeChainBattleButton => 'Start Chain Battle';
+
+  @override
+  String get homeReplayTitle => 'Battle Replay';
+
+  @override
+  String get homeReplaySubtitle => 'Replay and analyze past battles';
+
+  @override
+  String get homeReplayNote => 'All battles are recorded automatically';
+
+  @override
+  String get homeReplayButton => 'View Replays';
+
+  @override
+  String get homeRankingTitle => 'Ranking';
+
+  @override
+  String get homeRankingSubtitle => 'Compete against other commanders';
+
+  @override
+  String get homeRankingButton => 'View Ranking';
+
+  @override
+  String get homeChallengeHistoryTitle => 'Challenge History';
+
+  @override
+  String get homeChallengeHistorySubtitle =>
+      'Check the last 7 days of challenges';
+
+  @override
+  String get homeChallengeHistoryButton => 'View Challenge History';
+
+  @override
+  String get homeFriendsTitle => 'Friends';
+
+  @override
+  String get homeFriendsSubtitle =>
+      'Exchange friend codes and compete on the ranking';
+
+  @override
+  String get homeFriendsButton => 'View Friends';
+
+  @override
+  String get homeWarlordCollectionTitle => 'Warlord Collection';
+
+  @override
+  String get homeWarlordCollectionSubtitle =>
+      'Discover warlords with gold and complete your collection';
+
+  @override
+  String get homeWarlordCollectionButton => 'View Collection';
+
+  @override
+  String get homeGoldShopTitle => 'Gold Shop';
+
+  @override
+  String get homeGoldShopSubtitle =>
+      'Buy gold to speed up your Battle Pass progress';
+
+  @override
+  String get homeGoldShopButton => 'View Shop';
+
+  @override
+  String get homeBattlePassTitle => 'Battle Pass';
+
+  @override
+  String get homeBattlePassSubtitle => 'Rank up your tier through the season';
+
+  @override
+  String homeBattlePassMissedRewards(int count) {
+    return 'Missing $count premium reward(s)';
+  }
+
+  @override
+  String get homeBattlePassButton => 'View Battle Pass';
 }

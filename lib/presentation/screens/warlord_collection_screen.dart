@@ -382,11 +382,22 @@ class _WarlordCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: unlocked ? null : Colors.grey[850],
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
+        child: Container(
+          decoration: unlocked
+              ? null
+              : const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/warlord_locked.png'),
+                    fit: BoxFit.cover,
+                    opacity: 0.35,
+                  ),
+                ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
@@ -413,6 +424,7 @@ class _WarlordCard extends StatelessWidget {
                   style: const TextStyle(fontSize: 11),
                 ),
             ],
+            ),
           ),
         ),
       ),

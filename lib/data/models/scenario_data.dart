@@ -20,6 +20,18 @@ extension ScenarioDisplayName on Scenario {
       };
 }
 
+/// シナリオ選択画面のカードに表示する合戦イラストのアセットパス。
+extension ScenarioThumbnail on Scenario {
+  String get thumbnailAsset => switch (this) {
+        Scenario.odigahara => 'assets/images/scenario_odigahara.png',
+        Scenario.nagashino => 'assets/images/scenario_nagashino.png',
+        Scenario.honnoJi => 'assets/images/scenario_honnoji.png',
+        Scenario.sekigahara => 'assets/images/scenario_sekigahara.png',
+        Scenario.kawanakajima => 'assets/images/scenario_kawanakajima.png',
+        Scenario.itsukushima => 'assets/images/scenario_itsukushima.png',
+      };
+}
+
 class ScenarioData {
   final Scenario id;
   final String displayName;

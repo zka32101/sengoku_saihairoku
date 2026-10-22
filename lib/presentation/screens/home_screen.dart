@@ -223,35 +223,50 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 200,
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF3B1A1A), Color(0xFF1A0F0A)],
+        image: DecorationImage(
+          image: AssetImage('assets/images/home_header_bg.png'),
+          fit: BoxFit.cover,
         ),
       ),
-      child: Column(
-        children: [
-          const Text(
-            '戦国采配録',
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFD700),
-              letterSpacing: 4,
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black.withValues(alpha: 0.15),
+              const Color(0xFF1A0F0A).withValues(alpha: 0.75),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            '天下を狙え',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[400],
-              letterSpacing: 2,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '戦国采配録',
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFD700),
+                letterSpacing: 4,
+                shadows: [Shadow(blurRadius: 8, color: Colors.black)],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              '天下を狙え',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[300],
+                letterSpacing: 2,
+                shadows: const [Shadow(blurRadius: 6, color: Colors.black)],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -263,11 +278,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.castle, color: Color(0xFFFFD700), size: 28),
-                SizedBox(width: 8),
-                Text(
+                Image.asset(
+                  'assets/images/banner_decoration.png',
+                  width: 32,
+                  height: 32,
+                ),
+                const SizedBox(width: 8),
+                const Text(
                   'スポット戦',
                   style: TextStyle(
                     fontSize: 22,

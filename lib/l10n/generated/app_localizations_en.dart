@@ -163,4 +163,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weekdaySat => 'Sat';
+
+  @override
+  String get statisticsTitle => 'Stats';
+
+  @override
+  String get statisticsDetailTooltip => 'Detailed Stats (by Scenario / Trends)';
+
+  @override
+  String get statisticsXpSummaryTitle => 'XP Stats';
+
+  @override
+  String get statisticsXpGainedLabel => 'XP Gained';
+
+  @override
+  String get statisticsBattleCountLabel => 'Battles';
+
+  @override
+  String get statisticsAverageXpLabel => 'Avg XP';
+
+  @override
+  String get statisticsXpHistoryTitle => 'XP History';
+
+  @override
+  String get statisticsXpHistoryEmpty => 'No XP history yet';
+
+  @override
+  String get statisticsSourceBattle => 'Battle';
+
+  @override
+  String get statisticsSourceChallenge => 'Challenge';
+
+  @override
+  String get statisticsSourceAchievement => 'Achievement';
+
+  @override
+  String get statisticsSourceBattleXpBoost => 'Ad Boost';
+
+  @override
+  String get statisticsTimeJustNow => 'Just now';
+
+  @override
+  String statisticsTimeMinutesAgo(int minutes) {
+    return '${minutes}m ago';
+  }
+
+  @override
+  String statisticsTimeHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String statisticsTimeDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String statisticsTimeMonthDay(int month, int day) {
+    return '$month/$day';
+  }
 }

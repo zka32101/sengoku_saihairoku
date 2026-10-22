@@ -54,5 +54,37 @@
   "weekdayWed": "水",
   "weekdayThu": "木",
   "weekdayFri": "金",
-  "weekdaySat": "土"
+  "weekdaySat": "土",
+  "statisticsTitle": "統計",
+  "statisticsDetailTooltip": "詳細統計（シナリオ別・トレンド）",
+  "statisticsXpSummaryTitle": "XP統計",
+  "statisticsXpGainedLabel": "獲得XP",
+  "statisticsBattleCountLabel": "戦闘数",
+  "statisticsAverageXpLabel": "平均XP",
+  "statisticsXpHistoryTitle": "XP獲得履歴",
+  "statisticsXpHistoryEmpty": "XP獲得履歴がまだありません",
+  "statisticsSourceBattle": "戦闘",
+  "statisticsSourceChallenge": "チャレンジ",
+  "statisticsSourceAchievement": "実績",
+  "statisticsSourceBattleXpBoost": "広告ブースト",
+  "statisticsTimeJustNow": "たった今",
+  "statisticsTimeMinutesAgo": "{minutes}分前",
+  "@statisticsTimeMinutesAgo": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "statisticsTimeHoursAgo": "{hours}時間前",
+  "@statisticsTimeHoursAgo": {
+    "placeholders": { "hours": { "type": "int" } }
+  },
+  "statisticsTimeDaysAgo": "{days}日前",
+  "@statisticsTimeDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "statisticsTimeMonthDay": "{month}月{day}日",
+  "@statisticsTimeMonthDay": {
+    "placeholders": {
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  }
 }

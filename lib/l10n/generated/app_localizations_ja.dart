@@ -163,4 +163,63 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get weekdaySat => '土';
+
+  @override
+  String get statisticsTitle => '統計';
+
+  @override
+  String get statisticsDetailTooltip => '詳細統計（シナリオ別・トレンド）';
+
+  @override
+  String get statisticsXpSummaryTitle => 'XP統計';
+
+  @override
+  String get statisticsXpGainedLabel => '獲得XP';
+
+  @override
+  String get statisticsBattleCountLabel => '戦闘数';
+
+  @override
+  String get statisticsAverageXpLabel => '平均XP';
+
+  @override
+  String get statisticsXpHistoryTitle => 'XP獲得履歴';
+
+  @override
+  String get statisticsXpHistoryEmpty => 'XP獲得履歴がまだありません';
+
+  @override
+  String get statisticsSourceBattle => '戦闘';
+
+  @override
+  String get statisticsSourceChallenge => 'チャレンジ';
+
+  @override
+  String get statisticsSourceAchievement => '実績';
+
+  @override
+  String get statisticsSourceBattleXpBoost => '広告ブースト';
+
+  @override
+  String get statisticsTimeJustNow => 'たった今';
+
+  @override
+  String statisticsTimeMinutesAgo(int minutes) {
+    return '$minutes分前';
+  }
+
+  @override
+  String statisticsTimeHoursAgo(int hours) {
+    return '$hours時間前';
+  }
+
+  @override
+  String statisticsTimeDaysAgo(int days) {
+    return '$days日前';
+  }
+
+  @override
+  String statisticsTimeMonthDay(int month, int day) {
+    return '$month月$day日';
+  }
 }

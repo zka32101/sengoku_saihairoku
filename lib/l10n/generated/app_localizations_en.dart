@@ -127,4 +127,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsDeleteDataFailure => 'Failed to delete your data';
+
+  @override
+  String get challengeHistoryTitle => 'Challenge History';
+
+  @override
+  String get challengeHistoryEmpty => 'No challenge history';
+
+  @override
+  String get challengeHistoryBanner => 'Challenge history for the last 7 days';
+
+  @override
+  String get challengeHistoryToday => 'Today';
+
+  @override
+  String get challengeHistoryNoChallengeInfo => 'No challenge data';
+
+  @override
+  String get weekdaySun => 'Sun';
+
+  @override
+  String get weekdayMon => 'Mon';
+
+  @override
+  String get weekdayTue => 'Tue';
+
+  @override
+  String get weekdayWed => 'Wed';
+
+  @override
+  String get weekdayThu => 'Thu';
+
+  @override
+  String get weekdayFri => 'Fri';
+
+  @override
+  String get weekdaySat => 'Sat';
 }

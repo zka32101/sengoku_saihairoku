@@ -39,5 +39,17 @@
   "settingsDeleteDataBody": "This action cannot be undone",
   "settingsDeleteDataConfirm": "Delete",
   "settingsDeleteDataSuccess": "Your data has been deleted",
-  "settingsDeleteDataFailure": "Failed to delete your data"
+  "settingsDeleteDataFailure": "Failed to delete your data",
+  "challengeHistoryTitle": "Challenge History",
+  "challengeHistoryEmpty": "No challenge history",
+  "challengeHistoryBanner": "Challenge history for the last 7 days",
+  "challengeHistoryToday": "Today",
+  "challengeHistoryNoChallengeInfo": "No challenge data",
+  "weekdaySun": "Sun",
+  "weekdayMon": "Mon",
+  "weekdayTue": "Tue",
+  "weekdayWed": "Wed",
+  "weekdayThu": "Thu",
+  "weekdayFri": "Fri",
+  "weekdaySat": "Sat"
 }

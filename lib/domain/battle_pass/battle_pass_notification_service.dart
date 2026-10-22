@@ -143,8 +143,8 @@ class _BattlePassTierUpNotificationState
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.cyan.withOpacity(0.3),
-                  Colors.blue.withOpacity(0.2),
+                  Colors.cyan.withValues(alpha: 0.3),
+                  Colors.blue.withValues(alpha: 0.2),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -156,7 +156,7 @@ class _BattlePassTierUpNotificationState
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.cyan.withOpacity(0.4),
+                  color: Colors.cyan.withValues(alpha: 0.4),
                   blurRadius: 12,
                   spreadRadius: 2,
                 ),
@@ -193,7 +193,7 @@ class _BattlePassTierUpNotificationState
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.cyan.withOpacity(0.2),
+                        color: Colors.cyan.withValues(alpha: 0.2),
                         border: Border.all(color: Colors.cyan, width: 2),
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -308,8 +308,8 @@ class _BattlePassRewardNotificationState
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.green.withOpacity(0.3),
-                  Colors.teal.withOpacity(0.2),
+                  Colors.green.withValues(alpha: 0.3),
+                  Colors.teal.withValues(alpha: 0.2),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -321,7 +321,7 @@ class _BattlePassRewardNotificationState
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.green.withOpacity(0.4),
+                  color: Colors.green.withValues(alpha: 0.4),
                   blurRadius: 12,
                   spreadRadius: 2,
                 ),
@@ -430,8 +430,8 @@ class _BattlePassPremiumNotificationState
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.purple.withOpacity(0.3),
-                  Colors.pink.withOpacity(0.2),
+                  Colors.purple.withValues(alpha: 0.3),
+                  Colors.pink.withValues(alpha: 0.2),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -443,7 +443,7 @@ class _BattlePassPremiumNotificationState
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.purple.withOpacity(0.4),
+                  color: Colors.purple.withValues(alpha: 0.4),
                   blurRadius: 12,
                   spreadRadius: 2,
                 ),

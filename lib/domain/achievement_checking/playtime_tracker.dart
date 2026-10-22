@@ -1,11 +1,10 @@
-import '../../core/services/firebase_service.dart';
 import 'achievement_checker.dart';
+import 'package:flutter/foundation.dart';
 
 /// ユーザーのプレイ時間を追跡し、時間ベースの実績をチェックするサービス
 class PlaytimeTracker {
   static final PlaytimeTracker _instance = PlaytimeTracker._internal();
 
-  late FirebaseService _firebaseService;
   late AchievementChecker _achievementChecker;
 
   factory PlaytimeTracker() {
@@ -16,7 +15,6 @@ class PlaytimeTracker {
 
   /// 初期化
   Future<void> initialize() async {
-    _firebaseService = FirebaseService();
     _achievementChecker = AchievementChecker();
   }
 
@@ -38,7 +36,7 @@ class PlaytimeTracker {
         totalPlayTimeMinutes: totalPlaytimeMinutes,
       );
     } catch (e) {
-      print('Error recording playtime: $e');
+      debugPrint('Error recording playtime: $e');
     }
   }
 
@@ -56,7 +54,7 @@ class PlaytimeTracker {
       // return sum(durationSeconds) / 60
       return 0; // ダミー
     } catch (e) {
-      print('Error getting total playtime: $e');
+      debugPrint('Error getting total playtime: $e');
       return 0;
     }
   }

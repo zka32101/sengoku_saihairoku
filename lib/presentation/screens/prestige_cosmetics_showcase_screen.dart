@@ -4,7 +4,6 @@ import '../../data/models/user_progression.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
-import '../../domain/progression/prestige_manager.dart';
 import '../widgets/screen_transition.dart';
 
 /// プレスティジコスメティック・ショーケース画面
@@ -20,8 +19,6 @@ class _PrestigeCosmeticsShowcaseScreenState
     extends State<PrestigeCosmeticsShowcaseScreen> {
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
-  late PrestigeManager _prestigeManager;
-
   UserProgression? _userProgression;
   List<Cosmetic> _prestigeCosmetics = [];
   bool _isLoading = true;
@@ -31,10 +28,6 @@ class _PrestigeCosmeticsShowcaseScreenState
     super.initState();
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
-    _prestigeManager = PrestigeManager(
-      progressionRepository: _progressionRepo,
-      rewardRepository: _rewardRepo,
-    );
     _loadData();
   }
 
@@ -60,7 +53,7 @@ class _PrestigeCosmeticsShowcaseScreenState
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading prestige showcase data: $e');
+      debugPrint('Error loading prestige showcase data: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -163,7 +156,7 @@ class _PrestigeProgressCard extends StatelessWidget {
         : 1.0;
 
     return Card(
-      color: Color(currentTier.color).withOpacity(0.2),
+      color: Color(currentTier.color).withValues(alpha: 0.2),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -198,7 +191,7 @@ class _PrestigeProgressCard extends StatelessWidget {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Color(currentTier.color).withOpacity(0.1),
+                    color: Color(currentTier.color).withValues(alpha: 0.1),
                     border: Border.all(
                       color: Color(currentTier.color),
                       width: 2,
@@ -298,7 +291,7 @@ class _PrestigeTierHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Color(tier.color).withOpacity(0.15),
+        color: Color(tier.color).withValues(alpha: 0.15),
         border: Border(
           left: BorderSide(
             color: Color(tier.color),
@@ -337,7 +330,7 @@ class _PrestigeTierHeader extends StatelessWidget {
                 vertical: 6,
               ),
               decoration: BoxDecoration(
-                color: Color(tier.color).withOpacity(0.2),
+                color: Color(tier.color).withValues(alpha: 0.2),
                 border: Border.all(color: Color(tier.color)),
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -471,7 +464,7 @@ class _PrestigeCosmeticCardState extends State<_PrestigeCosmeticCard>
         scale: _scaleAnimation,
         child: Card(
           color: widget.isUnlocked
-              ? Color(widget.tier.color).withOpacity(0.1)
+              ? Color(widget.tier.color).withValues(alpha: 0.1)
               : Colors.grey[900],
           child: Padding(
             padding: const EdgeInsets.all(12),
@@ -521,7 +514,7 @@ class _PrestigeCosmeticCardState extends State<_PrestigeCosmeticCard>
                   ),
                   decoration: BoxDecoration(
                     color: widget.isUnlocked
-                        ? Color(widget.tier.color).withOpacity(0.2)
+                        ? Color(widget.tier.color).withValues(alpha: 0.2)
                         : Colors.grey[800],
                     border: Border.all(
                       color: widget.isUnlocked

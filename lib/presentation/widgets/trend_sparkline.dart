@@ -108,7 +108,7 @@ class _SparklinePainter extends CustomPainter {
       ..close();
     canvas.drawPath(
       fillPath,
-      Paint()..color = color.withOpacity(0.12),
+      Paint()..color = color.withValues(alpha: 0.12),
     );
 
     final dotPaint = Paint()..color = color;

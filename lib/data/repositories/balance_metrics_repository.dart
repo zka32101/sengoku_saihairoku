@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../models/balance_metrics.dart';
 import '../models/scenario_data.dart';
 import '../models/difficulty_mode.dart';
+import 'package:flutter/foundation.dart';
 
 /// ゲームバランスメトリクス管理
 class BalanceMetricsRepository {
@@ -31,7 +32,7 @@ class BalanceMetricsRepository {
       }
       return result;
     } catch (e) {
-      print('Error loading balance metrics: $e');
+      debugPrint('Error loading balance metrics: $e');
       return {};
     }
   }
@@ -46,7 +47,7 @@ class BalanceMetricsRepository {
       final key = '${scenario.name}_${difficulty.name}';
       return all[key];
     } catch (e) {
-      print('Error getting metrics for $scenario/$difficulty: $e');
+      debugPrint('Error getting metrics for $scenario/$difficulty: $e');
       return null;
     }
   }
@@ -59,7 +60,7 @@ class BalanceMetricsRepository {
       final sum = all.values.fold<double>(0, (sum, m) => sum + m.playerWinRate);
       return sum / all.length;
     } catch (e) {
-      print('Error calculating average win rate: $e');
+      debugPrint('Error calculating average win rate: $e');
       return 0.0;
     }
   }
@@ -91,7 +92,7 @@ class BalanceMetricsRepository {
 
       return averages;
     } catch (e) {
-      print('Error calculating win rate by difficulty: $e');
+      debugPrint('Error calculating win rate by difficulty: $e');
       return {};
     }
   }
@@ -105,7 +106,7 @@ class BalanceMetricsRepository {
           all.values.fold<double>(0, (sum, m) => sum + m.avgBattleDuration);
       return sum / all.length;
     } catch (e) {
-      print('Error calculating average battle duration: $e');
+      debugPrint('Error calculating average battle duration: $e');
       return 0.0;
     }
   }
@@ -137,7 +138,7 @@ class BalanceMetricsRepository {
 
       return averages;
     } catch (e) {
-      print('Error calculating battle duration by difficulty: $e');
+      debugPrint('Error calculating battle duration by difficulty: $e');
       return {};
     }
   }
@@ -159,7 +160,7 @@ class BalanceMetricsRepository {
       problems.sort((a, b) => b.recommendations.length.compareTo(a.recommendations.length));
       return problems;
     } catch (e) {
-      print('Error detecting problematic combinations: $e');
+      debugPrint('Error detecting problematic combinations: $e');
       return [];
     }
   }
@@ -212,7 +213,7 @@ class BalanceMetricsRepository {
 
       return buffer.toString();
     } catch (e) {
-      print('Error generating balance report: $e');
+      debugPrint('Error generating balance report: $e');
       return 'レポート生成エラー: $e';
     }
   }

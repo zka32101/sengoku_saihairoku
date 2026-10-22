@@ -186,7 +186,7 @@ class _AchievementNotificationWidgetState
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFFFD700).withOpacity(0.3),
+                      color: const Color(0xFFFFD700).withValues(alpha: 0.3),
                       blurRadius: 16,
                       spreadRadius: 2,
                     ),

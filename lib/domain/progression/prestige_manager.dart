@@ -2,6 +2,7 @@ import '../../data/models/user_progression.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../achievement_checking/prestige_achievement_handler.dart';
+import 'package:flutter/foundation.dart';
 
 /// プレスティジシステム管理
 class PrestigeManager {
@@ -149,14 +150,14 @@ class PrestigeManager {
         newResetCount,
       );
       if (unlockedAchievements.isNotEmpty) {
-        print(
+        debugPrint(
             '✓ Achievements unlocked: ${unlockedAchievements.map((a) => a.name).join(", ")}');
       }
 
-      print(
+      debugPrint(
           '✓ Prestige performed: $userId reset #$newResetCount (Tier: ${newPrestigeRank.displayName})');
     } catch (e) {
-      print('Error performing prestige: $e');
+      debugPrint('Error performing prestige: $e');
       rethrow;
     }
   }

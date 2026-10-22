@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/firebase_models.dart';
 import '../models/scenario_data.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class IRankingRepository {
   Future<List<RankingEntry>> fetchRanking(Scenario scenario, {int limit = 50});
@@ -115,7 +116,7 @@ class RankingRepository implements IRankingRepository {
         turningPointsAchieved: turningPointsAchieved,
       ));
     } catch (e) {
-      print('Error submitting season ranking: $e');
+      debugPrint('Error submitting season ranking: $e');
     }
   }
 
@@ -132,7 +133,7 @@ class RankingRepository implements IRankingRepository {
       if (data == null) return null;
       return data['bestScore'] as int?;
     } catch (e) {
-      print('Error getting season best: $e');
+      debugPrint('Error getting season best: $e');
       return null;
     }
   }

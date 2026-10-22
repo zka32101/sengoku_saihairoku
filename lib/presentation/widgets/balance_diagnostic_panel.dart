@@ -69,7 +69,7 @@ class _BalanceDiagnosticPanelState extends State<BalanceDiagnosticPanel> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => _showReport(context),
+                  onPressed: _showReport,
                   child: const Text('バランスレポートを表示'),
                 ),
               ),
@@ -80,7 +80,7 @@ class _BalanceDiagnosticPanelState extends State<BalanceDiagnosticPanel> {
     );
   }
 
-  Future<void> _showReport(BuildContext context) async {
+  Future<void> _showReport() async {
     final report = await _balanceRepo.generateBalanceReport();
     if (!mounted) return;
     showDialog(

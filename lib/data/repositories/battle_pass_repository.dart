@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import '../models/battle_pass.dart';
 import 'currency_repository.dart';
+import 'package:flutter/foundation.dart';
 
 /// バトルパスデータを管理するリポジトリ
 class BattlePassRepository {
@@ -28,9 +29,9 @@ class BattlePassRepository {
       final currentData = jsonData['current'] as Map<String, dynamic>;
       _currentBattlePass = BattlePass.fromJson(currentData);
       _initialized = true;
-      print('✅ BattlePass Repository initialized');
+      debugPrint('✅ BattlePass Repository initialized');
     } catch (e) {
-      print('❌ Error initializing BattlePass Repository: $e');
+      debugPrint('❌ Error initializing BattlePass Repository: $e');
       rethrow;
     }
   }
@@ -59,7 +60,7 @@ class BattlePassRepository {
 
       return BattlePassProgress.fromFirestore(doc);
     } catch (e) {
-      print('Error getting battle pass progress: $e');
+      debugPrint('Error getting battle pass progress: $e');
       return null;
     }
   }
@@ -92,7 +93,7 @@ class BattlePassRepository {
 
       return progress;
     } catch (e) {
-      print('Error initializing battle pass progress: $e');
+      debugPrint('Error initializing battle pass progress: $e');
       rethrow;
     }
   }
@@ -104,9 +105,7 @@ class BattlePassRepository {
   ) async {
     try {
       var progress = await getUserBattlePassProgress(userId);
-      if (progress == null) {
-        progress = await initializeBattlePassProgress(userId);
-      }
+      progress ??= await initializeBattlePassProgress(userId);
 
       // 新しいXPを追加
       int newCurrentXp = progress.currentXp + xpAmount;
@@ -167,7 +166,7 @@ class BattlePassRepository {
 
       return updatedProgress;
     } catch (e) {
-      print('Error gaining XP: $e');
+      debugPrint('Error gaining XP: $e');
       return null;
     }
   }
@@ -243,7 +242,7 @@ class BattlePassRepository {
 
       return updatedProgress;
     } catch (e) {
-      print('Error activating premium: $e');
+      debugPrint('Error activating premium: $e');
       return null;
     }
   }
@@ -305,7 +304,7 @@ class BattlePassRepository {
         daysRemaining: getDaysRemaining(),
       );
     } catch (e) {
-      print('Error getting battle pass stats: $e');
+      debugPrint('Error getting battle pass stats: $e');
       return null;
     }
   }

@@ -22,9 +22,7 @@ import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
-import '../../data/repositories/achievement_repository.dart';
 import '../../data/repositories/battle_pass_repository.dart';
-import '../../data/models/battle_pass.dart';
 import '../../domain/battle_pass/battle_pass_notification_service.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
@@ -63,7 +61,6 @@ class _ResultScreenState extends State<ResultScreen> {
   late RewardRepository _rewardRepo;
   late AchievementChecker _achievementChecker;
   late AchievementNotificationService _notificationService;
-  late AchievementRepository _achievementRepo;
   late BattlePassRepository _battlePassRepo;
   late BattlePassNotificationService _battlePassNotificationService;
   bool _challengeCompleted = false;
@@ -72,7 +69,7 @@ class _ResultScreenState extends State<ResultScreen> {
   int? _newLevel;
   bool _cosmeticUnlocked = false;
   Cosmetic? _unlockedCosmetic;
-  List<dynamic> _unlockedAchievements = [];
+  final List<dynamic> _unlockedAchievements = [];
   int _battlePassXpGained = 0;
   bool _battlePassTierUp = false;
   int? _newBattlePassTier;
@@ -90,7 +87,6 @@ class _ResultScreenState extends State<ResultScreen> {
     _rewardRepo = RewardRepository();
     _achievementChecker = AchievementChecker();
     _notificationService = AchievementNotificationService();
-    _achievementRepo = AchievementRepository();
     _battlePassRepo = BattlePassRepository();
     _battlePassNotificationService = BattlePassNotificationService();
 
@@ -192,7 +188,7 @@ class _ResultScreenState extends State<ResultScreen> {
         }
       }
     } catch (e) {
-      print('Error checking battle achievements: $e');
+      debugPrint('Error checking battle achievements: $e');
     }
   }
 
@@ -298,7 +294,7 @@ class _ResultScreenState extends State<ResultScreen> {
         }
       }
     } catch (e) {
-      print('Error checking event challenge achievements: $e');
+      debugPrint('Error checking event challenge achievements: $e');
     }
   }
 
@@ -356,7 +352,7 @@ class _ResultScreenState extends State<ResultScreen> {
       // バトルパスXPを記録
       await _recordBattlePassXp();
     } catch (e) {
-      print('Error recording progression XP: $e');
+      debugPrint('Error recording progression XP: $e');
     }
   }
 
@@ -386,7 +382,7 @@ class _ResultScreenState extends State<ResultScreen> {
       // コスメティック解放時に関連実績をチェック
       // TODO: 総解放数を取得して checkCosmeticAchievements を呼び出す
     } catch (e) {
-      print('Error unlocking milestone cosmetic: $e');
+      debugPrint('Error unlocking milestone cosmetic: $e');
     }
   }
 
@@ -410,7 +406,7 @@ class _ResultScreenState extends State<ResultScreen> {
         }
       }
     } catch (e) {
-      print('Error checking level achievements: $e');
+      debugPrint('Error checking level achievements: $e');
     }
   }
 
@@ -451,7 +447,7 @@ class _ResultScreenState extends State<ResultScreen> {
         }
       }
     } catch (e) {
-      print('Error recording battle pass XP: $e');
+      debugPrint('Error recording battle pass XP: $e');
     }
   }
 
@@ -803,7 +799,7 @@ class _FriendChallengeResultBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         border: Border.all(color: color, width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -851,7 +847,7 @@ class _ChallengeCompletionBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.green.withOpacity(0.15),
+        color: Colors.green.withValues(alpha: 0.15),
         border: Border.all(color: Colors.green, width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -947,8 +943,8 @@ class _LevelUpBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.amber.withOpacity(0.2),
-            Colors.orange.withOpacity(0.2),
+            Colors.amber.withValues(alpha: 0.2),
+            Colors.orange.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -993,8 +989,8 @@ class _BattlePassTierUpBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.cyan.withOpacity(0.2),
-            Colors.blue.withOpacity(0.2),
+            Colors.cyan.withValues(alpha: 0.2),
+            Colors.blue.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -1039,8 +1035,8 @@ class _CosmeticUnlockBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.purple.withOpacity(0.2),
-            Colors.pink.withOpacity(0.2),
+            Colors.purple.withValues(alpha: 0.2),
+            Colors.pink.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/battle_result_data.dart';
+import 'package:flutter/foundation.dart';
 
 /// オフライン等で`FirebaseService.saveBattleResult()`の書き込みに失敗した
 /// バトル結果を端末内に保持し、次回成功時に再送するキュー。
@@ -51,7 +52,7 @@ class PendingBattleResultQueue {
         results.add(
             BattleResultData.fromJson(jsonDecode(entry) as Map<String, dynamic>));
       } catch (e) {
-        print('Error decoding queued battle result: $e');
+        debugPrint('Error decoding queued battle result: $e');
       }
     }
     return results;

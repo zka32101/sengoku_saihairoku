@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 /// 初回起動オンボーディング（導入チュートリアル）の完了状態を管理する。
 class OnboardingRepository {
@@ -16,10 +17,10 @@ class OnboardingRepository {
       final doc =
           await FirebaseFirestore.instance.collection('users').doc(userId).get();
       final completed =
-          (doc.data() as Map<String, dynamic>?)?['onboardingCompleted'] as bool?;
+          (doc.data())?['onboardingCompleted'] as bool?;
       return completed != true;
     } catch (e) {
-      print('Error checking onboarding status: $e');
+      debugPrint('Error checking onboarding status: $e');
       return true;
     }
   }
@@ -31,7 +32,7 @@ class OnboardingRepository {
           .doc(userId)
           .set({'onboardingCompleted': true}, SetOptions(merge: true));
     } catch (e) {
-      print('Error marking onboarding completed: $e');
+      debugPrint('Error marking onboarding completed: $e');
     }
   }
 }

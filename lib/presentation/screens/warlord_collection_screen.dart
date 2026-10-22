@@ -218,7 +218,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
         }
       }
     } catch (e) {
-      print('Error checking warlord collection achievements: $e');
+      debugPrint('Error checking warlord collection achievements: $e');
     }
   }
 

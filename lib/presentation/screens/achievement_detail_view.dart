@@ -248,7 +248,7 @@ class AchievementDetailView extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: _getDifficultyColor(achievement.difficulty)
-                                  .withOpacity(0.2),
+                                  .withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
                                 color: _getDifficultyColor(achievement.difficulty),

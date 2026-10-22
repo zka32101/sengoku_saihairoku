@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/battle_replay.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import 'package:flutter/foundation.dart';
 
 /// バトルリプレイ管理リポジトリ
 class ReplayRepository {
@@ -43,7 +43,7 @@ class ReplayRepository {
         await prefs.setStringList(_replayListKey, replayIds);
       }
     } catch (e) {
-      print('Error saving replay: $e');
+      debugPrint('Error saving replay: $e');
       rethrow;
     }
   }
@@ -60,7 +60,7 @@ class ReplayRepository {
         jsonDecode(json) as Map<String, dynamic>,
       );
     } catch (e) {
-      print('Error getting replay $id: $e');
+      debugPrint('Error getting replay $id: $e');
       return null;
     }
   }
@@ -81,7 +81,7 @@ class ReplayRepository {
 
       return replays;
     } catch (e) {
-      print('Error getting all replays: $e');
+      debugPrint('Error getting all replays: $e');
       return [];
     }
   }
@@ -92,7 +92,7 @@ class ReplayRepository {
       final all = await getAllReplays();
       return all.where((r) => r.scenario == scenario).toList();
     } catch (e) {
-      print('Error getting replays by scenario: $e');
+      debugPrint('Error getting replays by scenario: $e');
       return [];
     }
   }
@@ -103,7 +103,7 @@ class ReplayRepository {
       final all = await getAllReplays();
       return all.where((r) => r.difficulty == difficulty).toList();
     } catch (e) {
-      print('Error getting replays by difficulty: $e');
+      debugPrint('Error getting replays by difficulty: $e');
       return [];
     }
   }
@@ -114,7 +114,7 @@ class ReplayRepository {
       final all = await getAllReplays();
       return all.where((r) => r.isVictory).toList();
     } catch (e) {
-      print('Error getting victory replays: $e');
+      debugPrint('Error getting victory replays: $e');
       return [];
     }
   }
@@ -125,7 +125,7 @@ class ReplayRepository {
       final all = await getAllReplays();
       return all.where((r) => !r.isVictory).toList();
     } catch (e) {
-      print('Error getting defeat replays: $e');
+      debugPrint('Error getting defeat replays: $e');
       return [];
     }
   }
@@ -141,7 +141,7 @@ class ReplayRepository {
       replayIds.removeWhere((rid) => rid == id);
       await prefs.setStringList(_replayListKey, replayIds);
     } catch (e) {
-      print('Error deleting replay $id: $e');
+      debugPrint('Error deleting replay $id: $e');
       rethrow;
     }
   }
@@ -158,7 +158,7 @@ class ReplayRepository {
 
       await prefs.remove(_replayListKey);
     } catch (e) {
-      print('Error deleting all replays: $e');
+      debugPrint('Error deleting all replays: $e');
       rethrow;
     }
   }
@@ -192,7 +192,7 @@ class ReplayRepository {
         byScenario: scenarioMap,
       );
     } catch (e) {
-      print('Error getting replay stats: $e');
+      debugPrint('Error getting replay stats: $e');
       return ReplayStats(
         totalReplays: 0,
         victories: 0,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 /// フレンド情報
 class FriendInfo {
@@ -127,7 +128,7 @@ class FriendRepository {
           .get();
       return snapshot.docs.map((d) => FriendInfo.fromFirestore(d)).toList();
     } catch (e) {
-      print('Error getting friends: $e');
+      debugPrint('Error getting friends: $e');
       return [];
     }
   }
@@ -170,7 +171,7 @@ class FriendRepository {
 
       return entries;
     } catch (e) {
-      print('Error getting friends ranking: $e');
+      debugPrint('Error getting friends ranking: $e');
       return [];
     }
   }
@@ -189,12 +190,12 @@ class FriendRepository {
 
       int best = 0;
       for (final doc in snapshot.docs) {
-        final score = (doc.data() as Map<String, dynamic>)['score'] as int? ?? 0;
+        final score = (doc.data())['score'] as int? ?? 0;
         if (score > best) best = score;
       }
       return best;
     } catch (e) {
-      print('Error getting friend best score: $e');
+      debugPrint('Error getting friend best score: $e');
       return null;
     }
   }
@@ -232,7 +233,7 @@ class FriendRepository {
         );
       }).toList();
     } catch (e) {
-      print('Error getting friends activity: $e');
+      debugPrint('Error getting friends activity: $e');
       return [];
     }
   }

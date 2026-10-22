@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import '../models/cosmetic.dart';
+import 'package:flutter/foundation.dart';
 
 /// ゲーム内報酬・コスメティック管理リポジトリ
 class RewardRepository {
@@ -9,7 +10,6 @@ class RewardRepository {
 
   late FirebaseFirestore _firestore;
   static const String _collection = 'rewards';
-  static const String _cosmeticsCollection = 'cosmetics';
   late Map<String, dynamic> _cosmeticDatabase;
 
   factory RewardRepository() {
@@ -22,7 +22,7 @@ class RewardRepository {
   Future<void> initialize() async {
     _firestore = FirebaseFirestore.instance;
     await _loadCosmeticDatabase();
-    print('✓ RewardRepository initialized');
+    debugPrint('✓ RewardRepository initialized');
   }
 
   /// コスメティックデータベース（JSON）を読み込み
@@ -31,10 +31,10 @@ class RewardRepository {
       final jsonString =
           await rootBundle.loadString('assets/data/cosmetics.json');
       _cosmeticDatabase = jsonDecode(jsonString) as Map<String, dynamic>;
-      print(
+      debugPrint(
           '✓ Cosmetic database loaded: ${_cosmeticDatabase.length} cosmetics');
     } catch (e) {
-      print('Error loading cosmetic database: $e');
+      debugPrint('Error loading cosmetic database: $e');
       _cosmeticDatabase = {};
     }
   }
@@ -63,14 +63,14 @@ class RewardRepository {
             ...cosmeticData,
             'unlockedAt': data['unlockedAt_$id'],
             'isEquipped': _isEquipped(data, id),
-          } as Map<String, dynamic>);
+          });
           cosmetics.add(cosmetic);
         }
       }
 
       return cosmetics;
     } catch (e) {
-      print('Error getting user cosmetics: $e');
+      debugPrint('Error getting user cosmetics: $e');
       return [];
     }
   }
@@ -89,7 +89,7 @@ class RewardRepository {
 
       return unlockedIds.contains(cosmeticId);
     } catch (e) {
-      print('Error checking cosmetic unlock: $e');
+      debugPrint('Error checking cosmetic unlock: $e');
       return false;
     }
   }
@@ -104,7 +104,7 @@ class RewardRepository {
       final isUnlocked = await isCosmeticUnlocked(userId, cosmeticId);
 
       if (isUnlocked) {
-        print('✓ Cosmetic already unlocked: $cosmeticId');
+        debugPrint('✓ Cosmetic already unlocked: $cosmeticId');
         return;
       }
 
@@ -119,9 +119,9 @@ class RewardRepository {
         SetOptions(merge: true),
       );
 
-      print('✓ Milestone cosmetic unlocked for user $userId: $cosmeticId');
+      debugPrint('✓ Milestone cosmetic unlocked for user $userId: $cosmeticId');
     } catch (e) {
-      print('Error unlocking milestone cosmetic: $e');
+      debugPrint('Error unlocking milestone cosmetic: $e');
     }
   }
 
@@ -135,7 +135,7 @@ class RewardRepository {
       final isUnlocked = await isCosmeticUnlocked(userId, cosmeticId);
 
       if (isUnlocked) {
-        print('✓ Prestige cosmetic already unlocked: $cosmeticId');
+        debugPrint('✓ Prestige cosmetic already unlocked: $cosmeticId');
         return;
       }
 
@@ -150,9 +150,9 @@ class RewardRepository {
         SetOptions(merge: true),
       );
 
-      print('✓ Prestige cosmetic unlocked for user $userId: $cosmeticId');
+      debugPrint('✓ Prestige cosmetic unlocked for user $userId: $cosmeticId');
     } catch (e) {
-      print('Error unlocking prestige cosmetic: $e');
+      debugPrint('Error unlocking prestige cosmetic: $e');
     }
   }
 
@@ -166,7 +166,7 @@ class RewardRepository {
       final isUnlocked = await isCosmeticUnlocked(userId, cosmeticId);
 
       if (!isUnlocked) {
-        print('Error: Cosmetic not unlocked: $cosmeticId');
+        debugPrint('Error: Cosmetic not unlocked: $cosmeticId');
         return;
       }
 
@@ -186,9 +186,9 @@ class RewardRepository {
         SetOptions(merge: true),
       );
 
-      print('✓ Cosmetic equipped for user $userId: $cosmeticId');
+      debugPrint('✓ Cosmetic equipped for user $userId: $cosmeticId');
     } catch (e) {
-      print('Error equipping cosmetic: $e');
+      debugPrint('Error equipping cosmetic: $e');
     }
   }
 
@@ -214,9 +214,9 @@ class RewardRepository {
         SetOptions(merge: true),
       );
 
-      print('✓ Cosmetic unequipped for user $userId');
+      debugPrint('✓ Cosmetic unequipped for user $userId');
     } catch (e) {
-      print('Error unequipping cosmetic: $e');
+      debugPrint('Error unequipping cosmetic: $e');
     }
   }
 
@@ -240,7 +240,7 @@ class RewardRepository {
             : null,
       );
     } catch (e) {
-      print('Error getting equipped cosmetics: $e');
+      debugPrint('Error getting equipped cosmetics: $e');
       return EquippedCosmetics();
     }
   }
@@ -302,10 +302,10 @@ class RewardRepository {
       final cosmeticData =
           _cosmeticDatabase[cosmeticId] as Map<String, dynamic>?;
       if (cosmeticData != null) {
-        return Cosmetic.fromJson(cosmeticData as Map<String, dynamic>);
+        return Cosmetic.fromJson(cosmeticData);
       }
     } catch (e) {
-      print('Error getting cosmetic info: $e');
+      debugPrint('Error getting cosmetic info: $e');
     }
     return null;
   }
@@ -325,10 +325,10 @@ class RewardRepository {
           .get();
 
       return docs.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data())
           .toList();
     } catch (e) {
-      print('Error getting reward history: $e');
+      debugPrint('Error getting reward history: $e');
       return [];
     }
   }
@@ -346,9 +346,9 @@ class RewardRepository {
       await _deleteCollection(
           _firestore.collection(_collection).doc(userId).collection('rewardHistory'));
 
-      print('✓ All reward data deleted for user $userId');
+      debugPrint('✓ All reward data deleted for user $userId');
     } catch (e) {
-      print('Error deleting reward data: $e');
+      debugPrint('Error deleting reward data: $e');
     }
   }
 

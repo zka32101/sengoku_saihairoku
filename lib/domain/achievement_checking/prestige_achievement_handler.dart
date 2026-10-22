@@ -1,5 +1,6 @@
 import '../../data/models/achievement.dart';
 import 'achievement_checker.dart';
+import 'package:flutter/foundation.dart';
 
 /// プレスティジシステムと連携して実績チェックを行うサービス
 class PrestigeAchievementHandler {
@@ -32,7 +33,7 @@ class PrestigeAchievementHandler {
         prestigeRank: newPrestigeRank,
       );
     } catch (e) {
-      print('Error checking prestige achievements: $e');
+      debugPrint('Error checking prestige achievements: $e');
       return [];
     }
   }
@@ -49,7 +50,7 @@ class PrestigeAchievementHandler {
         prestigeResetCount: resetCount,
       );
     } catch (e) {
-      print('Error checking prestige reset achievements: $e');
+      debugPrint('Error checking prestige reset achievements: $e');
       return [];
     }
   }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'currency_repository.dart';
+import 'package:flutter/foundation.dart';
 
 /// リワード広告視聴によるゴールド獲得を管理するリポジトリ。
 /// 1日あたりの視聴回数に上限を設け、Firestoreで日付ごとにカウントする。
@@ -34,7 +35,7 @@ class AdRewardRepository {
       final data = doc.data() as Map<String, dynamic>;
       return data['count'] as int? ?? 0;
     } catch (e) {
-      print('Error getting ad reward count: $e');
+      debugPrint('Error getting ad reward count: $e');
       return 0;
     }
   }
@@ -74,7 +75,7 @@ class AdRewardRepository {
       }
       return granted;
     } catch (e) {
-      print('Error recording ad reward: $e');
+      debugPrint('Error recording ad reward: $e');
       return false;
     }
   }

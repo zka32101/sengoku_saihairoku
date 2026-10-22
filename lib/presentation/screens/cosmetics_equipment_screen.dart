@@ -51,7 +51,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading cosmetics: $e');
+      debugPrint('Error loading cosmetics: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -72,7 +72,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
         );
       }
     } catch (e) {
-      print('Error equipping cosmetic: $e');
+      debugPrint('Error equipping cosmetic: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('エラーが発生しました: $e')),
@@ -97,7 +97,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
         );
       }
     } catch (e) {
-      print('Error unequipping cosmetic: $e');
+      debugPrint('Error unequipping cosmetic: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('エラーが発生しました: $e')),
@@ -247,7 +247,7 @@ class _CosmeticCategorySection extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF8B1A1A).withOpacity(0.2),
+                color: const Color(0xFF8B1A1A).withValues(alpha: 0.2),
                 border: Border.all(color: const Color(0xFFFFD700), width: 2),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -269,19 +269,18 @@ class _CosmeticCategorySection extends StatelessWidget {
                       Expanded(
                         child: Text(
                           cosmetics
-                                  .firstWhere(
-                                    (c) => c.id == equippedId,
-                                    orElse: () => Cosmetic(
-                                      id: '',
-                                      name: '不明',
-                                      description: '',
-                                      type: CosmeticType.unitSkin,
-                                      acquisitionMethod:
-                                          AcquisitionMethod.levelMilestone,
-                                    ),
-                                  )
-                                  .name ??
-                              'デフォルト',
+                              .firstWhere(
+                                (c) => c.id == equippedId,
+                                orElse: () => Cosmetic(
+                                  id: '',
+                                  name: '不明',
+                                  description: '',
+                                  type: CosmeticType.unitSkin,
+                                  acquisitionMethod:
+                                      AcquisitionMethod.levelMilestone,
+                                ),
+                              )
+                              .name,
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -437,7 +436,7 @@ class _CosmeticEquipmentCard extends StatelessWidget {
 
     return Card(
       color: isEquipped
-          ? const Color(0xFF8B1A1A).withOpacity(0.3)
+          ? const Color(0xFF8B1A1A).withValues(alpha: 0.3)
           : const Color(0xFF2A1A0A),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -472,7 +471,7 @@ class _CosmeticEquipmentCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: acquisitionColor.withOpacity(0.2),
+                              color: acquisitionColor.withValues(alpha: 0.2),
                               border: Border.all(
                                 color: acquisitionColor,
                                 width: 1,
@@ -497,7 +496,7 @@ class _CosmeticEquipmentCard extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFFD700)
-                                    .withOpacity(0.2),
+                                    .withValues(alpha: 0.2),
                                 border: Border.all(
                                   color: const Color(0xFFFFD700),
                                   width: 1,
@@ -585,8 +584,8 @@ class _PrestigeTierBadge extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            _getTierColor(tier).withOpacity(0.3),
-            _getTierColor(tier).withOpacity(0.1),
+            _getTierColor(tier).withValues(alpha: 0.3),
+            _getTierColor(tier).withValues(alpha: 0.1),
           ],
         ),
         border: Border.all(
@@ -754,14 +753,14 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.amber.withOpacity(0.15),
-                Colors.orange.withOpacity(0.1),
+                Colors.amber.withValues(alpha: 0.15),
+                Colors.orange.withValues(alpha: 0.1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             border: Border.all(
-              color: Colors.amber.withOpacity(0.3),
+              color: Colors.amber.withValues(alpha: 0.3),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(12),
@@ -852,7 +851,7 @@ class _ShowcaseItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         border: Border.all(
-          color: Colors.amber.withOpacity(0.2),
+          color: Colors.amber.withValues(alpha: 0.2),
           width: 1,
         ),
         borderRadius: BorderRadius.circular(8),
@@ -977,8 +976,8 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: Colors.amber.withOpacity(0.1),
-            border: Border.all(color: Colors.amber.withOpacity(0.3), width: 1),
+            color: Colors.amber.withValues(alpha: 0.1),
+            border: Border.all(color: Colors.amber.withValues(alpha: 0.3), width: 1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
@@ -1043,7 +1042,7 @@ class _PrestigeCosmeticCard extends StatelessWidget {
 
     return Card(
       color: isEquipped
-          ? const Color(0xFF8B1A1A).withOpacity(0.3)
+          ? const Color(0xFF8B1A1A).withValues(alpha: 0.3)
           : const Color(0xFF2A1A0A),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -1078,7 +1077,7 @@ class _PrestigeCosmeticCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: tierColor.withOpacity(0.2),
+                              color: tierColor.withValues(alpha: 0.2),
                               border: Border.all(
                                 color: tierColor,
                                 width: 1,
@@ -1103,7 +1102,7 @@ class _PrestigeCosmeticCard extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFFD700)
-                                    .withOpacity(0.2),
+                                    .withValues(alpha: 0.2),
                                 border: Border.all(
                                   color: const Color(0xFFFFD700),
                                   width: 1,

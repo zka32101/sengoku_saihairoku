@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/scenario_data.dart';
 import '../models/scenario_education.dart';
+import 'package:flutter/foundation.dart';
 
 class ScenarioEducationRepository {
   static final ScenarioEducationRepository _instance =
@@ -28,7 +29,7 @@ class ScenarioEducationRepository {
         );
       }
     } catch (e) {
-      print('Error loading education data: $e');
+      debugPrint('Error loading education data: $e');
     }
     return null;
   }

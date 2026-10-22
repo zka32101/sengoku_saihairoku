@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/daily_challenge.dart';
 import '../models/difficulty_mode.dart';
 import '../models/scenario_data.dart';
+import 'package:flutter/foundation.dart';
 
 /// 日替わりチャレンジ管理リポジトリ
 class DailyChallengeRepository {
@@ -41,9 +42,9 @@ class DailyChallengeRepository {
 
       _allChallenges = challenges;
       _initialized = true;
-      print('✓ DailyChallengeRepository initialized with ${_allChallenges.length} challenges');
+      debugPrint('✓ DailyChallengeRepository initialized with ${_allChallenges.length} challenges');
     } catch (e) {
-      print('Error initializing DailyChallengeRepository: $e');
+      debugPrint('Error initializing DailyChallengeRepository: $e');
       _initialized = false;
     }
   }
@@ -85,7 +86,7 @@ class DailyChallengeRepository {
         return ChallengeProgress.fromJson(todayProgress);
       }
     } catch (e) {
-      print('Error reading challenge progress: $e');
+      debugPrint('Error reading challenge progress: $e');
     }
 
     return null;
@@ -120,7 +121,7 @@ class DailyChallengeRepository {
 
     await _prefs.setString(_progressKey, jsonEncode(progressList));
     await _recordStreakCompletion(today);
-    print('✓ Challenge $challengeId completed on $today');
+    debugPrint('✓ Challenge $challengeId completed on $today');
   }
 
   /// 連続達成日数（ストリーク）を更新する。
@@ -170,10 +171,10 @@ class DailyChallengeRepository {
       if (index != -1) {
         progressList[index]['claimed'] = true;
         await _prefs.setString(_progressKey, jsonEncode(progressList));
-        print('✓ Challenge $challengeId reward claimed');
+        debugPrint('✓ Challenge $challengeId reward claimed');
       }
     } catch (e) {
-      print('Error claiming reward: $e');
+      debugPrint('Error claiming reward: $e');
     }
   }
 
@@ -206,8 +207,8 @@ class DailyChallengeRepository {
           }
 
           // チャレンジ情報から報酬を加算
-          final challenge = _allChallenges
-              .firstWhere((c) => c.id == challengeId, orElse: () => null as dynamic);
+          final matches = _allChallenges.where((c) => c.id == challengeId);
+          final challenge = matches.isEmpty ? null : matches.first;
 
           if (challenge != null) {
             totalRewardPoints += challenge.baseReward;
@@ -234,7 +235,7 @@ class DailyChallengeRepository {
         completionByDifficulty: completionByDifficulty,
       );
     } catch (e) {
-      print('Error calculating challenge stats: $e');
+      debugPrint('Error calculating challenge stats: $e');
       return ChallengeStats.empty();
     }
   }
@@ -258,7 +259,6 @@ class DailyChallengeRepository {
 
     for (int i = 6; i >= 0; i--) {
       final date = DateTime.now().subtract(Duration(days: i));
-      final dateKey = _formatDate(date);
       final dayOfYear = date.difference(DateTime(date.year, 1, 1)).inDays;
       final challengeIndex = dayOfYear % _allChallenges.length;
       final challenge = _allChallenges[challengeIndex];

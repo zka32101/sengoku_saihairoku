@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/repositories/tutorial_repository.dart';
 import '../../data/models/tutorial_content.dart';
-import '../../data/models/difficulty_mode.dart';
 
 /// チュートリアル・ヘルプモーダルダイアログ
 class HelpModal extends StatefulWidget {

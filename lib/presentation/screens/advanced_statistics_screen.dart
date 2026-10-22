@@ -214,7 +214,7 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: _getTrendColor(summary.performanceTrend.trend)
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(

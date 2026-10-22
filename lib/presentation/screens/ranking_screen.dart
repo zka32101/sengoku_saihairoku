@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/repositories/ranking_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class RankingScreen extends StatefulWidget {
   const RankingScreen({super.key});
@@ -90,17 +91,17 @@ class _RankingScreenState extends State<RankingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ランキング'),
+        title: Text(l10n.rankingTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
-            tooltip: 'ランキングを共有',
+            tooltip: l10n.rankingShareTooltip,
             onPressed: () => SharePlus.instance.share(
               ShareParams(
-                text: '戦国采配録でランキングに挑戦中！あなたも采配を振るってみない？\n'
-                    '#戦国采配録',
+                text: l10n.rankingShareText,
               ),
             ),
           ),
@@ -118,9 +119,9 @@ class _RankingScreenState extends State<RankingScreen> {
               children: [
                 Expanded(
                   child: SegmentedButton<bool>(
-                    segments: const [
-                      ButtonSegment(label: Text('グローバル'), value: true),
-                      ButtonSegment(label: Text('マイプレイ'), value: false),
+                    segments: [
+                      ButtonSegment(label: Text(l10n.rankingGlobal), value: true),
+                      ButtonSegment(label: Text(l10n.rankingMyPlay), value: false),
                     ],
                     selected: {_isGlobal},
                     onSelectionChanged: (newSelection) {
@@ -138,9 +139,9 @@ class _RankingScreenState extends State<RankingScreen> {
               child: DropdownButton<Scenario?>(
                 value: _selectedScenario,
                 isExpanded: true,
-                hint: const Text('全シナリオ'),
+                hint: Text(l10n.rankingAllScenarios),
                 items: [
-                  const DropdownMenuItem(value: null, child: Text('全シナリオ')),
+                  DropdownMenuItem(value: null, child: Text(l10n.rankingAllScenarios)),
                   ...Scenario.values.map((s) => DropdownMenuItem(
                         value: s,
                         child: Text(s.displayNameJa),
@@ -153,23 +154,23 @@ class _RankingScreenState extends State<RankingScreen> {
               ),
             ),
           Expanded(
-            child: _isGlobal ? _buildGlobalRankingList() : _buildUserRankingList(),
+            child: _isGlobal ? _buildGlobalRankingList(l10n) : _buildUserRankingList(l10n),
           ),
         ],
       ),
-      bottomNavigationBar: _buildBottomNav(context),
+      bottomNavigationBar: _buildBottomNav(context, l10n),
     );
   }
 
-  Widget _buildGlobalRankingList() {
+  Widget _buildGlobalRankingList(AppLocalizations l10n) {
     if (_globalLoadFailed) {
-      return const Center(child: Text('エラーが発生しました'));
+      return Center(child: Text(l10n.commonError));
     }
     if (_globalRankings.isEmpty && _isLoadingGlobal) {
       return const Center(child: CircularProgressIndicator());
     }
     if (_globalRankings.isEmpty) {
-      return const Center(child: Text('ランキングデータはまだありません'));
+      return Center(child: Text(l10n.rankingEmpty));
     }
 
     return ListView.builder(
@@ -183,15 +184,15 @@ class _RankingScreenState extends State<RankingScreen> {
           );
         }
         final entry = _globalRankings[index];
-        return _RankingCard(entry: entry, index: index);
+        return _RankingCard(entry: entry, index: index, l10n: l10n);
       },
     );
   }
 
-  Widget _buildUserRankingList() {
+  Widget _buildUserRankingList(AppLocalizations l10n) {
     return Column(
       children: [
-        if (_selectedScenario != null) _buildSeasonBestCard(_selectedScenario!),
+        if (_selectedScenario != null) _buildSeasonBestCard(_selectedScenario!, l10n),
         Expanded(
           child: FutureBuilder<List<RankingEntry>>(
             future: _userRankingFuture,
@@ -205,7 +206,7 @@ class _RankingScreenState extends State<RankingScreen> {
                   snapshot.data!.isEmpty) {
                 return Center(
                   child: Text(
-                    snapshot.hasError ? 'エラーが発生しました' : 'ランキングデータはまだありません',
+                    snapshot.hasError ? l10n.commonError : l10n.rankingEmpty,
                   ),
                 );
               }
@@ -215,7 +216,7 @@ class _RankingScreenState extends State<RankingScreen> {
                 itemCount: rankings.length,
                 itemBuilder: (context, index) {
                   final entry = rankings[index];
-                  return _RankingCard(entry: entry, index: index);
+                  return _RankingCard(entry: entry, index: index, l10n: l10n);
                 },
               );
             },
@@ -225,7 +226,7 @@ class _RankingScreenState extends State<RankingScreen> {
     );
   }
 
-  Widget _buildSeasonBestCard(Scenario scenario) {
+  Widget _buildSeasonBestCard(Scenario scenario, AppLocalizations l10n) {
     final userId = FirebaseService().userId;
     if (userId == null) return const SizedBox.shrink();
 
@@ -246,9 +247,10 @@ class _RankingScreenState extends State<RankingScreen> {
                   Expanded(
                     child: Text(
                       bestScore == null
-                          ? '${RankingRepository().currentSeasonLabel}: まだ記録がありません'
-                          : '${RankingRepository().currentSeasonLabel}: '
-                              '自己ベスト $bestScore点',
+                          ? l10n.rankingSeasonBestNone(
+                              RankingRepository().currentSeasonLabel)
+                          : l10n.rankingSeasonBestScore(
+                              RankingRepository().currentSeasonLabel, bestScore),
                       style: const TextStyle(color: Color(0xFFE8D5B0)),
                     ),
                   ),
@@ -261,7 +263,7 @@ class _RankingScreenState extends State<RankingScreen> {
     );
   }
 
-  Widget _buildBottomNav(BuildContext context) {
+  Widget _buildBottomNav(BuildContext context, AppLocalizations l10n) {
     return Container(
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: Color(0xFF8B6914))),
@@ -269,10 +271,10 @@ class _RankingScreenState extends State<RankingScreen> {
       ),
       child: Row(
         children: [
-          _navItem(context, Icons.home, 'ホーム', '/home'),
-          _navItem(context, Icons.leaderboard, 'ランキング', '/ranking',
+          _navItem(context, Icons.home, l10n.navHome, '/home'),
+          _navItem(context, Icons.leaderboard, l10n.navRanking, '/ranking',
               selected: true),
-          _navItem(context, Icons.settings, '設定', '/settings'),
+          _navItem(context, Icons.settings, l10n.navSettings, '/settings'),
         ],
       ),
     );
@@ -309,8 +311,9 @@ class _RankingScreenState extends State<RankingScreen> {
 class _RankingCard extends StatelessWidget {
   final RankingEntry entry;
   final int index;
+  final AppLocalizations l10n;
 
-  const _RankingCard({required this.entry, required this.index});
+  const _RankingCard({required this.entry, required this.index, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -383,9 +386,9 @@ class _RankingCard extends StatelessWidget {
                             color: Colors.green.withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: const Text(
-                            '勝利',
-                            style: TextStyle(
+                          child: Text(
+                            l10n.rankingWon,
+                            style: const TextStyle(
                               color: Colors.green,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
@@ -399,7 +402,7 @@ class _RankingCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${entry.duration}秒',
+                        l10n.rankingDurationSeconds(entry.duration),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

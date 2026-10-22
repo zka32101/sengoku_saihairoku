@@ -448,4 +448,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advancedStatsTrendStable => '→ Stable';
+
+  @override
+  String get rankingTitle => 'Ranking';
+
+  @override
+  String get rankingShareTooltip => 'Share Ranking';
+
+  @override
+  String get rankingShareText =>
+      'I\'m challenging the ranking in Sengoku Saihairoku! Want to try your own command?\n#SengokuSaihairoku';
+
+  @override
+  String get rankingGlobal => 'Global';
+
+  @override
+  String get rankingMyPlay => 'My Plays';
+
+  @override
+  String get rankingAllScenarios => 'All Scenarios';
+
+  @override
+  String get rankingEmpty => 'No ranking data yet';
+
+  @override
+  String get rankingWon => 'Win';
+
+  @override
+  String rankingSeasonBestNone(String season) {
+    return '$season: No record yet';
+  }
+
+  @override
+  String rankingSeasonBestScore(String season, int score) {
+    return '$season: Best $score pts';
+  }
+
+  @override
+  String rankingDurationSeconds(int seconds) {
+    return '${seconds}s';
+  }
 }

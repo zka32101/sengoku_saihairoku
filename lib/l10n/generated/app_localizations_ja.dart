@@ -447,4 +447,43 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get advancedStatsTrendStable => '→ 安定傾向';
+
+  @override
+  String get rankingTitle => 'ランキング';
+
+  @override
+  String get rankingShareTooltip => 'ランキングを共有';
+
+  @override
+  String get rankingShareText => '戦国采配録でランキングに挑戦中！あなたも采配を振るってみない？\n#戦国采配録';
+
+  @override
+  String get rankingGlobal => 'グローバル';
+
+  @override
+  String get rankingMyPlay => 'マイプレイ';
+
+  @override
+  String get rankingAllScenarios => '全シナリオ';
+
+  @override
+  String get rankingEmpty => 'ランキングデータはまだありません';
+
+  @override
+  String get rankingWon => '勝利';
+
+  @override
+  String rankingSeasonBestNone(String season) {
+    return '$season: まだ記録がありません';
+  }
+
+  @override
+  String rankingSeasonBestScore(String season, int score) {
+    return '$season: 自己ベスト $score点';
+  }
+
+  @override
+  String rankingDurationSeconds(int seconds) {
+    return '$seconds秒';
+  }
 }

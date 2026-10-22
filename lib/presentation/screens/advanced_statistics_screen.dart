@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/advanced_statistics.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../data/services/statistics_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/advanced_statistics_display.dart';
 import '../widgets/trend_sparkline.dart';
 
@@ -32,9 +33,10 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('詳細統計'),
+        title: Text(l10n.advancedStatsTitle),
         centerTitle: true,
         actions: [
           IconButton(
@@ -61,22 +63,22 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                   child: Row(
                     children: [
                       _TabButton(
-                        label: '概要',
+                        label: l10n.advancedStatsTabOverview,
                         selected: _selectedTab == 0,
                         onTap: () => setState(() => _selectedTab = 0),
                       ),
                       _TabButton(
-                        label: 'シナリオ',
+                        label: l10n.advancedStatsTabScenario,
                         selected: _selectedTab == 1,
                         onTap: () => setState(() => _selectedTab = 1),
                       ),
                       _TabButton(
-                        label: '難易度',
+                        label: l10n.advancedStatsTabDifficulty,
                         selected: _selectedTab == 2,
                         onTap: () => setState(() => _selectedTab = 2),
                       ),
                       _TabButton(
-                        label: 'ランキング',
+                        label: l10n.advancedStatsTabRanking,
                         selected: _selectedTab == 3,
                         onTap: () => setState(() => _selectedTab = 3),
                       ),
@@ -88,7 +90,7 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
               // コンテンツ
               if (_selectedTab == 0)
                 SliverToBoxAdapter(
-                  child: _buildOverviewTab(summary),
+                  child: _buildOverviewTab(l10n, summary),
                 )
               else if (_selectedTab == 1)
                 SliverList(
@@ -121,7 +123,7 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
     );
   }
 
-  Widget _buildOverviewTab(AdvancedStatisticsSummary summary) {
+  Widget _buildOverviewTab(AppLocalizations l10n, AdvancedStatisticsSummary summary) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -141,27 +143,27 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    '総バトル数',
-                    style: TextStyle(fontSize: 14),
+                  Text(
+                    l10n.advancedStatsTotalBattles,
+                    style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _OverviewStatTile(
-                        label: '勝率',
+                        label: l10n.advancedStatsWinRate,
                         value:
                             '${(summary.overallWinRate * 100).toStringAsFixed(1)}%',
                         color: Colors.blue,
                       ),
                       _OverviewStatTile(
-                        label: '勝利',
+                        label: l10n.advancedStatsVictories,
                         value: '${summary.totalVictories}',
                         color: Colors.green,
                       ),
                       _OverviewStatTile(
-                        label: '敗北',
+                        label: l10n.advancedStatsDefeats,
                         value: '${summary.totalDefeats}',
                         color: Colors.red,
                       ),
@@ -172,17 +174,17 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _OverviewStatTile(
-                        label: '最高スコア',
+                        label: l10n.advancedStatsHighestScore,
                         value: '${summary.highestScore}',
                         color: Colors.amber,
                       ),
                       _OverviewStatTile(
-                        label: '平均スコア',
+                        label: l10n.advancedStatsAverageScore,
                         value: '${summary.averageScore}',
                         color: Colors.amber,
                       ),
                       _OverviewStatTile(
-                        label: 'プレイ時間',
+                        label: l10n.advancedStatsPlayTime,
                         value: summary.playTimeFormatted,
                         color: Colors.purple,
                       ),
@@ -202,9 +204,9 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'パフォーマンストレンド',
-                    style: TextStyle(
+                  Text(
+                    l10n.advancedStatsPerformanceTrend,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -224,7 +226,7 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _getTrendLabel(summary.performanceTrend.trend),
+                              _getTrendLabel(l10n, summary.performanceTrend.trend),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color:
@@ -233,11 +235,16 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '勝率: ${(summary.performanceTrend.winRateChange * 100).toStringAsFixed(1)}%',
+                              l10n.advancedStatsWinRateChange(
+                                (summary.performanceTrend.winRateChange * 100)
+                                    .toStringAsFixed(1),
+                              ),
                               style: const TextStyle(fontSize: 12),
                             ),
                             Text(
-                              'スコア: ${summary.performanceTrend.scoreChange.toStringAsFixed(0)}pt',
+                              l10n.advancedStatsScoreChange(
+                                summary.performanceTrend.scoreChange.toStringAsFixed(0),
+                              ),
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
@@ -248,14 +255,14 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
                   ),
                   const SizedBox(height: 16),
                   TrendSparkline(
-                    label: '勝率の推移',
+                    label: l10n.advancedStatsWinRateTrendLabel,
                     points: summary.performanceTrend.winRateTrend,
                     color: Colors.blue,
                     valueFormatter: (v) => '${(v * 100).toStringAsFixed(0)}%',
                   ),
                   const SizedBox(height: 12),
                   TrendSparkline(
-                    label: 'スコアの推移',
+                    label: l10n.advancedStatsScoreTrendLabel,
                     points: summary.performanceTrend.scoreTrend,
                     color: Colors.amber,
                     valueFormatter: (v) => v.toStringAsFixed(0),
@@ -274,9 +281,9 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'シナリオ制覇状況',
-                    style: TextStyle(
+                  Text(
+                    l10n.advancedStatsScenarioClearStatus,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -305,14 +312,14 @@ class _AdvancedStatisticsScreenState extends State<AdvancedStatisticsScreen> {
     );
   }
 
-  String _getTrendLabel(String trend) {
+  String _getTrendLabel(AppLocalizations l10n, String trend) {
     switch (trend) {
       case 'improving':
-        return '📈 上昇傾向';
+        return l10n.advancedStatsTrendImproving;
       case 'declining':
-        return '📉 低下傾向';
+        return l10n.advancedStatsTrendDeclining;
       default:
-        return '→ 安定傾向';
+        return l10n.advancedStatsTrendStable;
     }
   }
 

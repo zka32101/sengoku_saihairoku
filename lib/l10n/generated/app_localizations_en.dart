@@ -381,4 +381,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prestigeShowcaseItemLocked => 'Locked';
+
+  @override
+  String get advancedStatsTitle => 'Detailed Stats';
+
+  @override
+  String get advancedStatsTabOverview => 'Overview';
+
+  @override
+  String get advancedStatsTabScenario => 'Scenario';
+
+  @override
+  String get advancedStatsTabDifficulty => 'Difficulty';
+
+  @override
+  String get advancedStatsTabRanking => 'Ranking';
+
+  @override
+  String get advancedStatsTotalBattles => 'Total Battles';
+
+  @override
+  String get advancedStatsWinRate => 'Win Rate';
+
+  @override
+  String get advancedStatsVictories => 'Victories';
+
+  @override
+  String get advancedStatsDefeats => 'Defeats';
+
+  @override
+  String get advancedStatsHighestScore => 'Highest Score';
+
+  @override
+  String get advancedStatsAverageScore => 'Average Score';
+
+  @override
+  String get advancedStatsPlayTime => 'Play Time';
+
+  @override
+  String get advancedStatsPerformanceTrend => 'Performance Trend';
+
+  @override
+  String advancedStatsWinRateChange(String percent) {
+    return 'Win rate: $percent%';
+  }
+
+  @override
+  String advancedStatsScoreChange(String score) {
+    return 'Score: ${score}pt';
+  }
+
+  @override
+  String get advancedStatsWinRateTrendLabel => 'Win Rate Trend';
+
+  @override
+  String get advancedStatsScoreTrendLabel => 'Score Trend';
+
+  @override
+  String get advancedStatsScenarioClearStatus => 'Scenario Completion';
+
+  @override
+  String get advancedStatsTrendImproving => '📈 Improving';
+
+  @override
+  String get advancedStatsTrendDeclining => '📉 Declining';
+
+  @override
+  String get advancedStatsTrendStable => '→ Stable';
 }

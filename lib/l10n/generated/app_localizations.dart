@@ -799,6 +799,132 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'ロック中'**
   String get prestigeShowcaseItemLocked;
+
+  /// No description provided for @advancedStatsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'詳細統計'**
+  String get advancedStatsTitle;
+
+  /// No description provided for @advancedStatsTabOverview.
+  ///
+  /// In ja, this message translates to:
+  /// **'概要'**
+  String get advancedStatsTabOverview;
+
+  /// No description provided for @advancedStatsTabScenario.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ'**
+  String get advancedStatsTabScenario;
+
+  /// No description provided for @advancedStatsTabDifficulty.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度'**
+  String get advancedStatsTabDifficulty;
+
+  /// No description provided for @advancedStatsTabRanking.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキング'**
+  String get advancedStatsTabRanking;
+
+  /// No description provided for @advancedStatsTotalBattles.
+  ///
+  /// In ja, this message translates to:
+  /// **'総バトル数'**
+  String get advancedStatsTotalBattles;
+
+  /// No description provided for @advancedStatsWinRate.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率'**
+  String get advancedStatsWinRate;
+
+  /// No description provided for @advancedStatsVictories.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get advancedStatsVictories;
+
+  /// No description provided for @advancedStatsDefeats.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get advancedStatsDefeats;
+
+  /// No description provided for @advancedStatsHighestScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'最高スコア'**
+  String get advancedStatsHighestScore;
+
+  /// No description provided for @advancedStatsAverageScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均スコア'**
+  String get advancedStatsAverageScore;
+
+  /// No description provided for @advancedStatsPlayTime.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間'**
+  String get advancedStatsPlayTime;
+
+  /// No description provided for @advancedStatsPerformanceTrend.
+  ///
+  /// In ja, this message translates to:
+  /// **'パフォーマンストレンド'**
+  String get advancedStatsPerformanceTrend;
+
+  /// No description provided for @advancedStatsWinRateChange.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率: {percent}%'**
+  String advancedStatsWinRateChange(String percent);
+
+  /// No description provided for @advancedStatsScoreChange.
+  ///
+  /// In ja, this message translates to:
+  /// **'スコア: {score}pt'**
+  String advancedStatsScoreChange(String score);
+
+  /// No description provided for @advancedStatsWinRateTrendLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率の推移'**
+  String get advancedStatsWinRateTrendLabel;
+
+  /// No description provided for @advancedStatsScoreTrendLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'スコアの推移'**
+  String get advancedStatsScoreTrendLabel;
+
+  /// No description provided for @advancedStatsScenarioClearStatus.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ制覇状況'**
+  String get advancedStatsScenarioClearStatus;
+
+  /// No description provided for @advancedStatsTrendImproving.
+  ///
+  /// In ja, this message translates to:
+  /// **'📈 上昇傾向'**
+  String get advancedStatsTrendImproving;
+
+  /// No description provided for @advancedStatsTrendDeclining.
+  ///
+  /// In ja, this message translates to:
+  /// **'📉 低下傾向'**
+  String get advancedStatsTrendDeclining;
+
+  /// No description provided for @advancedStatsTrendStable.
+  ///
+  /// In ja, this message translates to:
+  /// **'→ 安定傾向'**
+  String get advancedStatsTrendStable;
 }
 
 class _AppLocalizationsDelegate

@@ -152,5 +152,32 @@
     "placeholders": { "type": { "type": "String" } }
   },
   "prestigeShowcaseAcquired": "Acquired",
-  "prestigeShowcaseItemLocked": "Locked"
+  "prestigeShowcaseItemLocked": "Locked",
+  "advancedStatsTitle": "Detailed Stats",
+  "advancedStatsTabOverview": "Overview",
+  "advancedStatsTabScenario": "Scenario",
+  "advancedStatsTabDifficulty": "Difficulty",
+  "advancedStatsTabRanking": "Ranking",
+  "advancedStatsTotalBattles": "Total Battles",
+  "advancedStatsWinRate": "Win Rate",
+  "advancedStatsVictories": "Victories",
+  "advancedStatsDefeats": "Defeats",
+  "advancedStatsHighestScore": "Highest Score",
+  "advancedStatsAverageScore": "Average Score",
+  "advancedStatsPlayTime": "Play Time",
+  "advancedStatsPerformanceTrend": "Performance Trend",
+  "advancedStatsWinRateChange": "Win rate: {percent}%",
+  "@advancedStatsWinRateChange": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "advancedStatsScoreChange": "Score: {score}pt",
+  "@advancedStatsScoreChange": {
+    "placeholders": { "score": { "type": "String" } }
+  },
+  "advancedStatsWinRateTrendLabel": "Win Rate Trend",
+  "advancedStatsScoreTrendLabel": "Score Trend",
+  "advancedStatsScenarioClearStatus": "Scenario Completion",
+  "advancedStatsTrendImproving": "📈 Improving",
+  "advancedStatsTrendDeclining": "📉 Declining",
+  "advancedStatsTrendStable": "→ Stable"
 }

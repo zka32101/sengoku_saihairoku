@@ -380,4 +380,71 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get prestigeShowcaseItemLocked => 'ロック中';
+
+  @override
+  String get advancedStatsTitle => '詳細統計';
+
+  @override
+  String get advancedStatsTabOverview => '概要';
+
+  @override
+  String get advancedStatsTabScenario => 'シナリオ';
+
+  @override
+  String get advancedStatsTabDifficulty => '難易度';
+
+  @override
+  String get advancedStatsTabRanking => 'ランキング';
+
+  @override
+  String get advancedStatsTotalBattles => '総バトル数';
+
+  @override
+  String get advancedStatsWinRate => '勝率';
+
+  @override
+  String get advancedStatsVictories => '勝利';
+
+  @override
+  String get advancedStatsDefeats => '敗北';
+
+  @override
+  String get advancedStatsHighestScore => '最高スコア';
+
+  @override
+  String get advancedStatsAverageScore => '平均スコア';
+
+  @override
+  String get advancedStatsPlayTime => 'プレイ時間';
+
+  @override
+  String get advancedStatsPerformanceTrend => 'パフォーマンストレンド';
+
+  @override
+  String advancedStatsWinRateChange(String percent) {
+    return '勝率: $percent%';
+  }
+
+  @override
+  String advancedStatsScoreChange(String score) {
+    return 'スコア: ${score}pt';
+  }
+
+  @override
+  String get advancedStatsWinRateTrendLabel => '勝率の推移';
+
+  @override
+  String get advancedStatsScoreTrendLabel => 'スコアの推移';
+
+  @override
+  String get advancedStatsScenarioClearStatus => 'シナリオ制覇状況';
+
+  @override
+  String get advancedStatsTrendImproving => '📈 上昇傾向';
+
+  @override
+  String get advancedStatsTrendDeclining => '📉 低下傾向';
+
+  @override
+  String get advancedStatsTrendStable => '→ 安定傾向';
 }

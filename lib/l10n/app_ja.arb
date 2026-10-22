@@ -155,5 +155,32 @@
     "placeholders": { "type": { "type": "String" } }
   },
   "prestigeShowcaseAcquired": "取得済み",
-  "prestigeShowcaseItemLocked": "ロック中"
+  "prestigeShowcaseItemLocked": "ロック中",
+  "advancedStatsTitle": "詳細統計",
+  "advancedStatsTabOverview": "概要",
+  "advancedStatsTabScenario": "シナリオ",
+  "advancedStatsTabDifficulty": "難易度",
+  "advancedStatsTabRanking": "ランキング",
+  "advancedStatsTotalBattles": "総バトル数",
+  "advancedStatsWinRate": "勝率",
+  "advancedStatsVictories": "勝利",
+  "advancedStatsDefeats": "敗北",
+  "advancedStatsHighestScore": "最高スコア",
+  "advancedStatsAverageScore": "平均スコア",
+  "advancedStatsPlayTime": "プレイ時間",
+  "advancedStatsPerformanceTrend": "パフォーマンストレンド",
+  "advancedStatsWinRateChange": "勝率: {percent}%",
+  "@advancedStatsWinRateChange": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "advancedStatsScoreChange": "スコア: {score}pt",
+  "@advancedStatsScoreChange": {
+    "placeholders": { "score": { "type": "String" } }
+  },
+  "advancedStatsWinRateTrendLabel": "勝率の推移",
+  "advancedStatsScoreTrendLabel": "スコアの推移",
+  "advancedStatsScenarioClearStatus": "シナリオ制覇状況",
+  "advancedStatsTrendImproving": "📈 上昇傾向",
+  "advancedStatsTrendDeclining": "📉 低下傾向",
+  "advancedStatsTrendStable": "→ 安定傾向"
 }

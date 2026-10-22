@@ -128,5 +128,32 @@
   "achievementFilterLocked": "ロック中",
   "achievementSortName": "名前",
   "achievementEmptyFiltered": "フィルター条件に一致する実績がありません",
-  "achievementClearRate": "クリア率"
+  "achievementClearRate": "クリア率",
+  "prestigeShowcaseTitle": "プレスティジコスメティック",
+  "prestigeShowcaseEmptyTier": "このランクのコスメティックはまだありません",
+  "prestigeShowcaseCurrentRank": "現在のプレスティジランク",
+  "prestigeShowcaseNextRank": "次のランク: {rank}",
+  "@prestigeShowcaseNextRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseMaxRank": "最高ランク: {rank}に到達しました！",
+  "@prestigeShowcaseMaxRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseResetCount": "リセット回数: {count}",
+  "@prestigeShowcaseResetCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "prestigeShowcaseRequiredPoints": "必要ポイント: {points}",
+  "@prestigeShowcaseRequiredPoints": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "prestigeShowcaseUnlocked": "解放済み",
+  "prestigeShowcaseLocked": "未解放",
+  "prestigeShowcaseItemType": "タイプ: {type}",
+  "@prestigeShowcaseItemType": {
+    "placeholders": { "type": { "type": "String" } }
+  },
+  "prestigeShowcaseAcquired": "取得済み",
+  "prestigeShowcaseItemLocked": "ロック中"
 }

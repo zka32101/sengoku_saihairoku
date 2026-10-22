@@ -125,5 +125,32 @@
   "achievementFilterLocked": "Locked",
   "achievementSortName": "Name",
   "achievementEmptyFiltered": "No achievements match the selected filters",
-  "achievementClearRate": "Completion Rate"
+  "achievementClearRate": "Completion Rate",
+  "prestigeShowcaseTitle": "Prestige Cosmetics",
+  "prestigeShowcaseEmptyTier": "No cosmetics for this rank yet",
+  "prestigeShowcaseCurrentRank": "Current Prestige Rank",
+  "prestigeShowcaseNextRank": "Next rank: {rank}",
+  "@prestigeShowcaseNextRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseMaxRank": "Reached the highest rank: {rank}!",
+  "@prestigeShowcaseMaxRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseResetCount": "Resets: {count}",
+  "@prestigeShowcaseResetCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "prestigeShowcaseRequiredPoints": "Required points: {points}",
+  "@prestigeShowcaseRequiredPoints": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "prestigeShowcaseUnlocked": "Unlocked",
+  "prestigeShowcaseLocked": "Locked",
+  "prestigeShowcaseItemType": "Type: {type}",
+  "@prestigeShowcaseItemType": {
+    "placeholders": { "type": { "type": "String" } }
+  },
+  "prestigeShowcaseAcquired": "Acquired",
+  "prestigeShowcaseItemLocked": "Locked"
 }

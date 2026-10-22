@@ -727,6 +727,78 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'クリア率'**
   String get achievementClearRate;
+
+  /// No description provided for @prestigeShowcaseTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジコスメティック'**
+  String get prestigeShowcaseTitle;
+
+  /// No description provided for @prestigeShowcaseEmptyTier.
+  ///
+  /// In ja, this message translates to:
+  /// **'このランクのコスメティックはまだありません'**
+  String get prestigeShowcaseEmptyTier;
+
+  /// No description provided for @prestigeShowcaseCurrentRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のプレスティジランク'**
+  String get prestigeShowcaseCurrentRank;
+
+  /// No description provided for @prestigeShowcaseNextRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'次のランク: {rank}'**
+  String prestigeShowcaseNextRank(String rank);
+
+  /// No description provided for @prestigeShowcaseMaxRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'最高ランク: {rank}に到達しました！'**
+  String prestigeShowcaseMaxRank(String rank);
+
+  /// No description provided for @prestigeShowcaseResetCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット回数: {count}'**
+  String prestigeShowcaseResetCount(int count);
+
+  /// No description provided for @prestigeShowcaseRequiredPoints.
+  ///
+  /// In ja, this message translates to:
+  /// **'必要ポイント: {points}'**
+  String prestigeShowcaseRequiredPoints(int points);
+
+  /// No description provided for @prestigeShowcaseUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'解放済み'**
+  String get prestigeShowcaseUnlocked;
+
+  /// No description provided for @prestigeShowcaseLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'未解放'**
+  String get prestigeShowcaseLocked;
+
+  /// No description provided for @prestigeShowcaseItemType.
+  ///
+  /// In ja, this message translates to:
+  /// **'タイプ: {type}'**
+  String prestigeShowcaseItemType(String type);
+
+  /// No description provided for @prestigeShowcaseAcquired.
+  ///
+  /// In ja, this message translates to:
+  /// **'取得済み'**
+  String get prestigeShowcaseAcquired;
+
+  /// No description provided for @prestigeShowcaseItemLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'ロック中'**
+  String get prestigeShowcaseItemLocked;
 }
 
 class _AppLocalizationsDelegate

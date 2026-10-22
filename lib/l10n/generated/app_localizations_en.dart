@@ -335,4 +335,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get achievementClearRate => 'Completion Rate';
+
+  @override
+  String get prestigeShowcaseTitle => 'Prestige Cosmetics';
+
+  @override
+  String get prestigeShowcaseEmptyTier => 'No cosmetics for this rank yet';
+
+  @override
+  String get prestigeShowcaseCurrentRank => 'Current Prestige Rank';
+
+  @override
+  String prestigeShowcaseNextRank(String rank) {
+    return 'Next rank: $rank';
+  }
+
+  @override
+  String prestigeShowcaseMaxRank(String rank) {
+    return 'Reached the highest rank: $rank!';
+  }
+
+  @override
+  String prestigeShowcaseResetCount(int count) {
+    return 'Resets: $count';
+  }
+
+  @override
+  String prestigeShowcaseRequiredPoints(int points) {
+    return 'Required points: $points';
+  }
+
+  @override
+  String get prestigeShowcaseUnlocked => 'Unlocked';
+
+  @override
+  String get prestigeShowcaseLocked => 'Locked';
+
+  @override
+  String prestigeShowcaseItemType(String type) {
+    return 'Type: $type';
+  }
+
+  @override
+  String get prestigeShowcaseAcquired => 'Acquired';
+
+  @override
+  String get prestigeShowcaseItemLocked => 'Locked';
 }

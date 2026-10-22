@@ -334,4 +334,50 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get achievementClearRate => 'クリア率';
+
+  @override
+  String get prestigeShowcaseTitle => 'プレスティジコスメティック';
+
+  @override
+  String get prestigeShowcaseEmptyTier => 'このランクのコスメティックはまだありません';
+
+  @override
+  String get prestigeShowcaseCurrentRank => '現在のプレスティジランク';
+
+  @override
+  String prestigeShowcaseNextRank(String rank) {
+    return '次のランク: $rank';
+  }
+
+  @override
+  String prestigeShowcaseMaxRank(String rank) {
+    return '最高ランク: $rankに到達しました！';
+  }
+
+  @override
+  String prestigeShowcaseResetCount(int count) {
+    return 'リセット回数: $count';
+  }
+
+  @override
+  String prestigeShowcaseRequiredPoints(int points) {
+    return '必要ポイント: $points';
+  }
+
+  @override
+  String get prestigeShowcaseUnlocked => '解放済み';
+
+  @override
+  String get prestigeShowcaseLocked => '未解放';
+
+  @override
+  String prestigeShowcaseItemType(String type) {
+    return 'タイプ: $type';
+  }
+
+  @override
+  String get prestigeShowcaseAcquired => '取得済み';
+
+  @override
+  String get prestigeShowcaseItemLocked => 'ロック中';
 }

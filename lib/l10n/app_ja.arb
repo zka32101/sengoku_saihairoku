@@ -205,5 +205,47 @@
   "rankingDurationSeconds": "{seconds}秒",
   "@rankingDurationSeconds": {
     "placeholders": { "seconds": { "type": "int" } }
+  },
+  "warlordCollectionTitle": "武将図鑑",
+  "warlordCollectionUnlockedCount": "{unlocked} / {total} 解放済み",
+  "@warlordCollectionUnlockedCount": {
+    "placeholders": {
+      "unlocked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "warlordCollectionDrawing": "発掘中...",
+  "warlordCollectionDrawButton": "武将を発掘する（{cost}ゴールド）",
+  "@warlordCollectionDrawButton": {
+    "placeholders": { "cost": { "type": "int" } }
+  },
+  "warlordCollectionAllFilter": "すべて",
+  "warlordCollectionAllUnlocked": "すべての武将を解放済みです",
+  "warlordCollectionGoldShortage": "ゴールドが不足しています",
+  "warlordCollectionLocked": "???",
+  "warlordCollectionUndiscovered": "未発掘",
+  "warlordCollectionTotalStat": "総合力 {stat}",
+  "@warlordCollectionTotalStat": {
+    "placeholders": { "stat": { "type": "int" } }
+  },
+  "warlordDetailLeadership": "統率",
+  "warlordDetailValor": "武勇",
+  "warlordDetailIntelligence": "知略",
+  "warlordDetailAwakenedLevel": "覚醒済み（Lv.{level}）",
+  "@warlordDetailAwakenedLevel": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "warlordDetailLevel": "Lv.{level}",
+  "@warlordDetailLevel": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "warlordDetailExpHint": "出陣させて勝利するとEXPを獲得します",
+  "warlordDiscoveredTitle": "武将を発見！",
+  "warlordArchetypeLeadership": "采配の名手",
+  "warlordArchetypeValor": "猛将",
+  "warlordArchetypeIntelligence": "智将",
+  "warlordArchetypeLegendary": "伝説の{archetype}",
+  "@warlordArchetypeLegendary": {
+    "placeholders": { "archetype": { "type": "String" } }
   }
 }

@@ -7,6 +7,7 @@ import '../../data/repositories/currency_repository.dart';
 import '../../data/repositories/warlord_progress_repository.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// 武将図鑑（コレクション）画面
 class WarlordCollectionScreen extends StatefulWidget {
@@ -66,19 +67,22 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
   /// ステータスの傾向から武将の「型」を簡易的に表すフレーバーラベルを生成する。
   /// 個別の史実テキストは持たせず、統率・武勇・知略の相対的な高さから
   /// 動的に導くことで、102名全員分を手作業で書かずに図鑑を拡充する。
-  String _archetypeFor(Warlord warlord) {
+  String _archetypeFor(AppLocalizations l10n, Warlord warlord) {
     final stats = {
-      '采配の名手': warlord.leadership,
-      '猛将': warlord.valor,
-      '智将': warlord.intelligence,
+      l10n.warlordArchetypeLeadership: warlord.leadership,
+      l10n.warlordArchetypeValor: warlord.valor,
+      l10n.warlordArchetypeIntelligence: warlord.intelligence,
     };
     final maxEntry =
         stats.entries.reduce((a, b) => a.value >= b.value ? a : b);
-    if (warlord.totalStat >= 260) return '伝説の$maxEntry.key';
+    if (warlord.totalStat >= 260) {
+      return l10n.warlordArchetypeLegendary(maxEntry.key);
+    }
     return maxEntry.key;
   }
 
   void _showDetailDialog(Warlord warlord) {
+    final l10n = AppLocalizations.of(context)!;
     final exp = _warlordExp[warlord.id] ?? 0;
     final progressRepo = WarlordProgressRepository();
     final level = progressRepo.levelForExp(exp);
@@ -115,18 +119,20 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
             Text(warlord.faction),
             const SizedBox(height: 4),
             Text(
-              _archetypeFor(warlord),
+              _archetypeFor(l10n, warlord),
               style: const TextStyle(
                 fontStyle: FontStyle.italic,
                 color: Colors.orangeAccent,
               ),
             ),
             const SizedBox(height: 12),
-            _StatRow(label: '統率', value: warlord.leadership),
-            _StatRow(label: '武勇', value: warlord.valor),
-            _StatRow(label: '知略', value: warlord.intelligence),
+            _StatRow(label: l10n.warlordDetailLeadership, value: warlord.leadership),
+            _StatRow(label: l10n.warlordDetailValor, value: warlord.valor),
+            _StatRow(label: l10n.warlordDetailIntelligence, value: warlord.intelligence),
             const SizedBox(height: 12),
-            Text(awakened ? '覚醒済み（Lv.${WarlordProgressRepository.maxLevel}）' : 'Lv.$level'),
+            Text(awakened
+                ? l10n.warlordDetailAwakenedLevel(WarlordProgressRepository.maxLevel)
+                : l10n.warlordDetailLevel(level)),
             const SizedBox(height: 4),
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
@@ -139,7 +145,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '出陣させて勝利するとEXPを獲得します',
+              l10n.warlordDetailExpHint,
               style: TextStyle(fontSize: 11, color: Colors.grey[500]),
             ),
           ],
@@ -147,7 +153,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('閉じる'),
+            child: Text(l10n.commonClose),
           ),
         ],
       ),
@@ -155,12 +161,13 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
   }
 
   Future<void> _drawGacha() async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     if (userId == null || _drawing) return;
 
     if (_unlockedIds.length >= _allWarlords.length) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('すべての武将を解放済みです')),
+        SnackBar(content: Text(l10n.warlordCollectionAllUnlocked)),
       );
       return;
     }
@@ -177,7 +184,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
       if (mounted) {
         setState(() => _drawing = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('ゴールドが不足しています')),
+          SnackBar(content: Text(l10n.warlordCollectionGoldShortage)),
         );
       }
       return;
@@ -198,7 +205,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
 
     if (drawnId != null) {
       final warlord = _allWarlords.firstWhere((w) => w.id == drawnId);
-      _showUnlockDialog(warlord);
+      _showUnlockDialog(l10n, warlord);
       await _checkCollectionAchievements(userId);
     }
   }
@@ -222,11 +229,11 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
     }
   }
 
-  void _showUnlockDialog(Warlord warlord) {
+  void _showUnlockDialog(AppLocalizations l10n, Warlord warlord) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('武将を発見！'),
+        title: Text(l10n.warlordDiscoveredTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -237,15 +244,15 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
             const SizedBox(height: 4),
             Text(warlord.faction),
             const SizedBox(height: 12),
-            _StatRow(label: '統率', value: warlord.leadership),
-            _StatRow(label: '武勇', value: warlord.valor),
-            _StatRow(label: '知略', value: warlord.intelligence),
+            _StatRow(label: l10n.warlordDetailLeadership, value: warlord.leadership),
+            _StatRow(label: l10n.warlordDetailValor, value: warlord.valor),
+            _StatRow(label: l10n.warlordDetailIntelligence, value: warlord.intelligence),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('閉じる'),
+            child: Text(l10n.commonClose),
           ),
         ],
       ),
@@ -254,6 +261,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final factions =
         _allWarlords.map((w) => w.faction).toSet().toList()..sort();
     final filtered = _factionFilter == null
@@ -262,7 +270,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('武将図鑑'),
+        title: Text(l10n.warlordCollectionTitle),
         centerTitle: true,
       ),
       body: _loading
@@ -274,7 +282,8 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
                   child: Row(
                     children: [
                       Text(
-                        '${_unlockedIds.length} / ${_allWarlords.length} 解放済み',
+                        l10n.warlordCollectionUnlockedCount(
+                            _unlockedIds.length, _allWarlords.length),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
@@ -294,8 +303,9 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
                       icon: const Icon(Icons.casino),
                       label: Text(
                         _drawing
-                            ? '発掘中...'
-                            : '武将を発掘する（${WarlordCollectionRepository.gachaCost}ゴールド）',
+                            ? l10n.warlordCollectionDrawing
+                            : l10n.warlordCollectionDrawButton(
+                                WarlordCollectionRepository.gachaCost),
                       ),
                     ),
                   ),
@@ -307,7 +317,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
                   child: Row(
                     children: [
                       ChoiceChip(
-                        label: const Text('すべて'),
+                        label: Text(l10n.warlordCollectionAllFilter),
                         selected: _factionFilter == null,
                         onSelected: (_) =>
                             setState(() => _factionFilter = null),
@@ -343,6 +353,7 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
                       return _WarlordCard(
                         warlord: warlord,
                         unlocked: unlocked,
+                        l10n: l10n,
                         onTap: unlocked
                             ? () => _showDetailDialog(warlord)
                             : null,
@@ -380,11 +391,13 @@ class _StatRow extends StatelessWidget {
 class _WarlordCard extends StatelessWidget {
   final Warlord warlord;
   final bool unlocked;
+  final AppLocalizations l10n;
   final VoidCallback? onTap;
 
   const _WarlordCard({
     required this.warlord,
     required this.unlocked,
+    required this.l10n,
     this.onTap,
   });
 
@@ -427,20 +440,20 @@ class _WarlordCard extends StatelessWidget {
                     ),
               const SizedBox(height: 8),
               Text(
-                unlocked ? warlord.name : '???',
+                unlocked ? warlord.name : l10n.warlordCollectionLocked,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: unlocked ? null : Colors.grey[600],
                 ),
               ),
               Text(
-                unlocked ? warlord.faction : '未発掘',
+                unlocked ? warlord.faction : l10n.warlordCollectionUndiscovered,
                 style: TextStyle(fontSize: 11, color: Colors.grey[500]),
               ),
               const Spacer(),
               if (unlocked)
                 Text(
-                  '総合力 ${warlord.totalStat}',
+                  l10n.warlordCollectionTotalStat(warlord.totalStat),
                   style: const TextStyle(fontSize: 11),
                 ),
             ],

@@ -488,4 +488,79 @@ class AppLocalizationsEn extends AppLocalizations {
   String rankingDurationSeconds(int seconds) {
     return '${seconds}s';
   }
+
+  @override
+  String get warlordCollectionTitle => 'Warlord Collection';
+
+  @override
+  String warlordCollectionUnlockedCount(int unlocked, int total) {
+    return '$unlocked / $total Unlocked';
+  }
+
+  @override
+  String get warlordCollectionDrawing => 'Discovering...';
+
+  @override
+  String warlordCollectionDrawButton(int cost) {
+    return 'Discover a Warlord ($cost Gold)';
+  }
+
+  @override
+  String get warlordCollectionAllFilter => 'All';
+
+  @override
+  String get warlordCollectionAllUnlocked => 'All warlords have been unlocked';
+
+  @override
+  String get warlordCollectionGoldShortage => 'Not enough gold';
+
+  @override
+  String get warlordCollectionLocked => '???';
+
+  @override
+  String get warlordCollectionUndiscovered => 'Undiscovered';
+
+  @override
+  String warlordCollectionTotalStat(int stat) {
+    return 'Total Power $stat';
+  }
+
+  @override
+  String get warlordDetailLeadership => 'Leadership';
+
+  @override
+  String get warlordDetailValor => 'Valor';
+
+  @override
+  String get warlordDetailIntelligence => 'Intelligence';
+
+  @override
+  String warlordDetailAwakenedLevel(int level) {
+    return 'Awakened (Lv.$level)';
+  }
+
+  @override
+  String warlordDetailLevel(int level) {
+    return 'Lv.$level';
+  }
+
+  @override
+  String get warlordDetailExpHint => 'Sortie and win battles to gain EXP';
+
+  @override
+  String get warlordDiscoveredTitle => 'Warlord Discovered!';
+
+  @override
+  String get warlordArchetypeLeadership => 'Master Tactician';
+
+  @override
+  String get warlordArchetypeValor => 'Fierce General';
+
+  @override
+  String get warlordArchetypeIntelligence => 'Wise Strategist';
+
+  @override
+  String warlordArchetypeLegendary(String archetype) {
+    return 'Legendary $archetype';
+  }
 }

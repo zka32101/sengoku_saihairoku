@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
+import '../../core/services/ad_service.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
@@ -75,6 +76,8 @@ class _ResultScreenState extends State<ResultScreen> {
   int? _newBattlePassTier;
   FriendChallengeTarget? _friendChallengeResult;
   bool _friendChallengeBeaten = false;
+  bool _xpBoosted = false;
+  bool _xpBoosting = false;
 
   @override
   void initState() {
@@ -356,6 +359,61 @@ class _ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  /// 広告視聴で今回の戦闘XPをもう1回分（＝実質2倍）付与する。
+  /// 日次上限はゴールドショップの広告とは別枠（AdService.showRewardedAd）
+  /// で、1戦闘につき1回までは本メソッド自身のガード（_xpBoosted）で制限する。
+  Future<void> _boostXpWithAd() async {
+    if (_xpBoosted || _xpBoosting || _xpGained <= 0) return;
+    final userId = FirebaseService().userId;
+    if (userId == null) return;
+
+    setState(() => _xpBoosting = true);
+    try {
+      final earned = await AdService().showRewardedAd();
+      if (!earned) return;
+
+      int oldLevel;
+      if (_newLevel != null) {
+        oldLevel = _newLevel!;
+      } else {
+        final progression = await _progressionRepo.getUserProgression(userId);
+        oldLevel = progression?.currentLevel ?? 1;
+      }
+
+      await _progressionRepo.recordXpGain(
+        userId: userId,
+        xpGained: _xpGained,
+        source: 'battle_xp_boost_ad',
+        multipliers: const {},
+      );
+
+      final boostedXp = _xpGained;
+      final newProgression = await _progressionRepo.getUserProgression(userId);
+      final leveledUpFromBoost =
+          newProgression != null && newProgression.currentLevel > oldLevel;
+
+      if (!mounted) return;
+      setState(() {
+        _xpGained += boostedXp;
+        _xpBoosted = true;
+        if (leveledUpFromBoost) {
+          _leveledUp = true;
+          _newLevel = newProgression.currentLevel;
+        }
+      });
+
+      if (leveledUpFromBoost) {
+        // 通常のXP獲得と同じく、レベルマイルストーン解放・実績チェックを行う
+        await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
+        await _checkLevelAchievements(userId, newProgression.currentLevel);
+      }
+    } catch (e) {
+      debugPrint('Error boosting XP with ad: $e');
+    } finally {
+      if (mounted) setState(() => _xpBoosting = false);
+    }
+  }
+
   /// レベルマイルストーンに達した場合、コスメティックを解放
   Future<void> _unlockMilestoneCosmeticIfEarned(
     String userId,
@@ -508,7 +566,12 @@ class _ResultScreenState extends State<ResultScreen> {
                 const SizedBox.shrink(),
               if (_cosmeticUnlocked) const SizedBox(height: 16),
               if (_xpGained > 0)
-                _XpGainCard(xpGained: _xpGained)
+                _XpGainCard(
+                  xpGained: _xpGained,
+                  boosted: _xpBoosted,
+                  boosting: _xpBoosting,
+                  onBoost: _boostXpWithAd,
+                )
               else
                 const SizedBox.shrink(),
               if (_xpGained > 0) const SizedBox(height: 16),
@@ -886,8 +949,16 @@ class _ChallengeCompletionBanner extends StatelessWidget {
 
 class _XpGainCard extends StatelessWidget {
   final int xpGained;
+  final bool boosted;
+  final bool boosting;
+  final VoidCallback onBoost;
 
-  const _XpGainCard({required this.xpGained});
+  const _XpGainCard({
+    required this.xpGained,
+    required this.boosted,
+    required this.boosting,
+    required this.onBoost,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -924,6 +995,27 @@ class _XpGainCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (!boosted) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: boosting ? null : onBoost,
+                  icon: boosting
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.play_circle_outline, size: 18),
+                  label: Text(boosting ? '読み込み中…' : '広告を見てXPを2倍にする'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.amber,
+                    side: const BorderSide(color: Colors.amber),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

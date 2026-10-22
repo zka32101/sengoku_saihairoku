@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/message_loader.dart';
 import '../../data/models/scenario_data.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 
 class MessageScreenArgs {
@@ -52,7 +53,9 @@ class _MessageScreenState extends State<MessageScreen> {
       // デフォルトメッセージ選択
       final defaultKey = _selectDefaultKey();
       final defaultMessage = scenarioMessages[defaultKey] as String? ??
-          (entries.isNotEmpty ? entries.first.value : 'メッセージが見つかりませんでした');
+          (entries.isNotEmpty
+              ? entries.first.value
+              : (mounted ? AppLocalizations.of(context)!.messageScreenNotFound : ''));
 
       if (mounted) {
         setState(() {
@@ -65,7 +68,7 @@ class _MessageScreenState extends State<MessageScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _currentMessage = 'メッセージの読み込みに失敗しました: $e';
+          _currentMessage = AppLocalizations.of(context)!.messageScreenLoadError(e.toString());
           _loading = false;
         });
       }
@@ -79,16 +82,16 @@ class _MessageScreenState extends State<MessageScreen> {
     return 'defeat';
   }
 
-  String _keyToLabel(String key) {
+  String _keyToLabel(AppLocalizations l10n, String key) {
     return switch (key) {
-      'victory_perfect' => '完全勝利',
-      'victory_standard' => '勝利',
-      'victory_difficult' => '辛勝',
-      'defeat' => '敗北',
-      'turning_point_all' => '全TP達成',
-      'turning_point_most' => 'TP多数達成',
-      'history_changed' => '歴史変化',
-      'history_faithful' => '史実通り',
+      'victory_perfect' => l10n.messageKeyVictoryPerfect,
+      'victory_standard' => l10n.messageKeyVictoryStandard,
+      'victory_difficult' => l10n.messageKeyVictoryDifficult,
+      'defeat' => l10n.messageKeyDefeat,
+      'turning_point_all' => l10n.messageKeyTurningPointAll,
+      'turning_point_most' => l10n.messageKeyTurningPointMost,
+      'history_changed' => l10n.messageKeyHistoryChanged,
+      'history_faithful' => l10n.messageKeyHistoryFaithful,
       _ => key,
     };
   }
@@ -101,9 +104,10 @@ class _MessageScreenState extends State<MessageScreen> {
       );
     }
 
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('歴史分析: ${widget.args.scenario.displayNameJa}'),
+        title: Text(l10n.messageScreenTitle(widget.args.scenario.displayNameJa)),
       ),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 500),
@@ -115,9 +119,9 @@ class _MessageScreenState extends State<MessageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'あなたの采配が歴史だったなら',
-                    style: TextStyle(
+                  Text(
+                    l10n.messageScreenSubheading,
+                    style: const TextStyle(
                       color: Color(0xFFFFD700),
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -152,7 +156,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   DropdownButtonFormField<String>(
                     initialValue: _selectedKey,
                     decoration: InputDecoration(
-                      labelText: '別の视点を見る',
+                      labelText: l10n.messageScreenViewpointLabel,
                       labelStyle: const TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
                         borderSide: const BorderSide(color: Color(0xFF8B6914)),
@@ -168,7 +172,7 @@ class _MessageScreenState extends State<MessageScreen> {
                         .map((e) => DropdownMenuItem(
                               value: e.key,
                               child: Text(
-                                _keyToLabel(e.key),
+                                _keyToLabel(l10n, e.key),
                                 style: const TextStyle(color: Color(0xFFE8D5B0)),
                               ),
                             ))
@@ -191,9 +195,9 @@ class _MessageScreenState extends State<MessageScreen> {
                       onPressed: () =>
                           Navigator.popUntil(context, ModalRoute.withName('/home')),
                       icon: const Icon(Icons.home, color: Color(0xFFFFD700)),
-                      label: const Text(
-                        'ホームへ',
-                        style: TextStyle(color: Color(0xFFFFD700)),
+                      label: Text(
+                        l10n.messageScreenHome,
+                        style: const TextStyle(color: Color(0xFFFFD700)),
                       ),
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: Color(0xFFFFD700)),

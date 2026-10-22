@@ -4,6 +4,7 @@ import '../../data/models/user_progression.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 
 /// プレスティジコスメティック・ショーケース画面
@@ -60,9 +61,10 @@ class _PrestigeCosmeticsShowcaseScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('プレスティジコスメティック')),
+        appBar: AppBar(title: Text(l10n.prestigeShowcaseTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -70,7 +72,7 @@ class _PrestigeCosmeticsShowcaseScreenState
     final progression = _userProgression;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('プレスティジコスメティック')),
+      appBar: AppBar(title: Text(l10n.prestigeShowcaseTitle)),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(
@@ -81,7 +83,7 @@ class _PrestigeCosmeticsShowcaseScreenState
               if (progression != null)
                 _PrestigeProgressCard(progression: progression),
               const SizedBox(height: 24),
-              ..._buildTierSections(),
+              ..._buildTierSections(l10n),
             ],
           ),
         ),
@@ -89,7 +91,7 @@ class _PrestigeCosmeticsShowcaseScreenState
     );
   }
 
-  List<Widget> _buildTierSections() {
+  List<Widget> _buildTierSections(AppLocalizations l10n) {
     return PrestigeTier.values.map((tier) {
       final tierCosmetics = _prestigeCosmetics
           .where(
@@ -118,11 +120,11 @@ class _PrestigeCosmeticsShowcaseScreenState
               isUnlocked: isUnlocked,
             )
           else
-            const Padding(
-              padding: EdgeInsets.all(16),
+            Padding(
+              padding: const EdgeInsets.all(16),
               child: Text(
-                'このランクのコスメティックはまだありません',
-                style: TextStyle(color: Colors.grey),
+                l10n.prestigeShowcaseEmptyTier,
+                style: const TextStyle(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -144,6 +146,7 @@ class _PrestigeProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final currentTier = progression.prestigeRank;
     final nextTierIndex = currentTier.index + 1;
     final hasNextTier = nextTierIndex < PrestigeTier.values.length;
@@ -168,9 +171,9 @@ class _PrestigeProgressCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '現在のプレスティジランク',
-                      style: TextStyle(
+                    Text(
+                      l10n.prestigeShowcaseCurrentRank,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -213,7 +216,7 @@ class _PrestigeProgressCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '次のランク: ${nextTier.displayName}',
+                    l10n.prestigeShowcaseNextRank(nextTier.displayName),
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Text(
@@ -242,7 +245,7 @@ class _PrestigeProgressCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  '最高ランク: ${currentTier.displayName}に到達しました！',
+                  l10n.prestigeShowcaseMaxRank(currentTier.displayName),
                   style: TextStyle(
                     fontSize: 12,
                     color: Color(currentTier.color),
@@ -252,7 +255,7 @@ class _PrestigeProgressCard extends StatelessWidget {
               ),
             const SizedBox(height: 12),
             Text(
-              'リセット回数: ${progression.prestigeResetCount}',
+              l10n.prestigeShowcaseResetCount(progression.prestigeResetCount),
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.grey,
@@ -288,6 +291,7 @@ class _PrestigeTierHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -315,7 +319,7 @@ class _PrestigeTierHeader extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '必要ポイント: ${tier.pointsRequired}',
+                l10n.prestigeShowcaseRequiredPoints(tier.pointsRequired),
                 style: const TextStyle(
                   fontSize: 11,
                   color: Colors.grey,
@@ -335,7 +339,7 @@ class _PrestigeTierHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                '解放済み',
+                l10n.prestigeShowcaseUnlocked,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -354,9 +358,9 @@ class _PrestigeTierHeader extends StatelessWidget {
                 border: Border.all(color: Colors.grey[700]!),
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: const Text(
-                '未解放',
-                style: TextStyle(
+              child: Text(
+                l10n.prestigeShowcaseLocked,
+                style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
@@ -458,6 +462,7 @@ class _PrestigeCosmeticCardState extends State<_PrestigeCosmeticCard>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FadeTransition(
       opacity: _fadeAnimation,
       child: ScaleTransition(
@@ -497,7 +502,7 @@ class _PrestigeCosmeticCardState extends State<_PrestigeCosmeticCard>
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'タイプ: ${widget.cosmetic.type.displayName}',
+                        l10n.prestigeShowcaseItemType(widget.cosmetic.type.displayName),
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.grey[600],
@@ -524,7 +529,9 @@ class _PrestigeCosmeticCardState extends State<_PrestigeCosmeticCard>
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    widget.isUnlocked ? '取得済み' : 'ロック中',
+                    widget.isUnlocked
+                        ? l10n.prestigeShowcaseAcquired
+                        : l10n.prestigeShowcaseItemLocked,
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,

@@ -222,4 +222,229 @@ class AppLocalizationsJa extends AppLocalizations {
   String statisticsTimeMonthDay(int month, int day) {
     return '$month月$day日';
   }
+
+  @override
+  String messageScreenTitle(String scenario) {
+    return '歴史分析: $scenario';
+  }
+
+  @override
+  String get messageScreenSubheading => 'あなたの采配が歴史だったなら';
+
+  @override
+  String get messageScreenViewpointLabel => '別の視点を見る';
+
+  @override
+  String get messageScreenHome => 'ホームへ';
+
+  @override
+  String messageScreenLoadError(String error) {
+    return 'メッセージの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String get messageScreenNotFound => 'メッセージが見つかりませんでした';
+
+  @override
+  String get messageKeyVictoryPerfect => '完全勝利';
+
+  @override
+  String get messageKeyVictoryStandard => '勝利';
+
+  @override
+  String get messageKeyVictoryDifficult => '辛勝';
+
+  @override
+  String get messageKeyDefeat => '敗北';
+
+  @override
+  String get messageKeyTurningPointAll => '全TP達成';
+
+  @override
+  String get messageKeyTurningPointMost => 'TP多数達成';
+
+  @override
+  String get messageKeyHistoryChanged => '歴史変化';
+
+  @override
+  String get messageKeyHistoryFaithful => '史実通り';
+
+  @override
+  String get achievementListTitle => '実績';
+
+  @override
+  String get achievementCategoryCombat => '戦闘';
+
+  @override
+  String get achievementCategoryProgression => '進行度';
+
+  @override
+  String get achievementCategoryPrestige => 'プレスティジ';
+
+  @override
+  String get achievementCategoryCosmetic => 'コスメティック';
+
+  @override
+  String get achievementCategoryMilestone => 'マイルストーン';
+
+  @override
+  String get achievementCategoryEvent => 'イベント';
+
+  @override
+  String get achievementDifficultyBronze => 'ブロンズ';
+
+  @override
+  String get achievementDifficultySilver => 'シルバー';
+
+  @override
+  String get achievementDifficultyGold => 'ゴールド';
+
+  @override
+  String get achievementDifficultyDiamond => 'ダイヤモンド';
+
+  @override
+  String get achievementFilterTitle => 'フィルター';
+
+  @override
+  String get achievementFilterCategory => 'カテゴリー';
+
+  @override
+  String get achievementFilterDifficulty => '難易度';
+
+  @override
+  String get achievementFilterStatus => 'ステータス';
+
+  @override
+  String get achievementFilterSort => 'ソート';
+
+  @override
+  String get achievementFilterAll => 'すべて';
+
+  @override
+  String get achievementFilterUnlocked => 'クリア済み';
+
+  @override
+  String get achievementFilterLocked => 'ロック中';
+
+  @override
+  String get achievementSortName => '名前';
+
+  @override
+  String get achievementEmptyFiltered => 'フィルター条件に一致する実績がありません';
+
+  @override
+  String get achievementClearRate => 'クリア率';
+
+  @override
+  String get prestigeShowcaseTitle => 'プレスティジコスメティック';
+
+  @override
+  String get prestigeShowcaseEmptyTier => 'このランクのコスメティックはまだありません';
+
+  @override
+  String get prestigeShowcaseCurrentRank => '現在のプレスティジランク';
+
+  @override
+  String prestigeShowcaseNextRank(String rank) {
+    return '次のランク: $rank';
+  }
+
+  @override
+  String prestigeShowcaseMaxRank(String rank) {
+    return '最高ランク: $rankに到達しました！';
+  }
+
+  @override
+  String prestigeShowcaseResetCount(int count) {
+    return 'リセット回数: $count';
+  }
+
+  @override
+  String prestigeShowcaseRequiredPoints(int points) {
+    return '必要ポイント: $points';
+  }
+
+  @override
+  String get prestigeShowcaseUnlocked => '解放済み';
+
+  @override
+  String get prestigeShowcaseLocked => '未解放';
+
+  @override
+  String prestigeShowcaseItemType(String type) {
+    return 'タイプ: $type';
+  }
+
+  @override
+  String get prestigeShowcaseAcquired => '取得済み';
+
+  @override
+  String get prestigeShowcaseItemLocked => 'ロック中';
+
+  @override
+  String get advancedStatsTitle => '詳細統計';
+
+  @override
+  String get advancedStatsTabOverview => '概要';
+
+  @override
+  String get advancedStatsTabScenario => 'シナリオ';
+
+  @override
+  String get advancedStatsTabDifficulty => '難易度';
+
+  @override
+  String get advancedStatsTabRanking => 'ランキング';
+
+  @override
+  String get advancedStatsTotalBattles => '総バトル数';
+
+  @override
+  String get advancedStatsWinRate => '勝率';
+
+  @override
+  String get advancedStatsVictories => '勝利';
+
+  @override
+  String get advancedStatsDefeats => '敗北';
+
+  @override
+  String get advancedStatsHighestScore => '最高スコア';
+
+  @override
+  String get advancedStatsAverageScore => '平均スコア';
+
+  @override
+  String get advancedStatsPlayTime => 'プレイ時間';
+
+  @override
+  String get advancedStatsPerformanceTrend => 'パフォーマンストレンド';
+
+  @override
+  String advancedStatsWinRateChange(String percent) {
+    return '勝率: $percent%';
+  }
+
+  @override
+  String advancedStatsScoreChange(String score) {
+    return 'スコア: ${score}pt';
+  }
+
+  @override
+  String get advancedStatsWinRateTrendLabel => '勝率の推移';
+
+  @override
+  String get advancedStatsScoreTrendLabel => 'スコアの推移';
+
+  @override
+  String get advancedStatsScenarioClearStatus => 'シナリオ制覇状況';
+
+  @override
+  String get advancedStatsTrendImproving => '📈 上昇傾向';
+
+  @override
+  String get advancedStatsTrendDeclining => '📉 低下傾向';
+
+  @override
+  String get advancedStatsTrendStable => '→ 安定傾向';
 }

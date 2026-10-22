@@ -511,6 +511,420 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{month}月{day}日'**
   String statisticsTimeMonthDay(int month, int day);
+
+  /// No description provided for @messageScreenTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史分析: {scenario}'**
+  String messageScreenTitle(String scenario);
+
+  /// No description provided for @messageScreenSubheading.
+  ///
+  /// In ja, this message translates to:
+  /// **'あなたの采配が歴史だったなら'**
+  String get messageScreenSubheading;
+
+  /// No description provided for @messageScreenViewpointLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'別の視点を見る'**
+  String get messageScreenViewpointLabel;
+
+  /// No description provided for @messageScreenHome.
+  ///
+  /// In ja, this message translates to:
+  /// **'ホームへ'**
+  String get messageScreenHome;
+
+  /// No description provided for @messageScreenLoadError.
+  ///
+  /// In ja, this message translates to:
+  /// **'メッセージの読み込みに失敗しました: {error}'**
+  String messageScreenLoadError(String error);
+
+  /// No description provided for @messageScreenNotFound.
+  ///
+  /// In ja, this message translates to:
+  /// **'メッセージが見つかりませんでした'**
+  String get messageScreenNotFound;
+
+  /// No description provided for @messageKeyVictoryPerfect.
+  ///
+  /// In ja, this message translates to:
+  /// **'完全勝利'**
+  String get messageKeyVictoryPerfect;
+
+  /// No description provided for @messageKeyVictoryStandard.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get messageKeyVictoryStandard;
+
+  /// No description provided for @messageKeyVictoryDifficult.
+  ///
+  /// In ja, this message translates to:
+  /// **'辛勝'**
+  String get messageKeyVictoryDifficult;
+
+  /// No description provided for @messageKeyDefeat.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get messageKeyDefeat;
+
+  /// No description provided for @messageKeyTurningPointAll.
+  ///
+  /// In ja, this message translates to:
+  /// **'全TP達成'**
+  String get messageKeyTurningPointAll;
+
+  /// No description provided for @messageKeyTurningPointMost.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP多数達成'**
+  String get messageKeyTurningPointMost;
+
+  /// No description provided for @messageKeyHistoryChanged.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史変化'**
+  String get messageKeyHistoryChanged;
+
+  /// No description provided for @messageKeyHistoryFaithful.
+  ///
+  /// In ja, this message translates to:
+  /// **'史実通り'**
+  String get messageKeyHistoryFaithful;
+
+  /// No description provided for @achievementListTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'実績'**
+  String get achievementListTitle;
+
+  /// No description provided for @achievementCategoryCombat.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘'**
+  String get achievementCategoryCombat;
+
+  /// No description provided for @achievementCategoryProgression.
+  ///
+  /// In ja, this message translates to:
+  /// **'進行度'**
+  String get achievementCategoryProgression;
+
+  /// No description provided for @achievementCategoryPrestige.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ'**
+  String get achievementCategoryPrestige;
+
+  /// No description provided for @achievementCategoryCosmetic.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック'**
+  String get achievementCategoryCosmetic;
+
+  /// No description provided for @achievementCategoryMilestone.
+  ///
+  /// In ja, this message translates to:
+  /// **'マイルストーン'**
+  String get achievementCategoryMilestone;
+
+  /// No description provided for @achievementCategoryEvent.
+  ///
+  /// In ja, this message translates to:
+  /// **'イベント'**
+  String get achievementCategoryEvent;
+
+  /// No description provided for @achievementDifficultyBronze.
+  ///
+  /// In ja, this message translates to:
+  /// **'ブロンズ'**
+  String get achievementDifficultyBronze;
+
+  /// No description provided for @achievementDifficultySilver.
+  ///
+  /// In ja, this message translates to:
+  /// **'シルバー'**
+  String get achievementDifficultySilver;
+
+  /// No description provided for @achievementDifficultyGold.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールド'**
+  String get achievementDifficultyGold;
+
+  /// No description provided for @achievementDifficultyDiamond.
+  ///
+  /// In ja, this message translates to:
+  /// **'ダイヤモンド'**
+  String get achievementDifficultyDiamond;
+
+  /// No description provided for @achievementFilterTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フィルター'**
+  String get achievementFilterTitle;
+
+  /// No description provided for @achievementFilterCategory.
+  ///
+  /// In ja, this message translates to:
+  /// **'カテゴリー'**
+  String get achievementFilterCategory;
+
+  /// No description provided for @achievementFilterDifficulty.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度'**
+  String get achievementFilterDifficulty;
+
+  /// No description provided for @achievementFilterStatus.
+  ///
+  /// In ja, this message translates to:
+  /// **'ステータス'**
+  String get achievementFilterStatus;
+
+  /// No description provided for @achievementFilterSort.
+  ///
+  /// In ja, this message translates to:
+  /// **'ソート'**
+  String get achievementFilterSort;
+
+  /// No description provided for @achievementFilterAll.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべて'**
+  String get achievementFilterAll;
+
+  /// No description provided for @achievementFilterUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリア済み'**
+  String get achievementFilterUnlocked;
+
+  /// No description provided for @achievementFilterLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'ロック中'**
+  String get achievementFilterLocked;
+
+  /// No description provided for @achievementSortName.
+  ///
+  /// In ja, this message translates to:
+  /// **'名前'**
+  String get achievementSortName;
+
+  /// No description provided for @achievementEmptyFiltered.
+  ///
+  /// In ja, this message translates to:
+  /// **'フィルター条件に一致する実績がありません'**
+  String get achievementEmptyFiltered;
+
+  /// No description provided for @achievementClearRate.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリア率'**
+  String get achievementClearRate;
+
+  /// No description provided for @prestigeShowcaseTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジコスメティック'**
+  String get prestigeShowcaseTitle;
+
+  /// No description provided for @prestigeShowcaseEmptyTier.
+  ///
+  /// In ja, this message translates to:
+  /// **'このランクのコスメティックはまだありません'**
+  String get prestigeShowcaseEmptyTier;
+
+  /// No description provided for @prestigeShowcaseCurrentRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のプレスティジランク'**
+  String get prestigeShowcaseCurrentRank;
+
+  /// No description provided for @prestigeShowcaseNextRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'次のランク: {rank}'**
+  String prestigeShowcaseNextRank(String rank);
+
+  /// No description provided for @prestigeShowcaseMaxRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'最高ランク: {rank}に到達しました！'**
+  String prestigeShowcaseMaxRank(String rank);
+
+  /// No description provided for @prestigeShowcaseResetCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット回数: {count}'**
+  String prestigeShowcaseResetCount(int count);
+
+  /// No description provided for @prestigeShowcaseRequiredPoints.
+  ///
+  /// In ja, this message translates to:
+  /// **'必要ポイント: {points}'**
+  String prestigeShowcaseRequiredPoints(int points);
+
+  /// No description provided for @prestigeShowcaseUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'解放済み'**
+  String get prestigeShowcaseUnlocked;
+
+  /// No description provided for @prestigeShowcaseLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'未解放'**
+  String get prestigeShowcaseLocked;
+
+  /// No description provided for @prestigeShowcaseItemType.
+  ///
+  /// In ja, this message translates to:
+  /// **'タイプ: {type}'**
+  String prestigeShowcaseItemType(String type);
+
+  /// No description provided for @prestigeShowcaseAcquired.
+  ///
+  /// In ja, this message translates to:
+  /// **'取得済み'**
+  String get prestigeShowcaseAcquired;
+
+  /// No description provided for @prestigeShowcaseItemLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'ロック中'**
+  String get prestigeShowcaseItemLocked;
+
+  /// No description provided for @advancedStatsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'詳細統計'**
+  String get advancedStatsTitle;
+
+  /// No description provided for @advancedStatsTabOverview.
+  ///
+  /// In ja, this message translates to:
+  /// **'概要'**
+  String get advancedStatsTabOverview;
+
+  /// No description provided for @advancedStatsTabScenario.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ'**
+  String get advancedStatsTabScenario;
+
+  /// No description provided for @advancedStatsTabDifficulty.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度'**
+  String get advancedStatsTabDifficulty;
+
+  /// No description provided for @advancedStatsTabRanking.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキング'**
+  String get advancedStatsTabRanking;
+
+  /// No description provided for @advancedStatsTotalBattles.
+  ///
+  /// In ja, this message translates to:
+  /// **'総バトル数'**
+  String get advancedStatsTotalBattles;
+
+  /// No description provided for @advancedStatsWinRate.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率'**
+  String get advancedStatsWinRate;
+
+  /// No description provided for @advancedStatsVictories.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get advancedStatsVictories;
+
+  /// No description provided for @advancedStatsDefeats.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get advancedStatsDefeats;
+
+  /// No description provided for @advancedStatsHighestScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'最高スコア'**
+  String get advancedStatsHighestScore;
+
+  /// No description provided for @advancedStatsAverageScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均スコア'**
+  String get advancedStatsAverageScore;
+
+  /// No description provided for @advancedStatsPlayTime.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間'**
+  String get advancedStatsPlayTime;
+
+  /// No description provided for @advancedStatsPerformanceTrend.
+  ///
+  /// In ja, this message translates to:
+  /// **'パフォーマンストレンド'**
+  String get advancedStatsPerformanceTrend;
+
+  /// No description provided for @advancedStatsWinRateChange.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率: {percent}%'**
+  String advancedStatsWinRateChange(String percent);
+
+  /// No description provided for @advancedStatsScoreChange.
+  ///
+  /// In ja, this message translates to:
+  /// **'スコア: {score}pt'**
+  String advancedStatsScoreChange(String score);
+
+  /// No description provided for @advancedStatsWinRateTrendLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率の推移'**
+  String get advancedStatsWinRateTrendLabel;
+
+  /// No description provided for @advancedStatsScoreTrendLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'スコアの推移'**
+  String get advancedStatsScoreTrendLabel;
+
+  /// No description provided for @advancedStatsScenarioClearStatus.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ制覇状況'**
+  String get advancedStatsScenarioClearStatus;
+
+  /// No description provided for @advancedStatsTrendImproving.
+  ///
+  /// In ja, this message translates to:
+  /// **'📈 上昇傾向'**
+  String get advancedStatsTrendImproving;
+
+  /// No description provided for @advancedStatsTrendDeclining.
+  ///
+  /// In ja, this message translates to:
+  /// **'📉 低下傾向'**
+  String get advancedStatsTrendDeclining;
+
+  /// No description provided for @advancedStatsTrendStable.
+  ///
+  /// In ja, this message translates to:
+  /// **'→ 安定傾向'**
+  String get advancedStatsTrendStable;
 }
 
 class _AppLocalizationsDelegate

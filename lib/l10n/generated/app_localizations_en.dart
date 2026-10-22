@@ -222,4 +222,230 @@ class AppLocalizationsEn extends AppLocalizations {
   String statisticsTimeMonthDay(int month, int day) {
     return '$month/$day';
   }
+
+  @override
+  String messageScreenTitle(String scenario) {
+    return 'Historical Analysis: $scenario';
+  }
+
+  @override
+  String get messageScreenSubheading => 'If your command had been history';
+
+  @override
+  String get messageScreenViewpointLabel => 'View another perspective';
+
+  @override
+  String get messageScreenHome => 'Home';
+
+  @override
+  String messageScreenLoadError(String error) {
+    return 'Failed to load message: $error';
+  }
+
+  @override
+  String get messageScreenNotFound => 'No message found';
+
+  @override
+  String get messageKeyVictoryPerfect => 'Perfect Victory';
+
+  @override
+  String get messageKeyVictoryStandard => 'Victory';
+
+  @override
+  String get messageKeyVictoryDifficult => 'Hard-fought Victory';
+
+  @override
+  String get messageKeyDefeat => 'Defeat';
+
+  @override
+  String get messageKeyTurningPointAll => 'All Turning Points';
+
+  @override
+  String get messageKeyTurningPointMost => 'Most Turning Points';
+
+  @override
+  String get messageKeyHistoryChanged => 'History Changed';
+
+  @override
+  String get messageKeyHistoryFaithful => 'Historically Accurate';
+
+  @override
+  String get achievementListTitle => 'Achievements';
+
+  @override
+  String get achievementCategoryCombat => 'Combat';
+
+  @override
+  String get achievementCategoryProgression => 'Progression';
+
+  @override
+  String get achievementCategoryPrestige => 'Prestige';
+
+  @override
+  String get achievementCategoryCosmetic => 'Cosmetic';
+
+  @override
+  String get achievementCategoryMilestone => 'Milestone';
+
+  @override
+  String get achievementCategoryEvent => 'Event';
+
+  @override
+  String get achievementDifficultyBronze => 'Bronze';
+
+  @override
+  String get achievementDifficultySilver => 'Silver';
+
+  @override
+  String get achievementDifficultyGold => 'Gold';
+
+  @override
+  String get achievementDifficultyDiamond => 'Diamond';
+
+  @override
+  String get achievementFilterTitle => 'Filters';
+
+  @override
+  String get achievementFilterCategory => 'Category';
+
+  @override
+  String get achievementFilterDifficulty => 'Difficulty';
+
+  @override
+  String get achievementFilterStatus => 'Status';
+
+  @override
+  String get achievementFilterSort => 'Sort';
+
+  @override
+  String get achievementFilterAll => 'All';
+
+  @override
+  String get achievementFilterUnlocked => 'Unlocked';
+
+  @override
+  String get achievementFilterLocked => 'Locked';
+
+  @override
+  String get achievementSortName => 'Name';
+
+  @override
+  String get achievementEmptyFiltered =>
+      'No achievements match the selected filters';
+
+  @override
+  String get achievementClearRate => 'Completion Rate';
+
+  @override
+  String get prestigeShowcaseTitle => 'Prestige Cosmetics';
+
+  @override
+  String get prestigeShowcaseEmptyTier => 'No cosmetics for this rank yet';
+
+  @override
+  String get prestigeShowcaseCurrentRank => 'Current Prestige Rank';
+
+  @override
+  String prestigeShowcaseNextRank(String rank) {
+    return 'Next rank: $rank';
+  }
+
+  @override
+  String prestigeShowcaseMaxRank(String rank) {
+    return 'Reached the highest rank: $rank!';
+  }
+
+  @override
+  String prestigeShowcaseResetCount(int count) {
+    return 'Resets: $count';
+  }
+
+  @override
+  String prestigeShowcaseRequiredPoints(int points) {
+    return 'Required points: $points';
+  }
+
+  @override
+  String get prestigeShowcaseUnlocked => 'Unlocked';
+
+  @override
+  String get prestigeShowcaseLocked => 'Locked';
+
+  @override
+  String prestigeShowcaseItemType(String type) {
+    return 'Type: $type';
+  }
+
+  @override
+  String get prestigeShowcaseAcquired => 'Acquired';
+
+  @override
+  String get prestigeShowcaseItemLocked => 'Locked';
+
+  @override
+  String get advancedStatsTitle => 'Detailed Stats';
+
+  @override
+  String get advancedStatsTabOverview => 'Overview';
+
+  @override
+  String get advancedStatsTabScenario => 'Scenario';
+
+  @override
+  String get advancedStatsTabDifficulty => 'Difficulty';
+
+  @override
+  String get advancedStatsTabRanking => 'Ranking';
+
+  @override
+  String get advancedStatsTotalBattles => 'Total Battles';
+
+  @override
+  String get advancedStatsWinRate => 'Win Rate';
+
+  @override
+  String get advancedStatsVictories => 'Victories';
+
+  @override
+  String get advancedStatsDefeats => 'Defeats';
+
+  @override
+  String get advancedStatsHighestScore => 'Highest Score';
+
+  @override
+  String get advancedStatsAverageScore => 'Average Score';
+
+  @override
+  String get advancedStatsPlayTime => 'Play Time';
+
+  @override
+  String get advancedStatsPerformanceTrend => 'Performance Trend';
+
+  @override
+  String advancedStatsWinRateChange(String percent) {
+    return 'Win rate: $percent%';
+  }
+
+  @override
+  String advancedStatsScoreChange(String score) {
+    return 'Score: ${score}pt';
+  }
+
+  @override
+  String get advancedStatsWinRateTrendLabel => 'Win Rate Trend';
+
+  @override
+  String get advancedStatsScoreTrendLabel => 'Score Trend';
+
+  @override
+  String get advancedStatsScenarioClearStatus => 'Scenario Completion';
+
+  @override
+  String get advancedStatsTrendImproving => '📈 Improving';
+
+  @override
+  String get advancedStatsTrendDeclining => '📉 Declining';
+
+  @override
+  String get advancedStatsTrendStable => '→ Stable';
 }

@@ -83,5 +83,101 @@
       "month": { "type": "int" },
       "day": { "type": "int" }
     }
-  }
+  },
+  "messageScreenTitle": "Historical Analysis: {scenario}",
+  "@messageScreenTitle": {
+    "placeholders": { "scenario": { "type": "String" } }
+  },
+  "messageScreenSubheading": "If your command had been history",
+  "messageScreenViewpointLabel": "View another perspective",
+  "messageScreenHome": "Home",
+  "messageScreenLoadError": "Failed to load message: {error}",
+  "@messageScreenLoadError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "messageScreenNotFound": "No message found",
+  "messageKeyVictoryPerfect": "Perfect Victory",
+  "messageKeyVictoryStandard": "Victory",
+  "messageKeyVictoryDifficult": "Hard-fought Victory",
+  "messageKeyDefeat": "Defeat",
+  "messageKeyTurningPointAll": "All Turning Points",
+  "messageKeyTurningPointMost": "Most Turning Points",
+  "messageKeyHistoryChanged": "History Changed",
+  "messageKeyHistoryFaithful": "Historically Accurate",
+  "achievementListTitle": "Achievements",
+  "achievementCategoryCombat": "Combat",
+  "achievementCategoryProgression": "Progression",
+  "achievementCategoryPrestige": "Prestige",
+  "achievementCategoryCosmetic": "Cosmetic",
+  "achievementCategoryMilestone": "Milestone",
+  "achievementCategoryEvent": "Event",
+  "achievementDifficultyBronze": "Bronze",
+  "achievementDifficultySilver": "Silver",
+  "achievementDifficultyGold": "Gold",
+  "achievementDifficultyDiamond": "Diamond",
+  "achievementFilterTitle": "Filters",
+  "achievementFilterCategory": "Category",
+  "achievementFilterDifficulty": "Difficulty",
+  "achievementFilterStatus": "Status",
+  "achievementFilterSort": "Sort",
+  "achievementFilterAll": "All",
+  "achievementFilterUnlocked": "Unlocked",
+  "achievementFilterLocked": "Locked",
+  "achievementSortName": "Name",
+  "achievementEmptyFiltered": "No achievements match the selected filters",
+  "achievementClearRate": "Completion Rate",
+  "prestigeShowcaseTitle": "Prestige Cosmetics",
+  "prestigeShowcaseEmptyTier": "No cosmetics for this rank yet",
+  "prestigeShowcaseCurrentRank": "Current Prestige Rank",
+  "prestigeShowcaseNextRank": "Next rank: {rank}",
+  "@prestigeShowcaseNextRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseMaxRank": "Reached the highest rank: {rank}!",
+  "@prestigeShowcaseMaxRank": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "prestigeShowcaseResetCount": "Resets: {count}",
+  "@prestigeShowcaseResetCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "prestigeShowcaseRequiredPoints": "Required points: {points}",
+  "@prestigeShowcaseRequiredPoints": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "prestigeShowcaseUnlocked": "Unlocked",
+  "prestigeShowcaseLocked": "Locked",
+  "prestigeShowcaseItemType": "Type: {type}",
+  "@prestigeShowcaseItemType": {
+    "placeholders": { "type": { "type": "String" } }
+  },
+  "prestigeShowcaseAcquired": "Acquired",
+  "prestigeShowcaseItemLocked": "Locked",
+  "advancedStatsTitle": "Detailed Stats",
+  "advancedStatsTabOverview": "Overview",
+  "advancedStatsTabScenario": "Scenario",
+  "advancedStatsTabDifficulty": "Difficulty",
+  "advancedStatsTabRanking": "Ranking",
+  "advancedStatsTotalBattles": "Total Battles",
+  "advancedStatsWinRate": "Win Rate",
+  "advancedStatsVictories": "Victories",
+  "advancedStatsDefeats": "Defeats",
+  "advancedStatsHighestScore": "Highest Score",
+  "advancedStatsAverageScore": "Average Score",
+  "advancedStatsPlayTime": "Play Time",
+  "advancedStatsPerformanceTrend": "Performance Trend",
+  "advancedStatsWinRateChange": "Win rate: {percent}%",
+  "@advancedStatsWinRateChange": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "advancedStatsScoreChange": "Score: {score}pt",
+  "@advancedStatsScoreChange": {
+    "placeholders": { "score": { "type": "String" } }
+  },
+  "advancedStatsWinRateTrendLabel": "Win Rate Trend",
+  "advancedStatsScoreTrendLabel": "Score Trend",
+  "advancedStatsScenarioClearStatus": "Scenario Completion",
+  "advancedStatsTrendImproving": "📈 Improving",
+  "advancedStatsTrendDeclining": "📉 Declining",
+  "advancedStatsTrendStable": "→ Stable"
 }

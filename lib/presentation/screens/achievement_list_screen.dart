@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/achievement.dart';
 import '../../data/repositories/achievement_repository.dart';
 import '../../core/services/firebase_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/achievement_display.dart';
 import 'achievement_detail_view.dart';
 
@@ -103,44 +104,45 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
     return filtered;
   }
 
-  String _getCategoryLabel(AchievementCategory category) {
+  String _getCategoryLabel(AppLocalizations l10n, AchievementCategory category) {
     switch (category) {
       case AchievementCategory.combat:
-        return '戦闘';
+        return l10n.achievementCategoryCombat;
       case AchievementCategory.progression:
-        return '進行度';
+        return l10n.achievementCategoryProgression;
       case AchievementCategory.prestige:
-        return 'プレスティジ';
+        return l10n.achievementCategoryPrestige;
       case AchievementCategory.cosmetic:
-        return 'コスメティック';
+        return l10n.achievementCategoryCosmetic;
       case AchievementCategory.milestone:
-        return 'マイルストーン';
+        return l10n.achievementCategoryMilestone;
       case AchievementCategory.event:
-        return 'イベント';
+        return l10n.achievementCategoryEvent;
     }
   }
 
-  String _getDifficultyLabel(AchievementDifficulty difficulty) {
+  String _getDifficultyLabel(AppLocalizations l10n, AchievementDifficulty difficulty) {
     switch (difficulty) {
       case AchievementDifficulty.bronze:
-        return 'ブロンズ';
+        return l10n.achievementDifficultyBronze;
       case AchievementDifficulty.silver:
-        return 'シルバー';
+        return l10n.achievementDifficultySilver;
       case AchievementDifficulty.gold:
-        return 'ゴールド';
+        return l10n.achievementDifficultyGold;
       case AchievementDifficulty.diamond:
-        return 'ダイヤモンド';
+        return l10n.achievementDifficultyDiamond;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final filteredAchievements = _filteredAchievements;
     final unlockedCount = _unlockedStatus.values.where((v) => v).length;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('実績'),
+        title: Text(l10n.achievementListTitle),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -153,29 +155,29 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
               totalCount: _allAchievements.length,
             ),
             const SizedBox(height: 16),
-            
+
             // Filters
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'フィルター',
-                    style: TextStyle(
+                  Text(
+                    l10n.achievementFilterTitle,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFFD700),
                     ),
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Category Filter
                   _FilterChipGroup(
-                    label: 'カテゴリー',
+                    label: l10n.achievementFilterCategory,
                     options: [
-                      'すべて',
-                      ...AchievementCategory.values.map((c) => _getCategoryLabel(c)),
+                      l10n.achievementFilterAll,
+                      ...AchievementCategory.values.map((c) => _getCategoryLabel(l10n, c)),
                     ],
                     selectedIndex: _selectedCategory == null
                         ? 0
@@ -189,13 +191,13 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Difficulty Filter
                   _FilterChipGroup(
-                    label: '難易度',
+                    label: l10n.achievementFilterDifficulty,
                     options: [
-                      'すべて',
-                      ...AchievementDifficulty.values.map((d) => _getDifficultyLabel(d)),
+                      l10n.achievementFilterAll,
+                      ...AchievementDifficulty.values.map((d) => _getDifficultyLabel(l10n, d)),
                     ],
                     selectedIndex: _selectedDifficulty == null
                         ? 0
@@ -209,11 +211,15 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Unlock Status Filter
                   _FilterChipGroup(
-                    label: 'ステータス',
-                    options: const ['すべて', 'クリア済み', 'ロック中'],
+                    label: l10n.achievementFilterStatus,
+                    options: [
+                      l10n.achievementFilterAll,
+                      l10n.achievementFilterUnlocked,
+                      l10n.achievementFilterLocked,
+                    ],
                     selectedIndex: _unlockFilter.index,
                     onChanged: (index) {
                       setState(() {
@@ -222,11 +228,15 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  
+
                   // Sort
                   _FilterChipGroup(
-                    label: 'ソート',
-                    options: const ['名前', '難易度', 'カテゴリー'],
+                    label: l10n.achievementFilterSort,
+                    options: [
+                      l10n.achievementSortName,
+                      l10n.achievementFilterDifficulty,
+                      l10n.achievementFilterCategory,
+                    ],
                     selectedIndex: _sortBy.index,
                     onChanged: (index) {
                       setState(() {
@@ -238,7 +248,7 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Achievement List
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -247,7 +257,7 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(32),
                         child: Text(
-                          'フィルター条件に一致する実績がありません',
+                          l10n.achievementEmptyFiltered,
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.grey[600]),
                         ),
@@ -332,9 +342,9 @@ class _AchievementStatistics extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'クリア率',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.achievementClearRate,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFFFD700),

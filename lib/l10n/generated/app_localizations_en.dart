@@ -268,4 +268,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messageKeyHistoryFaithful => 'Historically Accurate';
+
+  @override
+  String get achievementListTitle => 'Achievements';
+
+  @override
+  String get achievementCategoryCombat => 'Combat';
+
+  @override
+  String get achievementCategoryProgression => 'Progression';
+
+  @override
+  String get achievementCategoryPrestige => 'Prestige';
+
+  @override
+  String get achievementCategoryCosmetic => 'Cosmetic';
+
+  @override
+  String get achievementCategoryMilestone => 'Milestone';
+
+  @override
+  String get achievementCategoryEvent => 'Event';
+
+  @override
+  String get achievementDifficultyBronze => 'Bronze';
+
+  @override
+  String get achievementDifficultySilver => 'Silver';
+
+  @override
+  String get achievementDifficultyGold => 'Gold';
+
+  @override
+  String get achievementDifficultyDiamond => 'Diamond';
+
+  @override
+  String get achievementFilterTitle => 'Filters';
+
+  @override
+  String get achievementFilterCategory => 'Category';
+
+  @override
+  String get achievementFilterDifficulty => 'Difficulty';
+
+  @override
+  String get achievementFilterStatus => 'Status';
+
+  @override
+  String get achievementFilterSort => 'Sort';
+
+  @override
+  String get achievementFilterAll => 'All';
+
+  @override
+  String get achievementFilterUnlocked => 'Unlocked';
+
+  @override
+  String get achievementFilterLocked => 'Locked';
+
+  @override
+  String get achievementSortName => 'Name';
+
+  @override
+  String get achievementEmptyFiltered =>
+      'No achievements match the selected filters';
+
+  @override
+  String get achievementClearRate => 'Completion Rate';
 }

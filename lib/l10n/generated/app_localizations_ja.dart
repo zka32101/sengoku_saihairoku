@@ -268,4 +268,70 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get messageKeyHistoryFaithful => '史実通り';
+
+  @override
+  String get achievementListTitle => '実績';
+
+  @override
+  String get achievementCategoryCombat => '戦闘';
+
+  @override
+  String get achievementCategoryProgression => '進行度';
+
+  @override
+  String get achievementCategoryPrestige => 'プレスティジ';
+
+  @override
+  String get achievementCategoryCosmetic => 'コスメティック';
+
+  @override
+  String get achievementCategoryMilestone => 'マイルストーン';
+
+  @override
+  String get achievementCategoryEvent => 'イベント';
+
+  @override
+  String get achievementDifficultyBronze => 'ブロンズ';
+
+  @override
+  String get achievementDifficultySilver => 'シルバー';
+
+  @override
+  String get achievementDifficultyGold => 'ゴールド';
+
+  @override
+  String get achievementDifficultyDiamond => 'ダイヤモンド';
+
+  @override
+  String get achievementFilterTitle => 'フィルター';
+
+  @override
+  String get achievementFilterCategory => 'カテゴリー';
+
+  @override
+  String get achievementFilterDifficulty => '難易度';
+
+  @override
+  String get achievementFilterStatus => 'ステータス';
+
+  @override
+  String get achievementFilterSort => 'ソート';
+
+  @override
+  String get achievementFilterAll => 'すべて';
+
+  @override
+  String get achievementFilterUnlocked => 'クリア済み';
+
+  @override
+  String get achievementFilterLocked => 'ロック中';
+
+  @override
+  String get achievementSortName => '名前';
+
+  @override
+  String get achievementEmptyFiltered => 'フィルター条件に一致する実績がありません';
+
+  @override
+  String get achievementClearRate => 'クリア率';
 }

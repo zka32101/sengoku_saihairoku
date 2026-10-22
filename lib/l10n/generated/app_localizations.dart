@@ -595,6 +595,138 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'史実通り'**
   String get messageKeyHistoryFaithful;
+
+  /// No description provided for @achievementListTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'実績'**
+  String get achievementListTitle;
+
+  /// No description provided for @achievementCategoryCombat.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘'**
+  String get achievementCategoryCombat;
+
+  /// No description provided for @achievementCategoryProgression.
+  ///
+  /// In ja, this message translates to:
+  /// **'進行度'**
+  String get achievementCategoryProgression;
+
+  /// No description provided for @achievementCategoryPrestige.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ'**
+  String get achievementCategoryPrestige;
+
+  /// No description provided for @achievementCategoryCosmetic.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック'**
+  String get achievementCategoryCosmetic;
+
+  /// No description provided for @achievementCategoryMilestone.
+  ///
+  /// In ja, this message translates to:
+  /// **'マイルストーン'**
+  String get achievementCategoryMilestone;
+
+  /// No description provided for @achievementCategoryEvent.
+  ///
+  /// In ja, this message translates to:
+  /// **'イベント'**
+  String get achievementCategoryEvent;
+
+  /// No description provided for @achievementDifficultyBronze.
+  ///
+  /// In ja, this message translates to:
+  /// **'ブロンズ'**
+  String get achievementDifficultyBronze;
+
+  /// No description provided for @achievementDifficultySilver.
+  ///
+  /// In ja, this message translates to:
+  /// **'シルバー'**
+  String get achievementDifficultySilver;
+
+  /// No description provided for @achievementDifficultyGold.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールド'**
+  String get achievementDifficultyGold;
+
+  /// No description provided for @achievementDifficultyDiamond.
+  ///
+  /// In ja, this message translates to:
+  /// **'ダイヤモンド'**
+  String get achievementDifficultyDiamond;
+
+  /// No description provided for @achievementFilterTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フィルター'**
+  String get achievementFilterTitle;
+
+  /// No description provided for @achievementFilterCategory.
+  ///
+  /// In ja, this message translates to:
+  /// **'カテゴリー'**
+  String get achievementFilterCategory;
+
+  /// No description provided for @achievementFilterDifficulty.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度'**
+  String get achievementFilterDifficulty;
+
+  /// No description provided for @achievementFilterStatus.
+  ///
+  /// In ja, this message translates to:
+  /// **'ステータス'**
+  String get achievementFilterStatus;
+
+  /// No description provided for @achievementFilterSort.
+  ///
+  /// In ja, this message translates to:
+  /// **'ソート'**
+  String get achievementFilterSort;
+
+  /// No description provided for @achievementFilterAll.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべて'**
+  String get achievementFilterAll;
+
+  /// No description provided for @achievementFilterUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリア済み'**
+  String get achievementFilterUnlocked;
+
+  /// No description provided for @achievementFilterLocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'ロック中'**
+  String get achievementFilterLocked;
+
+  /// No description provided for @achievementSortName.
+  ///
+  /// In ja, this message translates to:
+  /// **'名前'**
+  String get achievementSortName;
+
+  /// No description provided for @achievementEmptyFiltered.
+  ///
+  /// In ja, this message translates to:
+  /// **'フィルター条件に一致する実績がありません'**
+  String get achievementEmptyFiltered;
+
+  /// No description provided for @achievementClearRate.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリア率'**
+  String get achievementClearRate;
 }
 
 class _AppLocalizationsDelegate

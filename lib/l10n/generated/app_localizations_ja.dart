@@ -561,4 +561,65 @@ class AppLocalizationsJa extends AppLocalizations {
   String warlordArchetypeLegendary(String archetype) {
     return '伝説の$archetype';
   }
+
+  @override
+  String get goldShopTitle => 'ゴールドショップ';
+
+  @override
+  String get goldShopPurchaseSuccess => 'ゴールドを獲得しました！';
+
+  @override
+  String goldShopPurchaseFailure(String error) {
+    return '購入に失敗しました: $error';
+  }
+
+  @override
+  String get goldShopUnknownError => '不明なエラー';
+
+  @override
+  String goldShopAdRewardEarned(int amount) {
+    return '$amountゴールドを獲得しました！';
+  }
+
+  @override
+  String get goldShopAdFailure => '広告を表示できませんでした。しばらくしてから再度お試しください';
+
+  @override
+  String get goldShopBalanceLabel => '所持ゴールド';
+
+  @override
+  String goldShopWatchAdTitle(int amount) {
+    return '広告を見て$amountゴールド獲得';
+  }
+
+  @override
+  String goldShopWatchAdRemaining(int remaining, int limit) {
+    return '本日あと$remaining/$limit回';
+  }
+
+  @override
+  String get goldShopWatchButton => '視聴する';
+
+  @override
+  String get goldShopWatchLimitReached => '上限到達';
+
+  @override
+  String get goldShopPacksTitle => 'ゴールドパック';
+
+  @override
+  String get goldShopStoreUnavailable => 'ストアに接続できません';
+
+  @override
+  String get goldShopNoProducts => '現在購入可能な商品がありません';
+
+  @override
+  String get goldShopBestValueBadge => 'もっともお得';
+
+  @override
+  String get goldShopPopularBadge => '人気';
+
+  @override
+  String goldShopGoldAmount(int amount) {
+    return '$amount ゴールド';
+  }
 }

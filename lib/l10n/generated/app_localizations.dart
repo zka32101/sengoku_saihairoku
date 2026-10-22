@@ -1117,6 +1117,108 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'伝説の{archetype}'**
   String warlordArchetypeLegendary(String archetype);
+
+  /// No description provided for @goldShopTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドショップ'**
+  String get goldShopTitle;
+
+  /// No description provided for @goldShopPurchaseSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドを獲得しました！'**
+  String get goldShopPurchaseSuccess;
+
+  /// No description provided for @goldShopPurchaseFailure.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入に失敗しました: {error}'**
+  String goldShopPurchaseFailure(String error);
+
+  /// No description provided for @goldShopUnknownError.
+  ///
+  /// In ja, this message translates to:
+  /// **'不明なエラー'**
+  String get goldShopUnknownError;
+
+  /// No description provided for @goldShopAdRewardEarned.
+  ///
+  /// In ja, this message translates to:
+  /// **'{amount}ゴールドを獲得しました！'**
+  String goldShopAdRewardEarned(int amount);
+
+  /// No description provided for @goldShopAdFailure.
+  ///
+  /// In ja, this message translates to:
+  /// **'広告を表示できませんでした。しばらくしてから再度お試しください'**
+  String get goldShopAdFailure;
+
+  /// No description provided for @goldShopBalanceLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'所持ゴールド'**
+  String get goldShopBalanceLabel;
+
+  /// No description provided for @goldShopWatchAdTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'広告を見て{amount}ゴールド獲得'**
+  String goldShopWatchAdTitle(int amount);
+
+  /// No description provided for @goldShopWatchAdRemaining.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日あと{remaining}/{limit}回'**
+  String goldShopWatchAdRemaining(int remaining, int limit);
+
+  /// No description provided for @goldShopWatchButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'視聴する'**
+  String get goldShopWatchButton;
+
+  /// No description provided for @goldShopWatchLimitReached.
+  ///
+  /// In ja, this message translates to:
+  /// **'上限到達'**
+  String get goldShopWatchLimitReached;
+
+  /// No description provided for @goldShopPacksTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドパック'**
+  String get goldShopPacksTitle;
+
+  /// No description provided for @goldShopStoreUnavailable.
+  ///
+  /// In ja, this message translates to:
+  /// **'ストアに接続できません'**
+  String get goldShopStoreUnavailable;
+
+  /// No description provided for @goldShopNoProducts.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在購入可能な商品がありません'**
+  String get goldShopNoProducts;
+
+  /// No description provided for @goldShopBestValueBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'もっともお得'**
+  String get goldShopBestValueBadge;
+
+  /// No description provided for @goldShopPopularBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'人気'**
+  String get goldShopPopularBadge;
+
+  /// No description provided for @goldShopGoldAmount.
+  ///
+  /// In ja, this message translates to:
+  /// **'{amount} ゴールド'**
+  String goldShopGoldAmount(int amount);
 }
 
 class _AppLocalizationsDelegate

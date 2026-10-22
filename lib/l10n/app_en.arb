@@ -244,5 +244,40 @@
   "warlordArchetypeLegendary": "Legendary {archetype}",
   "@warlordArchetypeLegendary": {
     "placeholders": { "archetype": { "type": "String" } }
+  },
+  "goldShopTitle": "Gold Shop",
+  "goldShopPurchaseSuccess": "Gold received!",
+  "goldShopPurchaseFailure": "Purchase failed: {error}",
+  "@goldShopPurchaseFailure": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "goldShopUnknownError": "Unknown error",
+  "goldShopAdRewardEarned": "You earned {amount} gold!",
+  "@goldShopAdRewardEarned": {
+    "placeholders": { "amount": { "type": "int" } }
+  },
+  "goldShopAdFailure": "Could not show the ad. Please try again later.",
+  "goldShopBalanceLabel": "Gold Balance",
+  "goldShopWatchAdTitle": "Watch an ad for {amount} gold",
+  "@goldShopWatchAdTitle": {
+    "placeholders": { "amount": { "type": "int" } }
+  },
+  "goldShopWatchAdRemaining": "{remaining}/{limit} left today",
+  "@goldShopWatchAdRemaining": {
+    "placeholders": {
+      "remaining": { "type": "int" },
+      "limit": { "type": "int" }
+    }
+  },
+  "goldShopWatchButton": "Watch",
+  "goldShopWatchLimitReached": "Limit Reached",
+  "goldShopPacksTitle": "Gold Packs",
+  "goldShopStoreUnavailable": "Can't connect to the store",
+  "goldShopNoProducts": "No products available right now",
+  "goldShopBestValueBadge": "Best Value",
+  "goldShopPopularBadge": "Popular",
+  "goldShopGoldAmount": "{amount} Gold",
+  "@goldShopGoldAmount": {
+    "placeholders": { "amount": { "type": "int" } }
   }
 }

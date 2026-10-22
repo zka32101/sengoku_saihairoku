@@ -563,4 +563,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String warlordArchetypeLegendary(String archetype) {
     return 'Legendary $archetype';
   }
+
+  @override
+  String get goldShopTitle => 'Gold Shop';
+
+  @override
+  String get goldShopPurchaseSuccess => 'Gold received!';
+
+  @override
+  String goldShopPurchaseFailure(String error) {
+    return 'Purchase failed: $error';
+  }
+
+  @override
+  String get goldShopUnknownError => 'Unknown error';
+
+  @override
+  String goldShopAdRewardEarned(int amount) {
+    return 'You earned $amount gold!';
+  }
+
+  @override
+  String get goldShopAdFailure =>
+      'Could not show the ad. Please try again later.';
+
+  @override
+  String get goldShopBalanceLabel => 'Gold Balance';
+
+  @override
+  String goldShopWatchAdTitle(int amount) {
+    return 'Watch an ad for $amount gold';
+  }
+
+  @override
+  String goldShopWatchAdRemaining(int remaining, int limit) {
+    return '$remaining/$limit left today';
+  }
+
+  @override
+  String get goldShopWatchButton => 'Watch';
+
+  @override
+  String get goldShopWatchLimitReached => 'Limit Reached';
+
+  @override
+  String get goldShopPacksTitle => 'Gold Packs';
+
+  @override
+  String get goldShopStoreUnavailable => 'Can\'t connect to the store';
+
+  @override
+  String get goldShopNoProducts => 'No products available right now';
+
+  @override
+  String get goldShopBestValueBadge => 'Best Value';
+
+  @override
+  String get goldShopPopularBadge => 'Popular';
+
+  @override
+  String goldShopGoldAmount(int amount) {
+    return '$amount Gold';
+  }
 }

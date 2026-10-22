@@ -375,5 +375,95 @@
   "@homeBattlePassMissedRewards": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "homeBattlePassButton": "View Battle Pass"
+  "homeBattlePassButton": "View Battle Pass",
+  "resultTitle": "Battle Result",
+  "resultVictory": "Victory!",
+  "resultDefeat": "Defeat",
+  "resultVictorySubtitle": "A masterful command",
+  "resultDefeatSubtitle": "Avenge this defeat next time",
+  "resultTotalScoreLabel": "Total Score",
+  "resultScorePoints": "{score} pts",
+  "@resultScorePoints": {
+    "placeholders": { "score": { "type": "String" } }
+  },
+  "resultScoreVictory": "Victory Score",
+  "resultScoreEfficiency": "Efficiency Score",
+  "resultScoreCommand": "Command Score",
+  "resultScoreTurningPoint": "TP Bonus",
+  "resultScoreHistory": "History Bonus",
+  "resultTurningPointTitle": "Turning Points",
+  "resultTpFallback": "TP{number}",
+  "@resultTpFallback": {
+    "placeholders": { "number": { "type": "int" } }
+  },
+  "resultViewHistoryButton": "View Historical Analysis",
+  "resultViewRankingButton": "View Ranking",
+  "resultShareButton": "Share Result",
+  "resultHomeButton": "Back to Home",
+  "resultShareText": "I got a {result} in \"{scenario}\" on Sengoku Saihairoku!\nScore: {score} pts / Turning Points {tp}/{total}\n#SengokuSaihairoku",
+  "@resultShareText": {
+    "placeholders": {
+      "scenario": { "type": "String" },
+      "result": { "type": "String" },
+      "score": { "type": "int" },
+      "tp": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "resultShareVictory": "Victory",
+  "resultShareDefeat": "Defeat",
+  "resultFriendChallengeSuccess": "Beat {friend}'s challenge!",
+  "@resultFriendChallengeSuccess": {
+    "placeholders": { "friend": { "type": "String" } }
+  },
+  "resultFriendChallengeFailure": "Fell short of {friend}'s challenge",
+  "@resultFriendChallengeFailure": {
+    "placeholders": { "friend": { "type": "String" } }
+  },
+  "resultFriendChallengeTarget": "Target score: {score} pts",
+  "@resultFriendChallengeTarget": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "resultChallengeCompletedTitle": "Today's Challenge Complete!",
+  "resultChallengeCompletedNote": "Claim your reward from the Home screen",
+  "resultXpGainTitle": "XP Gained",
+  "resultXpGainedLabel": "XP Gained:",
+  "resultXpBoostLoading": "Loading…",
+  "resultXpBoostButton": "Watch an ad to double XP",
+  "resultLevelUpTitle": "Level Up!",
+  "resultLevelUpSubtitle": "Reached Level {level}",
+  "@resultLevelUpSubtitle": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "resultBattlePassTierUpTitle": "Battle Pass Tier Up!",
+  "resultBattlePassTierUpSubtitle": "Reached Tier {tier}",
+  "@resultBattlePassTierUpSubtitle": {
+    "placeholders": { "tier": { "type": "int" } }
+  },
+  "resultCosmeticUnlockTitle": "Cosmetic Unlocked!",
+  "resultTpOdigahara1": "Surprise attack before the enemy arrives",
+  "resultTpOdigahara2": "Fight in the storm",
+  "resultTpOdigahara3": "Weaken the enemy general",
+  "resultTpOdigahara4": "Defeat the enemy general",
+  "resultTpNagashino1": "Set the initial formation to defense",
+  "resultTpNagashino2": "Withstand the enemy cavalry charge",
+  "resultTpNagashino3": "Launch a full counterattack",
+  "resultTpNagashino4": "Defeat the enemy general",
+  "resultTpHonnoJi1": "Break through the enemy encirclement",
+  "resultTpHonnoJi2": "Survive until reinforcements arrive",
+  "resultTpHonnoJi3": "Counterattack after reinforcements arrive",
+  "resultTpHonnoJi4": "Defeat the enemy supreme commander",
+  "resultTpSekigahara1": "Proceed cautiously in the early stages",
+  "resultTpSekigahara2": "Maintain allied morale",
+  "resultTpSekigahara3": "Flank the enemy",
+  "resultTpSekigahara4": "Defeat the enemy general",
+  "resultTpSekigahara5": "Keep the Toyotomi warlord alive",
+  "resultTpKawanakajima1": "Prepare for the dawn surprise attack",
+  "resultTpKawanakajima2": "Hold out until the detached unit arrives",
+  "resultTpKawanakajima3": "Succeed at the pincer attack",
+  "resultTpKawanakajima4": "Defeat the enemy general",
+  "resultTpItsukushima1": "Surprise attack amid the storm",
+  "resultTpItsukushima2": "Defend Miyao Castle",
+  "resultTpItsukushima3": "Cut off the retreat and encircle",
+  "resultTpItsukushima4": "Defeat the enemy general"
 }

@@ -49,4 +49,82 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get commonError => 'エラーが発生しました';
+
+  @override
+  String get settingsTitle => '設定';
+
+  @override
+  String get settingsGameSection => 'ゲーム設定';
+
+  @override
+  String get settingsSfx => '効果音';
+
+  @override
+  String get settingsSfxSubtitle => 'SE';
+
+  @override
+  String get settingsBgm => 'BGM';
+
+  @override
+  String get settingsBgmSubtitle => 'バックグラウンドミュージック';
+
+  @override
+  String get settingsLanguageSection => '言語 / Language';
+
+  @override
+  String get settingsDisplayLanguage => '表示言語';
+
+  @override
+  String get settingsLanguageSystem => '端末の設定に従う';
+
+  @override
+  String get settingsLanguageJa => '日本語';
+
+  @override
+  String get settingsLanguageEn => 'English';
+
+  @override
+  String get settingsDataSection => 'データ管理';
+
+  @override
+  String get settingsCloudSave => 'クラウドに保存';
+
+  @override
+  String get settingsCloudSaveSubtitle => 'Firebase アカウントが必要です';
+
+  @override
+  String get settingsDeleteSaveData => 'セーブデータを削除';
+
+  @override
+  String get settingsOtherSection => 'その他';
+
+  @override
+  String get settingsReplayTutorial => 'チュートリアルをもう一度見る';
+
+  @override
+  String get settingsPrivacyPolicy => 'プライバシーポリシー';
+
+  @override
+  String get settingsTermsOfService => '利用規約';
+
+  @override
+  String get settingsVersion => 'バージョン';
+
+  @override
+  String get settingsComingSoon => '近日公開';
+
+  @override
+  String get settingsDeleteDataTitle => 'データを削除しますか？';
+
+  @override
+  String get settingsDeleteDataBody => 'この操作は元に戻せません';
+
+  @override
+  String get settingsDeleteDataConfirm => '削除';
+
+  @override
+  String get settingsDeleteDataSuccess => 'データを削除しました';
+
+  @override
+  String get settingsDeleteDataFailure => 'データの削除に失敗しました';
 }

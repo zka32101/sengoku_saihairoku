@@ -181,6 +181,162 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'エラーが発生しました'**
   String get commonError;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'設定'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsGameSection.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゲーム設定'**
+  String get settingsGameSection;
+
+  /// No description provided for @settingsSfx.
+  ///
+  /// In ja, this message translates to:
+  /// **'効果音'**
+  String get settingsSfx;
+
+  /// No description provided for @settingsSfxSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'SE'**
+  String get settingsSfxSubtitle;
+
+  /// No description provided for @settingsBgm.
+  ///
+  /// In ja, this message translates to:
+  /// **'BGM'**
+  String get settingsBgm;
+
+  /// No description provided for @settingsBgmSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バックグラウンドミュージック'**
+  String get settingsBgmSubtitle;
+
+  /// No description provided for @settingsLanguageSection.
+  ///
+  /// In ja, this message translates to:
+  /// **'言語 / Language'**
+  String get settingsLanguageSection;
+
+  /// No description provided for @settingsDisplayLanguage.
+  ///
+  /// In ja, this message translates to:
+  /// **'表示言語'**
+  String get settingsDisplayLanguage;
+
+  /// No description provided for @settingsLanguageSystem.
+  ///
+  /// In ja, this message translates to:
+  /// **'端末の設定に従う'**
+  String get settingsLanguageSystem;
+
+  /// No description provided for @settingsLanguageJa.
+  ///
+  /// In ja, this message translates to:
+  /// **'日本語'**
+  String get settingsLanguageJa;
+
+  /// No description provided for @settingsLanguageEn.
+  ///
+  /// In ja, this message translates to:
+  /// **'English'**
+  String get settingsLanguageEn;
+
+  /// No description provided for @settingsDataSection.
+  ///
+  /// In ja, this message translates to:
+  /// **'データ管理'**
+  String get settingsDataSection;
+
+  /// No description provided for @settingsCloudSave.
+  ///
+  /// In ja, this message translates to:
+  /// **'クラウドに保存'**
+  String get settingsCloudSave;
+
+  /// No description provided for @settingsCloudSaveSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'Firebase アカウントが必要です'**
+  String get settingsCloudSaveSubtitle;
+
+  /// No description provided for @settingsDeleteSaveData.
+  ///
+  /// In ja, this message translates to:
+  /// **'セーブデータを削除'**
+  String get settingsDeleteSaveData;
+
+  /// No description provided for @settingsOtherSection.
+  ///
+  /// In ja, this message translates to:
+  /// **'その他'**
+  String get settingsOtherSection;
+
+  /// No description provided for @settingsReplayTutorial.
+  ///
+  /// In ja, this message translates to:
+  /// **'チュートリアルをもう一度見る'**
+  String get settingsReplayTutorial;
+
+  /// No description provided for @settingsPrivacyPolicy.
+  ///
+  /// In ja, this message translates to:
+  /// **'プライバシーポリシー'**
+  String get settingsPrivacyPolicy;
+
+  /// No description provided for @settingsTermsOfService.
+  ///
+  /// In ja, this message translates to:
+  /// **'利用規約'**
+  String get settingsTermsOfService;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In ja, this message translates to:
+  /// **'バージョン'**
+  String get settingsVersion;
+
+  /// No description provided for @settingsComingSoon.
+  ///
+  /// In ja, this message translates to:
+  /// **'近日公開'**
+  String get settingsComingSoon;
+
+  /// No description provided for @settingsDeleteDataTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'データを削除しますか？'**
+  String get settingsDeleteDataTitle;
+
+  /// No description provided for @settingsDeleteDataBody.
+  ///
+  /// In ja, this message translates to:
+  /// **'この操作は元に戻せません'**
+  String get settingsDeleteDataBody;
+
+  /// No description provided for @settingsDeleteDataConfirm.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除'**
+  String get settingsDeleteDataConfirm;
+
+  /// No description provided for @settingsDeleteDataSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'データを削除しました'**
+  String get settingsDeleteDataSuccess;
+
+  /// No description provided for @settingsDeleteDataFailure.
+  ///
+  /// In ja, this message translates to:
+  /// **'データの削除に失敗しました'**
+  String get settingsDeleteDataFailure;
 }
 
 class _AppLocalizationsDelegate

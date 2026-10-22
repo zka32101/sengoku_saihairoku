@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/services/audio_manager.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/locale_controller.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/balance_diagnostic_panel.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
@@ -20,17 +21,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('設定')),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _Section(
-            title: 'ゲーム設定',
+            title: l10n.settingsGameSection,
             children: [
               SwitchListTile(
-                title: const Text('効果音', style: TextStyle(color: Color(0xFFE8D5B0))),
-                subtitle: Text('SE', style: TextStyle(color: Colors.grey[600])),
+                title: Text(l10n.settingsSfx, style: const TextStyle(color: Color(0xFFE8D5B0))),
+                subtitle: Text(l10n.settingsSfxSubtitle, style: TextStyle(color: Colors.grey[600])),
                 value: _sfxEnabled,
                 activeThumbColor: const Color(0xFFFFD700),
                 onChanged: (v) {
@@ -39,8 +41,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SwitchListTile(
-                title: const Text('BGM', style: TextStyle(color: Color(0xFFE8D5B0))),
-                subtitle: Text('バックグラウンドミュージック',
+                title: Text(l10n.settingsBgm, style: const TextStyle(color: Color(0xFFE8D5B0))),
+                subtitle: Text(l10n.settingsBgmSubtitle,
                     style: TextStyle(color: Colors.grey[600])),
                 value: _bgmEnabled,
                 activeThumbColor: const Color(0xFFFFD700),
@@ -58,12 +60,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 16),
           _Section(
-            title: '言語 / Language',
+            title: l10n.settingsLanguageSection,
             children: [
               ListTile(
                 leading: const Icon(Icons.language, color: Color(0xFFFFD700)),
-                title: const Text('表示言語',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                title: Text(l10n.settingsDisplayLanguage,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
                 trailing: ValueListenableBuilder<Locale?>(
                   valueListenable: LocaleController.instance,
                   builder: (context, locale, _) {
@@ -71,21 +73,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value: locale?.languageCode ?? 'system',
                       dropdownColor: const Color(0xFF2A1A0A),
                       underline: const SizedBox.shrink(),
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: 'system',
-                          child: Text('端末の設定に従う',
-                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                          child: Text(l10n.settingsLanguageSystem,
+                              style: const TextStyle(color: Color(0xFFE8D5B0))),
                         ),
                         DropdownMenuItem(
                           value: 'ja',
-                          child: Text('日本語',
-                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                          child: Text(l10n.settingsLanguageJa,
+                              style: const TextStyle(color: Color(0xFFE8D5B0))),
                         ),
                         DropdownMenuItem(
                           value: 'en',
-                          child: Text('English',
-                              style: TextStyle(color: Color(0xFFE8D5B0))),
+                          child: Text(l10n.settingsLanguageEn,
+                              style: const TextStyle(color: Color(0xFFE8D5B0))),
                         ),
                       ],
                       onChanged: (value) {
@@ -103,13 +105,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 16),
           _Section(
-            title: 'データ管理',
+            title: l10n.settingsDataSection,
             children: [
               ListTile(
                 leading: const Icon(Icons.cloud_upload, color: Color(0xFFFFD700)),
-                title: const Text('クラウドに保存',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
-                subtitle: Text('Firebase アカウントが必要です',
+                title: Text(l10n.settingsCloudSave,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
+                subtitle: Text(l10n.settingsCloudSaveSubtitle,
                     style: TextStyle(color: Colors.grey[600])),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
                 onTap: () => _showComingSoon(context),
@@ -117,8 +119,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ListTile(
                 leading:
                     const Icon(Icons.delete_outline, color: Colors.redAccent),
-                title: const Text('セーブデータを削除',
-                    style: TextStyle(color: Colors.redAccent)),
+                title: Text(l10n.settingsDeleteSaveData,
+                    style: const TextStyle(color: Colors.redAccent)),
                 onTap: () => _confirmDeleteData(context),
               ),
             ],
@@ -141,33 +143,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           const SizedBox(height: 16),
           _Section(
-            title: 'その他',
+            title: l10n.settingsOtherSection,
             children: [
               ListTile(
                 leading: const Icon(Icons.school, color: Colors.grey),
-                title: const Text('チュートリアルをもう一度見る',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                title: Text(l10n.settingsReplayTutorial,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
                 onTap: () => Navigator.pushNamed(context, '/onboarding'),
               ),
               ListTile(
                 leading: const Icon(Icons.privacy_tip, color: Colors.grey),
-                title: const Text('プライバシーポリシー',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                title: Text(l10n.settingsPrivacyPolicy,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
                 trailing: const Icon(Icons.open_in_new, color: Colors.grey, size: 16),
                 onTap: () => _showComingSoon(context),
               ),
               ListTile(
                 leading: const Icon(Icons.description, color: Colors.grey),
-                title: const Text('利用規約',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                title: Text(l10n.settingsTermsOfService,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
                 trailing: const Icon(Icons.open_in_new, color: Colors.grey, size: 16),
                 onTap: () => _showComingSoon(context),
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline, color: Colors.grey),
-                title: const Text('バージョン',
-                    style: TextStyle(color: Color(0xFFE8D5B0))),
+                title: Text(l10n.settingsVersion,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
                 trailing: const Text('1.0.0',
                     style: TextStyle(color: Colors.grey)),
               ),
@@ -181,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _showComingSoon(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('近日公開')),
+      SnackBar(content: Text(AppLocalizations.of(context)!.settingsComingSoon)),
     );
   }
 
@@ -225,18 +227,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _confirmDeleteData(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: const Color(0xFF2A1A0A),
-        title: const Text('データを削除しますか？',
-            style: TextStyle(color: Color(0xFFFFD700))),
-        content: const Text('この操作は元に戻せません',
-            style: TextStyle(color: Color(0xFFE8D5B0))),
+        title: Text(l10n.settingsDeleteDataTitle,
+            style: const TextStyle(color: Color(0xFFFFD700))),
+        content: Text(l10n.settingsDeleteDataBody,
+            style: const TextStyle(color: Color(0xFFE8D5B0))),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('キャンセル'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () async {
@@ -245,18 +248,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 await FirebaseService().deleteUserData();
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('データを削除しました')),
+                    SnackBar(content: Text(l10n.settingsDeleteDataSuccess)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('データの削除に失敗しました')),
+                    SnackBar(content: Text(l10n.settingsDeleteDataFailure)),
                   );
                 }
               }
             },
-            child: const Text('削除', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.settingsDeleteDataConfirm,
+                style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -264,6 +268,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildBottomNav(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: Color(0xFF8B6914))),
@@ -271,9 +276,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       child: Row(
         children: [
-          _navItem(context, Icons.home, 'ホーム', '/home'),
-          _navItem(context, Icons.leaderboard, 'ランキング', '/ranking'),
-          _navItem(context, Icons.settings, '設定', '/settings', selected: true),
+          _navItem(context, Icons.home, l10n.navHome, '/home'),
+          _navItem(context, Icons.leaderboard, l10n.navRanking, '/ranking'),
+          _navItem(context, Icons.settings, l10n.navSettings, '/settings', selected: true),
         ],
       ),
     );

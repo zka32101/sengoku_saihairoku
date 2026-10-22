@@ -222,4 +222,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String statisticsTimeMonthDay(int month, int day) {
     return '$month/$day';
   }
+
+  @override
+  String messageScreenTitle(String scenario) {
+    return 'Historical Analysis: $scenario';
+  }
+
+  @override
+  String get messageScreenSubheading => 'If your command had been history';
+
+  @override
+  String get messageScreenViewpointLabel => 'View another perspective';
+
+  @override
+  String get messageScreenHome => 'Home';
+
+  @override
+  String messageScreenLoadError(String error) {
+    return 'Failed to load message: $error';
+  }
+
+  @override
+  String get messageScreenNotFound => 'No message found';
+
+  @override
+  String get messageKeyVictoryPerfect => 'Perfect Victory';
+
+  @override
+  String get messageKeyVictoryStandard => 'Victory';
+
+  @override
+  String get messageKeyVictoryDifficult => 'Hard-fought Victory';
+
+  @override
+  String get messageKeyDefeat => 'Defeat';
+
+  @override
+  String get messageKeyTurningPointAll => 'All Turning Points';
+
+  @override
+  String get messageKeyTurningPointMost => 'Most Turning Points';
+
+  @override
+  String get messageKeyHistoryChanged => 'History Changed';
+
+  @override
+  String get messageKeyHistoryFaithful => 'Historically Accurate';
 }

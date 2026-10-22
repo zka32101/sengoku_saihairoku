@@ -511,6 +511,90 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{month}月{day}日'**
   String statisticsTimeMonthDay(int month, int day);
+
+  /// No description provided for @messageScreenTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史分析: {scenario}'**
+  String messageScreenTitle(String scenario);
+
+  /// No description provided for @messageScreenSubheading.
+  ///
+  /// In ja, this message translates to:
+  /// **'あなたの采配が歴史だったなら'**
+  String get messageScreenSubheading;
+
+  /// No description provided for @messageScreenViewpointLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'別の視点を見る'**
+  String get messageScreenViewpointLabel;
+
+  /// No description provided for @messageScreenHome.
+  ///
+  /// In ja, this message translates to:
+  /// **'ホームへ'**
+  String get messageScreenHome;
+
+  /// No description provided for @messageScreenLoadError.
+  ///
+  /// In ja, this message translates to:
+  /// **'メッセージの読み込みに失敗しました: {error}'**
+  String messageScreenLoadError(String error);
+
+  /// No description provided for @messageScreenNotFound.
+  ///
+  /// In ja, this message translates to:
+  /// **'メッセージが見つかりませんでした'**
+  String get messageScreenNotFound;
+
+  /// No description provided for @messageKeyVictoryPerfect.
+  ///
+  /// In ja, this message translates to:
+  /// **'完全勝利'**
+  String get messageKeyVictoryPerfect;
+
+  /// No description provided for @messageKeyVictoryStandard.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get messageKeyVictoryStandard;
+
+  /// No description provided for @messageKeyVictoryDifficult.
+  ///
+  /// In ja, this message translates to:
+  /// **'辛勝'**
+  String get messageKeyVictoryDifficult;
+
+  /// No description provided for @messageKeyDefeat.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get messageKeyDefeat;
+
+  /// No description provided for @messageKeyTurningPointAll.
+  ///
+  /// In ja, this message translates to:
+  /// **'全TP達成'**
+  String get messageKeyTurningPointAll;
+
+  /// No description provided for @messageKeyTurningPointMost.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP多数達成'**
+  String get messageKeyTurningPointMost;
+
+  /// No description provided for @messageKeyHistoryChanged.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史変化'**
+  String get messageKeyHistoryChanged;
+
+  /// No description provided for @messageKeyHistoryFaithful.
+  ///
+  /// In ja, this message translates to:
+  /// **'史実通り'**
+  String get messageKeyHistoryFaithful;
 }
 
 class _AppLocalizationsDelegate

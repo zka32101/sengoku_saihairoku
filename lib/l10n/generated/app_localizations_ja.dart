@@ -222,4 +222,50 @@ class AppLocalizationsJa extends AppLocalizations {
   String statisticsTimeMonthDay(int month, int day) {
     return '$month月$day日';
   }
+
+  @override
+  String messageScreenTitle(String scenario) {
+    return '歴史分析: $scenario';
+  }
+
+  @override
+  String get messageScreenSubheading => 'あなたの采配が歴史だったなら';
+
+  @override
+  String get messageScreenViewpointLabel => '別の視点を見る';
+
+  @override
+  String get messageScreenHome => 'ホームへ';
+
+  @override
+  String messageScreenLoadError(String error) {
+    return 'メッセージの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String get messageScreenNotFound => 'メッセージが見つかりませんでした';
+
+  @override
+  String get messageKeyVictoryPerfect => '完全勝利';
+
+  @override
+  String get messageKeyVictoryStandard => '勝利';
+
+  @override
+  String get messageKeyVictoryDifficult => '辛勝';
+
+  @override
+  String get messageKeyDefeat => '敗北';
+
+  @override
+  String get messageKeyTurningPointAll => '全TP達成';
+
+  @override
+  String get messageKeyTurningPointMost => 'TP多数達成';
+
+  @override
+  String get messageKeyHistoryChanged => '歴史変化';
+
+  @override
+  String get messageKeyHistoryFaithful => '史実通り';
 }

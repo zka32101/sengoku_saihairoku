@@ -83,5 +83,25 @@
       "month": { "type": "int" },
       "day": { "type": "int" }
     }
-  }
+  },
+  "messageScreenTitle": "Historical Analysis: {scenario}",
+  "@messageScreenTitle": {
+    "placeholders": { "scenario": { "type": "String" } }
+  },
+  "messageScreenSubheading": "If your command had been history",
+  "messageScreenViewpointLabel": "View another perspective",
+  "messageScreenHome": "Home",
+  "messageScreenLoadError": "Failed to load message: {error}",
+  "@messageScreenLoadError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "messageScreenNotFound": "No message found",
+  "messageKeyVictoryPerfect": "Perfect Victory",
+  "messageKeyVictoryStandard": "Victory",
+  "messageKeyVictoryDifficult": "Hard-fought Victory",
+  "messageKeyDefeat": "Defeat",
+  "messageKeyTurningPointAll": "All Turning Points",
+  "messageKeyTurningPointMost": "Most Turning Points",
+  "messageKeyHistoryChanged": "History Changed",
+  "messageKeyHistoryFaithful": "Historically Accurate"
 }

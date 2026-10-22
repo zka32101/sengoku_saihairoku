@@ -86,5 +86,25 @@
       "month": { "type": "int" },
       "day": { "type": "int" }
     }
-  }
+  },
+  "messageScreenTitle": "歴史分析: {scenario}",
+  "@messageScreenTitle": {
+    "placeholders": { "scenario": { "type": "String" } }
+  },
+  "messageScreenSubheading": "あなたの采配が歴史だったなら",
+  "messageScreenViewpointLabel": "別の視点を見る",
+  "messageScreenHome": "ホームへ",
+  "messageScreenLoadError": "メッセージの読み込みに失敗しました: {error}",
+  "@messageScreenLoadError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "messageScreenNotFound": "メッセージが見つかりませんでした",
+  "messageKeyVictoryPerfect": "完全勝利",
+  "messageKeyVictoryStandard": "勝利",
+  "messageKeyVictoryDifficult": "辛勝",
+  "messageKeyDefeat": "敗北",
+  "messageKeyTurningPointAll": "全TP達成",
+  "messageKeyTurningPointMost": "TP多数達成",
+  "messageKeyHistoryChanged": "歴史変化",
+  "messageKeyHistoryFaithful": "史実通り"
 }

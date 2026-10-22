@@ -195,8 +195,8 @@ class _GoldBalanceCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.amber.withOpacity(0.25),
-            Colors.orange.withOpacity(0.15),
+            Colors.amber.withValues(alpha: 0.25),
+            Colors.orange.withValues(alpha: 0.15),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -257,8 +257,8 @@ class _WatchAdCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.teal.withOpacity(0.2),
-            Colors.cyan.withOpacity(0.1),
+            Colors.teal.withValues(alpha: 0.2),
+            Colors.cyan.withValues(alpha: 0.1),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

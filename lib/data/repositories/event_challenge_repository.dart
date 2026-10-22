@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/event_challenge.dart';
+import 'package:flutter/foundation.dart';
 
 /// 期間限定イベントチャレンジ管理リポジトリ
 ///
@@ -38,7 +39,7 @@ class EventChallengeRepository {
 
       return candidates.isEmpty ? null : candidates.first;
     } catch (e) {
-      print('Error fetching active event: $e');
+      debugPrint('Error fetching active event: $e');
       return null;
     }
   }
@@ -52,7 +53,7 @@ class EventChallengeRepository {
       return EventChallengeProgress.fromJson(
           doc.data() as Map<String, dynamic>);
     } catch (e) {
-      print('Error fetching event progress: $e');
+      debugPrint('Error fetching event progress: $e');
       return null;
     }
   }
@@ -78,7 +79,7 @@ class EventChallengeRepository {
       final snapshot = await _progressRef(userId).count().get();
       return snapshot.count ?? 0;
     } catch (e) {
-      print('Error counting completed events: $e');
+      debugPrint('Error counting completed events: $e');
       return 0;
     }
   }

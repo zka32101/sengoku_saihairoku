@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/currency_wallet.dart';
+import 'package:flutter/foundation.dart';
 
 /// ゴールド（ゲーム内通貨）残高を管理するリポジトリ
 class CurrencyRepository {
@@ -28,7 +29,7 @@ class CurrencyRepository {
       }
       return CurrencyWallet.fromFirestore(doc);
     } catch (e) {
-      print('Error getting wallet: $e');
+      debugPrint('Error getting wallet: $e');
       return CurrencyWallet.empty(userId);
     }
   }
@@ -87,7 +88,7 @@ class CurrencyRepository {
 
       return updated;
     } catch (e) {
-      print('Error applying currency delta: $e');
+      debugPrint('Error applying currency delta: $e');
       return getWallet(userId);
     }
   }

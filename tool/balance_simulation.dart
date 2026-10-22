@@ -12,6 +12,7 @@
 //
 // 注意：これは数値を自動調整するツールではない。CLAUDE.mdの方針通り、
 // バランス調整の判断材料の一つとして使うこと。
+// ignore_for_file: avoid_print
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';

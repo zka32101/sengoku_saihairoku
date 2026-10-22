@@ -46,7 +46,7 @@ class DailyLoginDialog extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: DailyLoginBonus.goldByDay.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 6),
+                separatorBuilder: (_, _) => const SizedBox(width: 6),
                 itemBuilder: (context, index) {
                   final day = index + 1;
                   final isToday =

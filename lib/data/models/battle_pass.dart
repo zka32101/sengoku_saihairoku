@@ -11,7 +11,7 @@ enum RewardType {
   cosmetic,  // コスメティック
   currency,  // ゲーム通貨
   special,   // 特別報酬
-  cosmetic_exclusive, // プレミアム限定コスメティック
+  cosmeticExclusive, // プレミアム限定コスメティック
 }
 
 /// バトルパスのティア定義
@@ -130,10 +130,14 @@ abstract class BattlePassProgressView {
 class BattlePassProgress implements BattlePassProgressView {
   final String userId;
   final String battlePassId;
+  @override
   final int currentTier;
+  @override
   final int currentXp; // 現在のティア内でのXP
   final int totalXp; // シーズン開始からの累積XP
+  @override
   final List<String> unlockedRewards; // 獲得済みの報酬ID
+  @override
   final bool hasPremium; // プレミアムトラックに加入しているか
   final DateTime createdAt;
   final DateTime updatedAt;

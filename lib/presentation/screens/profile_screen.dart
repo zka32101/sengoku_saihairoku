@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading user data: $e');
+      debugPrint('Error loading user data: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -221,7 +221,7 @@ class _LevelCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.purple.withOpacity(0.2),
+                    color: Colors.purple.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Text(
@@ -265,7 +265,7 @@ class _PrestigeCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Color(prestigeTier.color).withOpacity(0.3),
+                    color: Color(prestigeTier.color).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       color: Color(prestigeTier.color),
@@ -455,7 +455,7 @@ class _CosmeticBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: cosmetic.isEquipped
-            ? const Color(0xFF8B1A1A).withOpacity(0.3)
+            ? const Color(0xFF8B1A1A).withValues(alpha: 0.3)
             : Colors.grey[800],
         border: Border.all(
           color: cosmetic.isEquipped
@@ -546,7 +546,7 @@ class _ProgressionDetailsCard extends StatelessWidget {
   String _formatPlayTime(int seconds) {
     final hours = seconds ~/ 3600;
     final minutes = (seconds % 3600) ~/ 60;
-    return '${hours}時間 ${minutes}分';
+    return '$hours時間 $minutes分';
   }
 
   String _formatDateTime(DateTime dateTime) {

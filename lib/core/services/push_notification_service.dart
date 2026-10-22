@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/foundation.dart';
 
 /// バックグラウンド/終了時にFCMメッセージを受信した際のハンドラ。
 /// トップレベル関数である必要がある（Flutterの制約）。
@@ -80,7 +81,7 @@ class PushNotificationService {
             .set({'fcmToken': newToken}, SetOptions(merge: true));
       });
     } catch (e) {
-      print('Error registering FCM token: $e');
+      debugPrint('Error registering FCM token: $e');
     }
   }
 }

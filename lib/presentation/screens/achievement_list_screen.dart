@@ -22,7 +22,7 @@ class _AchievementListScreenState extends State<AchievementListScreen> {
   _SortBy _sortBy = _SortBy.name;
   
   List<Achievement> _allAchievements = [];
-  Map<String, bool> _unlockedStatus = {}; // achievementId -> isUnlocked
+  final Map<String, bool> _unlockedStatus = {}; // achievementId -> isUnlocked
 
   @override
   void initState() {

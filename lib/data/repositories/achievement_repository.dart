@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import '../models/achievement.dart';
+import 'package:flutter/foundation.dart';
 
 /// 実績データリポジトリ
 class AchievementRepository {
@@ -36,7 +37,7 @@ class AchievementRepository {
       
       _initialized = true;
     } catch (e) {
-      print('Error initializing achievements: $e');
+      debugPrint('Error initializing achievements: $e');
       _achievementsCache = {};
       _initialized = true;
     }
@@ -72,7 +73,7 @@ class AchievementRepository {
           .map((doc) => AchievementProgress.fromFirestore(doc))
           .toList();
     } catch (e) {
-      print('Error getting user achievements: $e');
+      debugPrint('Error getting user achievements: $e');
       return [];
     }
   }
@@ -93,7 +94,7 @@ class AchievementRepository {
       if (!doc.exists) return null;
       return AchievementProgress.fromFirestore(doc);
     } catch (e) {
-      print('Error getting achievement progress: $e');
+      debugPrint('Error getting achievement progress: $e');
       return null;
     }
   }
@@ -121,7 +122,7 @@ class AchievementRepository {
         'updatedAt': Timestamp.fromDate(now),
       });
     } catch (e) {
-      print('Error unlocking achievement: $e');
+      debugPrint('Error unlocking achievement: $e');
       rethrow;
     }
   }
@@ -134,8 +135,7 @@ class AchievementRepository {
   ) async {
     try {
       final now = DateTime.now();
-      final achievement = getAchievementById(achievementId);
-      
+
       // 進捗が 100% になったらアンロック
       final isUnlocked = progress >= 100;
       
@@ -154,7 +154,7 @@ class AchievementRepository {
         'updatedAt': Timestamp.fromDate(now),
       }, SetOptions(merge: true));
     } catch (e) {
-      print('Error updating achievement progress: $e');
+      debugPrint('Error updating achievement progress: $e');
       rethrow;
     }
   }
@@ -213,7 +213,7 @@ class AchievementRepository {
         lastUnlockedAt: lastUnlockedAt ?? DateTime.now(),
       );
     } catch (e) {
-      print('Error getting achievement stats: $e');
+      debugPrint('Error getting achievement stats: $e');
       rethrow;
     }
   }
@@ -239,7 +239,7 @@ class AchievementRepository {
         };
       }).toList();
     } catch (e) {
-      print('Error getting achievement history: $e');
+      debugPrint('Error getting achievement history: $e');
       return [];
     }
   }

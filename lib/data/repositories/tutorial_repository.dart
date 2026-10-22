@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import '../models/tutorial_content.dart';
+import 'package:flutter/foundation.dart';
 
 class TutorialRepository {
   static final TutorialRepository _instance = TutorialRepository._internal();
@@ -25,7 +26,7 @@ class TutorialRepository {
         );
       }
     } catch (e) {
-      print('Error loading tutorial data: $e');
+      debugPrint('Error loading tutorial data: $e');
     }
     return null;
   }
@@ -45,7 +46,7 @@ class TutorialRepository {
       }
       return result;
     } catch (e) {
-      print('Error loading all tutorial data: $e');
+      debugPrint('Error loading all tutorial data: $e');
       return {};
     }
   }
@@ -62,7 +63,7 @@ class TutorialRepository {
       }
       return tips;
     } catch (e) {
-      print('Error loading tips by category: $e');
+      debugPrint('Error loading tips by category: $e');
       return [];
     }
   }
@@ -81,7 +82,7 @@ class TutorialRepository {
       }
       return tips;
     } catch (e) {
-      print('Error loading tips by difficulty: $e');
+      debugPrint('Error loading tips by difficulty: $e');
       return [];
     }
   }
@@ -100,7 +101,7 @@ class TutorialRepository {
             .toList();
       }
     } catch (e) {
-      print('Error loading command help: $e');
+      debugPrint('Error loading command help: $e');
     }
     return [];
   }
@@ -131,7 +132,7 @@ class TutorialRepository {
             .toList();
       }
     } catch (e) {
-      print('Error loading tactical hints: $e');
+      debugPrint('Error loading tactical hints: $e');
     }
     return [];
   }

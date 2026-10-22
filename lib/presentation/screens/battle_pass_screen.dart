@@ -82,7 +82,7 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
         await NotificationService().cancelBattlePassExpiryReminder();
       }
     } catch (e) {
-      print('Error loading battle pass data: $e');
+      debugPrint('Error loading battle pass data: $e');
       setState(() => _loading = false);
     }
   }
@@ -188,8 +188,8 @@ class _SeasonHeader extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.blue.withOpacity(0.2),
-            Colors.cyan.withOpacity(0.2),
+            Colors.blue.withValues(alpha: 0.2),
+            Colors.cyan.withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -294,8 +294,8 @@ class _PremiumUpsellCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.purple.withOpacity(0.25),
-            Colors.deepPurple.withOpacity(0.15),
+            Colors.purple.withValues(alpha: 0.25),
+            Colors.deepPurple.withValues(alpha: 0.15),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -432,7 +432,7 @@ class _CurrentTierCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.purple.withOpacity(0.2),
+                      color: Colors.purple.withValues(alpha: 0.2),
                       border: Border.all(color: Colors.purple, width: 1),
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -548,7 +548,7 @@ class _TierRewardCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isUnlocked
-              ? const Color(0xFF1A2A1A).withOpacity(0.8)
+              ? const Color(0xFF1A2A1A).withValues(alpha: 0.8)
               : const Color(0xFF2A1A0A),
           border: Border.all(
             color: isUnlocked
@@ -566,8 +566,8 @@ class _TierRewardCard extends StatelessWidget {
               height: 50,
               decoration: BoxDecoration(
                 color: isCurrentTier
-                    ? Colors.cyan.withOpacity(0.2)
-                    : Colors.grey.withOpacity(0.2),
+                    ? Colors.cyan.withValues(alpha: 0.2)
+                    : Colors.grey.withValues(alpha: 0.2),
                 border: Border.all(
                   color: isCurrentTier ? Colors.cyan : Colors.grey[600]!,
                   width: isCurrentTier ? 2 : 1,
@@ -613,8 +613,8 @@ class _TierRewardCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: tier.track == BattlePassTrack.free
-                              ? Colors.green.withOpacity(0.2)
-                              : Colors.purple.withOpacity(0.2),
+                              ? Colors.green.withValues(alpha: 0.2)
+                              : Colors.purple.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(

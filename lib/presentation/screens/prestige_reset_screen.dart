@@ -46,7 +46,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading user data: $e');
+      debugPrint('Error loading user data: $e');
       setState(() => _isLoading = false);
     }
   }
@@ -88,7 +88,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
         Navigator.of(context).pop();
       }
     } catch (e) {
-      print('Error performing prestige: $e');
+      debugPrint('Error performing prestige: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('エラーが発生しました: $e')),
@@ -161,7 +161,6 @@ class _PrestigeInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tier = progression.prestigeRank;
-    final nextTierExists = tier != PrestigeTier.diamond;
 
     return Card(
       child: Padding(
@@ -175,7 +174,7 @@ class _PrestigeInfoCard extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Color(tier.color).withOpacity(0.3),
+                    color: Color(tier.color).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: Color(tier.color),
@@ -290,7 +289,7 @@ class _LockedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.red[900]?.withOpacity(0.3),
+      color: Colors.red[900]?.withValues(alpha: 0.3),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -338,7 +337,7 @@ class _PrestigeActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF8B1A1A).withOpacity(0.2),
+      color: const Color(0xFF8B1A1A).withValues(alpha: 0.2),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -529,7 +528,7 @@ class _PrestigeConfirmationDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.orange.withOpacity(0.2),
+              color: Colors.orange.withValues(alpha: 0.2),
               border: Border.all(color: Colors.orange, width: 1),
               borderRadius: BorderRadius.circular(8),
             ),

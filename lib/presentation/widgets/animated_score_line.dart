@@ -12,6 +12,7 @@ class AnimatedScoreLine extends StatefulWidget {
     this.label,
     this.score,
     this.maxScore, {
+    super.key,
     this.duration = const Duration(milliseconds: 1000),
     this.delayMillis = 0,
   });

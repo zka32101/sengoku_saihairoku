@@ -1,9 +1,7 @@
 import '../../data/models/achievement.dart';
-import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
-import '../../data/models/difficulty_mode.dart';
 import '../../data/repositories/achievement_repository.dart';
-import '../../core/services/firebase_service.dart';
+import 'package:flutter/foundation.dart';
 
 /// 実績獲得条件を確認し、達成したら自動的に解放するサービス
 class AchievementChecker {
@@ -323,7 +321,7 @@ class AchievementChecker {
       );
       return progress != null && progress.isUnlocked;
     } catch (e) {
-      print('Error checking achievement unlock status: $e');
+      debugPrint('Error checking achievement unlock status: $e');
       return false;
     }
   }

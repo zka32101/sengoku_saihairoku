@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import '../models/turn_efficiency.dart';
 import '../models/scenario_data.dart';
 import '../models/difficulty_mode.dart';
+import 'package:flutter/foundation.dart';
 
 /// ターンランク管理リポジトリ
 class TurnRankRepository {
   static final TurnRankRepository _instance = TurnRankRepository._internal();
-  Map<Scenario, Map<DifficultyMode, TurnRankingCriteria>> _criteria = {};
+  final Map<Scenario, Map<DifficultyMode, TurnRankingCriteria>> _criteria = {};
   bool _initialized = false;
 
   factory TurnRankRepository() {
@@ -43,9 +44,9 @@ class TurnRankRepository {
       }
 
       _initialized = true;
-      print('✓ TurnRankRepository initialized with ${_criteria.length} scenarios');
+      debugPrint('✓ TurnRankRepository initialized with ${_criteria.length} scenarios');
     } catch (e) {
-      print('Error initializing TurnRankRepository: $e');
+      debugPrint('Error initializing TurnRankRepository: $e');
       _initialized = false;
     }
   }

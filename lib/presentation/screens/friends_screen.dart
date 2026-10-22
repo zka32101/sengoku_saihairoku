@@ -304,8 +304,8 @@ class _MyCodeCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF8B1A1A).withOpacity(0.3),
-            const Color(0xFF3B1A1A).withOpacity(0.2),
+            const Color(0xFF8B1A1A).withValues(alpha: 0.3),
+            const Color(0xFF3B1A1A).withValues(alpha: 0.2),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -445,7 +445,7 @@ class _RankingRow extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isMe
-              ? const Color(0xFF8B1A1A).withOpacity(0.2)
+              ? const Color(0xFF8B1A1A).withValues(alpha: 0.2)
               : const Color(0xFF2A1A0A),
           border: isMe
               ? Border.all(color: const Color(0xFFFFD700), width: 1)

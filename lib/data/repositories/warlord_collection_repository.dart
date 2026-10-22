@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 /// 武将コレクション（図鑑）管理リポジトリ
 ///
@@ -30,7 +31,7 @@ class WarlordCollectionRepository {
       final data = doc.data() as Map<String, dynamic>;
       return Set<String>.from(data['unlocked'] as List? ?? []);
     } catch (e) {
-      print('Error getting unlocked warlords: $e');
+      debugPrint('Error getting unlocked warlords: $e');
       return {};
     }
   }

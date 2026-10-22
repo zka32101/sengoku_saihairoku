@@ -212,11 +212,11 @@ class _PlayTimeCard extends StatelessWidget {
     final minutes = d.inMinutes.remainder(60);
     final seconds = d.inSeconds.remainder(60);
     if (hours > 0) {
-      return '${hours}時間 ${minutes}分';
+      return '$hours時間 $minutes分';
     } else if (minutes > 0) {
-      return '${minutes}分 ${seconds}秒';
+      return '$minutes分 $seconds秒';
     } else {
-      return '${seconds}秒';
+      return '$seconds秒';
     }
   }
 

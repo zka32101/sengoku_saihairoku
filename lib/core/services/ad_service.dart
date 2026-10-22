@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_service.dart';
 import '../../data/repositories/ad_reward_repository.dart';
+import 'package:flutter/foundation.dart';
 
 /// リワード広告（動画視聴でゴールド獲得）を管理するサービス。
 ///
@@ -43,7 +44,7 @@ class AdService {
           _isLoading = false;
         },
         onAdFailedToLoad: (error) {
-          print('❌ Rewarded ad failed to load: $error');
+          debugPrint('❌ Rewarded ad failed to load: $error');
           _rewardedAd = null;
           _isLoading = false;
         },

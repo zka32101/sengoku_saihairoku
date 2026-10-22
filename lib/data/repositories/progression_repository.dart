@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_progression.dart';
+import 'package:flutter/foundation.dart';
 
 /// ユーザープログレッション管理リポジトリ
 class ProgressionRepository {
@@ -18,7 +19,7 @@ class ProgressionRepository {
   /// 初期化（Firestoreのセットアップ）
   Future<void> initialize() async {
     _firestore = FirebaseFirestore.instance;
-    print('✓ ProgressionRepository initialized');
+    debugPrint('✓ ProgressionRepository initialized');
   }
 
   /// ユーザープログレッションを取得
@@ -33,7 +34,7 @@ class ProgressionRepository {
 
       return UserProgression.fromJson(doc.data() as Map<String, dynamic>);
     } catch (e) {
-      print('Error getting user progression: $e');
+      debugPrint('Error getting user progression: $e');
       return null;
     }
   }
@@ -48,7 +49,7 @@ class ProgressionRepository {
     try {
       final doc =
           await _firestore.collection(_collection).doc(userId).get();
-      final currentData = doc.data() as Map<String, dynamic>? ?? {};
+      final currentData = doc.data() ?? {};
 
       final currentXp = currentData['experiencePoints'] as int? ?? 0;
       final currentLevel = currentData['currentLevel'] as int? ?? 1;
@@ -81,12 +82,12 @@ class ProgressionRepository {
 
       if (leveledUp) {
         await _applyLevelMilestones(userId, newLevel);
-        print('✓ Level up! User $userId reached level $newLevel');
+        debugPrint('✓ Level up! User $userId reached level $newLevel');
       }
 
-      print('✓ XP gain recorded: $xpGained XP for user $userId');
+      debugPrint('✓ XP gain recorded: $xpGained XP for user $userId');
     } catch (e) {
-      print('Error recording XP gain: $e');
+      debugPrint('Error recording XP gain: $e');
     }
   }
 
@@ -111,10 +112,10 @@ class ProgressionRepository {
           'unlockedAt': FieldValue.serverTimestamp(),
         });
 
-        print('✓ Milestone unlocked for user $userId: $reward');
+        debugPrint('✓ Milestone unlocked for user $userId: $reward');
       }
     } catch (e) {
-      print('Error applying level milestones: $e');
+      debugPrint('Error applying level milestones: $e');
     }
   }
 
@@ -123,7 +124,7 @@ class ProgressionRepository {
     try {
       final doc =
           await _firestore.collection(_collection).doc(userId).get();
-      final currentData = doc.data() as Map<String, dynamic>? ?? {};
+      final currentData = doc.data() ?? {};
 
       final currentResetCount = currentData['prestigeResetCount'] as int? ?? 0;
 
@@ -146,10 +147,10 @@ class ProgressionRepository {
         'prestigedAt': FieldValue.serverTimestamp(),
       });
 
-      print(
+      debugPrint(
           '✓ Prestige performed for user $userId (Reset #${currentResetCount + 1})');
     } catch (e) {
-      print('Error performing prestige: $e');
+      debugPrint('Error performing prestige: $e');
     }
   }
 
@@ -161,9 +162,9 @@ class ProgressionRepository {
         'lastUpdated': FieldValue.serverTimestamp(),
       });
 
-      print('✓ Cosmetic unlocked for user $userId: $cosmeticId');
+      debugPrint('✓ Cosmetic unlocked for user $userId: $cosmeticId');
     } catch (e) {
-      print('Error unlocking cosmetic: $e');
+      debugPrint('Error unlocking cosmetic: $e');
     }
   }
 
@@ -187,9 +188,9 @@ class ProgressionRepository {
 
       await _firestore.collection(_collection).doc(userId).update(update);
 
-      print('✓ Cosmetic equipped for user $userId');
+      debugPrint('✓ Cosmetic equipped for user $userId');
     } catch (e) {
-      print('Error equipping cosmetic: $e');
+      debugPrint('Error equipping cosmetic: $e');
     }
   }
 
@@ -209,10 +210,10 @@ class ProgressionRepository {
 
       return docs.docs
           .map((doc) =>
-              XpGainRecord.fromJson(doc.data() as Map<String, dynamic>))
+              XpGainRecord.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      print('Error getting XP history: $e');
+      debugPrint('Error getting XP history: $e');
       return [];
     }
   }
@@ -230,10 +231,10 @@ class ProgressionRepository {
           .get();
 
       return docs.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data())
           .toList();
     } catch (e) {
-      print('Error getting prestige history: $e');
+      debugPrint('Error getting prestige history: $e');
       return [];
     }
   }
@@ -251,10 +252,10 @@ class ProgressionRepository {
           .get();
 
       return docs.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data())
           .toList();
     } catch (e) {
-      print('Error getting milestone rewards: $e');
+      debugPrint('Error getting milestone rewards: $e');
       return [];
     }
   }
@@ -275,7 +276,7 @@ class ProgressionRepository {
         .collection(_collection)
         .doc(userId)
         .set(progression.toJson())
-        .catchError((e) => print('Error creating default progression: $e'));
+        .catchError((e) => debugPrint('Error creating default progression: $e'));
 
     return progression;
   }
@@ -294,9 +295,9 @@ class ProgressionRepository {
       await _deleteCollection(
           _firestore.collection(_collection).doc(userId).collection('milestones'));
 
-      print('✓ All progression data deleted for user $userId');
+      debugPrint('✓ All progression data deleted for user $userId');
     } catch (e) {
-      print('Error deleting progression data: $e');
+      debugPrint('Error deleting progression data: $e');
     }
   }
 

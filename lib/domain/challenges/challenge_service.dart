@@ -1,6 +1,4 @@
 import '../../data/models/daily_challenge.dart';
-import '../../data/models/scenario_data.dart';
-import '../../data/models/difficulty_mode.dart';
 import '../state/battle_state.dart';
 
 /// チャレンジ達成判定サービス

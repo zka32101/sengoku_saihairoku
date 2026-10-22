@@ -4,6 +4,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'firebase_service.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/repositories/currency_repository.dart';
+import 'package:flutter/foundation.dart';
 
 /// 購入フローの状態
 enum PurchaseState { idle, pending, success, error }
@@ -92,7 +93,7 @@ class PurchaseService {
     try {
       _available = await _iap.isAvailable();
       if (!_available) {
-        print('⚠️ In-app purchases not available on this device');
+        debugPrint('⚠️ In-app purchases not available on this device');
         return;
       }
 
@@ -106,15 +107,15 @@ class PurchaseService {
 
       final response = await _iap.queryProductDetails(_productIds);
       if (response.error != null) {
-        print('❌ Error querying products: ${response.error}');
+        debugPrint('❌ Error querying products: ${response.error}');
       }
       if (response.notFoundIDs.isNotEmpty) {
-        print('⚠️ Products not found in store: ${response.notFoundIDs}');
+        debugPrint('⚠️ Products not found in store: ${response.notFoundIDs}');
       }
       _products = response.productDetails;
-      print('✅ PurchaseService initialized (${_products.length} products)');
+      debugPrint('✅ PurchaseService initialized (${_products.length} products)');
     } catch (e) {
-      print('❌ Error initializing PurchaseService: $e');
+      debugPrint('❌ Error initializing PurchaseService: $e');
     }
   }
 

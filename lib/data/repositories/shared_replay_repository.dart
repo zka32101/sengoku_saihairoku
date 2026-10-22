@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/battle_replay.dart';
+import 'package:flutter/foundation.dart';
 
 /// リプレイ共有リポジトリ
 ///
@@ -55,7 +56,7 @@ class SharedReplayRepository {
       final data = doc.data() as Map<String, dynamic>;
       return BattleReplay.fromJson(data['replay'] as Map<String, dynamic>);
     } catch (e) {
-      print('Error fetching shared replay: $e');
+      debugPrint('Error fetching shared replay: $e');
       return null;
     }
   }
@@ -69,7 +70,7 @@ class SharedReplayRepository {
       final data = doc.data() as Map<String, dynamic>;
       return (data['likes'] as num?)?.toInt() ?? 0;
     } catch (e) {
-      print('Error fetching like count: $e');
+      debugPrint('Error fetching like count: $e');
       return 0;
     }
   }
@@ -80,7 +81,7 @@ class SharedReplayRepository {
     try {
       await docRef.update({'likes': FieldValue.increment(1)});
     } catch (e) {
-      print('Error liking replay: $e');
+      debugPrint('Error liking replay: $e');
     }
     return getLikeCount(code);
   }
@@ -124,7 +125,7 @@ class SharedReplayRepository {
         );
       }).toList();
     } catch (e) {
-      print('Error fetching replay comments: $e');
+      debugPrint('Error fetching replay comments: $e');
       return [];
     }
   }

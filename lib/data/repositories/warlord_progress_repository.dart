@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 /// 武将の育成（EXP・レベル・覚醒）を管理するリポジトリ。
 ///
@@ -43,7 +44,7 @@ class WarlordProgressRepository {
       final exp = data['exp'] as Map<String, dynamic>? ?? {};
       return exp.map((id, value) => MapEntry(id, (value as num).toInt()));
     } catch (e) {
-      print('Error getting warlord progress: $e');
+      debugPrint('Error getting warlord progress: $e');
       return {};
     }
   }
@@ -58,7 +59,7 @@ class WarlordProgressRepository {
       }
       await _progressRef(userId).set(updates, SetOptions(merge: true));
     } catch (e) {
-      print('Error adding warlord exp: $e');
+      debugPrint('Error adding warlord exp: $e');
     }
   }
 }

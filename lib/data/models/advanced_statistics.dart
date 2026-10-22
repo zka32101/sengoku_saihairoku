@@ -70,7 +70,7 @@ class DifficultyPerformance {
     required this.averageDuration,
   });
 
-  String get summary => '${victoryCount}勝 ${defeatCount}敗';
+  String get summary => '$victoryCount勝 $defeatCount敗';
 }
 
 /// 全体統計サマリー

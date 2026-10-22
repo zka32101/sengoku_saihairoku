@@ -182,7 +182,7 @@ class _OnboardingPageView extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: const Color(0xFF8B1A1A).withOpacity(0.2),
+              color: const Color(0xFF8B1A1A).withValues(alpha: 0.2),
               border: Border.all(color: const Color(0xFFFFD700), width: 2),
               shape: BoxShape.circle,
             ),

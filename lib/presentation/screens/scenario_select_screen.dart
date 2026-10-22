@@ -577,8 +577,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                         onTap: () {
                           setState(() => _selectedDifficulty = mode);
                         },
-                      ))
-                  .toList(),
+                      )),
               const SizedBox(height: 24),
               // Action Buttons
               Row(

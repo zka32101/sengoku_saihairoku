@@ -128,7 +128,7 @@ class ChallengeCard extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: _getDifficultyColor(challenge.difficulty)
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       border: Border.all(
                         color: _getDifficultyColor(challenge.difficulty),
                       ),

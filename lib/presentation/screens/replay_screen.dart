@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/models/battle_replay.dart';
-import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../data/repositories/replay_repository.dart';
 import '../../data/repositories/shared_replay_repository.dart';
@@ -650,12 +649,12 @@ class _ReplayListTile extends StatelessWidget {
         trailing: PopupMenuButton(
           itemBuilder: (ctx) => [
             PopupMenuItem(
-              child: const Text('共有'),
               onTap: onShare,
+              child: const Text('共有'),
             ),
             PopupMenuItem(
-              child: const Text('削除'),
               onTap: onDelete,
+              child: const Text('削除'),
             ),
           ],
         ),

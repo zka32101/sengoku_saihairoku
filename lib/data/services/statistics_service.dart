@@ -3,6 +3,7 @@ import '../models/battle_replay.dart';
 import '../models/scenario_data.dart';
 import '../models/difficulty_mode.dart';
 import '../repositories/replay_repository.dart';
+import 'package:flutter/foundation.dart';
 
 /// 統計分析サービス
 class StatisticsService {
@@ -76,7 +77,7 @@ class StatisticsService {
         performanceTrend: performanceTrend,
       );
     } catch (e) {
-      print('Error calculating advanced statistics: $e');
+      debugPrint('Error calculating advanced statistics: $e');
       return _createEmptySummary();
     }
   }

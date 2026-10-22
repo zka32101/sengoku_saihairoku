@@ -114,6 +114,17 @@ class BattlePass {
     'tiers': tiers.map((t) => t.toJson()).toList(),
     'maxTier': maxTier,
   };
+
+  /// プレミアムトラックに未加入のまま通過したティア数（＝購入すれば
+  /// 即座に受け取れるプレミアム報酬の数）。購入導線のFOMO訴求に使う。
+  int missedPremiumRewardCount(BattlePassProgressView progress) {
+    if (progress.hasPremium) return 0;
+    return tiers
+        .where((t) =>
+            t.track == BattlePassTrack.premium &&
+            t.tierNumber <= progress.currentTier)
+        .length;
+  }
 }
 
 /// `BattlePassProgress`と、進捗未取得時に使うプレースホルダーを

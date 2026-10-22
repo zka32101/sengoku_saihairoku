@@ -126,6 +126,8 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
                   product: _purchaseService.battlePassPremiumProduct,
                   isStoreAvailable: _purchaseService.isAvailable,
                   isPurchasing: _purchaseState == PurchaseState.pending,
+                  missedRewardCount:
+                      _currentBattlePass!.missedPremiumRewardCount(progress),
                   onBuy: () => _purchaseService.buyPremiumBattlePass(),
                   onRestore: () => _purchaseService.restorePurchases(),
                 ),
@@ -274,6 +276,7 @@ class _PremiumUpsellCard extends StatelessWidget {
   final ProductDetails? product;
   final bool isStoreAvailable;
   final bool isPurchasing;
+  final int missedRewardCount;
   final VoidCallback onBuy;
   final VoidCallback onRestore;
 
@@ -281,6 +284,7 @@ class _PremiumUpsellCard extends StatelessWidget {
     required this.product,
     required this.isStoreAvailable,
     required this.isPurchasing,
+    required this.missedRewardCount,
     required this.onBuy,
     required this.onRestore,
   });
@@ -328,6 +332,33 @@ class _PremiumUpsellCard extends StatelessWidget {
             '以降のティアアップでも継続してプレミアム報酬を受け取れます。',
             style: TextStyle(fontSize: 12, color: Colors.grey),
           ),
+          if (missedRewardCount > 0) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.purple.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.warning_amber_rounded,
+                      color: Colors.amber, size: 18),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'すでに$missedRewardCount件のプレミアム報酬を受け取り逃しています！',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
@@ -539,6 +570,10 @@ class _TierRewardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final canAccess = _canAccess;
+    // プレミアム未加入でも、既に通過したティアはunlockedRewardsに
+    // 記録される（gainXp参照）が、実際に報酬が付与されるのは
+    // canAccessがtrueの場合のみ。「受け取り済み」表示は両方を満たす時だけ。
+    final isClaimed = isUnlocked && canAccess;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -547,11 +582,11 @@ class _TierRewardCard extends StatelessWidget {
         child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isUnlocked
+          color: isClaimed
               ? const Color(0xFF1A2A1A).withValues(alpha: 0.8)
               : const Color(0xFF2A1A0A),
           border: Border.all(
-            color: isUnlocked
+            color: isClaimed
                 ? Colors.green
                 : (canAccess ? Colors.grey[600]! : Colors.grey[700]!),
             width: 1,
@@ -600,7 +635,7 @@ class _TierRewardCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: isUnlocked
+                          color: isClaimed
                               ? Colors.cyan
                               : const Color(0xFFE8D5B0),
                         ),
@@ -648,7 +683,7 @@ class _TierRewardCard extends StatelessWidget {
             ),
 
             // Status Icon
-            if (isUnlocked)
+            if (isClaimed)
               const Icon(
                 Icons.check_circle,
                 color: Colors.green,

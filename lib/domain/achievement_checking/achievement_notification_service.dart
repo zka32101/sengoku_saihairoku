@@ -179,6 +179,11 @@ class _AchievementNotificationWidgetState
                       const Color(0xFF2A1A0A),
                     ],
                   ),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/panel_frame.png'),
+                    fit: BoxFit.fill,
+                    opacity: 0.3,
+                  ),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: const Color(0xFFFFD700),

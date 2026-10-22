@@ -83,6 +83,7 @@ class ScenarioSelectScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final s = _scenarios[index];
               return _ScenarioCard(
+                thumbnailAsset: s.scenario.thumbnailAsset,
                 name: s.name,
                 year: s.year,
                 difficulty: s.difficulty,
@@ -100,6 +101,7 @@ class ScenarioSelectScreen extends StatelessWidget {
 }
 
 class _ScenarioCard extends StatelessWidget {
+  final String thumbnailAsset;
   final String name;
   final int year;
   final int difficulty;
@@ -109,6 +111,7 @@ class _ScenarioCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _ScenarioCard({
+    required this.thumbnailAsset,
     required this.name,
     required this.year,
     required this.difficulty,
@@ -121,10 +124,35 @@ class _ScenarioCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: isUnlocked ? onTap : null,
         borderRadius: BorderRadius.circular(8),
-        child: Padding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              child: isUnlocked
+                  ? Image.asset(
+                      thumbnailAsset,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    )
+                  : ColorFiltered(
+                      colorFilter: const ColorFilter.matrix(<double>[
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0.2126, 0.7152, 0.0722, 0, 0,
+                        0, 0, 0, 1, 0,
+                      ]),
+                      child: Image.asset(
+                        thumbnailAsset,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+            Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,6 +215,8 @@ class _ScenarioCard extends StatelessWidget {
               ],
             ],
           ),
+            ),
+          ],
         ),
       ),
     );

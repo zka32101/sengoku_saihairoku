@@ -43,4 +43,40 @@ class Warlord {
       };
 
   int get totalStat => leadership + valor + intelligence;
+
+  static const _portraitedIds = {
+    'oda_nobunaga',
+    'toyotomi_hideyoshi',
+    'tokugawa_ieyasu',
+    'takeda_shingen',
+    'uesugi_kenshin',
+    'date_masamune',
+    'mouri_motonari',
+    'shimazu_yoshihiro',
+    'akechi_mitsuhide',
+    'sanada_yukimura',
+    'hojo_ujiyasu',
+    'chosokabe_motochika',
+  };
+
+  /// 武将図鑑カードに表示するポートレート画像のアセットパス。
+  /// 主要12武将は専用イラスト、それ以外は統率・武勇・知略のうち
+  /// 最も高いステータスに応じた汎用イラスト（_archetypeForと同じ基準）を使う。
+  String get portraitAsset {
+    if (_portraitedIds.contains(id)) {
+      return 'assets/images/warlords/$id.png';
+    }
+    final stats = {
+      'leadership': leadership,
+      'valor': valor,
+      'intelligence': intelligence,
+    };
+    final topStat = stats.entries.reduce((a, b) => a.value >= b.value ? a : b).key;
+    final archetypeFile = switch (topStat) {
+      'valor' => 'archetype_valor',
+      'intelligence' => 'archetype_strategist',
+      _ => 'archetype_leadership',
+    };
+    return 'assets/images/warlords/$archetypeFile.png';
+  }
 }

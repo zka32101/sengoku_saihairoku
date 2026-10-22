@@ -102,6 +102,16 @@ class _WarlordCollectionScreenState extends State<WarlordCollectionScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                warlord.portraitAsset,
+                height: 140,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 12),
             Text(warlord.faction),
             const SizedBox(height: 4),
             Text(
@@ -400,11 +410,21 @@ class _WarlordCard extends StatelessWidget {
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                unlocked ? Icons.person : Icons.person_outline,
-                size: 36,
-                color: unlocked ? const Color(0xFFFFD700) : Colors.grey[600],
-              ),
+              unlocked
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Image.asset(
+                        warlord.portraitAsset,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : Icon(
+                      Icons.person_outline,
+                      size: 36,
+                      color: Colors.grey[600],
+                    ),
               const SizedBox(height: 8),
               Text(
                 unlocked ? warlord.name : '???',

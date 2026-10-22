@@ -378,5 +378,145 @@
   "@homeBattlePassMissedRewards": {
     "placeholders": { "count": { "type": "int" } }
   },
-  "homeBattlePassButton": "バトルパスを見る"
+  "homeBattlePassButton": "バトルパスを見る",
+  "resultTitle": "戦闘結果",
+  "resultVictory": "勝利！",
+  "resultDefeat": "敗北",
+  "resultVictorySubtitle": "見事な采配であった",
+  "resultDefeatSubtitle": "次は必ず雪辱を晴らせ",
+  "resultTotalScoreLabel": "総スコア",
+  "resultScorePoints": "{score}点",
+  "@resultScorePoints": {
+    "placeholders": { "score": { "type": "String" } }
+  },
+  "resultScoreVictory": "勝敗スコア",
+  "resultScoreEfficiency": "効率スコア",
+  "resultScoreCommand": "采配スコア",
+  "resultScoreTurningPoint": "TP ボーナス",
+  "resultScoreHistory": "歴史ボーナス",
+  "resultTurningPointTitle": "ターニングポイント",
+  "resultTpFallback": "TP{number}",
+  "@resultTpFallback": {
+    "placeholders": { "number": { "type": "int" } }
+  },
+  "resultViewHistoryButton": "歴史分析を見る",
+  "resultViewRankingButton": "ランキングを見る",
+  "resultShareButton": "結果をシェア",
+  "resultHomeButton": "ホームへ戻る",
+  "resultShareText": "戦国采配録『{scenario}』で{result}！\nスコア: {score} pts / ターニングポイント {tp}/{total}\n#戦国采配録",
+  "@resultShareText": {
+    "placeholders": {
+      "scenario": { "type": "String" },
+      "result": { "type": "String" },
+      "score": { "type": "int" },
+      "tp": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "resultShareVictory": "勝利",
+  "resultShareDefeat": "敗北",
+  "resultFriendChallengeSuccess": "{friend}への挑戦、成功！",
+  "@resultFriendChallengeSuccess": {
+    "placeholders": { "friend": { "type": "String" } }
+  },
+  "resultFriendChallengeFailure": "{friend}への挑戦、届かず",
+  "@resultFriendChallengeFailure": {
+    "placeholders": { "friend": { "type": "String" } }
+  },
+  "resultFriendChallengeTarget": "目標スコア: {score}点",
+  "@resultFriendChallengeTarget": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "resultChallengeCompletedTitle": "本日のチャレンジ達成！",
+  "resultChallengeCompletedNote": "報酬を受け取るにはホーム画面から獲得してください",
+  "resultXpGainTitle": "経験値獲得",
+  "resultXpGainedLabel": "獲得XP:",
+  "resultXpBoostLoading": "読み込み中…",
+  "resultXpBoostButton": "広告を見てXPを2倍にする",
+  "resultLevelUpTitle": "レベルアップ！",
+  "resultLevelUpSubtitle": "レベル {level} に到達しました",
+  "@resultLevelUpSubtitle": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "resultBattlePassTierUpTitle": "バトルパス ティアアップ！",
+  "resultBattlePassTierUpSubtitle": "ティア {tier} に到達しました",
+  "@resultBattlePassTierUpSubtitle": {
+    "placeholders": { "tier": { "type": "int" } }
+  },
+  "resultCosmeticUnlockTitle": "コスメティック解放！",
+  "resultTpOdigahara1": "敵到着前に奇襲",
+  "resultTpOdigahara2": "嵐の中での戦闘",
+  "resultTpOdigahara3": "敵将兵力低下",
+  "resultTpOdigahara4": "敵将討死",
+  "resultTpNagashino1": "初期陣形を防御に設定",
+  "resultTpNagashino2": "敵騎馬隊の突撃を耐える",
+  "resultTpNagashino3": "一斉反撃",
+  "resultTpNagashino4": "敵将討死",
+  "resultTpHonnoJi1": "敵の包囲を突破",
+  "resultTpHonnoJi2": "援軍到着まで生存",
+  "resultTpHonnoJi3": "援軍到着後の反撃",
+  "resultTpHonnoJi4": "敵総大将討死",
+  "resultTpSekigahara1": "序盤は慎重に",
+  "resultTpSekigahara2": "味方のモラル維持",
+  "resultTpSekigahara3": "側面を奇襲",
+  "resultTpSekigahara4": "敵将討死",
+  "resultTpSekigahara5": "豊臣武将生存",
+  "resultTpKawanakajima1": "夜明けの奇襲に備える",
+  "resultTpKawanakajima2": "別働隊到着まで凌ぐ",
+  "resultTpKawanakajima3": "挟撃を成功させる",
+  "resultTpKawanakajima4": "敵将討死",
+  "resultTpItsukushima1": "暴風雨に乗じた奇襲",
+  "resultTpItsukushima2": "宮尾城を死守",
+  "resultTpItsukushima3": "退路を断ち包囲",
+  "resultTpItsukushima4": "敵将討死",
+  "scenarioSelectTitle": "シナリオを選ぶ",
+  "scenarioSelectHelpTooltip": "ヘルプ",
+  "scenarioYearSuffix": "{year}年",
+  "@scenarioYearSuffix": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "scenarioSettingsTitle": "シナリオ設定",
+  "scenarioPerspectiveTitle": "視点を選ぶ",
+  "scenarioWarlordSelectTitle": "出陣武将を選ぶ（任意・最大2名）",
+  "scenarioWarlordSelectHint": "統率ステータスに応じて自軍全体の兵力が上昇します。2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます",
+  "scenarioWarlordAwakenedTag": "覚醒",
+  "scenarioWarlordChipLabel": "{name} Lv.{level}{awakened} (統率{leadership})",
+  "@scenarioWarlordChipLabel": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "level": { "type": "int" },
+      "awakened": { "type": "String" },
+      "leadership": { "type": "int" }
+    }
+  },
+  "scenarioCompatibilityLabel": "相性倍率: ×{multiplier}{note}",
+  "@scenarioCompatibilityLabel": {
+    "placeholders": {
+      "multiplier": { "type": "String" },
+      "note": { "type": "String" }
+    }
+  },
+  "scenarioCompatibilityPositive": "（好相性）",
+  "scenarioCompatibilityNegative": "（不協和）",
+  "scenarioDifficultyTitle": "難易度を選ぶ",
+  "scenarioLoadingText": "シナリオを読み込み中...",
+  "scenarioLoadErrorText": "シナリオの読み込みに失敗しました",
+  "scenarioNameOdigahara": "桶狭間の戦",
+  "scenarioDescOdigahara": "3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ",
+  "scenarioPlayTimeOdigahara": "3〜5分",
+  "scenarioNameNagashino": "長篠の戦",
+  "scenarioDescNagashino": "防衛陣形で武田騎馬隊を迎え撃て",
+  "scenarioPlayTimeNagashino": "4〜6分",
+  "scenarioNameHonnoji": "本能寺の変",
+  "scenarioDescHonnoji": "500 vs 13,000 — 絶望的状況からの逆転",
+  "scenarioPlayTimeHonnoji": "5〜7分",
+  "scenarioNameSekigahara": "関ヶ原の戦",
+  "scenarioDescSekigahara": "天下分け目 — 複雑な戦局を制せよ",
+  "scenarioPlayTimeSekigahara": "6〜8分",
+  "scenarioNameKawanakajima": "川中島の戦",
+  "scenarioDescKawanakajima": "夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ",
+  "scenarioPlayTimeKawanakajima": "4〜6分",
+  "scenarioNameItsukushima": "厳島の戦",
+  "scenarioDescItsukushima": "4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ",
+  "scenarioPlayTimeItsukushima": "4〜5分"
 }

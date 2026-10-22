@@ -826,4 +826,317 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get homeBattlePassButton => 'バトルパスを見る';
+
+  @override
+  String get resultTitle => '戦闘結果';
+
+  @override
+  String get resultVictory => '勝利！';
+
+  @override
+  String get resultDefeat => '敗北';
+
+  @override
+  String get resultVictorySubtitle => '見事な采配であった';
+
+  @override
+  String get resultDefeatSubtitle => '次は必ず雪辱を晴らせ';
+
+  @override
+  String get resultTotalScoreLabel => '総スコア';
+
+  @override
+  String resultScorePoints(String score) {
+    return '$score点';
+  }
+
+  @override
+  String get resultScoreVictory => '勝敗スコア';
+
+  @override
+  String get resultScoreEfficiency => '効率スコア';
+
+  @override
+  String get resultScoreCommand => '采配スコア';
+
+  @override
+  String get resultScoreTurningPoint => 'TP ボーナス';
+
+  @override
+  String get resultScoreHistory => '歴史ボーナス';
+
+  @override
+  String get resultTurningPointTitle => 'ターニングポイント';
+
+  @override
+  String resultTpFallback(int number) {
+    return 'TP$number';
+  }
+
+  @override
+  String get resultViewHistoryButton => '歴史分析を見る';
+
+  @override
+  String get resultViewRankingButton => 'ランキングを見る';
+
+  @override
+  String get resultShareButton => '結果をシェア';
+
+  @override
+  String get resultHomeButton => 'ホームへ戻る';
+
+  @override
+  String resultShareText(
+    String scenario,
+    String result,
+    int score,
+    int tp,
+    int total,
+  ) {
+    return '戦国采配録『$scenario』で$result！\nスコア: $score pts / ターニングポイント $tp/$total\n#戦国采配録';
+  }
+
+  @override
+  String get resultShareVictory => '勝利';
+
+  @override
+  String get resultShareDefeat => '敗北';
+
+  @override
+  String resultFriendChallengeSuccess(String friend) {
+    return '$friendへの挑戦、成功！';
+  }
+
+  @override
+  String resultFriendChallengeFailure(String friend) {
+    return '$friendへの挑戦、届かず';
+  }
+
+  @override
+  String resultFriendChallengeTarget(int score) {
+    return '目標スコア: $score点';
+  }
+
+  @override
+  String get resultChallengeCompletedTitle => '本日のチャレンジ達成！';
+
+  @override
+  String get resultChallengeCompletedNote => '報酬を受け取るにはホーム画面から獲得してください';
+
+  @override
+  String get resultXpGainTitle => '経験値獲得';
+
+  @override
+  String get resultXpGainedLabel => '獲得XP:';
+
+  @override
+  String get resultXpBoostLoading => '読み込み中…';
+
+  @override
+  String get resultXpBoostButton => '広告を見てXPを2倍にする';
+
+  @override
+  String get resultLevelUpTitle => 'レベルアップ！';
+
+  @override
+  String resultLevelUpSubtitle(int level) {
+    return 'レベル $level に到達しました';
+  }
+
+  @override
+  String get resultBattlePassTierUpTitle => 'バトルパス ティアアップ！';
+
+  @override
+  String resultBattlePassTierUpSubtitle(int tier) {
+    return 'ティア $tier に到達しました';
+  }
+
+  @override
+  String get resultCosmeticUnlockTitle => 'コスメティック解放！';
+
+  @override
+  String get resultTpOdigahara1 => '敵到着前に奇襲';
+
+  @override
+  String get resultTpOdigahara2 => '嵐の中での戦闘';
+
+  @override
+  String get resultTpOdigahara3 => '敵将兵力低下';
+
+  @override
+  String get resultTpOdigahara4 => '敵将討死';
+
+  @override
+  String get resultTpNagashino1 => '初期陣形を防御に設定';
+
+  @override
+  String get resultTpNagashino2 => '敵騎馬隊の突撃を耐える';
+
+  @override
+  String get resultTpNagashino3 => '一斉反撃';
+
+  @override
+  String get resultTpNagashino4 => '敵将討死';
+
+  @override
+  String get resultTpHonnoJi1 => '敵の包囲を突破';
+
+  @override
+  String get resultTpHonnoJi2 => '援軍到着まで生存';
+
+  @override
+  String get resultTpHonnoJi3 => '援軍到着後の反撃';
+
+  @override
+  String get resultTpHonnoJi4 => '敵総大将討死';
+
+  @override
+  String get resultTpSekigahara1 => '序盤は慎重に';
+
+  @override
+  String get resultTpSekigahara2 => '味方のモラル維持';
+
+  @override
+  String get resultTpSekigahara3 => '側面を奇襲';
+
+  @override
+  String get resultTpSekigahara4 => '敵将討死';
+
+  @override
+  String get resultTpSekigahara5 => '豊臣武将生存';
+
+  @override
+  String get resultTpKawanakajima1 => '夜明けの奇襲に備える';
+
+  @override
+  String get resultTpKawanakajima2 => '別働隊到着まで凌ぐ';
+
+  @override
+  String get resultTpKawanakajima3 => '挟撃を成功させる';
+
+  @override
+  String get resultTpKawanakajima4 => '敵将討死';
+
+  @override
+  String get resultTpItsukushima1 => '暴風雨に乗じた奇襲';
+
+  @override
+  String get resultTpItsukushima2 => '宮尾城を死守';
+
+  @override
+  String get resultTpItsukushima3 => '退路を断ち包囲';
+
+  @override
+  String get resultTpItsukushima4 => '敵将討死';
+
+  @override
+  String get scenarioSelectTitle => 'シナリオを選ぶ';
+
+  @override
+  String get scenarioSelectHelpTooltip => 'ヘルプ';
+
+  @override
+  String scenarioYearSuffix(int year) {
+    return '$year年';
+  }
+
+  @override
+  String get scenarioSettingsTitle => 'シナリオ設定';
+
+  @override
+  String get scenarioPerspectiveTitle => '視点を選ぶ';
+
+  @override
+  String get scenarioWarlordSelectTitle => '出陣武将を選ぶ（任意・最大2名）';
+
+  @override
+  String get scenarioWarlordSelectHint =>
+      '統率ステータスに応じて自軍全体の兵力が上昇します。2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます';
+
+  @override
+  String get scenarioWarlordAwakenedTag => '覚醒';
+
+  @override
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  ) {
+    return '$name Lv.$level$awakened (統率$leadership)';
+  }
+
+  @override
+  String scenarioCompatibilityLabel(String multiplier, String note) {
+    return '相性倍率: ×$multiplier$note';
+  }
+
+  @override
+  String get scenarioCompatibilityPositive => '（好相性）';
+
+  @override
+  String get scenarioCompatibilityNegative => '（不協和）';
+
+  @override
+  String get scenarioDifficultyTitle => '難易度を選ぶ';
+
+  @override
+  String get scenarioLoadingText => 'シナリオを読み込み中...';
+
+  @override
+  String get scenarioLoadErrorText => 'シナリオの読み込みに失敗しました';
+
+  @override
+  String get scenarioNameOdigahara => '桶狭間の戦';
+
+  @override
+  String get scenarioDescOdigahara => '3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ';
+
+  @override
+  String get scenarioPlayTimeOdigahara => '3〜5分';
+
+  @override
+  String get scenarioNameNagashino => '長篠の戦';
+
+  @override
+  String get scenarioDescNagashino => '防衛陣形で武田騎馬隊を迎え撃て';
+
+  @override
+  String get scenarioPlayTimeNagashino => '4〜6分';
+
+  @override
+  String get scenarioNameHonnoji => '本能寺の変';
+
+  @override
+  String get scenarioDescHonnoji => '500 vs 13,000 — 絶望的状況からの逆転';
+
+  @override
+  String get scenarioPlayTimeHonnoji => '5〜7分';
+
+  @override
+  String get scenarioNameSekigahara => '関ヶ原の戦';
+
+  @override
+  String get scenarioDescSekigahara => '天下分け目 — 複雑な戦局を制せよ';
+
+  @override
+  String get scenarioPlayTimeSekigahara => '6〜8分';
+
+  @override
+  String get scenarioNameKawanakajima => '川中島の戦';
+
+  @override
+  String get scenarioDescKawanakajima => '夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ';
+
+  @override
+  String get scenarioPlayTimeKawanakajima => '4〜6分';
+
+  @override
+  String get scenarioNameItsukushima => '厳島の戦';
+
+  @override
+  String get scenarioDescItsukushima => '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ';
+
+  @override
+  String get scenarioPlayTimeItsukushima => '4〜5分';
 }

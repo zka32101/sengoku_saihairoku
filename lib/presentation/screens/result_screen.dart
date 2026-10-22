@@ -25,6 +25,7 @@ import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../domain/battle_pass/battle_pass_notification_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 import '../widgets/animated_score_line.dart';
 import '../widgets/turn_rank_badge.dart';
@@ -519,6 +520,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final data = widget.args.data;
 
     // ターンランクを計算
@@ -536,7 +538,7 @@ class _ResultScreenState extends State<ResultScreen> {
         : null;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('戦闘結果')),
+      appBar: AppBar(title: Text(l10n.resultTitle)),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(
@@ -544,24 +546,24 @@ class _ResultScreenState extends State<ResultScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _ResultHeader(won: data.won),
+              _ResultHeader(won: data.won, l10n: l10n),
               const SizedBox(height: 24),
               if (turnRankResult != null) ...[
                 TurnRankPanel(rankResult: turnRankResult),
                 const SizedBox(height: 16),
               ],
               if (_leveledUp && _newLevel != null)
-                _LevelUpBanner(newLevel: _newLevel!)
+                _LevelUpBanner(newLevel: _newLevel!, l10n: l10n)
               else
                 const SizedBox.shrink(),
               if (_leveledUp) const SizedBox(height: 16),
               if (_battlePassTierUp && _newBattlePassTier != null)
-                _BattlePassTierUpBanner(newTier: _newBattlePassTier!)
+                _BattlePassTierUpBanner(newTier: _newBattlePassTier!, l10n: l10n)
               else
                 const SizedBox.shrink(),
               if (_battlePassTierUp) const SizedBox(height: 16),
               if (_cosmeticUnlocked && _unlockedCosmetic != null)
-                _CosmeticUnlockBanner(cosmetic: _unlockedCosmetic!)
+                _CosmeticUnlockBanner(cosmetic: _unlockedCosmetic!, l10n: l10n)
               else
                 const SizedBox.shrink(),
               if (_cosmeticUnlocked) const SizedBox(height: 16),
@@ -571,12 +573,13 @@ class _ResultScreenState extends State<ResultScreen> {
                   boosted: _xpBoosted,
                   boosting: _xpBoosting,
                   onBoost: _boostXpWithAd,
+                  l10n: l10n,
                 )
               else
                 const SizedBox.shrink(),
               if (_xpGained > 0) const SizedBox(height: 16),
               if (_challengeCompleted)
-                _ChallengeCompletionBanner()
+                _ChallengeCompletionBanner(l10n: l10n)
               else
                 const SizedBox.shrink(),
               if (_challengeCompleted) const SizedBox(height: 16),
@@ -585,18 +588,20 @@ class _ResultScreenState extends State<ResultScreen> {
                   friendLabel: _friendChallengeResult!.friendLabel,
                   targetScore: _friendChallengeResult!.targetScore,
                   beaten: _friendChallengeBeaten,
+                  l10n: l10n,
                 )
               else
                 const SizedBox.shrink(),
               if (_friendChallengeResult != null) const SizedBox(height: 16),
-              _ScoreCard(breakdown: data.scoreBreakdown),
+              _ScoreCard(breakdown: data.scoreBreakdown, l10n: l10n),
               const SizedBox(height: 16),
               _TurningPointCard(
                 achievements: data.tpAchievements,
                 scenario: widget.args.scenario,
+                l10n: l10n,
               ),
               const SizedBox(height: 24),
-              _ActionButtons(args: widget.args),
+              _ActionButtons(args: widget.args, l10n: l10n),
             ],
           ),
         ),
@@ -607,8 +612,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
 class _ResultHeader extends StatelessWidget {
   final bool won;
+  final AppLocalizations l10n;
 
-  const _ResultHeader({required this.won});
+  const _ResultHeader({required this.won, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -627,7 +633,7 @@ class _ResultHeader extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            won ? '勝利！' : '敗北',
+            won ? l10n.resultVictory : l10n.resultDefeat,
             style: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.bold,
@@ -637,7 +643,7 @@ class _ResultHeader extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            won ? '見事な采配であった' : '次は必ず雪辱を晴らせ',
+            won ? l10n.resultVictorySubtitle : l10n.resultDefeatSubtitle,
             style: const TextStyle(color: Colors.grey),
           ),
         ],
@@ -648,8 +654,9 @@ class _ResultHeader extends StatelessWidget {
 
 class _ScoreCard extends StatelessWidget {
   final ScoreBreakdownResult breakdown;
+  final AppLocalizations l10n;
 
-  const _ScoreCard({required this.breakdown});
+  const _ScoreCard({required this.breakdown, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -662,19 +669,19 @@ class _ScoreCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '総スコア',
-                  style: TextStyle(
+                Text(
+                  l10n.resultTotalScoreLabel,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
                   ),
                 ),
                 Text(
-                  '${breakdown.total.toString().replaceAllMapped(
+                  l10n.resultScorePoints(breakdown.total.toString().replaceAllMapped(
                     RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                     (m) => '${m[1]},',
-                  )}点',
+                  )),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -684,15 +691,15 @@ class _ScoreCard extends StatelessWidget {
               ],
             ),
             const Divider(color: Color(0xFF8B6914)),
-            AnimatedScoreLine('勝敗スコア', breakdown.victoryScore, 40000,
+            AnimatedScoreLine(l10n.resultScoreVictory, breakdown.victoryScore, 40000,
                 delayMillis: 100),
-            AnimatedScoreLine('効率スコア', breakdown.efficiencyScore, 20000,
+            AnimatedScoreLine(l10n.resultScoreEfficiency, breakdown.efficiencyScore, 20000,
                 delayMillis: 200),
-            AnimatedScoreLine('采配スコア', breakdown.commandScore, 15000,
+            AnimatedScoreLine(l10n.resultScoreCommand, breakdown.commandScore, 15000,
                 delayMillis: 300),
-            AnimatedScoreLine('TP ボーナス', breakdown.turningPointScore, 15000,
+            AnimatedScoreLine(l10n.resultScoreTurningPoint, breakdown.turningPointScore, 15000,
                 delayMillis: 400),
-            AnimatedScoreLine('歴史ボーナス', breakdown.historyBonus, 10000,
+            AnimatedScoreLine(l10n.resultScoreHistory, breakdown.historyBonus, 10000,
                 delayMillis: 500),
           ],
         ),
@@ -704,24 +711,65 @@ class _ScoreCard extends StatelessWidget {
 class _TurningPointCard extends StatelessWidget {
   final List<bool> achievements;
   final Scenario scenario;
+  final AppLocalizations l10n;
 
   const _TurningPointCard({
     required this.achievements,
     required this.scenario,
+    required this.l10n,
   });
 
-  static const _tpNames = {
-    Scenario.odigahara: ['敵到着前に奇襲', '嵐の中での戦闘', '敵将兵力低下', '敵将討死'],
-    Scenario.nagashino: ['初期陣形を防御に設定', '敵騎馬隊の突撃を耐える', '一斉反撃', '敵将討死'],
-    Scenario.honnoJi: ['敵の包囲を突破', '援軍到着まで生存', '援軍到着後の反撃', '敵総大将討死'],
-    Scenario.sekigahara: ['序盤は慎重に', '味方のモラル維持', '側面を奇襲', '敵将討死', '豊臣武将生存'],
-    Scenario.kawanakajima: ['夜明けの奇襲に備える', '別働隊到着まで凌ぐ', '挟撃を成功させる', '敵将討死'],
-    Scenario.itsukushima: ['暴風雨に乗じた奇襲', '宮尾城を死守', '退路を断ち包囲', '敵将討死'],
-  };
+  List<String> _tpNamesFor(Scenario scenario) {
+    switch (scenario) {
+      case Scenario.odigahara:
+        return [
+          l10n.resultTpOdigahara1,
+          l10n.resultTpOdigahara2,
+          l10n.resultTpOdigahara3,
+          l10n.resultTpOdigahara4,
+        ];
+      case Scenario.nagashino:
+        return [
+          l10n.resultTpNagashino1,
+          l10n.resultTpNagashino2,
+          l10n.resultTpNagashino3,
+          l10n.resultTpNagashino4,
+        ];
+      case Scenario.honnoJi:
+        return [
+          l10n.resultTpHonnoJi1,
+          l10n.resultTpHonnoJi2,
+          l10n.resultTpHonnoJi3,
+          l10n.resultTpHonnoJi4,
+        ];
+      case Scenario.sekigahara:
+        return [
+          l10n.resultTpSekigahara1,
+          l10n.resultTpSekigahara2,
+          l10n.resultTpSekigahara3,
+          l10n.resultTpSekigahara4,
+          l10n.resultTpSekigahara5,
+        ];
+      case Scenario.kawanakajima:
+        return [
+          l10n.resultTpKawanakajima1,
+          l10n.resultTpKawanakajima2,
+          l10n.resultTpKawanakajima3,
+          l10n.resultTpKawanakajima4,
+        ];
+      case Scenario.itsukushima:
+        return [
+          l10n.resultTpItsukushima1,
+          l10n.resultTpItsukushima2,
+          l10n.resultTpItsukushima3,
+          l10n.resultTpItsukushima4,
+        ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final names = _tpNames[scenario] ?? [];
+    final names = _tpNamesFor(scenario);
 
     return Card(
       child: Padding(
@@ -729,9 +777,9 @@ class _TurningPointCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'ターニングポイント',
-              style: TextStyle(
+            Text(
+              l10n.resultTurningPointTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -740,7 +788,8 @@ class _TurningPointCard extends StatelessWidget {
             const SizedBox(height: 8),
             ...List.generate(achievements.length, (i) {
               final achieved = achievements[i];
-              final name = i < names.length ? names[i] : 'TP${i + 1}';
+              final name =
+                  i < names.length ? names[i] : l10n.resultTpFallback(i + 1);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 3),
                 child: Row(
@@ -773,18 +822,23 @@ class _TurningPointCard extends StatelessWidget {
 
 class _ActionButtons extends StatelessWidget {
   final ResultScreenArgs args;
+  final AppLocalizations l10n;
 
-  const _ActionButtons({required this.args});
+  const _ActionButtons({required this.args, required this.l10n});
 
   void _shareResult(BuildContext context) {
     final data = args.data;
-    final resultText = data.won ? '勝利' : '敗北';
+    final resultText = data.won ? l10n.resultShareVictory : l10n.resultShareDefeat;
     final tpCount = data.tpAchievements.where((a) => a).length;
     SharePlus.instance.share(
       ShareParams(
-        text: '戦国采配録『${args.scenario.displayNameJa}』で$resultText！\n'
-            'スコア: ${data.totalScore} pts / ターニングポイント $tpCount/${data.tpAchievements.length}\n'
-            '#戦国采配録',
+        text: l10n.resultShareText(
+          args.scenario.displayNameJa,
+          resultText,
+          data.totalScore,
+          tpCount,
+          data.tpAchievements.length,
+        ),
       ),
     );
   }
@@ -805,21 +859,21 @@ class _ActionButtons extends StatelessWidget {
             ),
           ),
           icon: const Icon(Icons.history_edu),
-          label: const Text('歴史分析を見る'),
+          label: Text(l10n.resultViewHistoryButton),
         ),
         const SizedBox(height: 8),
         ElevatedButton.icon(
           onPressed: () => Navigator.pushNamed(context, '/ranking'),
           icon: const Icon(Icons.leaderboard),
-          label: const Text('ランキングを見る'),
+          label: Text(l10n.resultViewRankingButton),
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: () => _shareResult(context),
           icon: const Icon(Icons.share, color: Colors.cyan),
-          label: const Text(
-            '結果をシェア',
-            style: TextStyle(color: Colors.cyan),
+          label: Text(
+            l10n.resultShareButton,
+            style: const TextStyle(color: Colors.cyan),
           ),
           style: OutlinedButton.styleFrom(
             side: const BorderSide(color: Colors.cyan),
@@ -831,9 +885,9 @@ class _ActionButtons extends StatelessWidget {
           onPressed: () => Navigator.popUntil(
               context, ModalRoute.withName('/home')),
           icon: const Icon(Icons.home, color: Color(0xFFFFD700)),
-          label: const Text(
-            'ホームへ戻る',
-            style: TextStyle(color: Color(0xFFFFD700)),
+          label: Text(
+            l10n.resultHomeButton,
+            style: const TextStyle(color: Color(0xFFFFD700)),
           ),
           style: OutlinedButton.styleFrom(
             side: const BorderSide(color: Color(0xFFFFD700)),
@@ -849,11 +903,13 @@ class _FriendChallengeResultBanner extends StatelessWidget {
   final String friendLabel;
   final int targetScore;
   final bool beaten;
+  final AppLocalizations l10n;
 
   const _FriendChallengeResultBanner({
     required this.friendLabel,
     required this.targetScore,
     required this.beaten,
+    required this.l10n,
   });
 
   @override
@@ -880,8 +936,8 @@ class _FriendChallengeResultBanner extends StatelessWidget {
               children: [
                 Text(
                   beaten
-                      ? '$friendLabelへの挑戦、成功！'
-                      : '$friendLabelへの挑戦、届かず',
+                      ? l10n.resultFriendChallengeSuccess(friendLabel)
+                      : l10n.resultFriendChallengeFailure(friendLabel),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -890,7 +946,7 @@ class _FriendChallengeResultBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '目標スコア: $targetScore点',
+                  l10n.resultFriendChallengeTarget(targetScore),
                   style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                 ),
               ],
@@ -903,7 +959,9 @@ class _FriendChallengeResultBanner extends StatelessWidget {
 }
 
 class _ChallengeCompletionBanner extends StatelessWidget {
-  const _ChallengeCompletionBanner();
+  final AppLocalizations l10n;
+
+  const _ChallengeCompletionBanner({required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -922,9 +980,9 @@ class _ChallengeCompletionBanner extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '本日のチャレンジ達成！',
-                  style: TextStyle(
+                Text(
+                  l10n.resultChallengeCompletedTitle,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.green,
@@ -932,7 +990,7 @@ class _ChallengeCompletionBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '報酬を受け取るにはホーム画面から獲得してください',
+                  l10n.resultChallengeCompletedNote,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[400],
@@ -952,12 +1010,14 @@ class _XpGainCard extends StatelessWidget {
   final bool boosted;
   final bool boosting;
   final VoidCallback onBoost;
+  final AppLocalizations l10n;
 
   const _XpGainCard({
     required this.xpGained,
     required this.boosted,
     required this.boosting,
     required this.onBoost,
+    required this.l10n,
   });
 
   @override
@@ -969,9 +1029,9 @@ class _XpGainCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '経験値獲得',
-              style: TextStyle(
+            Text(
+              l10n.resultXpGainTitle,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.amber,
@@ -981,9 +1041,9 @@ class _XpGainCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '獲得XP:',
-                  style: TextStyle(color: Colors.grey),
+                Text(
+                  l10n.resultXpGainedLabel,
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
                   '+$xpGained',
@@ -1008,7 +1068,7 @@ class _XpGainCard extends StatelessWidget {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.play_circle_outline, size: 18),
-                  label: Text(boosting ? '読み込み中…' : '広告を見てXPを2倍にする'),
+                  label: Text(boosting ? l10n.resultXpBoostLoading : l10n.resultXpBoostButton),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.amber,
                     side: const BorderSide(color: Colors.amber),
@@ -1025,8 +1085,9 @@ class _XpGainCard extends StatelessWidget {
 
 class _LevelUpBanner extends StatelessWidget {
   final int newLevel;
+  final AppLocalizations l10n;
 
-  const _LevelUpBanner({required this.newLevel});
+  const _LevelUpBanner({required this.newLevel, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -1046,9 +1107,9 @@ class _LevelUpBanner extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            'レベルアップ！',
-            style: TextStyle(
+          Text(
+            l10n.resultLevelUpTitle,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.amber,
@@ -1057,7 +1118,7 @@ class _LevelUpBanner extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'レベル $newLevel に到達しました',
+            l10n.resultLevelUpSubtitle(newLevel),
             style: const TextStyle(
               fontSize: 16,
               color: Colors.amber,
@@ -1071,8 +1132,9 @@ class _LevelUpBanner extends StatelessWidget {
 
 class _BattlePassTierUpBanner extends StatelessWidget {
   final int newTier;
+  final AppLocalizations l10n;
 
-  const _BattlePassTierUpBanner({required this.newTier});
+  const _BattlePassTierUpBanner({required this.newTier, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -1092,9 +1154,9 @@ class _BattlePassTierUpBanner extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            'バトルパス ティアアップ！',
-            style: TextStyle(
+          Text(
+            l10n.resultBattlePassTierUpTitle,
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.cyan,
@@ -1103,7 +1165,7 @@ class _BattlePassTierUpBanner extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'ティア $newTier に到達しました',
+            l10n.resultBattlePassTierUpSubtitle(newTier),
             style: const TextStyle(
               fontSize: 16,
               color: Colors.cyan,
@@ -1117,8 +1179,9 @@ class _BattlePassTierUpBanner extends StatelessWidget {
 
 class _CosmeticUnlockBanner extends StatelessWidget {
   final Cosmetic cosmetic;
+  final AppLocalizations l10n;
 
-  const _CosmeticUnlockBanner({required this.cosmetic});
+  const _CosmeticUnlockBanner({required this.cosmetic, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -1138,9 +1201,9 @@ class _CosmeticUnlockBanner extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            'コスメティック解放！',
-            style: TextStyle(
+          Text(
+            l10n.resultCosmeticUnlockTitle,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.purple,

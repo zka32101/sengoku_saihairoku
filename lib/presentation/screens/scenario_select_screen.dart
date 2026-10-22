@@ -9,6 +9,7 @@ import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/scenario_difficulty_repository.dart';
 import '../../data/repositories/warlord_progress_repository.dart';
 import '../../domain/warlord/warlord_compatibility.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
 
@@ -38,20 +39,30 @@ class ScenarioSelectScreen extends StatelessWidget {
     );
   }
 
-  static const _scenarios = [
-    _ScenarioEntry(Scenario.odigahara, '桶狭間の戦', 1560, 1, '3〜5分', '3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ', true),
-    _ScenarioEntry(Scenario.nagashino, '長篠の戦', 1575, 2, '4〜6分', '防衛陣形で武田騎馬隊を迎え撃て', true),
-    _ScenarioEntry(Scenario.honnoJi, '本能寺の変', 1582, 3, '5〜7分', '500 vs 13,000 — 絶望的状況からの逆転', true),
-    _ScenarioEntry(Scenario.sekigahara, '関ヶ原の戦', 1600, 4, '6〜8分', '天下分け目 — 複雑な戦局を制せよ', true),
-    _ScenarioEntry(Scenario.kawanakajima, '川中島の戦', 1561, 3, '4〜6分', '夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ', true),
-    _ScenarioEntry(Scenario.itsukushima, '厳島の戦', 1555, 3, '4〜5分', '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ', true),
+  static List<_ScenarioEntry> _scenariosFor(AppLocalizations l10n) => [
+    _ScenarioEntry(Scenario.odigahara, l10n.scenarioNameOdigahara, 1560, 1,
+        l10n.scenarioPlayTimeOdigahara, l10n.scenarioDescOdigahara, true),
+    _ScenarioEntry(Scenario.nagashino, l10n.scenarioNameNagashino, 1575, 2,
+        l10n.scenarioPlayTimeNagashino, l10n.scenarioDescNagashino, true),
+    _ScenarioEntry(Scenario.honnoJi, l10n.scenarioNameHonnoji, 1582, 3,
+        l10n.scenarioPlayTimeHonnoji, l10n.scenarioDescHonnoji, true),
+    _ScenarioEntry(Scenario.sekigahara, l10n.scenarioNameSekigahara, 1600, 4,
+        l10n.scenarioPlayTimeSekigahara, l10n.scenarioDescSekigahara, true),
+    _ScenarioEntry(Scenario.kawanakajima, l10n.scenarioNameKawanakajima, 1561,
+        3, l10n.scenarioPlayTimeKawanakajima, l10n.scenarioDescKawanakajima,
+        true),
+    _ScenarioEntry(Scenario.itsukushima, l10n.scenarioNameItsukushima, 1555,
+        3, l10n.scenarioPlayTimeItsukushima, l10n.scenarioDescItsukushima,
+        true),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final scenarios = _scenariosFor(l10n);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('シナリオを選ぶ'),
+        title: Text(l10n.scenarioSelectTitle),
         actions: [
           IconButton(
             onPressed: () {
@@ -63,7 +74,7 @@ class ScenarioSelectScreen extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.help_outline),
-            tooltip: 'ヘルプ',
+            tooltip: l10n.scenarioSelectHelpTooltip,
           ),
         ],
       ),
@@ -78,10 +89,10 @@ class ScenarioSelectScreen extends StatelessWidget {
           color: const Color(0xFF1A0F0A).withValues(alpha: 0.72),
           child: ListView.separated(
             padding: const EdgeInsets.all(16),
-            itemCount: _scenarios.length,
+            itemCount: scenarios.length,
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
-              final s = _scenarios[index];
+              final s = scenarios[index];
               return _ScenarioCard(
                 thumbnailAsset: s.scenario.thumbnailAsset,
                 name: s.name,
@@ -91,6 +102,7 @@ class ScenarioSelectScreen extends StatelessWidget {
                 description: s.description,
                 isUnlocked: s.isUnlocked,
                 onTap: () => _showScenarioSettings(context, s.scenario),
+                l10n: l10n,
               );
             },
           ),
@@ -109,6 +121,7 @@ class _ScenarioCard extends StatelessWidget {
   final String description;
   final bool isUnlocked;
   final VoidCallback onTap;
+  final AppLocalizations l10n;
 
   const _ScenarioCard({
     required this.thumbnailAsset,
@@ -119,6 +132,7 @@ class _ScenarioCard extends StatelessWidget {
     required this.description,
     required this.isUnlocked,
     required this.onTap,
+    required this.l10n,
   });
 
   @override
@@ -172,7 +186,7 @@ class _ScenarioCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '$year年',
+                          l10n.scenarioYearSuffix(year),
                           style: TextStyle(
                             color: Colors.grey[500],
                             fontSize: 13,
@@ -209,7 +223,7 @@ class _ScenarioCard extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: onTap,
-                    child: const Text('出陣'),
+                    child: Text(l10n.commonSortie),
                   ),
                 ),
               ],
@@ -406,16 +420,17 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_loading) {
       return Dialog(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              CircularProgressIndicator(),
-              SizedBox(height: 16),
-              Text('シナリオを読み込み中...'),
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(l10n.scenarioLoadingText),
             ],
           ),
         ),
@@ -429,11 +444,11 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('シナリオの読み込みに失敗しました'),
+              Text(l10n.scenarioLoadErrorText),
               const SizedBox(height: 16),
               OutlinedButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('閉じる'),
+                child: Text(l10n.commonClose),
               ),
             ],
           ),
@@ -452,9 +467,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'シナリオ設定',
-                style: TextStyle(
+              Text(
+                l10n.scenarioSettingsTitle,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFFFD700),
@@ -463,9 +478,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
               const SizedBox(height: 24),
               // Perspective Selection
               if (hasPerspectiveChoice) ...[
-                const Text(
-                  '視点を選ぶ',
-                  style: TextStyle(
+                Text(
+                  l10n.scenarioPerspectiveTitle,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -499,9 +514,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
               ],
               // Warlord Selection
               if (_unlockedWarlords.isNotEmpty) ...[
-                const Text(
-                  '出陣武将を選ぶ（任意・最大2名）',
-                  style: TextStyle(
+                Text(
+                  l10n.scenarioWarlordSelectTitle,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -509,9 +524,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '統率ステータスに応じて自軍全体の兵力が上昇します。'
-                  '2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、'
-                  '1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます',
+                  l10n.scenarioWarlordSelectHint,
                   style: TextStyle(fontSize: 11, color: Colors.grey[500]),
                 ),
                 const SizedBox(height: 12),
@@ -524,9 +537,15 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                               padding: const EdgeInsets.only(right: 8),
                               child: FilterChip(
                                 label: Text(
-                                  '${w.name} Lv.${_levelOf(w)}'
-                                  '${WarlordProgressRepository().isAwakened(_levelOf(w)) ? '覚醒' : ''}'
-                                  ' (統率${w.leadership})',
+                                  l10n.scenarioWarlordChipLabel(
+                                    w.name,
+                                    _levelOf(w),
+                                    WarlordProgressRepository()
+                                            .isAwakened(_levelOf(w))
+                                        ? l10n.scenarioWarlordAwakenedTag
+                                        : '',
+                                    w.leadership,
+                                  ),
                                 ),
                                 selected: _selectedWarlords
                                     .any((sw) => sw.id == w.id),
@@ -545,8 +564,12 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                     );
                     final isPositive = compatibility >= 1.0;
                     return Text(
-                      '相性倍率: ×${compatibility.toStringAsFixed(2)}'
-                      '${isPositive ? '（好相性）' : '（不協和）'}',
+                      l10n.scenarioCompatibilityLabel(
+                        compatibility.toStringAsFixed(2),
+                        isPositive
+                            ? l10n.scenarioCompatibilityPositive
+                            : l10n.scenarioCompatibilityNegative,
+                      ),
                       style: TextStyle(
                         fontSize: 12,
                         color: isPositive
@@ -561,9 +584,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 const SizedBox(height: 24),
               ],
               // Difficulty Selection
-              const Text(
-                '難易度を選ぶ',
-                style: TextStyle(
+              Text(
+                l10n.scenarioDifficultyTitle,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFFFD700),
@@ -585,14 +608,14 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('キャンセル'),
+                      child: Text(l10n.commonCancel),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: _startBattle,
-                      child: const Text('出陣'),
+                      child: Text(l10n.commonSortie),
                     ),
                   ),
                 ],

@@ -836,4 +836,326 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeBattlePassButton => 'View Battle Pass';
+
+  @override
+  String get resultTitle => 'Battle Result';
+
+  @override
+  String get resultVictory => 'Victory!';
+
+  @override
+  String get resultDefeat => 'Defeat';
+
+  @override
+  String get resultVictorySubtitle => 'A masterful command';
+
+  @override
+  String get resultDefeatSubtitle => 'Avenge this defeat next time';
+
+  @override
+  String get resultTotalScoreLabel => 'Total Score';
+
+  @override
+  String resultScorePoints(String score) {
+    return '$score pts';
+  }
+
+  @override
+  String get resultScoreVictory => 'Victory Score';
+
+  @override
+  String get resultScoreEfficiency => 'Efficiency Score';
+
+  @override
+  String get resultScoreCommand => 'Command Score';
+
+  @override
+  String get resultScoreTurningPoint => 'TP Bonus';
+
+  @override
+  String get resultScoreHistory => 'History Bonus';
+
+  @override
+  String get resultTurningPointTitle => 'Turning Points';
+
+  @override
+  String resultTpFallback(int number) {
+    return 'TP$number';
+  }
+
+  @override
+  String get resultViewHistoryButton => 'View Historical Analysis';
+
+  @override
+  String get resultViewRankingButton => 'View Ranking';
+
+  @override
+  String get resultShareButton => 'Share Result';
+
+  @override
+  String get resultHomeButton => 'Back to Home';
+
+  @override
+  String resultShareText(
+    String scenario,
+    String result,
+    int score,
+    int tp,
+    int total,
+  ) {
+    return 'I got a $result in \"$scenario\" on Sengoku Saihairoku!\nScore: $score pts / Turning Points $tp/$total\n#SengokuSaihairoku';
+  }
+
+  @override
+  String get resultShareVictory => 'Victory';
+
+  @override
+  String get resultShareDefeat => 'Defeat';
+
+  @override
+  String resultFriendChallengeSuccess(String friend) {
+    return 'Beat $friend\'s challenge!';
+  }
+
+  @override
+  String resultFriendChallengeFailure(String friend) {
+    return 'Fell short of $friend\'s challenge';
+  }
+
+  @override
+  String resultFriendChallengeTarget(int score) {
+    return 'Target score: $score pts';
+  }
+
+  @override
+  String get resultChallengeCompletedTitle => 'Today\'s Challenge Complete!';
+
+  @override
+  String get resultChallengeCompletedNote =>
+      'Claim your reward from the Home screen';
+
+  @override
+  String get resultXpGainTitle => 'XP Gained';
+
+  @override
+  String get resultXpGainedLabel => 'XP Gained:';
+
+  @override
+  String get resultXpBoostLoading => 'Loading…';
+
+  @override
+  String get resultXpBoostButton => 'Watch an ad to double XP';
+
+  @override
+  String get resultLevelUpTitle => 'Level Up!';
+
+  @override
+  String resultLevelUpSubtitle(int level) {
+    return 'Reached Level $level';
+  }
+
+  @override
+  String get resultBattlePassTierUpTitle => 'Battle Pass Tier Up!';
+
+  @override
+  String resultBattlePassTierUpSubtitle(int tier) {
+    return 'Reached Tier $tier';
+  }
+
+  @override
+  String get resultCosmeticUnlockTitle => 'Cosmetic Unlocked!';
+
+  @override
+  String get resultTpOdigahara1 => 'Surprise attack before the enemy arrives';
+
+  @override
+  String get resultTpOdigahara2 => 'Fight in the storm';
+
+  @override
+  String get resultTpOdigahara3 => 'Weaken the enemy general';
+
+  @override
+  String get resultTpOdigahara4 => 'Defeat the enemy general';
+
+  @override
+  String get resultTpNagashino1 => 'Set the initial formation to defense';
+
+  @override
+  String get resultTpNagashino2 => 'Withstand the enemy cavalry charge';
+
+  @override
+  String get resultTpNagashino3 => 'Launch a full counterattack';
+
+  @override
+  String get resultTpNagashino4 => 'Defeat the enemy general';
+
+  @override
+  String get resultTpHonnoJi1 => 'Break through the enemy encirclement';
+
+  @override
+  String get resultTpHonnoJi2 => 'Survive until reinforcements arrive';
+
+  @override
+  String get resultTpHonnoJi3 => 'Counterattack after reinforcements arrive';
+
+  @override
+  String get resultTpHonnoJi4 => 'Defeat the enemy supreme commander';
+
+  @override
+  String get resultTpSekigahara1 => 'Proceed cautiously in the early stages';
+
+  @override
+  String get resultTpSekigahara2 => 'Maintain allied morale';
+
+  @override
+  String get resultTpSekigahara3 => 'Flank the enemy';
+
+  @override
+  String get resultTpSekigahara4 => 'Defeat the enemy general';
+
+  @override
+  String get resultTpSekigahara5 => 'Keep the Toyotomi warlord alive';
+
+  @override
+  String get resultTpKawanakajima1 => 'Prepare for the dawn surprise attack';
+
+  @override
+  String get resultTpKawanakajima2 =>
+      'Hold out until the detached unit arrives';
+
+  @override
+  String get resultTpKawanakajima3 => 'Succeed at the pincer attack';
+
+  @override
+  String get resultTpKawanakajima4 => 'Defeat the enemy general';
+
+  @override
+  String get resultTpItsukushima1 => 'Surprise attack amid the storm';
+
+  @override
+  String get resultTpItsukushima2 => 'Defend Miyao Castle';
+
+  @override
+  String get resultTpItsukushima3 => 'Cut off the retreat and encircle';
+
+  @override
+  String get resultTpItsukushima4 => 'Defeat the enemy general';
+
+  @override
+  String get scenarioSelectTitle => 'Choose a Scenario';
+
+  @override
+  String get scenarioSelectHelpTooltip => 'Help';
+
+  @override
+  String scenarioYearSuffix(int year) {
+    return '$year';
+  }
+
+  @override
+  String get scenarioSettingsTitle => 'Scenario Settings';
+
+  @override
+  String get scenarioPerspectiveTitle => 'Choose a Perspective';
+
+  @override
+  String get scenarioWarlordSelectTitle =>
+      'Choose Warlords to Sortie (optional, up to 2)';
+
+  @override
+  String get scenarioWarlordSelectHint =>
+      'Your army\'s overall strength rises based on Leadership. Selecting two also applies compatibility (same faction, intelligence synergy, leadership gap) — the 1st commands the vanguard and the 2nd the main force, reflecting each warlord\'s Valor in their unit.';
+
+  @override
+  String get scenarioWarlordAwakenedTag => 'Awakened';
+
+  @override
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  ) {
+    return '$name Lv.$level$awakened (LDR $leadership)';
+  }
+
+  @override
+  String scenarioCompatibilityLabel(String multiplier, String note) {
+    return 'Compatibility: ×$multiplier$note';
+  }
+
+  @override
+  String get scenarioCompatibilityPositive => ' (Good match)';
+
+  @override
+  String get scenarioCompatibilityNegative => ' (Poor match)';
+
+  @override
+  String get scenarioDifficultyTitle => 'Choose Difficulty';
+
+  @override
+  String get scenarioLoadingText => 'Loading scenario...';
+
+  @override
+  String get scenarioLoadErrorText => 'Failed to load scenario';
+
+  @override
+  String get scenarioNameOdigahara => 'Battle of Okehazama';
+
+  @override
+  String get scenarioDescOdigahara =>
+      '3,500 vs 15,000 — overturn overwhelming odds with cunning tactics';
+
+  @override
+  String get scenarioPlayTimeOdigahara => '3-5 min';
+
+  @override
+  String get scenarioNameNagashino => 'Battle of Nagashino';
+
+  @override
+  String get scenarioDescNagashino =>
+      'Meet the Takeda cavalry with a defensive formation';
+
+  @override
+  String get scenarioPlayTimeNagashino => '4-6 min';
+
+  @override
+  String get scenarioNameHonnoji => 'Honno-ji Incident';
+
+  @override
+  String get scenarioDescHonnoji =>
+      '500 vs 13,000 — a reversal from a hopeless situation';
+
+  @override
+  String get scenarioPlayTimeHonnoji => '5-7 min';
+
+  @override
+  String get scenarioNameSekigahara => 'Battle of Sekigahara';
+
+  @override
+  String get scenarioDescSekigahara =>
+      'The fate of the realm — master a complex battlefield';
+
+  @override
+  String get scenarioPlayTimeSekigahara => '6-8 min';
+
+  @override
+  String get scenarioNameKawanakajima => 'Battle of Kawanakajima';
+
+  @override
+  String get scenarioDescKawanakajima =>
+      'Hold the line alone after a dawn ambush until the detached unit arrives';
+
+  @override
+  String get scenarioPlayTimeKawanakajima => '4-6 min';
+
+  @override
+  String get scenarioNameItsukushima => 'Battle of Itsukushima';
+
+  @override
+  String get scenarioDescItsukushima =>
+      '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
+
+  @override
+  String get scenarioPlayTimeItsukushima => '4-5 min';
 }

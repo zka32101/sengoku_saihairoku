@@ -1591,6 +1591,575 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'バトルパスを見る'**
   String get homeBattlePassButton;
+
+  /// No description provided for @resultTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘結果'**
+  String get resultTitle;
+
+  /// No description provided for @resultVictory.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利！'**
+  String get resultVictory;
+
+  /// No description provided for @resultDefeat.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get resultDefeat;
+
+  /// No description provided for @resultVictorySubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'見事な采配であった'**
+  String get resultVictorySubtitle;
+
+  /// No description provided for @resultDefeatSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'次は必ず雪辱を晴らせ'**
+  String get resultDefeatSubtitle;
+
+  /// No description provided for @resultTotalScoreLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総スコア'**
+  String get resultTotalScoreLabel;
+
+  /// No description provided for @resultScorePoints.
+  ///
+  /// In ja, this message translates to:
+  /// **'{score}点'**
+  String resultScorePoints(String score);
+
+  /// No description provided for @resultScoreVictory.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝敗スコア'**
+  String get resultScoreVictory;
+
+  /// No description provided for @resultScoreEfficiency.
+  ///
+  /// In ja, this message translates to:
+  /// **'効率スコア'**
+  String get resultScoreEfficiency;
+
+  /// No description provided for @resultScoreCommand.
+  ///
+  /// In ja, this message translates to:
+  /// **'采配スコア'**
+  String get resultScoreCommand;
+
+  /// No description provided for @resultScoreTurningPoint.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP ボーナス'**
+  String get resultScoreTurningPoint;
+
+  /// No description provided for @resultScoreHistory.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史ボーナス'**
+  String get resultScoreHistory;
+
+  /// No description provided for @resultTurningPointTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターニングポイント'**
+  String get resultTurningPointTitle;
+
+  /// No description provided for @resultTpFallback.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP{number}'**
+  String resultTpFallback(int number);
+
+  /// No description provided for @resultViewHistoryButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'歴史分析を見る'**
+  String get resultViewHistoryButton;
+
+  /// No description provided for @resultViewRankingButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキングを見る'**
+  String get resultViewRankingButton;
+
+  /// No description provided for @resultShareButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'結果をシェア'**
+  String get resultShareButton;
+
+  /// No description provided for @resultHomeButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'ホームへ戻る'**
+  String get resultHomeButton;
+
+  /// No description provided for @resultShareText.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録『{scenario}』で{result}！\nスコア: {score} pts / ターニングポイント {tp}/{total}\n#戦国采配録'**
+  String resultShareText(
+    String scenario,
+    String result,
+    int score,
+    int tp,
+    int total,
+  );
+
+  /// No description provided for @resultShareVictory.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get resultShareVictory;
+
+  /// No description provided for @resultShareDefeat.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get resultShareDefeat;
+
+  /// No description provided for @resultFriendChallengeSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'{friend}への挑戦、成功！'**
+  String resultFriendChallengeSuccess(String friend);
+
+  /// No description provided for @resultFriendChallengeFailure.
+  ///
+  /// In ja, this message translates to:
+  /// **'{friend}への挑戦、届かず'**
+  String resultFriendChallengeFailure(String friend);
+
+  /// No description provided for @resultFriendChallengeTarget.
+  ///
+  /// In ja, this message translates to:
+  /// **'目標スコア: {score}点'**
+  String resultFriendChallengeTarget(int score);
+
+  /// No description provided for @resultChallengeCompletedTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日のチャレンジ達成！'**
+  String get resultChallengeCompletedTitle;
+
+  /// No description provided for @resultChallengeCompletedNote.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬を受け取るにはホーム画面から獲得してください'**
+  String get resultChallengeCompletedNote;
+
+  /// No description provided for @resultXpGainTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'経験値獲得'**
+  String get resultXpGainTitle;
+
+  /// No description provided for @resultXpGainedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'獲得XP:'**
+  String get resultXpGainedLabel;
+
+  /// No description provided for @resultXpBoostLoading.
+  ///
+  /// In ja, this message translates to:
+  /// **'読み込み中…'**
+  String get resultXpBoostLoading;
+
+  /// No description provided for @resultXpBoostButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'広告を見てXPを2倍にする'**
+  String get resultXpBoostButton;
+
+  /// No description provided for @resultLevelUpTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベルアップ！'**
+  String get resultLevelUpTitle;
+
+  /// No description provided for @resultLevelUpSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル {level} に到達しました'**
+  String resultLevelUpSubtitle(int level);
+
+  /// No description provided for @resultBattlePassTierUpTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパス ティアアップ！'**
+  String get resultBattlePassTierUpTitle;
+
+  /// No description provided for @resultBattlePassTierUpSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ティア {tier} に到達しました'**
+  String resultBattlePassTierUpSubtitle(int tier);
+
+  /// No description provided for @resultCosmeticUnlockTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック解放！'**
+  String get resultCosmeticUnlockTitle;
+
+  /// No description provided for @resultTpOdigahara1.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵到着前に奇襲'**
+  String get resultTpOdigahara1;
+
+  /// No description provided for @resultTpOdigahara2.
+  ///
+  /// In ja, this message translates to:
+  /// **'嵐の中での戦闘'**
+  String get resultTpOdigahara2;
+
+  /// No description provided for @resultTpOdigahara3.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将兵力低下'**
+  String get resultTpOdigahara3;
+
+  /// No description provided for @resultTpOdigahara4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpOdigahara4;
+
+  /// No description provided for @resultTpNagashino1.
+  ///
+  /// In ja, this message translates to:
+  /// **'初期陣形を防御に設定'**
+  String get resultTpNagashino1;
+
+  /// No description provided for @resultTpNagashino2.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵騎馬隊の突撃を耐える'**
+  String get resultTpNagashino2;
+
+  /// No description provided for @resultTpNagashino3.
+  ///
+  /// In ja, this message translates to:
+  /// **'一斉反撃'**
+  String get resultTpNagashino3;
+
+  /// No description provided for @resultTpNagashino4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpNagashino4;
+
+  /// No description provided for @resultTpHonnoJi1.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵の包囲を突破'**
+  String get resultTpHonnoJi1;
+
+  /// No description provided for @resultTpHonnoJi2.
+  ///
+  /// In ja, this message translates to:
+  /// **'援軍到着まで生存'**
+  String get resultTpHonnoJi2;
+
+  /// No description provided for @resultTpHonnoJi3.
+  ///
+  /// In ja, this message translates to:
+  /// **'援軍到着後の反撃'**
+  String get resultTpHonnoJi3;
+
+  /// No description provided for @resultTpHonnoJi4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵総大将討死'**
+  String get resultTpHonnoJi4;
+
+  /// No description provided for @resultTpSekigahara1.
+  ///
+  /// In ja, this message translates to:
+  /// **'序盤は慎重に'**
+  String get resultTpSekigahara1;
+
+  /// No description provided for @resultTpSekigahara2.
+  ///
+  /// In ja, this message translates to:
+  /// **'味方のモラル維持'**
+  String get resultTpSekigahara2;
+
+  /// No description provided for @resultTpSekigahara3.
+  ///
+  /// In ja, this message translates to:
+  /// **'側面を奇襲'**
+  String get resultTpSekigahara3;
+
+  /// No description provided for @resultTpSekigahara4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpSekigahara4;
+
+  /// No description provided for @resultTpSekigahara5.
+  ///
+  /// In ja, this message translates to:
+  /// **'豊臣武将生存'**
+  String get resultTpSekigahara5;
+
+  /// No description provided for @resultTpKawanakajima1.
+  ///
+  /// In ja, this message translates to:
+  /// **'夜明けの奇襲に備える'**
+  String get resultTpKawanakajima1;
+
+  /// No description provided for @resultTpKawanakajima2.
+  ///
+  /// In ja, this message translates to:
+  /// **'別働隊到着まで凌ぐ'**
+  String get resultTpKawanakajima2;
+
+  /// No description provided for @resultTpKawanakajima3.
+  ///
+  /// In ja, this message translates to:
+  /// **'挟撃を成功させる'**
+  String get resultTpKawanakajima3;
+
+  /// No description provided for @resultTpKawanakajima4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpKawanakajima4;
+
+  /// No description provided for @resultTpItsukushima1.
+  ///
+  /// In ja, this message translates to:
+  /// **'暴風雨に乗じた奇襲'**
+  String get resultTpItsukushima1;
+
+  /// No description provided for @resultTpItsukushima2.
+  ///
+  /// In ja, this message translates to:
+  /// **'宮尾城を死守'**
+  String get resultTpItsukushima2;
+
+  /// No description provided for @resultTpItsukushima3.
+  ///
+  /// In ja, this message translates to:
+  /// **'退路を断ち包囲'**
+  String get resultTpItsukushima3;
+
+  /// No description provided for @resultTpItsukushima4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpItsukushima4;
+
+  /// No description provided for @scenarioSelectTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオを選ぶ'**
+  String get scenarioSelectTitle;
+
+  /// No description provided for @scenarioSelectHelpTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'ヘルプ'**
+  String get scenarioSelectHelpTooltip;
+
+  /// No description provided for @scenarioYearSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{year}年'**
+  String scenarioYearSuffix(int year);
+
+  /// No description provided for @scenarioSettingsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオ設定'**
+  String get scenarioSettingsTitle;
+
+  /// No description provided for @scenarioPerspectiveTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'視点を選ぶ'**
+  String get scenarioPerspectiveTitle;
+
+  /// No description provided for @scenarioWarlordSelectTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'出陣武将を選ぶ（任意・最大2名）'**
+  String get scenarioWarlordSelectTitle;
+
+  /// No description provided for @scenarioWarlordSelectHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'統率ステータスに応じて自軍全体の兵力が上昇します。2名選ぶと相性（同勢力・知略シナジー・統率差）に加え、1人目が先鋒隊・2人目が本隊を指揮し、各武将の武勇が担当部隊に反映されます'**
+  String get scenarioWarlordSelectHint;
+
+  /// No description provided for @scenarioWarlordAwakenedTag.
+  ///
+  /// In ja, this message translates to:
+  /// **'覚醒'**
+  String get scenarioWarlordAwakenedTag;
+
+  /// No description provided for @scenarioWarlordChipLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'{name} Lv.{level}{awakened} (統率{leadership})'**
+  String scenarioWarlordChipLabel(
+    String name,
+    int level,
+    String awakened,
+    int leadership,
+  );
+
+  /// No description provided for @scenarioCompatibilityLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'相性倍率: ×{multiplier}{note}'**
+  String scenarioCompatibilityLabel(String multiplier, String note);
+
+  /// No description provided for @scenarioCompatibilityPositive.
+  ///
+  /// In ja, this message translates to:
+  /// **'（好相性）'**
+  String get scenarioCompatibilityPositive;
+
+  /// No description provided for @scenarioCompatibilityNegative.
+  ///
+  /// In ja, this message translates to:
+  /// **'（不協和）'**
+  String get scenarioCompatibilityNegative;
+
+  /// No description provided for @scenarioDifficultyTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度を選ぶ'**
+  String get scenarioDifficultyTitle;
+
+  /// No description provided for @scenarioLoadingText.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオを読み込み中...'**
+  String get scenarioLoadingText;
+
+  /// No description provided for @scenarioLoadErrorText.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオの読み込みに失敗しました'**
+  String get scenarioLoadErrorText;
+
+  /// No description provided for @scenarioNameOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'桶狭間の戦'**
+  String get scenarioNameOdigahara;
+
+  /// No description provided for @scenarioDescOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'3,500 vs 15,000 — 圧倒的劣勢を奇策で覆せ'**
+  String get scenarioDescOdigahara;
+
+  /// No description provided for @scenarioPlayTimeOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'3〜5分'**
+  String get scenarioPlayTimeOdigahara;
+
+  /// No description provided for @scenarioNameNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'長篠の戦'**
+  String get scenarioNameNagashino;
+
+  /// No description provided for @scenarioDescNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'防衛陣形で武田騎馬隊を迎え撃て'**
+  String get scenarioDescNagashino;
+
+  /// No description provided for @scenarioPlayTimeNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜6分'**
+  String get scenarioPlayTimeNagashino;
+
+  /// No description provided for @scenarioNameHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'本能寺の変'**
+  String get scenarioNameHonnoji;
+
+  /// No description provided for @scenarioDescHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'500 vs 13,000 — 絶望的状況からの逆転'**
+  String get scenarioDescHonnoji;
+
+  /// No description provided for @scenarioPlayTimeHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'5〜7分'**
+  String get scenarioPlayTimeHonnoji;
+
+  /// No description provided for @scenarioNameSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'関ヶ原の戦'**
+  String get scenarioNameSekigahara;
+
+  /// No description provided for @scenarioDescSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'天下分け目 — 複雑な戦局を制せよ'**
+  String get scenarioDescSekigahara;
+
+  /// No description provided for @scenarioPlayTimeSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'6〜8分'**
+  String get scenarioPlayTimeSekigahara;
+
+  /// No description provided for @scenarioNameKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'川中島の戦'**
+  String get scenarioNameKawanakajima;
+
+  /// No description provided for @scenarioDescKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'夜明けの奇襲を受けた本隊のみで、別働隊到着まで持ちこたえよ'**
+  String get scenarioDescKawanakajima;
+
+  /// No description provided for @scenarioPlayTimeKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜6分'**
+  String get scenarioPlayTimeKawanakajima;
+
+  /// No description provided for @scenarioNameItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'厳島の戦'**
+  String get scenarioNameItsukushima;
+
+  /// No description provided for @scenarioDescItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ'**
+  String get scenarioDescItsukushima;
+
+  /// No description provided for @scenarioPlayTimeItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeItsukushima;
 }
 
 class _AppLocalizationsDelegate

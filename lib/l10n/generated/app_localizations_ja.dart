@@ -127,4 +127,40 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settingsDeleteDataFailure => 'データの削除に失敗しました';
+
+  @override
+  String get challengeHistoryTitle => 'チャレンジ履歴';
+
+  @override
+  String get challengeHistoryEmpty => 'チャレンジ履歴がありません';
+
+  @override
+  String get challengeHistoryBanner => 'これまで7日間のチャレンジ情報';
+
+  @override
+  String get challengeHistoryToday => '本日';
+
+  @override
+  String get challengeHistoryNoChallengeInfo => 'チャレンジ情報がありません';
+
+  @override
+  String get weekdaySun => '日';
+
+  @override
+  String get weekdayMon => '月';
+
+  @override
+  String get weekdayTue => '火';
+
+  @override
+  String get weekdayWed => '水';
+
+  @override
+  String get weekdayThu => '木';
+
+  @override
+  String get weekdayFri => '金';
+
+  @override
+  String get weekdaySat => '土';
 }

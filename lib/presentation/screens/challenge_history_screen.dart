@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
 import '../../data/models/daily_challenge.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/challenge_card.dart';
 
 class ChallengeHistoryScreen extends StatefulWidget {
@@ -30,16 +31,26 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
     return '${months[date.month - 1]} ${date.day}';
   }
 
-  String _getDayOfWeek(DateTime date) {
-    const days = ['日', '月', '火', '水', '木', '金', '土'];
+  String _getDayOfWeek(BuildContext context, DateTime date) {
+    final l10n = AppLocalizations.of(context)!;
+    final days = [
+      l10n.weekdaySun,
+      l10n.weekdayMon,
+      l10n.weekdayTue,
+      l10n.weekdayWed,
+      l10n.weekdayThu,
+      l10n.weekdayFri,
+      l10n.weekdaySat,
+    ];
     return days[date.weekday % 7];
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('チャレンジ履歴'),
+        title: Text(l10n.challengeHistoryTitle),
         elevation: 0,
         backgroundColor: const Color(0xFF0A0A0A),
       ),
@@ -51,8 +62,8 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
-              child: Text('チャレンジ履歴がありません'),
+            return Center(
+              child: Text(l10n.challengeHistoryEmpty),
             );
           }
 
@@ -69,9 +80,9 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: const Color(0xFF333333)),
                   ),
-                  child: const Text(
-                    'これまで7日間のチャレンジ情報',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.challengeHistoryBanner,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
@@ -125,7 +136,7 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
                                   ),
                                 ),
                                 Text(
-                                  '（${_getDayOfWeek(date)}）',
+                                  '（${_getDayOfWeek(context, date)}）',
                                   style: TextStyle(
                                     fontSize: 11,
                                     color: Colors.grey[500],
@@ -143,9 +154,9 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
                                   color: const Color(0xFFFFD700),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: const Text(
-                                  '本日',
-                                  style: TextStyle(
+                                child: Text(
+                                  l10n.challengeHistoryToday,
+                                  style: const TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -182,7 +193,7 @@ class _ChallengeHistoryScreenState extends State<ChallengeHistoryScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            'チャレンジ情報がありません',
+                            l10n.challengeHistoryNoChallengeInfo,
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey[500]),
                           ),

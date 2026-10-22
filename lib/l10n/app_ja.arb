@@ -42,5 +42,17 @@
   "settingsDeleteDataBody": "この操作は元に戻せません",
   "settingsDeleteDataConfirm": "削除",
   "settingsDeleteDataSuccess": "データを削除しました",
-  "settingsDeleteDataFailure": "データの削除に失敗しました"
+  "settingsDeleteDataFailure": "データの削除に失敗しました",
+  "challengeHistoryTitle": "チャレンジ履歴",
+  "challengeHistoryEmpty": "チャレンジ履歴がありません",
+  "challengeHistoryBanner": "これまで7日間のチャレンジ情報",
+  "challengeHistoryToday": "本日",
+  "challengeHistoryNoChallengeInfo": "チャレンジ情報がありません",
+  "weekdaySun": "日",
+  "weekdayMon": "月",
+  "weekdayTue": "火",
+  "weekdayWed": "水",
+  "weekdayThu": "木",
+  "weekdayFri": "金",
+  "weekdaySat": "土"
 }

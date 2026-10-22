@@ -337,6 +337,78 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'データの削除に失敗しました'**
   String get settingsDeleteDataFailure;
+
+  /// No description provided for @challengeHistoryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ履歴'**
+  String get challengeHistoryTitle;
+
+  /// No description provided for @challengeHistoryEmpty.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ履歴がありません'**
+  String get challengeHistoryEmpty;
+
+  /// No description provided for @challengeHistoryBanner.
+  ///
+  /// In ja, this message translates to:
+  /// **'これまで7日間のチャレンジ情報'**
+  String get challengeHistoryBanner;
+
+  /// No description provided for @challengeHistoryToday.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日'**
+  String get challengeHistoryToday;
+
+  /// No description provided for @challengeHistoryNoChallengeInfo.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ情報がありません'**
+  String get challengeHistoryNoChallengeInfo;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In ja, this message translates to:
+  /// **'日'**
+  String get weekdaySun;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In ja, this message translates to:
+  /// **'月'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In ja, this message translates to:
+  /// **'火'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In ja, this message translates to:
+  /// **'水'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In ja, this message translates to:
+  /// **'木'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In ja, this message translates to:
+  /// **'金'**
+  String get weekdayFri;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In ja, this message translates to:
+  /// **'土'**
+  String get weekdaySat;
 }
 
 class _AppLocalizationsDelegate

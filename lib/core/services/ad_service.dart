@@ -62,6 +62,19 @@ class AdService {
       return false;
     }
 
+    if (!await _showAdAndAwaitReward()) return false;
+
+    return _adRewardRepo.recordWatchAndReward(userId);
+  }
+
+  /// 広告を表示し、最後まで視聴されたかどうかだけを返す汎用メソッド。
+  /// ゴールドショップの日次上限・付与ロジックは適用されないため、
+  /// 戦闘結果画面のXPブーストなど、呼び出し側で独自の報酬ロジックを
+  /// 持つ場面向け。
+  Future<bool> showRewardedAd() => _showAdAndAwaitReward();
+
+  /// 広告読み込み済みインスタンスを表示し、最後まで視聴されたかを返す。
+  Future<bool> _showAdAndAwaitReward() async {
     final ad = _rewardedAd;
     if (ad == null) {
       // 未読み込みなら次回のために読み込んでおく
@@ -89,9 +102,7 @@ class AdService {
       },
     );
 
-    if (!earned) return false;
-
-    return _adRewardRepo.recordWatchAndReward(userId);
+    return earned;
   }
 
   Future<int> getTodayWatchCount() async {

@@ -162,19 +162,32 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
                       ),
                     )
                   else
-                    ...goldPacks.map(
-                      (product) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: _GoldPackCard(
-                          product: product,
-                          goldAmount:
-                              PurchaseService.goldPackAmounts[product.id] ?? 0,
-                          isPurchasing: _purchaseState == PurchaseState.pending &&
-                              _purchasingProductId == product.id,
-                          isDisabled: _purchaseState == PurchaseState.pending,
-                          onBuy: () => _buy(product.id),
-                        ),
-                      ),
+                    ...goldPacks.asMap().entries.map(
+                      (entry) {
+                        final index = entry.key;
+                        final product = entry.value;
+                        // goldPackProductsは小→大の順。中間パックを「人気」、
+                        // 最大パックを「もっともお得」としてアンカリングし、
+                        // 購入検討時の比較を後押しする。
+                        final isLast = index == goldPacks.length - 1;
+                        final isMiddle =
+                            goldPacks.length >= 3 && index == goldPacks.length - 2;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: _GoldPackCard(
+                            product: product,
+                            goldAmount:
+                                PurchaseService.goldPackAmounts[product.id] ?? 0,
+                            isPurchasing: _purchaseState == PurchaseState.pending &&
+                                _purchasingProductId == product.id,
+                            isDisabled: _purchaseState == PurchaseState.pending,
+                            badgeLabel: isLast
+                                ? 'もっともお得'
+                                : (isMiddle ? '人気' : null),
+                            onBuy: () => _buy(product.id),
+                          ),
+                        );
+                      },
                     ),
                 ],
               ),
@@ -321,6 +334,7 @@ class _GoldPackCard extends StatelessWidget {
   final int goldAmount;
   final bool isPurchasing;
   final bool isDisabled;
+  final String? badgeLabel;
   final VoidCallback onBuy;
 
   const _GoldPackCard({
@@ -328,12 +342,21 @@ class _GoldPackCard extends StatelessWidget {
     required this.goldAmount,
     required this.isPurchasing,
     required this.isDisabled,
+    this.badgeLabel,
     required this.onBuy,
   });
 
   @override
   Widget build(BuildContext context) {
+    final highlighted = badgeLabel != null;
+
     return Card(
+      shape: highlighted
+          ? RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: const BorderSide(color: Colors.amber, width: 2),
+            )
+          : null,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -344,13 +367,38 @@ class _GoldPackCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$goldAmount ゴールド',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFE8D5B0),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '$goldAmount ゴールド',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFE8D5B0),
+                        ),
+                      ),
+                      if (badgeLabel != null) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            badgeLabel!,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 2),
                   Text(

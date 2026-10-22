@@ -6,6 +6,7 @@ import '../../core/services/purchase_service.dart';
 import '../../core/services/ad_service.dart';
 import '../../data/models/currency_wallet.dart';
 import '../../data/repositories/currency_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// ゴールドショップ画面（IAPによるゴールド購入）
 class GoldShopScreen extends StatefulWidget {
@@ -44,14 +45,18 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
         if (state != PurchaseState.pending) _purchasingProductId = null;
       });
 
+      final l10n = AppLocalizations.of(context)!;
       if (state == PurchaseState.success) {
         _loadWallet();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('ゴールドを獲得しました！')),
+          SnackBar(content: Text(l10n.goldShopPurchaseSuccess)),
         );
       } else if (state == PurchaseState.error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('購入に失敗しました: ${_purchaseService.lastError ?? "不明なエラー"}')),
+          SnackBar(
+            content: Text(l10n.goldShopPurchaseFailure(
+                _purchaseService.lastError ?? l10n.goldShopUnknownError)),
+          ),
         );
       }
     });
@@ -90,6 +95,7 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
   }
 
   Future<void> _watchAd() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isWatchingAd = true);
     final earned = await _adService.showRewardedAdForGold();
     if (!mounted) return;
@@ -100,21 +106,24 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
       await _loadAdWatchCount();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${_adService.rewardGoldAmount}ゴールドを獲得しました！')),
+        SnackBar(
+            content:
+                Text(l10n.goldShopAdRewardEarned(_adService.rewardGoldAmount))),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('広告を表示できませんでした。しばらくしてから再度お試しください')),
+        SnackBar(content: Text(l10n.goldShopAdFailure)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final goldPacks = _purchaseService.goldPackProducts;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('ゴールドショップ')),
+      appBar: AppBar(title: Text(l10n.goldShopTitle)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -122,7 +131,7 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _GoldBalanceCard(gold: _wallet?.gold ?? 0),
+                  _GoldBalanceCard(gold: _wallet?.gold ?? 0, l10n: l10n),
                   const SizedBox(height: 16),
                   _WatchAdCard(
                     watchCount: _adWatchCount,
@@ -130,11 +139,12 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
                     rewardAmount: _adService.rewardGoldAmount,
                     isWatching: _isWatchingAd,
                     onWatch: _watchAd,
+                    l10n: l10n,
                   ),
                   const SizedBox(height: 24),
-                  const Text(
-                    'ゴールドパック',
-                    style: TextStyle(
+                  Text(
+                    l10n.goldShopPacksTitle,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFFD700),
@@ -142,22 +152,22 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
                   ),
                   const SizedBox(height: 12),
                   if (!_purchaseService.isAvailable)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: Text(
-                          'ストアに接続できません',
-                          style: TextStyle(color: Colors.grey),
+                          l10n.goldShopStoreUnavailable,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     )
                   else if (goldPacks.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: Text(
-                          '現在購入可能な商品がありません',
-                          style: TextStyle(color: Colors.grey),
+                          l10n.goldShopNoProducts,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     )
@@ -182,9 +192,10 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
                                 _purchasingProductId == product.id,
                             isDisabled: _purchaseState == PurchaseState.pending,
                             badgeLabel: isLast
-                                ? 'もっともお得'
-                                : (isMiddle ? '人気' : null),
+                                ? l10n.goldShopBestValueBadge
+                                : (isMiddle ? l10n.goldShopPopularBadge : null),
                             onBuy: () => _buy(product.id),
+                            l10n: l10n,
                           ),
                         );
                       },
@@ -198,8 +209,9 @@ class _GoldShopScreenState extends State<GoldShopScreen> {
 
 class _GoldBalanceCard extends StatelessWidget {
   final int gold;
+  final AppLocalizations l10n;
 
-  const _GoldBalanceCard({required this.gold});
+  const _GoldBalanceCard({required this.gold, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -224,9 +236,9 @@ class _GoldBalanceCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '所持ゴールド',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+              Text(
+                l10n.goldShopBalanceLabel,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
               const SizedBox(height: 4),
               Text(
@@ -251,6 +263,7 @@ class _WatchAdCard extends StatelessWidget {
   final int rewardAmount;
   final bool isWatching;
   final VoidCallback onWatch;
+  final AppLocalizations l10n;
 
   const _WatchAdCard({
     required this.watchCount,
@@ -258,6 +271,7 @@ class _WatchAdCard extends StatelessWidget {
     required this.rewardAmount,
     required this.isWatching,
     required this.onWatch,
+    required this.l10n,
   });
 
   @override
@@ -288,7 +302,7 @@ class _WatchAdCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '広告を見て$rewardAmountゴールド獲得',
+                  l10n.goldShopWatchAdTitle(rewardAmount),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -297,7 +311,7 @@ class _WatchAdCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '本日あと$remaining/$dailyLimit回',
+                  l10n.goldShopWatchAdRemaining(remaining, dailyLimit),
                   style: TextStyle(fontSize: 11, color: Colors.grey[400]),
                 ),
               ],
@@ -320,7 +334,9 @@ class _WatchAdCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     )
-                  : Text(remaining > 0 ? '視聴する' : '上限到達'),
+                  : Text(remaining > 0
+                      ? l10n.goldShopWatchButton
+                      : l10n.goldShopWatchLimitReached),
             ),
           ),
         ],
@@ -336,6 +352,7 @@ class _GoldPackCard extends StatelessWidget {
   final bool isDisabled;
   final String? badgeLabel;
   final VoidCallback onBuy;
+  final AppLocalizations l10n;
 
   const _GoldPackCard({
     required this.product,
@@ -344,6 +361,7 @@ class _GoldPackCard extends StatelessWidget {
     required this.isDisabled,
     this.badgeLabel,
     required this.onBuy,
+    required this.l10n,
   });
 
   @override
@@ -370,7 +388,7 @@ class _GoldPackCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '$goldAmount ゴールド',
+                        l10n.goldShopGoldAmount(goldAmount),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

@@ -5,6 +5,7 @@ import '../../data/models/cosmetic.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../../data/repositories/achievement_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -62,24 +63,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('プロフィール')),
+        appBar: AppBar(title: Text(l10n.profileTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_userProgression == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('プロフィール')),
-        body: const Center(child: Text('ユーザーデータを読み込めませんでした')),
+        appBar: AppBar(title: Text(l10n.profileTitle)),
+        body: Center(child: Text(l10n.profileLoadError)),
       );
     }
 
     final progression = _userProgression!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('プロフィール')),
+      appBar: AppBar(title: Text(l10n.profileTitle)),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(
@@ -87,21 +89,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _LevelCard(progression: progression),
+              _LevelCard(progression: progression, l10n: l10n),
               const SizedBox(height: 16),
-              _PrestigeCard(progression: progression),
+              _PrestigeCard(progression: progression, l10n: l10n),
               const SizedBox(height: 16),
               _AchievementStatsCard(
                 unlockedCount: _unlockedAchievementCount,
                 totalCount: _totalAchievementCount,
                 onViewAll: () => Navigator.pushNamed(context, '/achievements'),
+                l10n: l10n,
               ),
               const SizedBox(height: 16),
-              _CosmeticsCard(cosmetics: _userCosmetics),
+              _CosmeticsCard(cosmetics: _userCosmetics, l10n: l10n),
               const SizedBox(height: 16),
-              _ProgressionDetailsCard(progression: progression),
+              _ProgressionDetailsCard(progression: progression, l10n: l10n),
               const SizedBox(height: 24),
-              _ActionButtonsCard(context: context, progression: progression),
+              _ActionButtonsCard(
+                  context: context, progression: progression, l10n: l10n),
               const SizedBox(height: 24),
             ],
           ),
@@ -113,8 +117,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 class _LevelCard extends StatelessWidget {
   final UserProgression progression;
+  final AppLocalizations l10n;
 
-  const _LevelCard({required this.progression});
+  const _LevelCard({required this.progression, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -132,9 +137,9 @@ class _LevelCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'レベル',
-                      style: TextStyle(
+                    Text(
+                      l10n.profileLevelLabel,
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
@@ -153,19 +158,21 @@ class _LevelCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      '経験値',
-                      style: TextStyle(
+                    Text(
+                      l10n.profileXpLabel,
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${progression.experiencePoints.toString().replaceAllMapped(
-                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                        (m) => '${m[1]},',
-                      )} XP',
+                      l10n.profileXpSuffix(
+                        progression.experiencePoints.toString().replaceAllMapped(
+                          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                          (m) => '${m[1]},',
+                        ),
+                      ),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -184,9 +191,9 @@ class _LevelCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      '次のレベルまでの進捗',
-                      style: TextStyle(
+                    Text(
+                      l10n.profileNextLevelProgress,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
@@ -224,9 +231,9 @@ class _LevelCard extends StatelessWidget {
                     color: Colors.purple.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text(
-                    '最大レベルに到達！プレスティジでリセットできます',
-                    style: TextStyle(
+                  child: Text(
+                    l10n.profileMaxLevelReached,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.purple,
                       fontWeight: FontWeight.w600,
@@ -243,8 +250,9 @@ class _LevelCard extends StatelessWidget {
 
 class _PrestigeCard extends StatelessWidget {
   final UserProgression progression;
+  final AppLocalizations l10n;
 
-  const _PrestigeCard({required this.progression});
+  const _PrestigeCard({required this.progression, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -287,9 +295,9 @@ class _PrestigeCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'プレスティジランク',
-                        style: TextStyle(
+                      Text(
+                        l10n.profilePrestigeRank,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
                         ),
@@ -314,7 +322,7 @@ class _PrestigeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'プレスティジポイント',
+                  l10n.profilePrestigePoints,
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[400],
@@ -344,7 +352,7 @@ class _PrestigeCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'リセット回数: ${progression.prestigeResetCount}',
+              l10n.profilePrestigeResetCount(progression.prestigeResetCount),
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.grey,
@@ -359,8 +367,9 @@ class _PrestigeCard extends StatelessWidget {
 
 class _CosmeticsCard extends StatelessWidget {
   final List<Cosmetic> cosmetics;
+  final AppLocalizations l10n;
 
-  const _CosmeticsCard({required this.cosmetics});
+  const _CosmeticsCard({required this.cosmetics, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -373,9 +382,9 @@ class _CosmeticsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'コスメティック',
-              style: TextStyle(
+            Text(
+              l10n.profileCosmeticsTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -387,7 +396,7 @@ class _CosmeticsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ユニットスキン (${unitSkins.length})',
+                    l10n.profileUnitSkinsLabel(unitSkins.length),
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -410,7 +419,7 @@ class _CosmeticsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'UIテーマ (${uiThemes.length})',
+                    l10n.profileUiThemesLabel(uiThemes.length),
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -430,7 +439,7 @@ class _CosmeticsCard extends StatelessWidget {
             if (cosmetics.isEmpty)
               Center(
                 child: Text(
-                  'コスメティックはまだ解放されていません',
+                  l10n.profileCosmeticsEmpty,
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[600],
@@ -494,8 +503,9 @@ class _CosmeticBadge extends StatelessWidget {
 
 class _ProgressionDetailsCard extends StatelessWidget {
   final UserProgression progression;
+  final AppLocalizations l10n;
 
-  const _ProgressionDetailsCard({required this.progression});
+  const _ProgressionDetailsCard({required this.progression, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -505,9 +515,9 @@ class _ProgressionDetailsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'プログレッション詳細',
-              style: TextStyle(
+            Text(
+              l10n.profileProgressionDetailsTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -517,25 +527,26 @@ class _ProgressionDetailsCard extends StatelessWidget {
             const Divider(color: Color(0xFF8B6914)),
             const SizedBox(height: 12),
             _DetailRow(
-              label: 'ユーザーID',
+              label: l10n.profileUserIdLabel,
               value: progression.userId.length > 20
                   ? '${progression.userId.substring(0, 20)}...'
                   : progression.userId,
             ),
             const SizedBox(height: 10),
             _DetailRow(
-              label: 'プレイ時間',
-              value: _formatPlayTime(progression.totalPlayTime),
+              label: l10n.profilePlayTimeLabel,
+              value: _formatPlayTime(l10n, progression.totalPlayTime),
             ),
             const SizedBox(height: 10),
             _DetailRow(
-              label: '最終更新',
-              value: _formatDateTime(progression.lastUpdated),
+              label: l10n.profileLastUpdatedLabel,
+              value: _formatDateTime(l10n, progression.lastUpdated),
             ),
             const SizedBox(height: 10),
             _DetailRow(
-              label: 'アンロック済みコスメティック',
-              value: '${progression.unlockedCosmetics.length}個',
+              label: l10n.profileUnlockedCosmeticsLabel,
+              value: l10n.profileUnlockedCosmeticsCount(
+                  progression.unlockedCosmetics.length),
             ),
           ],
         ),
@@ -543,14 +554,15 @@ class _ProgressionDetailsCard extends StatelessWidget {
     );
   }
 
-  String _formatPlayTime(int seconds) {
+  String _formatPlayTime(AppLocalizations l10n, int seconds) {
     final hours = seconds ~/ 3600;
     final minutes = (seconds % 3600) ~/ 60;
-    return '$hours時間 $minutes分';
+    return l10n.profilePlayTimeFormat(hours, minutes);
   }
 
-  String _formatDateTime(DateTime dateTime) {
-    return '${dateTime.year}年${dateTime.month}月${dateTime.day}日';
+  String _formatDateTime(AppLocalizations l10n, DateTime dateTime) {
+    return l10n.profileDateFormat(
+        dateTime.year, dateTime.month, dateTime.day);
   }
 }
 
@@ -595,10 +607,12 @@ class _DetailRow extends StatelessWidget {
 class _ActionButtonsCard extends StatelessWidget {
   final BuildContext context;
   final UserProgression progression;
+  final AppLocalizations l10n;
 
   const _ActionButtonsCard({
     required this.context,
     required this.progression,
+    required this.l10n,
   });
 
   @override
@@ -609,9 +623,9 @@ class _ActionButtonsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'アクション',
-              style: TextStyle(
+            Text(
+              l10n.profileActionsTitle,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -622,7 +636,7 @@ class _ActionButtonsCard extends StatelessWidget {
               onPressed: () =>
                   Navigator.pushNamed(context, '/cosmetics_equipment'),
               icon: const Icon(Icons.palette),
-              label: const Text('コスメティック設定'),
+              label: Text(l10n.profileCosmeticsSettingsButton),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
@@ -633,7 +647,7 @@ class _ActionButtonsCard extends StatelessWidget {
                 onPressed: () =>
                     Navigator.pushNamed(context, '/prestige_reset'),
                 icon: const Icon(Icons.star),
-                label: const Text('プレスティジ'),
+                label: Text(l10n.profilePrestigeButton),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber[700],
                   foregroundColor: Colors.black,
@@ -644,7 +658,7 @@ class _ActionButtonsCard extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: null,
                 icon: const Icon(Icons.lock),
-                label: const Text('プレスティジ (Lv.100で解放)'),
+                label: Text(l10n.profilePrestigeLockedButton(100)),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
@@ -660,11 +674,13 @@ class _AchievementStatsCard extends StatelessWidget {
   final int unlockedCount;
   final int totalCount;
   final VoidCallback onViewAll;
+  final AppLocalizations l10n;
 
   const _AchievementStatsCard({
     required this.unlockedCount,
     required this.totalCount,
     required this.onViewAll,
+    required this.l10n,
   });
 
   @override
@@ -680,9 +696,9 @@ class _AchievementStatsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '実績',
-                  style: TextStyle(
+                Text(
+                  l10n.profileAchievementsTitle,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -730,7 +746,7 @@ class _AchievementStatsCard extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
-                child: const Text('すべての実績を表示'),
+                child: Text(l10n.profileAchievementsViewAllButton),
               ),
             ),
           ],

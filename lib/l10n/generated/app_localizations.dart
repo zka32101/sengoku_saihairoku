@@ -1219,6 +1219,174 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{amount} ゴールド'**
   String goldShopGoldAmount(int amount);
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プロフィール'**
+  String get profileTitle;
+
+  /// No description provided for @profileLoadError.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユーザーデータを読み込めませんでした'**
+  String get profileLoadError;
+
+  /// No description provided for @profileLevelLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル'**
+  String get profileLevelLabel;
+
+  /// No description provided for @profileXpLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'経験値'**
+  String get profileXpLabel;
+
+  /// No description provided for @profileXpSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{xp} XP'**
+  String profileXpSuffix(String xp);
+
+  /// No description provided for @profileNextLevelProgress.
+  ///
+  /// In ja, this message translates to:
+  /// **'次のレベルまでの進捗'**
+  String get profileNextLevelProgress;
+
+  /// No description provided for @profileMaxLevelReached.
+  ///
+  /// In ja, this message translates to:
+  /// **'最大レベルに到達！プレスティジでリセットできます'**
+  String get profileMaxLevelReached;
+
+  /// No description provided for @profilePrestigeRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジランク'**
+  String get profilePrestigeRank;
+
+  /// No description provided for @profilePrestigePoints.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジポイント'**
+  String get profilePrestigePoints;
+
+  /// No description provided for @profilePrestigeResetCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット回数: {count}'**
+  String profilePrestigeResetCount(int count);
+
+  /// No description provided for @profileCosmeticsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック'**
+  String get profileCosmeticsTitle;
+
+  /// No description provided for @profileUnitSkinsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユニットスキン ({count})'**
+  String profileUnitSkinsLabel(int count);
+
+  /// No description provided for @profileUiThemesLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'UIテーマ ({count})'**
+  String profileUiThemesLabel(int count);
+
+  /// No description provided for @profileCosmeticsEmpty.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティックはまだ解放されていません'**
+  String get profileCosmeticsEmpty;
+
+  /// No description provided for @profileProgressionDetailsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プログレッション詳細'**
+  String get profileProgressionDetailsTitle;
+
+  /// No description provided for @profileUserIdLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユーザーID'**
+  String get profileUserIdLabel;
+
+  /// No description provided for @profilePlayTimeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間'**
+  String get profilePlayTimeLabel;
+
+  /// No description provided for @profilePlayTimeFormat.
+  ///
+  /// In ja, this message translates to:
+  /// **'{hours}時間 {minutes}分'**
+  String profilePlayTimeFormat(int hours, int minutes);
+
+  /// No description provided for @profileLastUpdatedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'最終更新'**
+  String get profileLastUpdatedLabel;
+
+  /// No description provided for @profileDateFormat.
+  ///
+  /// In ja, this message translates to:
+  /// **'{year}年{month}月{day}日'**
+  String profileDateFormat(int year, int month, int day);
+
+  /// No description provided for @profileUnlockedCosmeticsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'アンロック済みコスメティック'**
+  String get profileUnlockedCosmeticsLabel;
+
+  /// No description provided for @profileUnlockedCosmeticsCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'{count}個'**
+  String profileUnlockedCosmeticsCount(int count);
+
+  /// No description provided for @profileActionsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'アクション'**
+  String get profileActionsTitle;
+
+  /// No description provided for @profileCosmeticsSettingsButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック設定'**
+  String get profileCosmeticsSettingsButton;
+
+  /// No description provided for @profilePrestigeButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ'**
+  String get profilePrestigeButton;
+
+  /// No description provided for @profilePrestigeLockedButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ (Lv.{level}で解放)'**
+  String profilePrestigeLockedButton(int level);
+
+  /// No description provided for @profileAchievementsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'実績'**
+  String get profileAchievementsTitle;
+
+  /// No description provided for @profileAchievementsViewAllButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべての実績を表示'**
+  String get profileAchievementsViewAllButton;
 }
 
 class _AppLocalizationsDelegate

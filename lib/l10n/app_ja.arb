@@ -282,5 +282,64 @@
   "goldShopGoldAmount": "{amount} ゴールド",
   "@goldShopGoldAmount": {
     "placeholders": { "amount": { "type": "int" } }
-  }
+  },
+  "profileTitle": "プロフィール",
+  "profileLoadError": "ユーザーデータを読み込めませんでした",
+  "profileLevelLabel": "レベル",
+  "profileXpLabel": "経験値",
+  "profileXpSuffix": "{xp} XP",
+  "@profileXpSuffix": {
+    "placeholders": { "xp": { "type": "String" } }
+  },
+  "profileNextLevelProgress": "次のレベルまでの進捗",
+  "profileMaxLevelReached": "最大レベルに到達！プレスティジでリセットできます",
+  "profilePrestigeRank": "プレスティジランク",
+  "profilePrestigePoints": "プレスティジポイント",
+  "profilePrestigeResetCount": "リセット回数: {count}",
+  "@profilePrestigeResetCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileCosmeticsTitle": "コスメティック",
+  "profileUnitSkinsLabel": "ユニットスキン ({count})",
+  "@profileUnitSkinsLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileUiThemesLabel": "UIテーマ ({count})",
+  "@profileUiThemesLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileCosmeticsEmpty": "コスメティックはまだ解放されていません",
+  "profileProgressionDetailsTitle": "プログレッション詳細",
+  "profileUserIdLabel": "ユーザーID",
+  "profilePlayTimeLabel": "プレイ時間",
+  "profilePlayTimeFormat": "{hours}時間 {minutes}分",
+  "@profilePlayTimeFormat": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "profileLastUpdatedLabel": "最終更新",
+  "profileDateFormat": "{year}年{month}月{day}日",
+  "@profileDateFormat": {
+    "placeholders": {
+      "year": { "type": "int" },
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  },
+  "profileUnlockedCosmeticsLabel": "アンロック済みコスメティック",
+  "profileUnlockedCosmeticsCount": "{count}個",
+  "@profileUnlockedCosmeticsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "profileActionsTitle": "アクション",
+  "profileCosmeticsSettingsButton": "コスメティック設定",
+  "profilePrestigeButton": "プレスティジ",
+  "profilePrestigeLockedButton": "プレスティジ (Lv.{level}で解放)",
+  "@profilePrestigeLockedButton": {
+    "placeholders": { "level": { "type": "int" } }
+  },
+  "profileAchievementsTitle": "実績",
+  "profileAchievementsViewAllButton": "すべての実績を表示"
 }

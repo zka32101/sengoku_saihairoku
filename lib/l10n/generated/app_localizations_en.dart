@@ -625,4 +625,105 @@ class AppLocalizationsEn extends AppLocalizations {
   String goldShopGoldAmount(int amount) {
     return '$amount Gold';
   }
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileLoadError => 'Could not load user data';
+
+  @override
+  String get profileLevelLabel => 'Level';
+
+  @override
+  String get profileXpLabel => 'XP';
+
+  @override
+  String profileXpSuffix(String xp) {
+    return '$xp XP';
+  }
+
+  @override
+  String get profileNextLevelProgress => 'Progress to Next Level';
+
+  @override
+  String get profileMaxLevelReached =>
+      'Max level reached! You can reset with Prestige.';
+
+  @override
+  String get profilePrestigeRank => 'Prestige Rank';
+
+  @override
+  String get profilePrestigePoints => 'Prestige Points';
+
+  @override
+  String profilePrestigeResetCount(int count) {
+    return 'Resets: $count';
+  }
+
+  @override
+  String get profileCosmeticsTitle => 'Cosmetics';
+
+  @override
+  String profileUnitSkinsLabel(int count) {
+    return 'Unit Skins ($count)';
+  }
+
+  @override
+  String profileUiThemesLabel(int count) {
+    return 'UI Themes ($count)';
+  }
+
+  @override
+  String get profileCosmeticsEmpty => 'No cosmetics unlocked yet';
+
+  @override
+  String get profileProgressionDetailsTitle => 'Progression Details';
+
+  @override
+  String get profileUserIdLabel => 'User ID';
+
+  @override
+  String get profilePlayTimeLabel => 'Play Time';
+
+  @override
+  String profilePlayTimeFormat(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get profileLastUpdatedLabel => 'Last Updated';
+
+  @override
+  String profileDateFormat(int year, int month, int day) {
+    return '$year/$month/$day';
+  }
+
+  @override
+  String get profileUnlockedCosmeticsLabel => 'Unlocked Cosmetics';
+
+  @override
+  String profileUnlockedCosmeticsCount(int count) {
+    return '$count';
+  }
+
+  @override
+  String get profileActionsTitle => 'Actions';
+
+  @override
+  String get profileCosmeticsSettingsButton => 'Cosmetics Settings';
+
+  @override
+  String get profilePrestigeButton => 'Prestige';
+
+  @override
+  String profilePrestigeLockedButton(int level) {
+    return 'Prestige (Unlocks at Lv.$level)';
+  }
+
+  @override
+  String get profileAchievementsTitle => 'Achievements';
+
+  @override
+  String get profileAchievementsViewAllButton => 'View All Achievements';
 }

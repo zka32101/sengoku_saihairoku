@@ -409,6 +409,108 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'土'**
   String get weekdaySat;
+
+  /// No description provided for @statisticsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'統計'**
+  String get statisticsTitle;
+
+  /// No description provided for @statisticsDetailTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'詳細統計（シナリオ別・トレンド）'**
+  String get statisticsDetailTooltip;
+
+  /// No description provided for @statisticsXpSummaryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'XP統計'**
+  String get statisticsXpSummaryTitle;
+
+  /// No description provided for @statisticsXpGainedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'獲得XP'**
+  String get statisticsXpGainedLabel;
+
+  /// No description provided for @statisticsBattleCountLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘数'**
+  String get statisticsBattleCountLabel;
+
+  /// No description provided for @statisticsAverageXpLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均XP'**
+  String get statisticsAverageXpLabel;
+
+  /// No description provided for @statisticsXpHistoryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'XP獲得履歴'**
+  String get statisticsXpHistoryTitle;
+
+  /// No description provided for @statisticsXpHistoryEmpty.
+  ///
+  /// In ja, this message translates to:
+  /// **'XP獲得履歴がまだありません'**
+  String get statisticsXpHistoryEmpty;
+
+  /// No description provided for @statisticsSourceBattle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘'**
+  String get statisticsSourceBattle;
+
+  /// No description provided for @statisticsSourceChallenge.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ'**
+  String get statisticsSourceChallenge;
+
+  /// No description provided for @statisticsSourceAchievement.
+  ///
+  /// In ja, this message translates to:
+  /// **'実績'**
+  String get statisticsSourceAchievement;
+
+  /// No description provided for @statisticsSourceBattleXpBoost.
+  ///
+  /// In ja, this message translates to:
+  /// **'広告ブースト'**
+  String get statisticsSourceBattleXpBoost;
+
+  /// No description provided for @statisticsTimeJustNow.
+  ///
+  /// In ja, this message translates to:
+  /// **'たった今'**
+  String get statisticsTimeJustNow;
+
+  /// No description provided for @statisticsTimeMinutesAgo.
+  ///
+  /// In ja, this message translates to:
+  /// **'{minutes}分前'**
+  String statisticsTimeMinutesAgo(int minutes);
+
+  /// No description provided for @statisticsTimeHoursAgo.
+  ///
+  /// In ja, this message translates to:
+  /// **'{hours}時間前'**
+  String statisticsTimeHoursAgo(int hours);
+
+  /// No description provided for @statisticsTimeDaysAgo.
+  ///
+  /// In ja, this message translates to:
+  /// **'{days}日前'**
+  String statisticsTimeDaysAgo(int days);
+
+  /// No description provided for @statisticsTimeMonthDay.
+  ///
+  /// In ja, this message translates to:
+  /// **'{month}月{day}日'**
+  String statisticsTimeMonthDay(int month, int day);
 }
 
 class _AppLocalizationsDelegate

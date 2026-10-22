@@ -51,5 +51,37 @@
   "weekdayWed": "Wed",
   "weekdayThu": "Thu",
   "weekdayFri": "Fri",
-  "weekdaySat": "Sat"
+  "weekdaySat": "Sat",
+  "statisticsTitle": "Stats",
+  "statisticsDetailTooltip": "Detailed Stats (by Scenario / Trends)",
+  "statisticsXpSummaryTitle": "XP Stats",
+  "statisticsXpGainedLabel": "XP Gained",
+  "statisticsBattleCountLabel": "Battles",
+  "statisticsAverageXpLabel": "Avg XP",
+  "statisticsXpHistoryTitle": "XP History",
+  "statisticsXpHistoryEmpty": "No XP history yet",
+  "statisticsSourceBattle": "Battle",
+  "statisticsSourceChallenge": "Challenge",
+  "statisticsSourceAchievement": "Achievement",
+  "statisticsSourceBattleXpBoost": "Ad Boost",
+  "statisticsTimeJustNow": "Just now",
+  "statisticsTimeMinutesAgo": "{minutes}m ago",
+  "@statisticsTimeMinutesAgo": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "statisticsTimeHoursAgo": "{hours}h ago",
+  "@statisticsTimeHoursAgo": {
+    "placeholders": { "hours": { "type": "int" } }
+  },
+  "statisticsTimeDaysAgo": "{days}d ago",
+  "@statisticsTimeDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "statisticsTimeMonthDay": "{month}/{day}",
+  "@statisticsTimeMonthDay": {
+    "placeholders": {
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  }
 }

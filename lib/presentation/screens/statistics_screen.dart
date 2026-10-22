@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/repositories/progression_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 import 'advanced_statistics_screen.dart';
 
@@ -46,20 +47,21 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('統計')),
+        appBar: AppBar(title: Text(l10n.statisticsTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('統計'),
+        title: Text(l10n.statisticsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.bar_chart),
-            tooltip: '詳細統計（シナリオ別・トレンド）',
+            tooltip: l10n.statisticsDetailTooltip,
             onPressed: () {
               Navigator.push(
                 context,
@@ -112,15 +114,16 @@ class _XpStatsSummaryCard extends StatelessWidget {
       averageXpPerBattle = totalXpGained ~/ battleCount;
     }
 
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'XP統計',
-              style: TextStyle(
+            Text(
+              l10n.statisticsXpSummaryTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -131,17 +134,17 @@ class _XpStatsSummaryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _StatTile(
-                  label: '獲得XP',
+                  label: l10n.statisticsXpGainedLabel,
                   value: totalXpGained.toString(),
                   color: Colors.amber,
                 ),
                 _StatTile(
-                  label: '戦闘数',
+                  label: l10n.statisticsBattleCountLabel,
                   value: battleCount.toString(),
                   color: Colors.blue,
                 ),
                 _StatTile(
-                  label: '平均XP',
+                  label: l10n.statisticsAverageXpLabel,
                   value: averageXpPerBattle.toString(),
                   color: Colors.green,
                 ),
@@ -209,15 +212,16 @@ class _XpHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'XP獲得履歴',
-              style: TextStyle(
+            Text(
+              l10n.statisticsXpHistoryTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -227,7 +231,7 @@ class _XpHistoryCard extends StatelessWidget {
             if (xpHistory.isEmpty)
               Center(
                 child: Text(
-                  'XP獲得履歴がまだありません',
+                  l10n.statisticsXpHistoryEmpty,
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[600],
@@ -259,7 +263,7 @@ class _XpHistoryCard extends StatelessWidget {
                                       CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _getSourceLabel(source),
+                                      _getSourceLabel(l10n, source),
                                       style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
@@ -269,7 +273,7 @@ class _XpHistoryCard extends StatelessWidget {
                                     const SizedBox(height: 2),
                                     if (timestamp != null)
                                       Text(
-                                        _formatTimestamp(timestamp),
+                                        _formatTimestamp(l10n, timestamp),
                                         style: const TextStyle(
                                           fontSize: 11,
                                           color: Colors.grey,
@@ -300,31 +304,32 @@ class _XpHistoryCard extends StatelessWidget {
     );
   }
 
-  String _getSourceLabel(String source) {
+  String _getSourceLabel(AppLocalizations l10n, String source) {
     return switch (source) {
-      'battle' => '戦闘',
-      'challenge' => 'チャレンジ',
-      'achievement' => '実績',
+      'battle' => l10n.statisticsSourceBattle,
+      'challenge' => l10n.statisticsSourceChallenge,
+      'achievement' => l10n.statisticsSourceAchievement,
+      'battle_xp_boost_ad' => l10n.statisticsSourceBattleXpBoost,
       _ => source,
     };
   }
 
-  String _formatTimestamp(String timestamp) {
+  String _formatTimestamp(AppLocalizations l10n, String timestamp) {
     try {
       final dateTime = DateTime.parse(timestamp);
       final now = DateTime.now();
       final difference = now.difference(dateTime);
 
       if (difference.inMinutes < 1) {
-        return 'たった今';
+        return l10n.statisticsTimeJustNow;
       } else if (difference.inHours < 1) {
-        return '${difference.inMinutes}分前';
+        return l10n.statisticsTimeMinutesAgo(difference.inMinutes);
       } else if (difference.inDays < 1) {
-        return '${difference.inHours}時間前';
+        return l10n.statisticsTimeHoursAgo(difference.inHours);
       } else if (difference.inDays < 30) {
-        return '${difference.inDays}日前';
+        return l10n.statisticsTimeDaysAgo(difference.inDays);
       } else {
-        return '${dateTime.month}月${dateTime.day}日';
+        return l10n.statisticsTimeMonthDay(dateTime.month, dateTime.day);
       }
     } catch (e) {
       return timestamp;

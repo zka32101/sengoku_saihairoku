@@ -67,22 +67,33 @@ class ScenarioSelectScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: _scenarios.length,
-        separatorBuilder: (context, index) => const SizedBox(height: 12),
-        itemBuilder: (context, index) {
-          final s = _scenarios[index];
-          return _ScenarioCard(
-            name: s.name,
-            year: s.year,
-            difficulty: s.difficulty,
-            playTime: s.playTime,
-            description: s.description,
-            isUnlocked: s.isUnlocked,
-            onTap: () => _showScenarioSettings(context, s.scenario),
-          );
-        },
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/scenario_select_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          color: const Color(0xFF1A0F0A).withValues(alpha: 0.72),
+          child: ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: _scenarios.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final s = _scenarios[index];
+              return _ScenarioCard(
+                name: s.name,
+                year: s.year,
+                difficulty: s.difficulty,
+                playTime: s.playTime,
+                description: s.description,
+                isUnlocked: s.isUnlocked,
+                onTap: () => _showScenarioSettings(context, s.scenario),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

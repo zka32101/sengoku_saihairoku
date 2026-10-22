@@ -722,4 +722,108 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get profileAchievementsViewAllButton => 'すべての実績を表示';
+
+  @override
+  String get homeAppTitle => '戦国采配録';
+
+  @override
+  String get homeTagline => '天下を狙え';
+
+  @override
+  String get homeTodayChallengeLabel => '本日のチャレンジ';
+
+  @override
+  String get homeWeeklyChallengeLabel => '今週のチャレンジ';
+
+  @override
+  String get homeSpotBattleTitle => 'スポット戦';
+
+  @override
+  String get homeSpotBattleSubtitle => '有名な合戦を選んで采配を振るえ';
+
+  @override
+  String get homeSpotBattlePlayTime => 'プレイ時間: 3〜8分';
+
+  @override
+  String get homeSpotBattleButton => 'シナリオを選ぶ';
+
+  @override
+  String get homeChainBattleTitle => '連戦モード';
+
+  @override
+  String get homeChainBattleSubtitle => '休憩なしで全シナリオを攻略する高難度の縛りプレイ';
+
+  @override
+  String get homeChainBattleButton => '連戦に挑む';
+
+  @override
+  String get homeReplayTitle => 'バトルリプレイ';
+
+  @override
+  String get homeReplaySubtitle => '過去のバトルを再生・分析する';
+
+  @override
+  String get homeReplayNote => 'すべてのバトルは自動で記録されます';
+
+  @override
+  String get homeReplayButton => 'リプレイを見る';
+
+  @override
+  String get homeRankingTitle => 'ランキング';
+
+  @override
+  String get homeRankingSubtitle => '他の武将の采配と競え';
+
+  @override
+  String get homeRankingButton => 'ランキングを見る';
+
+  @override
+  String get homeChallengeHistoryTitle => 'チャレンジ履歴';
+
+  @override
+  String get homeChallengeHistorySubtitle => '過去7日間のチャレンジを確認';
+
+  @override
+  String get homeChallengeHistoryButton => 'チャレンジ履歴を見る';
+
+  @override
+  String get homeFriendsTitle => 'フレンド';
+
+  @override
+  String get homeFriendsSubtitle => 'フレンドコードを交換してランキングを競おう';
+
+  @override
+  String get homeFriendsButton => 'フレンドを見る';
+
+  @override
+  String get homeWarlordCollectionTitle => '武将図鑑';
+
+  @override
+  String get homeWarlordCollectionSubtitle => 'ゴールドで武将を発掘し、図鑑をコンプリートしよう';
+
+  @override
+  String get homeWarlordCollectionButton => '図鑑を見る';
+
+  @override
+  String get homeGoldShopTitle => 'ゴールドショップ';
+
+  @override
+  String get homeGoldShopSubtitle => 'ゴールドを購入してバトルパスの進行を加速';
+
+  @override
+  String get homeGoldShopButton => 'ショップを見る';
+
+  @override
+  String get homeBattlePassTitle => 'バトルパス';
+
+  @override
+  String get homeBattlePassSubtitle => 'シーズンを通してティアをアップ';
+
+  @override
+  String homeBattlePassMissedRewards(int count) {
+    return 'プレミアム報酬を$count件受け取り逃し中';
+  }
+
+  @override
+  String get homeBattlePassButton => 'バトルパスを見る';
 }

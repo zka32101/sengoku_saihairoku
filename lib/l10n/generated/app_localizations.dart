@@ -1387,6 +1387,210 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'すべての実績を表示'**
   String get profileAchievementsViewAllButton;
+
+  /// No description provided for @homeAppTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録'**
+  String get homeAppTitle;
+
+  /// No description provided for @homeTagline.
+  ///
+  /// In ja, this message translates to:
+  /// **'天下を狙え'**
+  String get homeTagline;
+
+  /// No description provided for @homeTodayChallengeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日のチャレンジ'**
+  String get homeTodayChallengeLabel;
+
+  /// No description provided for @homeWeeklyChallengeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'今週のチャレンジ'**
+  String get homeWeeklyChallengeLabel;
+
+  /// No description provided for @homeSpotBattleTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'スポット戦'**
+  String get homeSpotBattleTitle;
+
+  /// No description provided for @homeSpotBattleSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'有名な合戦を選んで采配を振るえ'**
+  String get homeSpotBattleSubtitle;
+
+  /// No description provided for @homeSpotBattlePlayTime.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間: 3〜8分'**
+  String get homeSpotBattlePlayTime;
+
+  /// No description provided for @homeSpotBattleButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオを選ぶ'**
+  String get homeSpotBattleButton;
+
+  /// No description provided for @homeChainBattleTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'連戦モード'**
+  String get homeChainBattleTitle;
+
+  /// No description provided for @homeChainBattleSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'休憩なしで全シナリオを攻略する高難度の縛りプレイ'**
+  String get homeChainBattleSubtitle;
+
+  /// No description provided for @homeChainBattleButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'連戦に挑む'**
+  String get homeChainBattleButton;
+
+  /// No description provided for @homeReplayTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルリプレイ'**
+  String get homeReplayTitle;
+
+  /// No description provided for @homeReplaySubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'過去のバトルを再生・分析する'**
+  String get homeReplaySubtitle;
+
+  /// No description provided for @homeReplayNote.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべてのバトルは自動で記録されます'**
+  String get homeReplayNote;
+
+  /// No description provided for @homeReplayButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'リプレイを見る'**
+  String get homeReplayButton;
+
+  /// No description provided for @homeRankingTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキング'**
+  String get homeRankingTitle;
+
+  /// No description provided for @homeRankingSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'他の武将の采配と競え'**
+  String get homeRankingSubtitle;
+
+  /// No description provided for @homeRankingButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランキングを見る'**
+  String get homeRankingButton;
+
+  /// No description provided for @homeChallengeHistoryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ履歴'**
+  String get homeChallengeHistoryTitle;
+
+  /// No description provided for @homeChallengeHistorySubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'過去7日間のチャレンジを確認'**
+  String get homeChallengeHistorySubtitle;
+
+  /// No description provided for @homeChallengeHistoryButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'チャレンジ履歴を見る'**
+  String get homeChallengeHistoryButton;
+
+  /// No description provided for @homeFriendsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンド'**
+  String get homeFriendsTitle;
+
+  /// No description provided for @homeFriendsSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドコードを交換してランキングを競おう'**
+  String get homeFriendsSubtitle;
+
+  /// No description provided for @homeFriendsButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドを見る'**
+  String get homeFriendsButton;
+
+  /// No description provided for @homeWarlordCollectionTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将図鑑'**
+  String get homeWarlordCollectionTitle;
+
+  /// No description provided for @homeWarlordCollectionSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドで武将を発掘し、図鑑をコンプリートしよう'**
+  String get homeWarlordCollectionSubtitle;
+
+  /// No description provided for @homeWarlordCollectionButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'図鑑を見る'**
+  String get homeWarlordCollectionButton;
+
+  /// No description provided for @homeGoldShopTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドショップ'**
+  String get homeGoldShopTitle;
+
+  /// No description provided for @homeGoldShopSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールドを購入してバトルパスの進行を加速'**
+  String get homeGoldShopSubtitle;
+
+  /// No description provided for @homeGoldShopButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'ショップを見る'**
+  String get homeGoldShopButton;
+
+  /// No description provided for @homeBattlePassTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパス'**
+  String get homeBattlePassTitle;
+
+  /// No description provided for @homeBattlePassSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シーズンを通してティアをアップ'**
+  String get homeBattlePassSubtitle;
+
+  /// No description provided for @homeBattlePassMissedRewards.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアム報酬を{count}件受け取り逃し中'**
+  String homeBattlePassMissedRewards(int count);
+
+  /// No description provided for @homeBattlePassButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパスを見る'**
+  String get homeBattlePassButton;
 }
 
 class _AppLocalizationsDelegate

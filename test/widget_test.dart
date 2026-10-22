@@ -1,4 +1,5 @@
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sengoku_saihairoku/data/repositories/achievement_repository.dart';
@@ -7,6 +8,7 @@ import 'package:sengoku_saihairoku/data/repositories/daily_challenge_repository.
 import 'package:sengoku_saihairoku/data/repositories/progression_repository.dart';
 import 'package:sengoku_saihairoku/data/repositories/reward_repository.dart';
 import 'package:sengoku_saihairoku/data/repositories/turn_rank_repository.dart';
+import 'package:sengoku_saihairoku/core/services/locale_controller.dart';
 import 'package:sengoku_saihairoku/main.dart';
 
 /// ウィジェットテストは main() を経由せず SengokuSaihairokuApp を直接
@@ -42,6 +44,10 @@ void main() {
     await RewardRepository().initialize();
     await AchievementRepository().initialize();
     await BattlePassRepository().initialize();
+
+    // ホーム画面のタイトルは多言語化対応によりロケール依存の表示文言に
+    // なったため、テスト環境の既定ロケール（en）に依存せず明示的にjaへ固定する。
+    LocaleController.instance.value = const Locale('ja');
 
     await tester.pumpWidget(
       const SengokuSaihairokuApp(initialRoute: '/home'),

@@ -144,11 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context),
+            _buildHeader(context, l10n),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -170,9 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            '本日のチャレンジ',
-                            style: TextStyle(
+                          Text(
+                            l10n.homeTodayChallengeLabel,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
@@ -193,9 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            '今週のチャレンジ',
-                            style: TextStyle(
+                          Text(
+                            l10n.homeWeeklyChallengeLabel,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
@@ -210,23 +211,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 16),
                         ],
                       ),
-                    _buildSpotBattleCard(context),
+                    _buildSpotBattleCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildChainBattleCard(context),
+                    _buildChainBattleCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildReplayCard(context),
+                    _buildReplayCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildRankingCard(context),
+                    _buildRankingCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildChallengeHistoryCard(context),
+                    _buildChallengeHistoryCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildBattlePassCard(context),
+                    _buildBattlePassCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildGoldShopCard(context),
+                    _buildGoldShopCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildFriendsCard(context),
+                    _buildFriendsCard(context, l10n),
                     const SizedBox(height: 16),
-                    _buildWarlordCollectionCard(context),
+                    _buildWarlordCollectionCard(context, l10n),
                   ],
                 ),
               ),
@@ -238,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
     return Container(
       width: double.infinity,
       height: 200,
@@ -263,9 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '戦国采配録',
-              style: TextStyle(
+            Text(
+              l10n.homeAppTitle,
+              style: const TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -275,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '天下を狙え',
+              l10n.homeTagline,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[300],
@@ -289,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSpotBattleCard(BuildContext context) {
+  Widget _buildSpotBattleCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -304,9 +305,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 32,
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'スポット戦',
-                  style: TextStyle(
+                Text(
+                  l10n.homeSpotBattleTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -316,12 +317,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '有名な合戦を選んで采配を振るえ',
+              l10n.homeSpotBattleSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 4),
             Text(
-              'プレイ時間: 3〜8分',
+              l10n.homeSpotBattlePlayTime,
               style: TextStyle(color: Colors.grey[500], fontSize: 12),
             ),
             const SizedBox(height: 16),
@@ -331,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () =>
                     Navigator.pushNamed(context, '/scenario_select'),
                 icon: const Icon(Icons.play_arrow),
-                label: const Text('シナリオを選ぶ'),
+                label: Text(l10n.homeSpotBattleButton),
               ),
             ),
           ],
@@ -340,20 +341,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildChainBattleCard(BuildContext context) {
+  Widget _buildChainBattleCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.whatshot, color: Colors.redAccent, size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.whatshot, color: Colors.redAccent, size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  '連戦モード',
-                  style: TextStyle(
+                  l10n.homeChainBattleTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.redAccent,
@@ -363,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '休憩なしで全シナリオを攻略する高難度の縛りプレイ',
+              l10n.homeChainBattleSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -373,9 +374,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () =>
                     Navigator.pushNamed(context, '/chain_battle'),
                 icon: const Icon(Icons.whatshot, color: Colors.redAccent),
-                label: const Text(
-                  '連戦に挑む',
-                  style: TextStyle(color: Colors.redAccent),
+                label: Text(
+                  l10n.homeChainBattleButton,
+                  style: const TextStyle(color: Colors.redAccent),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.redAccent),
@@ -389,20 +390,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildReplayCard(BuildContext context) {
+  Widget _buildReplayCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.videocam, color: Color(0xFFFFD700), size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.videocam, color: Color(0xFFFFD700), size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'バトルリプレイ',
-                  style: TextStyle(
+                  l10n.homeReplayTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -412,12 +413,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '過去のバトルを再生・分析する',
+              l10n.homeReplaySubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 4),
             Text(
-              'すべてのバトルは自動で記録されます',
+              l10n.homeReplayNote,
               style: TextStyle(color: Colors.grey[500], fontSize: 12),
             ),
             const SizedBox(height: 16),
@@ -426,9 +427,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/replay'),
                 icon: const Icon(Icons.play_circle, color: Color(0xFFFFD700)),
-                label: const Text(
-                  'リプレイを見る',
-                  style: TextStyle(color: Color(0xFFFFD700)),
+                label: Text(
+                  l10n.homeReplayButton,
+                  style: const TextStyle(color: Color(0xFFFFD700)),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
@@ -442,20 +443,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildRankingCard(BuildContext context) {
+  Widget _buildRankingCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.leaderboard, color: Color(0xFFFFD700), size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.leaderboard, color: Color(0xFFFFD700), size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'ランキング',
-                  style: TextStyle(
+                  l10n.homeRankingTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -465,7 +466,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '他の武将の采配と競え',
+              l10n.homeRankingSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -474,9 +475,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/ranking'),
                 icon: const Icon(Icons.bar_chart, color: Color(0xFFFFD700)),
-                label: const Text(
-                  'ランキングを見る',
-                  style: TextStyle(color: Color(0xFFFFD700)),
+                label: Text(
+                  l10n.homeRankingButton,
+                  style: const TextStyle(color: Color(0xFFFFD700)),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
@@ -490,20 +491,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildChallengeHistoryCard(BuildContext context) {
+  Widget _buildChallengeHistoryCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.card_giftcard, color: Color(0xFFFFD700), size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.card_giftcard, color: Color(0xFFFFD700), size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'チャレンジ履歴',
-                  style: TextStyle(
+                  l10n.homeChallengeHistoryTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -513,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '過去7日間のチャレンジを確認',
+              l10n.homeChallengeHistorySubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -523,9 +524,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () =>
                     Navigator.pushNamed(context, '/challenge_history'),
                 icon: const Icon(Icons.history, color: Color(0xFFFFD700)),
-                label: const Text(
-                  'チャレンジ履歴を見る',
-                  style: TextStyle(color: Color(0xFFFFD700)),
+                label: Text(
+                  l10n.homeChallengeHistoryButton,
+                  style: const TextStyle(color: Color(0xFFFFD700)),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
@@ -539,20 +540,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFriendsCard(BuildContext context) {
+  Widget _buildFriendsCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.people, color: Colors.lightGreenAccent, size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.people, color: Colors.lightGreenAccent, size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'フレンド',
-                  style: TextStyle(
+                  l10n.homeFriendsTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.lightGreenAccent,
@@ -562,7 +563,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'フレンドコードを交換してランキングを競おう',
+              l10n.homeFriendsSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -571,9 +572,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/friends'),
                 icon: const Icon(Icons.people, color: Colors.lightGreenAccent),
-                label: const Text(
-                  'フレンドを見る',
-                  style: TextStyle(color: Colors.lightGreenAccent),
+                label: Text(
+                  l10n.homeFriendsButton,
+                  style: const TextStyle(color: Colors.lightGreenAccent),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.lightGreenAccent),
@@ -587,20 +588,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildWarlordCollectionCard(BuildContext context) {
+  Widget _buildWarlordCollectionCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.military_tech, color: Colors.orangeAccent, size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.military_tech, color: Colors.orangeAccent, size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  '武将図鑑',
-                  style: TextStyle(
+                  l10n.homeWarlordCollectionTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.orangeAccent,
@@ -610,7 +611,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'ゴールドで武将を発掘し、図鑑をコンプリートしよう',
+              l10n.homeWarlordCollectionSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -620,9 +621,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () => Navigator.pushNamed(context, '/warlords'),
                 icon: const Icon(Icons.military_tech,
                     color: Colors.orangeAccent),
-                label: const Text(
-                  '図鑑を見る',
-                  style: TextStyle(color: Colors.orangeAccent),
+                label: Text(
+                  l10n.homeWarlordCollectionButton,
+                  style: const TextStyle(color: Colors.orangeAccent),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.orangeAccent),
@@ -636,20 +637,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildGoldShopCard(BuildContext context) {
+  Widget _buildGoldShopCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.monetization_on, color: Colors.amber, size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.monetization_on, color: Colors.amber, size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'ゴールドショップ',
-                  style: TextStyle(
+                  l10n.homeGoldShopTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.amber,
@@ -659,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'ゴールドを購入してバトルパスの進行を加速',
+              l10n.homeGoldShopSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             const SizedBox(height: 16),
@@ -668,9 +669,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/gold_shop'),
                 icon: const Icon(Icons.monetization_on, color: Colors.amber),
-                label: const Text(
-                  'ショップを見る',
-                  style: TextStyle(color: Colors.amber),
+                label: Text(
+                  l10n.homeGoldShopButton,
+                  style: const TextStyle(color: Colors.amber),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.amber),
@@ -684,20 +685,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBattlePassCard(BuildContext context) {
+  Widget _buildBattlePassCard(BuildContext context, AppLocalizations l10n) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.card_membership, color: Colors.cyan, size: 28),
-                SizedBox(width: 8),
+                const Icon(Icons.card_membership, color: Colors.cyan, size: 28),
+                const SizedBox(width: 8),
                 Text(
-                  'バトルパス',
-                  style: TextStyle(
+                  l10n.homeBattlePassTitle,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.cyan,
@@ -707,7 +708,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'シーズンを通してティアをアップ',
+              l10n.homeBattlePassSubtitle,
               style: TextStyle(color: Colors.grey[400]),
             ),
             if (_missedPremiumRewardCount > 0) ...[
@@ -725,7 +726,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.amber, size: 14),
                     const SizedBox(width: 6),
                     Text(
-                      'プレミアム報酬を$_missedPremiumRewardCount件受け取り逃し中',
+                      l10n.homeBattlePassMissedRewards(_missedPremiumRewardCount),
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -742,9 +743,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/battle_pass'),
                 icon: const Icon(Icons.trending_up, color: Colors.cyan),
-                label: const Text(
-                  'バトルパスを見る',
-                  style: TextStyle(color: Colors.cyan),
+                label: Text(
+                  l10n.homeBattlePassButton,
+                  style: const TextStyle(color: Colors.cyan),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.cyan),

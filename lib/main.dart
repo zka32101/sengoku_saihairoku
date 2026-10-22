@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,6 +39,8 @@ import 'data/repositories/battle_pass_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  runApp(const _SplashScreen());
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseService().initialize();
   await LocaleController.instance.loadSaved();
@@ -95,6 +98,35 @@ void main() async {
       initialRoute: needsOnboarding ? '/onboarding' : '/home',
     ),
   ));
+}
+
+/// 起動時の非同期初期化（Firebase・各種リポジトリ）が完了するまで表示する
+/// スプラッシュ画面。main()から初期化完了後にrunApp()を再度呼ぶことで
+/// 本体のSengokuSaihairokuAppに差し替える。
+class _SplashScreen extends StatelessWidget {
+  const _SplashScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final asset =
+        Random().nextBool() ? 'assets/images/loading_1.png' : 'assets/images/loading_2.png';
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: const Color(0xFF1A0F0A),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(asset, fit: BoxFit.cover),
+            Container(color: Colors.black.withValues(alpha: 0.35)),
+            const Center(
+              child: CircularProgressIndicator(color: Color(0xFFFFD700)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class SengokuSaihairokuApp extends StatefulWidget {

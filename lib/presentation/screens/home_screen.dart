@@ -739,7 +739,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _navItem(BuildContext context, IconData icon, String label, String route,
       {bool selected = false}) {
-    return Expanded(
+    return SizedBox(
+      width: 72,
       child: InkWell(
         onTap: () {
           // ranking/settings画面の下部ナビと挙動を揃える（スタックを積み上げず置換する）

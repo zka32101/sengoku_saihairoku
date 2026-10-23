@@ -1339,4 +1339,116 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get prestigeResetConfirmExecuteButton => 'リセットを実行';
+
+  @override
+  String get cosmeticsEquipTitle => 'コスメティック設定';
+
+  @override
+  String get cosmeticsEquipSuccess => 'コスメティックを装備しました';
+
+  @override
+  String get cosmeticsUnequipSuccess => 'コスメティックを外しました';
+
+  @override
+  String get cosmeticsUnitSkinTitle => 'ユニットスキン';
+
+  @override
+  String get cosmeticsUiThemeTitle => 'UIテーマ';
+
+  @override
+  String get cosmeticsEquippedLabel => '装備中:';
+
+  @override
+  String get cosmeticsUnknownName => '不明';
+
+  @override
+  String get cosmeticsUnequipButton => '外す';
+
+  @override
+  String get cosmeticsEquippedBadge => '装備中';
+
+  @override
+  String get cosmeticsEquipButton => '装備する';
+
+  @override
+  String cosmeticsNoCosmeticsTitle(String type) {
+    return '$typeはまだ解放されていません';
+  }
+
+  @override
+  String get cosmeticsNoCosmeticsHint => 'レベルアップやプレスティジで解放されます';
+
+  @override
+  String get cosmeticsAcquisitionLevelMilestone => 'レベル報酬';
+
+  @override
+  String get cosmeticsAcquisitionAchievement => 'アチーブメント';
+
+  @override
+  String get cosmeticsAcquisitionPrestige => 'プレスティジ報酬';
+
+  @override
+  String get cosmeticsAcquisitionBattlePass => 'バトルパス';
+
+  @override
+  String get cosmeticsAcquisitionEvent => 'イベント報酬';
+
+  @override
+  String get cosmeticsPrestigeRankLabel => 'プレスティジランク';
+
+  @override
+  String cosmeticsResetCountLabel(int count) {
+    return 'リセット回数: $count';
+  }
+
+  @override
+  String cosmeticsPointsLabel(int points) {
+    return 'ポイント: $points';
+  }
+
+  @override
+  String get cosmeticsShowcaseTitle => 'プレスティジコスメティック';
+
+  @override
+  String cosmeticsShowcaseRankLine(String rank) {
+    return 'ランク: $rank';
+  }
+
+  @override
+  String get cosmeticsShowcaseEquippedSkinLabel => '装備中のユニットスキン';
+
+  @override
+  String get cosmeticsShowcaseEquippedThemeLabel => '装備中のUIテーマ';
+
+  @override
+  String get cosmeticsShowcaseEmpty => 'プレスティジコスメティックがまだ装備されていません';
+
+  @override
+  String get cosmeticsPrestigeSectionEmptyHint => 'プレスティジリセットを行うと解放されます';
+
+  @override
+  String cosmeticsPrestigeCurrentRankLine(String rank) {
+    return '現在のプレスティジランク: $rank';
+  }
+
+  @override
+  String get cosmeticsPrestigeUnitSkinTitle => 'プレスティジユニットスキン';
+
+  @override
+  String get cosmeticsPrestigeUiThemeTitle => 'プレスティジUIテーマ';
+
+  @override
+  String get cosmeticsPrestigeTierSilver => 'シルバー';
+
+  @override
+  String get cosmeticsPrestigeTierGold => 'ゴールド';
+
+  @override
+  String get cosmeticsPrestigeTierPlatinum => 'プラチナ';
+
+  @override
+  String get cosmeticsPrestigeTierDiamond => 'ダイヤモンド';
+
+  @override
+  String get cosmeticsPrestigeTierUnknown => '不明';
 }

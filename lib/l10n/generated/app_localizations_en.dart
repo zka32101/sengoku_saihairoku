@@ -1283,4 +1283,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String chainCompletionAdLabel(int amount) {
     return 'Watch an ad to earn a $amount gold bonus for your hard work';
   }
+
+  @override
+  String get prestigeResetTitle => 'Prestige';
+
+  @override
+  String get prestigeResetSuccessMessage => 'Prestige reset complete!';
+
+  @override
+  String prestigeResetErrorMessage(String error) {
+    return 'An error occurred: $error';
+  }
+
+  @override
+  String get prestigeResetLockedLevelReason => 'Reach Level 100 first';
+
+  @override
+  String prestigeResetLockedPointsReason(int points) {
+    return 'You need 1000 or more Prestige Points\nCurrent: $points';
+  }
+
+  @override
+  String get prestigeResetCurrentRankLabel => 'Current Prestige Rank';
+
+  @override
+  String prestigeResetCountSuffix(int count) {
+    return 'Resets: $count';
+  }
+
+  @override
+  String get prestigeResetLockedTitle => 'Prestige Unavailable';
+
+  @override
+  String get prestigeResetActionTitle => 'Perform Prestige Reset';
+
+  @override
+  String get prestigeResetActionDescription =>
+      'You meet the requirements. You can perform a Prestige reset.';
+
+  @override
+  String get prestigeResetProcessing => 'Processing...';
+
+  @override
+  String get prestigeResetBenefitsTitle => 'About Prestige';
+
+  @override
+  String get prestigeResetBenefit1Title => 'Level and XP Reset';
+
+  @override
+  String get prestigeResetBenefit1Desc =>
+      'Your level returns to 1 and your XP resets to 0';
+
+  @override
+  String get prestigeResetBenefit2Title => 'Prestige Rank Rises';
+
+  @override
+  String get prestigeResetBenefit2Desc =>
+      'Your new rank is determined based on turn efficiency';
+
+  @override
+  String get prestigeResetBenefit3Title => 'Exclusive Cosmetics Unlocked';
+
+  @override
+  String get prestigeResetBenefit3Desc =>
+      'Exclusive skins and themes matching your new rank are unlocked';
+
+  @override
+  String get prestigeResetBenefit4Title => 'Next Reset Requirement Rises';
+
+  @override
+  String get prestigeResetBenefit4Desc =>
+      'You will need more Prestige Points next time';
+
+  @override
+  String get prestigeResetConfirmTitle => 'Confirm Prestige Reset';
+
+  @override
+  String get prestigeResetConfirmIntro =>
+      'This will perform a Prestige reset. Is the following OK?';
+
+  @override
+  String get prestigeResetConfirmCurrentLevel => 'Current Level';
+
+  @override
+  String get prestigeResetConfirmRank => 'Rank After Reset';
+
+  @override
+  String get prestigeResetIrreversibleWarning => 'This action cannot be undone';
+
+  @override
+  String get prestigeResetConfirmExecuteButton => 'Perform Reset';
 }

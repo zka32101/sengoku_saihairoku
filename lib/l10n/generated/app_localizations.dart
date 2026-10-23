@@ -2160,6 +2160,126 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'4〜5分'**
   String get scenarioPlayTimeItsukushima;
+
+  /// No description provided for @tutorialTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'初陣：采配の基本'**
+  String get tutorialTitle;
+
+  /// No description provided for @tutorialPaceSelectTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'進め方を選ぶ'**
+  String get tutorialPaceSelectTitle;
+
+  /// No description provided for @tutorialPaceThoroughButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'じっくり学ぶ（解説つき）'**
+  String get tutorialPaceThoroughButton;
+
+  /// No description provided for @tutorialPaceBriskButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'駆け足で済ませる（解説なし）'**
+  String get tutorialPaceBriskButton;
+
+  /// No description provided for @tutorialEnemyBaseLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵本陣'**
+  String get tutorialEnemyBaseLabel;
+
+  /// No description provided for @tutorialVictoryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'初陣、勝利！'**
+  String get tutorialVictoryTitle;
+
+  /// No description provided for @tutorialVictoryMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'奇襲・盾陣・激励・突撃…\n采配次第で劣勢は覆せる。\nさあ、本当の戦場へ。'**
+  String get tutorialVictoryMessage;
+
+  /// No description provided for @tutorialStartJourneyButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将としての旅を始める'**
+  String get tutorialStartJourneyButton;
+
+  /// No description provided for @tutorialStepAmbushLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'奇襲'**
+  String get tutorialStepAmbushLabel;
+
+  /// No description provided for @tutorialStepAmbushPrompt.
+  ///
+  /// In ja, this message translates to:
+  /// **'兵力は敵の数分の一…正面からでは勝てない。\nまずは「奇襲」で敵の側面を突こう。'**
+  String get tutorialStepAmbushPrompt;
+
+  /// No description provided for @tutorialStepAmbushResult.
+  ///
+  /// In ja, this message translates to:
+  /// **'奇襲成功！敵陣が崩れ、大きな打撃を与えた。'**
+  String get tutorialStepAmbushResult;
+
+  /// No description provided for @tutorialStepShieldLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'盾陣'**
+  String get tutorialStepShieldLabel;
+
+  /// No description provided for @tutorialStepShieldPrompt.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵の反撃が始まる。「盾陣」で守りを固め、\n被害を抑えよう。'**
+  String get tutorialStepShieldPrompt;
+
+  /// No description provided for @tutorialStepShieldResult.
+  ///
+  /// In ja, this message translates to:
+  /// **'盾陣を展開！味方の防御力が大きく上がった。'**
+  String get tutorialStepShieldResult;
+
+  /// No description provided for @tutorialStepRallyLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'激励'**
+  String get tutorialStepRallyLabel;
+
+  /// No description provided for @tutorialStepRallyPrompt.
+  ///
+  /// In ja, this message translates to:
+  /// **'味方の士気を「激励」で高め、\n攻撃力を引き上げよう。'**
+  String get tutorialStepRallyPrompt;
+
+  /// No description provided for @tutorialStepRallyResult.
+  ///
+  /// In ja, this message translates to:
+  /// **'将兵の士気が上がり、攻撃力が上昇した！'**
+  String get tutorialStepRallyResult;
+
+  /// No description provided for @tutorialStepChargeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'突撃'**
+  String get tutorialStepChargeLabel;
+
+  /// No description provided for @tutorialStepChargePrompt.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵は崩れかけている。最後は「突撃」で\n一気に畳み掛けよう！'**
+  String get tutorialStepChargePrompt;
+
+  /// No description provided for @tutorialStepChargeResult.
+  ///
+  /// In ja, this message translates to:
+  /// **'全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！'**
+  String get tutorialStepChargeResult;
 }
 
 class _AppLocalizationsDelegate

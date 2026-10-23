@@ -1158,4 +1158,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeItsukushima => '4-5 min';
+
+  @override
+  String get tutorialTitle => 'First Battle: Command Basics';
+
+  @override
+  String get tutorialPaceSelectTitle => 'Choose Your Pace';
+
+  @override
+  String get tutorialPaceThoroughButton =>
+      'Learn Thoroughly (with explanations)';
+
+  @override
+  String get tutorialPaceBriskButton => 'Breeze Through (no explanations)';
+
+  @override
+  String get tutorialEnemyBaseLabel => 'Enemy Main Camp';
+
+  @override
+  String get tutorialVictoryTitle => 'First Battle Won!';
+
+  @override
+  String get tutorialVictoryMessage =>
+      'Surprise Attack, Shield Formation, Rally, Charge…\nEven the odds can be overcome with the right command.\nNow, to the real battlefield.';
+
+  @override
+  String get tutorialStartJourneyButton => 'Begin Your Journey as a Warlord';
+
+  @override
+  String get tutorialStepAmbushLabel => 'Surprise Attack';
+
+  @override
+  String get tutorialStepAmbushPrompt =>
+      'Your forces are a fraction of the enemy\'s… you can\'t win head-on.\nFirst, strike their flank with a \"Surprise Attack\".';
+
+  @override
+  String get tutorialStepAmbushResult =>
+      'Surprise attack succeeded! The enemy ranks broke, dealing a heavy blow.';
+
+  @override
+  String get tutorialStepShieldLabel => 'Shield Formation';
+
+  @override
+  String get tutorialStepShieldPrompt =>
+      'The enemy counterattacks. Use \"Shield Formation\" to harden your defenses\nand reduce losses.';
+
+  @override
+  String get tutorialStepShieldResult =>
+      'Shield formation deployed! Your army\'s defense rose sharply.';
+
+  @override
+  String get tutorialStepRallyLabel => 'Rally';
+
+  @override
+  String get tutorialStepRallyPrompt =>
+      'Raise your troops\' morale with \"Rally\"\nto boost their attack power.';
+
+  @override
+  String get tutorialStepRallyResult =>
+      'Troop morale rose, boosting attack power!';
+
+  @override
+  String get tutorialStepChargeLabel => 'Charge';
+
+  @override
+  String get tutorialStepChargePrompt =>
+      'The enemy is faltering. Finish them with a \"Charge\"\nand press the advantage!';
+
+  @override
+  String get tutorialStepChargeResult =>
+      'Full charge! You broke through the enemy\'s main camp and claimed victory!';
 }

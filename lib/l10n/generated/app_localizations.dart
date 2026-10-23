@@ -2280,6 +2280,84 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！'**
   String get tutorialStepChargeResult;
+
+  /// No description provided for @chainBattleTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'連戦モード'**
+  String get chainBattleTitle;
+
+  /// No description provided for @chainBattleDifficultyIntro.
+  ///
+  /// In ja, this message translates to:
+  /// **'連戦モードは全{count}戦を休憩なしで攻略します。ステージが進むほど自軍兵力が疲労で減少します。難易度を選んでください。'**
+  String chainBattleDifficultyIntro(int count);
+
+  /// No description provided for @chainBattleStageLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ステージ {current} / {total}'**
+  String chainBattleStageLabel(int current, int total);
+
+  /// No description provided for @chainBattleFatigueMultiplier.
+  ///
+  /// In ja, this message translates to:
+  /// **'疲労による兵力倍率: ×{multiplier}'**
+  String chainBattleFatigueMultiplier(String multiplier);
+
+  /// No description provided for @chainBattleResultLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{scenario}: {result}（{score}点）'**
+  String chainBattleResultLine(String scenario, String result, int score);
+
+  /// No description provided for @chainBattleWin.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get chainBattleWin;
+
+  /// No description provided for @chainBattleLoss.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get chainBattleLoss;
+
+  /// No description provided for @chainSummaryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'連戦終了'**
+  String get chainSummaryTitle;
+
+  /// No description provided for @chainSummaryWins.
+  ///
+  /// In ja, this message translates to:
+  /// **'{wins} / {total} 勝利'**
+  String chainSummaryWins(int wins, int total);
+
+  /// No description provided for @chainSummaryTotalScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'合計スコア: {score}点'**
+  String chainSummaryTotalScore(int score);
+
+  /// No description provided for @chainSummaryResultLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{result} {score}点'**
+  String chainSummaryResultLine(String result, int score);
+
+  /// No description provided for @chainSummaryHomeButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'ホームに戻る'**
+  String get chainSummaryHomeButton;
+
+  /// No description provided for @chainCompletionAdLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'広告を見て連戦の労をねぎらうボーナス{amount}ゴールドを獲得'**
+  String chainCompletionAdLabel(int amount);
 }
 
 class _AppLocalizationsDelegate

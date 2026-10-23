@@ -1139,4 +1139,65 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeItsukushima => '4〜5分';
+
+  @override
+  String get tutorialTitle => '初陣：采配の基本';
+
+  @override
+  String get tutorialPaceSelectTitle => '進め方を選ぶ';
+
+  @override
+  String get tutorialPaceThoroughButton => 'じっくり学ぶ（解説つき）';
+
+  @override
+  String get tutorialPaceBriskButton => '駆け足で済ませる（解説なし）';
+
+  @override
+  String get tutorialEnemyBaseLabel => '敵本陣';
+
+  @override
+  String get tutorialVictoryTitle => '初陣、勝利！';
+
+  @override
+  String get tutorialVictoryMessage => '奇襲・盾陣・激励・突撃…\n采配次第で劣勢は覆せる。\nさあ、本当の戦場へ。';
+
+  @override
+  String get tutorialStartJourneyButton => '武将としての旅を始める';
+
+  @override
+  String get tutorialStepAmbushLabel => '奇襲';
+
+  @override
+  String get tutorialStepAmbushPrompt =>
+      '兵力は敵の数分の一…正面からでは勝てない。\nまずは「奇襲」で敵の側面を突こう。';
+
+  @override
+  String get tutorialStepAmbushResult => '奇襲成功！敵陣が崩れ、大きな打撃を与えた。';
+
+  @override
+  String get tutorialStepShieldLabel => '盾陣';
+
+  @override
+  String get tutorialStepShieldPrompt => '敵の反撃が始まる。「盾陣」で守りを固め、\n被害を抑えよう。';
+
+  @override
+  String get tutorialStepShieldResult => '盾陣を展開！味方の防御力が大きく上がった。';
+
+  @override
+  String get tutorialStepRallyLabel => '激励';
+
+  @override
+  String get tutorialStepRallyPrompt => '味方の士気を「激励」で高め、\n攻撃力を引き上げよう。';
+
+  @override
+  String get tutorialStepRallyResult => '将兵の士気が上がり、攻撃力が上昇した！';
+
+  @override
+  String get tutorialStepChargeLabel => '突撃';
+
+  @override
+  String get tutorialStepChargePrompt => '敵は崩れかけている。最後は「突撃」で\n一気に畳み掛けよう！';
+
+  @override
+  String get tutorialStepChargeResult => '全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！';
 }

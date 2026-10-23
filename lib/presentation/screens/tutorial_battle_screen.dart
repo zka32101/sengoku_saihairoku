@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/scoring/battle_event_log.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class _TutorialStep {
   final PlayerCommand command;
@@ -21,39 +22,39 @@ class _TutorialStep {
   });
 }
 
-const _steps = [
+List<_TutorialStep> _stepsFor(AppLocalizations l10n) => [
   _TutorialStep(
     command: PlayerCommand.ambush,
-    label: '奇襲',
+    label: l10n.tutorialStepAmbushLabel,
     icon: Icons.bolt,
     color: Colors.orange,
-    prompt: '兵力は敵の数分の一…正面からでは勝てない。\nまずは「奇襲」で敵の側面を突こう。',
-    resultMessage: '奇襲成功！敵陣が崩れ、大きな打撃を与えた。',
+    prompt: l10n.tutorialStepAmbushPrompt,
+    resultMessage: l10n.tutorialStepAmbushResult,
     enemyDamage: 30,
   ),
   _TutorialStep(
     command: PlayerCommand.shield,
-    label: '盾陣',
+    label: l10n.tutorialStepShieldLabel,
     icon: Icons.shield,
-    color: Color(0xFF44AAFF),
-    prompt: '敵の反撃が始まる。「盾陣」で守りを固め、\n被害を抑えよう。',
-    resultMessage: '盾陣を展開！味方の防御力が大きく上がった。',
+    color: const Color(0xFF44AAFF),
+    prompt: l10n.tutorialStepShieldPrompt,
+    resultMessage: l10n.tutorialStepShieldResult,
   ),
   _TutorialStep(
     command: PlayerCommand.rally,
-    label: '激励',
+    label: l10n.tutorialStepRallyLabel,
     icon: Icons.local_fire_department,
-    color: Color(0xFFFFAA00),
-    prompt: '味方の士気を「激励」で高め、\n攻撃力を引き上げよう。',
-    resultMessage: '将兵の士気が上がり、攻撃力が上昇した！',
+    color: const Color(0xFFFFAA00),
+    prompt: l10n.tutorialStepRallyPrompt,
+    resultMessage: l10n.tutorialStepRallyResult,
   ),
   _TutorialStep(
     command: PlayerCommand.charge,
-    label: '突撃',
+    label: l10n.tutorialStepChargeLabel,
     icon: Icons.double_arrow,
-    color: Color(0xFFFF4444),
-    prompt: '敵は崩れかけている。最後は「突撃」で\n一気に畳み掛けよう！',
-    resultMessage: '全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！',
+    color: const Color(0xFFFF4444),
+    prompt: l10n.tutorialStepChargePrompt,
+    resultMessage: l10n.tutorialStepChargeResult,
     enemyDamage: 70,
   ),
 ];
@@ -82,11 +83,12 @@ class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
   int _stepIndex = 0;
   int _enemyHp = 100;
   String? _lastResultMessage;
-  bool get _isVictory => _stepIndex >= _steps.length;
 
-  void _executeCurrentStep() {
-    if (_isVictory) return;
-    final step = _steps[_stepIndex];
+  bool _isVictory(List<_TutorialStep> steps) => _stepIndex >= steps.length;
+
+  void _executeCurrentStep(List<_TutorialStep> steps) {
+    if (_isVictory(steps)) return;
+    final step = steps[_stepIndex];
     setState(() {
       _enemyHp = (_enemyHp - step.enemyDamage).clamp(0, 100);
       _lastResultMessage = step.resultMessage;
@@ -96,10 +98,13 @@ class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final steps = _stepsFor(l10n);
+    final isVictory = _isVictory(steps);
     return Scaffold(
       backgroundColor: const Color(0xFF1A0F0A),
       appBar: AppBar(
-        title: const Text('初陣：采配の基本'),
+        title: Text(l10n.tutorialTitle),
         backgroundColor: const Color(0xFF3B1A1A),
         automaticallyImplyLeading: false,
       ),
@@ -109,20 +114,21 @@ class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
           child: _pace == null
               ? _PaceSelector(
                   onSelected: (pace) => setState(() => _pace = pace),
+                  l10n: l10n,
                 )
               : Column(
                   children: [
-                    _EnemyHpBar(enemyHp: _enemyHp),
+                    _EnemyHpBar(enemyHp: _enemyHp, l10n: l10n),
                     const SizedBox(height: 24),
                     Expanded(
                       child: Center(
-                        child: _isVictory
-                            ? _VictoryPanel(onFinished: widget.onFinished)
+                        child: isVictory
+                            ? _VictoryPanel(onFinished: widget.onFinished, l10n: l10n)
                             : _StepPanel(
-                                step: _steps[_stepIndex],
+                                step: steps[_stepIndex],
                                 lastResultMessage: _lastResultMessage,
                                 showPrompt: _pace == _TutorialPace.thorough,
-                                onExecute: _executeCurrentStep,
+                                onExecute: () => _executeCurrentStep(steps),
                               ),
                       ),
                     ),
@@ -136,8 +142,9 @@ class _TutorialBattleScreenState extends State<TutorialBattleScreen> {
 
 class _PaceSelector extends StatelessWidget {
   final ValueChanged<_TutorialPace> onSelected;
+  final AppLocalizations l10n;
 
-  const _PaceSelector({required this.onSelected});
+  const _PaceSelector({required this.onSelected, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -145,9 +152,9 @@ class _PaceSelector extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            '進め方を選ぶ',
-            style: TextStyle(
+          Text(
+            l10n.tutorialPaceSelectTitle,
+            style: const TextStyle(
               color: Color(0xFFFFD700),
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -156,17 +163,17 @@ class _PaceSelector extends StatelessWidget {
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () => onSelected(_TutorialPace.thorough),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: Text('じっくり学ぶ（解説つき）'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text(l10n.tutorialPaceThoroughButton),
             ),
           ),
           const SizedBox(height: 12),
           OutlinedButton(
             onPressed: () => onSelected(_TutorialPace.brisk),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: Text('駆け足で済ませる（解説なし）'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Text(l10n.tutorialPaceBriskButton),
             ),
           ),
         ],
@@ -177,17 +184,18 @@ class _PaceSelector extends StatelessWidget {
 
 class _EnemyHpBar extends StatelessWidget {
   final int enemyHp;
+  final AppLocalizations l10n;
 
-  const _EnemyHpBar({required this.enemyHp});
+  const _EnemyHpBar({required this.enemyHp, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '敵本陣',
-          style: TextStyle(color: Color(0xFFB0A090), fontSize: 12),
+        Text(
+          l10n.tutorialEnemyBaseLabel,
+          style: const TextStyle(color: Color(0xFFB0A090), fontSize: 12),
         ),
         const SizedBox(height: 4),
         ClipRRect(
@@ -258,8 +266,9 @@ class _StepPanel extends StatelessWidget {
 
 class _VictoryPanel extends StatelessWidget {
   final VoidCallback onFinished;
+  final AppLocalizations l10n;
 
-  const _VictoryPanel({required this.onFinished});
+  const _VictoryPanel({required this.onFinished, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -268,19 +277,19 @@ class _VictoryPanel extends StatelessWidget {
       children: [
         const Icon(Icons.emoji_events, size: 72, color: Color(0xFFFFD700)),
         const SizedBox(height: 16),
-        const Text(
-          '初陣、勝利！',
-          style: TextStyle(
+        Text(
+          l10n.tutorialVictoryTitle,
+          style: const TextStyle(
             color: Color(0xFFFFD700),
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
-          '奇襲・盾陣・激励・突撃…\n采配次第で劣勢は覆せる。\nさあ、本当の戦場へ。',
+        Text(
+          l10n.tutorialVictoryMessage,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFFE8D5B0), fontSize: 14, height: 1.6),
+          style: const TextStyle(color: Color(0xFFE8D5B0), fontSize: 14, height: 1.6),
         ),
         const SizedBox(height: 32),
         ElevatedButton(
@@ -288,7 +297,7 @@ class _VictoryPanel extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
           ),
-          child: const Text('武将としての旅を始める'),
+          child: Text(l10n.tutorialStartJourneyButton),
         ),
       ],
     );

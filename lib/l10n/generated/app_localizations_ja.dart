@@ -1525,4 +1525,48 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get friendsChallengeTooltip => '挑戦する';
+
+  @override
+  String get onboardingSkipButton => 'スキップ';
+
+  @override
+  String get onboardingNextButton => '次へ';
+
+  @override
+  String get onboardingStartButton => '初陣へ';
+
+  @override
+  String get onboardingPage1Title => '戦国采配録へようこそ';
+
+  @override
+  String get onboardingPage1Description =>
+      '桶狭間、本能寺、関ヶ原…\n兵力で劣る武将となり、采配一つで\n歴史に残る大逆転劇を実現せよ。';
+
+  @override
+  String get onboardingPage2Title => '圧倒的劣勢から始まる';
+
+  @override
+  String get onboardingPage2Description =>
+      '多くのシナリオでは、敵の兵力が\nあなたの数倍〜十数倍に達する。\n正面からの力押しでは勝てない。';
+
+  @override
+  String get onboardingPage3Title => 'コマンドで戦況を動かす';
+
+  @override
+  String get onboardingPage3Description =>
+      '奇襲・盾陣・進軍・撤退・鼓舞・突撃…\n状況に応じたコマンドの選択こそが\n勝敗を分ける采配の要。';
+
+  @override
+  String get onboardingPage4Title => 'ターニングポイントを狙え';
+
+  @override
+  String get onboardingPage4Description =>
+      '各シナリオには史実に基づいた\n「ターニングポイント」が用意されている。\n条件を満たして達成し、高得点を狙おう。';
+
+  @override
+  String get onboardingPage5Title => '成長し続ける武将';
+
+  @override
+  String get onboardingPage5Description =>
+      'レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！';
 }

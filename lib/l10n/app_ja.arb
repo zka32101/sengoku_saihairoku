@@ -714,5 +714,18 @@
       "result": { "type": "String" }
     }
   },
-  "friendsChallengeTooltip": "挑戦する"
+  "friendsChallengeTooltip": "挑戦する",
+  "onboardingSkipButton": "スキップ",
+  "onboardingNextButton": "次へ",
+  "onboardingStartButton": "初陣へ",
+  "onboardingPage1Title": "戦国采配録へようこそ",
+  "onboardingPage1Description": "桶狭間、本能寺、関ヶ原…\n兵力で劣る武将となり、采配一つで\n歴史に残る大逆転劇を実現せよ。",
+  "onboardingPage2Title": "圧倒的劣勢から始まる",
+  "onboardingPage2Description": "多くのシナリオでは、敵の兵力が\nあなたの数倍〜十数倍に達する。\n正面からの力押しでは勝てない。",
+  "onboardingPage3Title": "コマンドで戦況を動かす",
+  "onboardingPage3Description": "奇襲・盾陣・進軍・撤退・鼓舞・突撃…\n状況に応じたコマンドの選択こそが\n勝敗を分ける采配の要。",
+  "onboardingPage4Title": "ターニングポイントを狙え",
+  "onboardingPage4Description": "各シナリオには史実に基づいた\n「ターニングポイント」が用意されている。\n条件を満たして達成し、高得点を狙おう。",
+  "onboardingPage5Title": "成長し続ける武将",
+  "onboardingPage5Description": "レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！"
 }

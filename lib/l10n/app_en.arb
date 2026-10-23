@@ -711,5 +711,18 @@
       "result": { "type": "String" }
     }
   },
-  "friendsChallengeTooltip": "Challenge"
+  "friendsChallengeTooltip": "Challenge",
+  "onboardingSkipButton": "Skip",
+  "onboardingNextButton": "Next",
+  "onboardingStartButton": "Start",
+  "onboardingPage1Title": "Welcome to Sengoku Saihairoku",
+  "onboardingPage1Description": "Okehazama, Honno-ji, Sekigahara…\nBecome an outnumbered warlord and use your commands\nto pull off a legendary comeback.",
+  "onboardingPage2Title": "You Start at a Severe Disadvantage",
+  "onboardingPage2Description": "In many scenarios, the enemy's forces\nare several to over ten times your own.\nYou can't win by brute force alone.",
+  "onboardingPage3Title": "Commands Shape the Battle",
+  "onboardingPage3Description": "Surprise Attack, Shield Formation, Advance, Retreat, Rally, Charge…\nChoosing the right command for the situation\nis the key to victory.",
+  "onboardingPage4Title": "Aim for the Turning Points",
+  "onboardingPage4Description": "Each scenario has historically-based\n\"Turning Points\" to discover.\nMeet their conditions for a high score.",
+  "onboardingPage5Title": "A Warlord Who Keeps Growing",
+  "onboardingPage5Description": "Level, achievements, Battle Pass, Prestige…\nThe more you fight, the more your warlord grows.\nNow, take command of your first battle!"
 }

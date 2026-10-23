@@ -1563,4 +1563,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get friendsChallengeTooltip => 'Challenge';
+
+  @override
+  String get onboardingSkipButton => 'Skip';
+
+  @override
+  String get onboardingNextButton => 'Next';
+
+  @override
+  String get onboardingStartButton => 'Start';
+
+  @override
+  String get onboardingPage1Title => 'Welcome to Sengoku Saihairoku';
+
+  @override
+  String get onboardingPage1Description =>
+      'Okehazama, Honno-ji, Sekigahara…\nBecome an outnumbered warlord and use your commands\nto pull off a legendary comeback.';
+
+  @override
+  String get onboardingPage2Title => 'You Start at a Severe Disadvantage';
+
+  @override
+  String get onboardingPage2Description =>
+      'In many scenarios, the enemy\'s forces\nare several to over ten times your own.\nYou can\'t win by brute force alone.';
+
+  @override
+  String get onboardingPage3Title => 'Commands Shape the Battle';
+
+  @override
+  String get onboardingPage3Description =>
+      'Surprise Attack, Shield Formation, Advance, Retreat, Rally, Charge…\nChoosing the right command for the situation\nis the key to victory.';
+
+  @override
+  String get onboardingPage4Title => 'Aim for the Turning Points';
+
+  @override
+  String get onboardingPage4Description =>
+      'Each scenario has historically-based\n\"Turning Points\" to discover.\nMeet their conditions for a high score.';
+
+  @override
+  String get onboardingPage5Title => 'A Warlord Who Keeps Growing';
+
+  @override
+  String get onboardingPage5Description =>
+      'Level, achievements, Battle Pass, Prestige…\nThe more you fight, the more your warlord grows.\nNow, take command of your first battle!';
 }

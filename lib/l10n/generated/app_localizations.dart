@@ -2850,6 +2850,84 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'挑戦する'**
   String get friendsChallengeTooltip;
+
+  /// No description provided for @onboardingSkipButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'スキップ'**
+  String get onboardingSkipButton;
+
+  /// No description provided for @onboardingNextButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'次へ'**
+  String get onboardingNextButton;
+
+  /// No description provided for @onboardingStartButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'初陣へ'**
+  String get onboardingStartButton;
+
+  /// No description provided for @onboardingPage1Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録へようこそ'**
+  String get onboardingPage1Title;
+
+  /// No description provided for @onboardingPage1Description.
+  ///
+  /// In ja, this message translates to:
+  /// **'桶狭間、本能寺、関ヶ原…\n兵力で劣る武将となり、采配一つで\n歴史に残る大逆転劇を実現せよ。'**
+  String get onboardingPage1Description;
+
+  /// No description provided for @onboardingPage2Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'圧倒的劣勢から始まる'**
+  String get onboardingPage2Title;
+
+  /// No description provided for @onboardingPage2Description.
+  ///
+  /// In ja, this message translates to:
+  /// **'多くのシナリオでは、敵の兵力が\nあなたの数倍〜十数倍に達する。\n正面からの力押しでは勝てない。'**
+  String get onboardingPage2Description;
+
+  /// No description provided for @onboardingPage3Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'コマンドで戦況を動かす'**
+  String get onboardingPage3Title;
+
+  /// No description provided for @onboardingPage3Description.
+  ///
+  /// In ja, this message translates to:
+  /// **'奇襲・盾陣・進軍・撤退・鼓舞・突撃…\n状況に応じたコマンドの選択こそが\n勝敗を分ける采配の要。'**
+  String get onboardingPage3Description;
+
+  /// No description provided for @onboardingPage4Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターニングポイントを狙え'**
+  String get onboardingPage4Title;
+
+  /// No description provided for @onboardingPage4Description.
+  ///
+  /// In ja, this message translates to:
+  /// **'各シナリオには史実に基づいた\n「ターニングポイント」が用意されている。\n条件を満たして達成し、高得点を狙おう。'**
+  String get onboardingPage4Description;
+
+  /// No description provided for @onboardingPage5Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'成長し続ける武将'**
+  String get onboardingPage5Title;
+
+  /// No description provided for @onboardingPage5Description.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！'**
+  String get onboardingPage5Description;
 }
 
 class _AppLocalizationsDelegate

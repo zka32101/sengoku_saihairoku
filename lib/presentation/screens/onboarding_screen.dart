@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../data/repositories/onboarding_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import 'tutorial_battle_screen.dart';
 
 class _OnboardingPage {
@@ -15,41 +16,31 @@ class _OnboardingPage {
   });
 }
 
-const _pages = [
+List<_OnboardingPage> _pagesFor(AppLocalizations l10n) => [
   _OnboardingPage(
     icon: Icons.castle,
-    title: '戦国采配録へようこそ',
-    description: '桶狭間、本能寺、関ヶ原…\n'
-        '兵力で劣る武将となり、采配一つで\n'
-        '歴史に残る大逆転劇を実現せよ。',
+    title: l10n.onboardingPage1Title,
+    description: l10n.onboardingPage1Description,
   ),
   _OnboardingPage(
     icon: Icons.trending_down,
-    title: '圧倒的劣勢から始まる',
-    description: '多くのシナリオでは、敵の兵力が\n'
-        'あなたの数倍〜十数倍に達する。\n'
-        '正面からの力押しでは勝てない。',
+    title: l10n.onboardingPage2Title,
+    description: l10n.onboardingPage2Description,
   ),
   _OnboardingPage(
     icon: Icons.touch_app,
-    title: 'コマンドで戦況を動かす',
-    description: '奇襲・盾陣・進軍・撤退・鼓舞・突撃…\n'
-        '状況に応じたコマンドの選択こそが\n'
-        '勝敗を分ける采配の要。',
+    title: l10n.onboardingPage3Title,
+    description: l10n.onboardingPage3Description,
   ),
   _OnboardingPage(
     icon: Icons.emoji_events,
-    title: 'ターニングポイントを狙え',
-    description: '各シナリオには史実に基づいた\n'
-        '「ターニングポイント」が用意されている。\n'
-        '条件を満たして達成し、高得点を狙おう。',
+    title: l10n.onboardingPage4Title,
+    description: l10n.onboardingPage4Description,
   ),
   _OnboardingPage(
     icon: Icons.military_tech,
-    title: '成長し続ける武将',
-    description: 'レベル・実績・バトルパス・プレスティジ…\n'
-        '戦えば戦うほど武将は成長する。\n'
-        'さあ、初陣の采配を振るおう！',
+    title: l10n.onboardingPage5Title,
+    description: l10n.onboardingPage5Description,
   ),
 ];
 
@@ -81,8 +72,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Navigator.of(context).pushNamedAndRemoveUntil('/home', (_) => false);
   }
 
-  void _next() {
-    if (_currentPage < _pages.length - 1) {
+  void _next(int pageCount) {
+    if (_currentPage < pageCount - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
@@ -102,7 +93,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLastPage = _currentPage == _pages.length - 1;
+    final l10n = AppLocalizations.of(context)!;
+    final pages = _pagesFor(l10n);
+    final isLastPage = _currentPage == pages.length - 1;
 
     return Scaffold(
       body: SafeArea(
@@ -114,9 +107,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 padding: const EdgeInsets.all(8),
                 child: TextButton(
                   onPressed: _finish,
-                  child: const Text(
-                    'スキップ',
-                    style: TextStyle(color: Colors.grey),
+                  child: Text(
+                    l10n.onboardingSkipButton,
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 ),
               ),
@@ -124,15 +117,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 onPageChanged: (index) => setState(() => _currentPage = index),
-                itemBuilder: (context, index) => _OnboardingPageView(page: _pages[index]),
+                itemBuilder: (context, index) => _OnboardingPageView(page: pages[index]),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                _pages.length,
+                pages.length,
                 (i) => Container(
                   margin: const EdgeInsets.symmetric(horizontal: 4),
                   width: i == _currentPage ? 20 : 8,
@@ -151,11 +144,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _next,
+                  onPressed: () => _next(pages.length),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: Text(isLastPage ? '初陣へ' : '次へ'),
+                  child: Text(isLastPage
+                      ? l10n.onboardingStartButton
+                      : l10n.onboardingNextButton),
                 ),
               ),
             ),

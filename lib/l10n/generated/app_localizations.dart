@@ -2358,6 +2358,162 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'広告を見て連戦の労をねぎらうボーナス{amount}ゴールドを獲得'**
   String chainCompletionAdLabel(int amount);
+
+  /// No description provided for @prestigeResetTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ'**
+  String get prestigeResetTitle;
+
+  /// No description provided for @prestigeResetSuccessMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセットが完了しました！'**
+  String get prestigeResetSuccessMessage;
+
+  /// No description provided for @prestigeResetErrorMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'エラーが発生しました: {error}'**
+  String prestigeResetErrorMessage(String error);
+
+  /// No description provided for @prestigeResetLockedLevelReason.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル100に到達してください'**
+  String get prestigeResetLockedLevelReason;
+
+  /// No description provided for @prestigeResetLockedPointsReason.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジポイント1000以上が必要です\n現在: {points}'**
+  String prestigeResetLockedPointsReason(int points);
+
+  /// No description provided for @prestigeResetCurrentRankLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のプレスティジランク'**
+  String get prestigeResetCurrentRankLabel;
+
+  /// No description provided for @prestigeResetCountSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット回数: {count}回'**
+  String prestigeResetCountSuffix(int count);
+
+  /// No description provided for @prestigeResetLockedTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジが利用できません'**
+  String get prestigeResetLockedTitle;
+
+  /// No description provided for @prestigeResetActionTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセット実行'**
+  String get prestigeResetActionTitle;
+
+  /// No description provided for @prestigeResetActionDescription.
+  ///
+  /// In ja, this message translates to:
+  /// **'条件を満たしています。プレスティジリセットを実行できます。'**
+  String get prestigeResetActionDescription;
+
+  /// No description provided for @prestigeResetProcessing.
+  ///
+  /// In ja, this message translates to:
+  /// **'処理中...'**
+  String get prestigeResetProcessing;
+
+  /// No description provided for @prestigeResetBenefitsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジについて'**
+  String get prestigeResetBenefitsTitle;
+
+  /// No description provided for @prestigeResetBenefit1Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベルとXPがリセット'**
+  String get prestigeResetBenefit1Title;
+
+  /// No description provided for @prestigeResetBenefit1Desc.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベルが1に戻り、XPが0にリセットされます'**
+  String get prestigeResetBenefit1Desc;
+
+  /// No description provided for @prestigeResetBenefit2Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジランク上昇'**
+  String get prestigeResetBenefit2Title;
+
+  /// No description provided for @prestigeResetBenefit2Desc.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターン効率に基づいて新しいランクが決定されます'**
+  String get prestigeResetBenefit2Desc;
+
+  /// No description provided for @prestigeResetBenefit3Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'限定コスメティック解放'**
+  String get prestigeResetBenefit3Title;
+
+  /// No description provided for @prestigeResetBenefit3Desc.
+  ///
+  /// In ja, this message translates to:
+  /// **'新しいランクに対応した限定スキンやテーマが解放されます'**
+  String get prestigeResetBenefit3Desc;
+
+  /// No description provided for @prestigeResetBenefit4Title.
+  ///
+  /// In ja, this message translates to:
+  /// **'次回リセット条件が上昇'**
+  String get prestigeResetBenefit4Title;
+
+  /// No description provided for @prestigeResetBenefit4Desc.
+  ///
+  /// In ja, this message translates to:
+  /// **'より多くのプレスティジポイントが必要になります'**
+  String get prestigeResetBenefit4Desc;
+
+  /// No description provided for @prestigeResetConfirmTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセット確認'**
+  String get prestigeResetConfirmTitle;
+
+  /// No description provided for @prestigeResetConfirmIntro.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセットを実行します。以下の内容で問題ありませんか？'**
+  String get prestigeResetConfirmIntro;
+
+  /// No description provided for @prestigeResetConfirmCurrentLevel.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のレベル'**
+  String get prestigeResetConfirmCurrentLevel;
+
+  /// No description provided for @prestigeResetConfirmRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット後のランク'**
+  String get prestigeResetConfirmRank;
+
+  /// No description provided for @prestigeResetIrreversibleWarning.
+  ///
+  /// In ja, this message translates to:
+  /// **'この操作は取り消せません'**
+  String get prestigeResetIrreversibleWarning;
+
+  /// No description provided for @prestigeResetConfirmExecuteButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセットを実行'**
+  String get prestigeResetConfirmExecuteButton;
 }
 
 class _AppLocalizationsDelegate

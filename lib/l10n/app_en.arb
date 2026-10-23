@@ -585,5 +585,40 @@
   "chainCompletionAdLabel": "Watch an ad to earn a {amount} gold bonus for your hard work",
   "@chainCompletionAdLabel": {
     "placeholders": { "amount": { "type": "int" } }
-  }
+  },
+  "prestigeResetTitle": "Prestige",
+  "prestigeResetSuccessMessage": "Prestige reset complete!",
+  "prestigeResetErrorMessage": "An error occurred: {error}",
+  "@prestigeResetErrorMessage": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "prestigeResetLockedLevelReason": "Reach Level 100 first",
+  "prestigeResetLockedPointsReason": "You need 1000 or more Prestige Points\nCurrent: {points}",
+  "@prestigeResetLockedPointsReason": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "prestigeResetCurrentRankLabel": "Current Prestige Rank",
+  "prestigeResetCountSuffix": "Resets: {count}",
+  "@prestigeResetCountSuffix": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "prestigeResetLockedTitle": "Prestige Unavailable",
+  "prestigeResetActionTitle": "Perform Prestige Reset",
+  "prestigeResetActionDescription": "You meet the requirements. You can perform a Prestige reset.",
+  "prestigeResetProcessing": "Processing...",
+  "prestigeResetBenefitsTitle": "About Prestige",
+  "prestigeResetBenefit1Title": "Level and XP Reset",
+  "prestigeResetBenefit1Desc": "Your level returns to 1 and your XP resets to 0",
+  "prestigeResetBenefit2Title": "Prestige Rank Rises",
+  "prestigeResetBenefit2Desc": "Your new rank is determined based on turn efficiency",
+  "prestigeResetBenefit3Title": "Exclusive Cosmetics Unlocked",
+  "prestigeResetBenefit3Desc": "Exclusive skins and themes matching your new rank are unlocked",
+  "prestigeResetBenefit4Title": "Next Reset Requirement Rises",
+  "prestigeResetBenefit4Desc": "You will need more Prestige Points next time",
+  "prestigeResetConfirmTitle": "Confirm Prestige Reset",
+  "prestigeResetConfirmIntro": "This will perform a Prestige reset. Is the following OK?",
+  "prestigeResetConfirmCurrentLevel": "Current Level",
+  "prestigeResetConfirmRank": "Rank After Reset",
+  "prestigeResetIrreversibleWarning": "This action cannot be undone",
+  "prestigeResetConfirmExecuteButton": "Perform Reset"
 }

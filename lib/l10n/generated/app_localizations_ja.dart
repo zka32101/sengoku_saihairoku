@@ -1255,4 +1255,88 @@ class AppLocalizationsJa extends AppLocalizations {
   String chainCompletionAdLabel(int amount) {
     return '広告を見て連戦の労をねぎらうボーナス$amountゴールドを獲得';
   }
+
+  @override
+  String get prestigeResetTitle => 'プレスティジ';
+
+  @override
+  String get prestigeResetSuccessMessage => 'プレスティジリセットが完了しました！';
+
+  @override
+  String prestigeResetErrorMessage(String error) {
+    return 'エラーが発生しました: $error';
+  }
+
+  @override
+  String get prestigeResetLockedLevelReason => 'レベル100に到達してください';
+
+  @override
+  String prestigeResetLockedPointsReason(int points) {
+    return 'プレスティジポイント1000以上が必要です\n現在: $points';
+  }
+
+  @override
+  String get prestigeResetCurrentRankLabel => '現在のプレスティジランク';
+
+  @override
+  String prestigeResetCountSuffix(int count) {
+    return 'リセット回数: $count回';
+  }
+
+  @override
+  String get prestigeResetLockedTitle => 'プレスティジが利用できません';
+
+  @override
+  String get prestigeResetActionTitle => 'プレスティジリセット実行';
+
+  @override
+  String get prestigeResetActionDescription => '条件を満たしています。プレスティジリセットを実行できます。';
+
+  @override
+  String get prestigeResetProcessing => '処理中...';
+
+  @override
+  String get prestigeResetBenefitsTitle => 'プレスティジについて';
+
+  @override
+  String get prestigeResetBenefit1Title => 'レベルとXPがリセット';
+
+  @override
+  String get prestigeResetBenefit1Desc => 'レベルが1に戻り、XPが0にリセットされます';
+
+  @override
+  String get prestigeResetBenefit2Title => 'プレスティジランク上昇';
+
+  @override
+  String get prestigeResetBenefit2Desc => 'ターン効率に基づいて新しいランクが決定されます';
+
+  @override
+  String get prestigeResetBenefit3Title => '限定コスメティック解放';
+
+  @override
+  String get prestigeResetBenefit3Desc => '新しいランクに対応した限定スキンやテーマが解放されます';
+
+  @override
+  String get prestigeResetBenefit4Title => '次回リセット条件が上昇';
+
+  @override
+  String get prestigeResetBenefit4Desc => 'より多くのプレスティジポイントが必要になります';
+
+  @override
+  String get prestigeResetConfirmTitle => 'プレスティジリセット確認';
+
+  @override
+  String get prestigeResetConfirmIntro => 'プレスティジリセットを実行します。以下の内容で問題ありませんか？';
+
+  @override
+  String get prestigeResetConfirmCurrentLevel => '現在のレベル';
+
+  @override
+  String get prestigeResetConfirmRank => 'リセット後のランク';
+
+  @override
+  String get prestigeResetIrreversibleWarning => 'この操作は取り消せません';
+
+  @override
+  String get prestigeResetConfirmExecuteButton => 'リセットを実行';
 }

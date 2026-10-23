@@ -588,5 +588,40 @@
   "chainCompletionAdLabel": "広告を見て連戦の労をねぎらうボーナス{amount}ゴールドを獲得",
   "@chainCompletionAdLabel": {
     "placeholders": { "amount": { "type": "int" } }
-  }
+  },
+  "prestigeResetTitle": "プレスティジ",
+  "prestigeResetSuccessMessage": "プレスティジリセットが完了しました！",
+  "prestigeResetErrorMessage": "エラーが発生しました: {error}",
+  "@prestigeResetErrorMessage": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "prestigeResetLockedLevelReason": "レベル100に到達してください",
+  "prestigeResetLockedPointsReason": "プレスティジポイント1000以上が必要です\n現在: {points}",
+  "@prestigeResetLockedPointsReason": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "prestigeResetCurrentRankLabel": "現在のプレスティジランク",
+  "prestigeResetCountSuffix": "リセット回数: {count}回",
+  "@prestigeResetCountSuffix": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "prestigeResetLockedTitle": "プレスティジが利用できません",
+  "prestigeResetActionTitle": "プレスティジリセット実行",
+  "prestigeResetActionDescription": "条件を満たしています。プレスティジリセットを実行できます。",
+  "prestigeResetProcessing": "処理中...",
+  "prestigeResetBenefitsTitle": "プレスティジについて",
+  "prestigeResetBenefit1Title": "レベルとXPがリセット",
+  "prestigeResetBenefit1Desc": "レベルが1に戻り、XPが0にリセットされます",
+  "prestigeResetBenefit2Title": "プレスティジランク上昇",
+  "prestigeResetBenefit2Desc": "ターン効率に基づいて新しいランクが決定されます",
+  "prestigeResetBenefit3Title": "限定コスメティック解放",
+  "prestigeResetBenefit3Desc": "新しいランクに対応した限定スキンやテーマが解放されます",
+  "prestigeResetBenefit4Title": "次回リセット条件が上昇",
+  "prestigeResetBenefit4Desc": "より多くのプレスティジポイントが必要になります",
+  "prestigeResetConfirmTitle": "プレスティジリセット確認",
+  "prestigeResetConfirmIntro": "プレスティジリセットを実行します。以下の内容で問題ありませんか？",
+  "prestigeResetConfirmCurrentLevel": "現在のレベル",
+  "prestigeResetConfirmRank": "リセット後のランク",
+  "prestigeResetIrreversibleWarning": "この操作は取り消せません",
+  "prestigeResetConfirmExecuteButton": "リセットを実行"
 }

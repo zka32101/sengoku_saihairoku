@@ -4,6 +4,7 @@ import '../../data/models/user_progression.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../../domain/progression/prestige_manager.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 
 /// プレスティジリセット画面
@@ -65,6 +66,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
   }
 
   Future<void> _performPrestige() async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     if (userId == null) return;
 
@@ -78,9 +80,9 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('プレスティジリセットが完了しました！'),
-            duration: Duration(seconds: 2),
+          SnackBar(
+            content: Text(l10n.prestigeResetSuccessMessage),
+            duration: const Duration(seconds: 2),
           ),
         );
 
@@ -91,7 +93,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
       debugPrint('Error performing prestige: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('エラーが発生しました: $e')),
+          SnackBar(content: Text(l10n.prestigeResetErrorMessage(e.toString()))),
         );
       }
     } finally {
@@ -101,17 +103,18 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('プレスティジ')),
+        appBar: AppBar(title: Text(l10n.prestigeResetTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_userProgression == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('プレスティジ')),
-        body: const Center(child: Text('ユーザーデータを読み込めませんでした')),
+        appBar: AppBar(title: Text(l10n.prestigeResetTitle)),
+        body: Center(child: Text(l10n.profileLoadError)),
       );
     }
 
@@ -120,7 +123,7 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
         progression.prestigePoints >= 1000;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('プレスティジ')),
+      appBar: AppBar(title: Text(l10n.prestigeResetTitle)),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(
@@ -128,22 +131,25 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _PrestigeInfoCard(progression: progression),
+              _PrestigeInfoCard(progression: progression, l10n: l10n),
               const SizedBox(height: 24),
               if (progression.currentLevel < 100)
-                _LockedCard(reason: 'レベル100に到達してください')
+                _LockedCard(
+                    reason: l10n.prestigeResetLockedLevelReason, l10n: l10n)
               else if (!canPrestige)
                 _LockedCard(
-                  reason:
-                      'プレスティジポイント1000以上が必要です\n現在: ${progression.prestigePoints}',
+                  reason: l10n.prestigeResetLockedPointsReason(
+                      progression.prestigePoints),
+                  l10n: l10n,
                 )
               else
                 _PrestigeActionCard(
                   isResetting: _isResetting,
                   onPrestige: _confirmPrestige,
+                  l10n: l10n,
                 ),
               const SizedBox(height: 24),
-              _PrestigeBenefitsCard(),
+              _PrestigeBenefitsCard(l10n: l10n),
               const SizedBox(height: 24),
             ],
           ),
@@ -155,8 +161,9 @@ class _PrestigeResetScreenState extends State<PrestigeResetScreen> {
 
 class _PrestigeInfoCard extends StatelessWidget {
   final UserProgression progression;
+  final AppLocalizations l10n;
 
-  const _PrestigeInfoCard({required this.progression});
+  const _PrestigeInfoCard({required this.progression, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -196,9 +203,9 @@ class _PrestigeInfoCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '現在のプレスティジランク',
-                        style: TextStyle(
+                      Text(
+                        l10n.prestigeResetCurrentRankLabel,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
                         ),
@@ -225,9 +232,9 @@ class _PrestigeInfoCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'レベル',
-                      style: TextStyle(
+                    Text(
+                      l10n.profileLevelLabel,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
@@ -246,9 +253,9 @@ class _PrestigeInfoCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      'プレスティジポイント',
-                      style: TextStyle(
+                    Text(
+                      l10n.profilePrestigePoints,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
@@ -268,7 +275,7 @@ class _PrestigeInfoCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'リセット回数: ${progression.prestigeResetCount}回',
+              l10n.prestigeResetCountSuffix(progression.prestigeResetCount),
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.grey,
@@ -283,8 +290,9 @@ class _PrestigeInfoCard extends StatelessWidget {
 
 class _LockedCard extends StatelessWidget {
   final String reason;
+  final AppLocalizations l10n;
 
-  const _LockedCard({required this.reason});
+  const _LockedCard({required this.reason, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -300,9 +308,9 @@ class _LockedCard extends StatelessWidget {
               color: Colors.red[400],
             ),
             const SizedBox(height: 12),
-            const Text(
-              'プレスティジが利用できません',
-              style: TextStyle(
+            Text(
+              l10n.prestigeResetLockedTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFE8D5B0),
@@ -328,10 +336,12 @@ class _LockedCard extends StatelessWidget {
 class _PrestigeActionCard extends StatelessWidget {
   final bool isResetting;
   final VoidCallback onPrestige;
+  final AppLocalizations l10n;
 
   const _PrestigeActionCard({
     required this.isResetting,
     required this.onPrestige,
+    required this.l10n,
   });
 
   @override
@@ -343,9 +353,9 @@ class _PrestigeActionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'プレスティジリセット実行',
-              style: TextStyle(
+            Text(
+              l10n.prestigeResetActionTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -353,9 +363,9 @@ class _PrestigeActionCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            const Text(
-              '条件を満たしています。プレスティジリセットを実行できます。',
-              style: TextStyle(
+            Text(
+              l10n.prestigeResetActionDescription,
+              style: const TextStyle(
                 fontSize: 13,
                 color: Colors.grey,
               ),
@@ -375,7 +385,9 @@ class _PrestigeActionCard extends StatelessWidget {
                       ),
                     )
                   : const Icon(Icons.star),
-              label: Text(isResetting ? '処理中...' : 'プレスティジリセット実行'),
+              label: Text(isResetting
+                  ? l10n.prestigeResetProcessing
+                  : l10n.prestigeResetActionTitle),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.amber[700],
                 foregroundColor: Colors.black,
@@ -390,6 +402,10 @@ class _PrestigeActionCard extends StatelessWidget {
 }
 
 class _PrestigeBenefitsCard extends StatelessWidget {
+  final AppLocalizations l10n;
+
+  const _PrestigeBenefitsCard({required this.l10n});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -398,9 +414,9 @@ class _PrestigeBenefitsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'プレスティジについて',
-              style: TextStyle(
+            Text(
+              l10n.prestigeResetBenefitsTitle,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -411,26 +427,26 @@ class _PrestigeBenefitsCard extends StatelessWidget {
             const SizedBox(height: 12),
             _BenefitRow(
               icon: Icons.restart_alt,
-              title: 'レベルとXPがリセット',
-              description: 'レベルが1に戻り、XPが0にリセットされます',
+              title: l10n.prestigeResetBenefit1Title,
+              description: l10n.prestigeResetBenefit1Desc,
             ),
             const SizedBox(height: 12),
             _BenefitRow(
               icon: Icons.star,
-              title: 'プレスティジランク上昇',
-              description: 'ターン効率に基づいて新しいランクが決定されます',
+              title: l10n.prestigeResetBenefit2Title,
+              description: l10n.prestigeResetBenefit2Desc,
             ),
             const SizedBox(height: 12),
             _BenefitRow(
               icon: Icons.card_giftcard,
-              title: '限定コスメティック解放',
-              description: '新しいランクに対応した限定スキンやテーマが解放されます',
+              title: l10n.prestigeResetBenefit3Title,
+              description: l10n.prestigeResetBenefit3Desc,
             ),
             const SizedBox(height: 12),
             _BenefitRow(
               icon: Icons.trending_up,
-              title: '次回リセット条件が上昇',
-              description: 'より多くのプレスティジポイントが必要になります',
+              title: l10n.prestigeResetBenefit4Title,
+              description: l10n.prestigeResetBenefit4Desc,
             ),
           ],
         ),
@@ -496,31 +512,32 @@ class _PrestigeConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('プレスティジリセット確認'),
+      title: Text(l10n.prestigeResetConfirmTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'プレスティジリセットを実行します。以下の内容で問題ありませんか？',
+            l10n.prestigeResetConfirmIntro,
             style: TextStyle(color: Colors.grey[300]),
           ),
           const SizedBox(height: 16),
           _ConfirmationItem(
-            label: '現在のレベル',
+            label: l10n.prestigeResetConfirmCurrentLevel,
             value: '${userProgression.currentLevel}',
             willReset: true,
           ),
           const SizedBox(height: 8),
           _ConfirmationItem(
-            label: 'プレスティジポイント',
+            label: l10n.profilePrestigePoints,
             value: '${userProgression.prestigePoints}',
             willReset: false,
           ),
           const SizedBox(height: 8),
           _ConfirmationItem(
-            label: 'リセット後のランク',
+            label: l10n.prestigeResetConfirmRank,
             value: userProgression.prestigeRank.displayName,
             willReset: false,
           ),
@@ -538,7 +555,7 @@ class _PrestigeConfirmationDialog extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'この操作は取り消せません',
+                    l10n.prestigeResetIrreversibleWarning,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.orange[400],
@@ -554,7 +571,7 @@ class _PrestigeConfirmationDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('キャンセル'),
+          child: Text(l10n.commonCancel),
         ),
         ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
@@ -562,7 +579,7 @@ class _PrestigeConfirmationDialog extends StatelessWidget {
             backgroundColor: Colors.amber[700],
             foregroundColor: Colors.black,
           ),
-          child: const Text('リセットを実行'),
+          child: Text(l10n.prestigeResetConfirmExecuteButton),
         ),
       ],
     );

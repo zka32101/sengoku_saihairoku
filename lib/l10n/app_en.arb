@@ -620,5 +620,54 @@
   "prestigeResetConfirmCurrentLevel": "Current Level",
   "prestigeResetConfirmRank": "Rank After Reset",
   "prestigeResetIrreversibleWarning": "This action cannot be undone",
-  "prestigeResetConfirmExecuteButton": "Perform Reset"
+  "prestigeResetConfirmExecuteButton": "Perform Reset",
+  "cosmeticsEquipTitle": "Cosmetics Settings",
+  "cosmeticsEquipSuccess": "Cosmetic equipped",
+  "cosmeticsUnequipSuccess": "Cosmetic unequipped",
+  "cosmeticsUnitSkinTitle": "Unit Skins",
+  "cosmeticsUiThemeTitle": "UI Themes",
+  "cosmeticsEquippedLabel": "Equipped:",
+  "cosmeticsUnknownName": "Unknown",
+  "cosmeticsUnequipButton": "Unequip",
+  "cosmeticsEquippedBadge": "Equipped",
+  "cosmeticsEquipButton": "Equip",
+  "cosmeticsNoCosmeticsTitle": "No {type} unlocked yet",
+  "@cosmeticsNoCosmeticsTitle": {
+    "placeholders": { "type": { "type": "String" } }
+  },
+  "cosmeticsNoCosmeticsHint": "Unlocked by leveling up or through Prestige",
+  "cosmeticsAcquisitionLevelMilestone": "Level Reward",
+  "cosmeticsAcquisitionAchievement": "Achievement",
+  "cosmeticsAcquisitionPrestige": "Prestige Reward",
+  "cosmeticsAcquisitionBattlePass": "Battle Pass",
+  "cosmeticsAcquisitionEvent": "Event Reward",
+  "cosmeticsPrestigeRankLabel": "Prestige Rank",
+  "cosmeticsResetCountLabel": "Resets: {count}",
+  "@cosmeticsResetCountLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "cosmeticsPointsLabel": "Points: {points}",
+  "@cosmeticsPointsLabel": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "cosmeticsShowcaseTitle": "Prestige Cosmetics",
+  "cosmeticsShowcaseRankLine": "Rank: {rank}",
+  "@cosmeticsShowcaseRankLine": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "cosmeticsShowcaseEquippedSkinLabel": "Equipped Unit Skin",
+  "cosmeticsShowcaseEquippedThemeLabel": "Equipped UI Theme",
+  "cosmeticsShowcaseEmpty": "No Prestige cosmetics equipped yet",
+  "cosmeticsPrestigeSectionEmptyHint": "Unlocked by performing a Prestige reset",
+  "cosmeticsPrestigeCurrentRankLine": "Current Prestige Rank: {rank}",
+  "@cosmeticsPrestigeCurrentRankLine": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "cosmeticsPrestigeUnitSkinTitle": "Prestige Unit Skins",
+  "cosmeticsPrestigeUiThemeTitle": "Prestige UI Themes",
+  "cosmeticsPrestigeTierSilver": "Silver",
+  "cosmeticsPrestigeTierGold": "Gold",
+  "cosmeticsPrestigeTierPlatinum": "Platinum",
+  "cosmeticsPrestigeTierDiamond": "Diamond",
+  "cosmeticsPrestigeTierUnknown": "Unknown"
 }

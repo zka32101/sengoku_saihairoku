@@ -1373,4 +1373,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prestigeResetConfirmExecuteButton => 'Perform Reset';
+
+  @override
+  String get cosmeticsEquipTitle => 'Cosmetics Settings';
+
+  @override
+  String get cosmeticsEquipSuccess => 'Cosmetic equipped';
+
+  @override
+  String get cosmeticsUnequipSuccess => 'Cosmetic unequipped';
+
+  @override
+  String get cosmeticsUnitSkinTitle => 'Unit Skins';
+
+  @override
+  String get cosmeticsUiThemeTitle => 'UI Themes';
+
+  @override
+  String get cosmeticsEquippedLabel => 'Equipped:';
+
+  @override
+  String get cosmeticsUnknownName => 'Unknown';
+
+  @override
+  String get cosmeticsUnequipButton => 'Unequip';
+
+  @override
+  String get cosmeticsEquippedBadge => 'Equipped';
+
+  @override
+  String get cosmeticsEquipButton => 'Equip';
+
+  @override
+  String cosmeticsNoCosmeticsTitle(String type) {
+    return 'No $type unlocked yet';
+  }
+
+  @override
+  String get cosmeticsNoCosmeticsHint =>
+      'Unlocked by leveling up or through Prestige';
+
+  @override
+  String get cosmeticsAcquisitionLevelMilestone => 'Level Reward';
+
+  @override
+  String get cosmeticsAcquisitionAchievement => 'Achievement';
+
+  @override
+  String get cosmeticsAcquisitionPrestige => 'Prestige Reward';
+
+  @override
+  String get cosmeticsAcquisitionBattlePass => 'Battle Pass';
+
+  @override
+  String get cosmeticsAcquisitionEvent => 'Event Reward';
+
+  @override
+  String get cosmeticsPrestigeRankLabel => 'Prestige Rank';
+
+  @override
+  String cosmeticsResetCountLabel(int count) {
+    return 'Resets: $count';
+  }
+
+  @override
+  String cosmeticsPointsLabel(int points) {
+    return 'Points: $points';
+  }
+
+  @override
+  String get cosmeticsShowcaseTitle => 'Prestige Cosmetics';
+
+  @override
+  String cosmeticsShowcaseRankLine(String rank) {
+    return 'Rank: $rank';
+  }
+
+  @override
+  String get cosmeticsShowcaseEquippedSkinLabel => 'Equipped Unit Skin';
+
+  @override
+  String get cosmeticsShowcaseEquippedThemeLabel => 'Equipped UI Theme';
+
+  @override
+  String get cosmeticsShowcaseEmpty => 'No Prestige cosmetics equipped yet';
+
+  @override
+  String get cosmeticsPrestigeSectionEmptyHint =>
+      'Unlocked by performing a Prestige reset';
+
+  @override
+  String cosmeticsPrestigeCurrentRankLine(String rank) {
+    return 'Current Prestige Rank: $rank';
+  }
+
+  @override
+  String get cosmeticsPrestigeUnitSkinTitle => 'Prestige Unit Skins';
+
+  @override
+  String get cosmeticsPrestigeUiThemeTitle => 'Prestige UI Themes';
+
+  @override
+  String get cosmeticsPrestigeTierSilver => 'Silver';
+
+  @override
+  String get cosmeticsPrestigeTierGold => 'Gold';
+
+  @override
+  String get cosmeticsPrestigeTierPlatinum => 'Platinum';
+
+  @override
+  String get cosmeticsPrestigeTierDiamond => 'Diamond';
+
+  @override
+  String get cosmeticsPrestigeTierUnknown => 'Unknown';
 }

@@ -2514,6 +2514,210 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'リセットを実行'**
   String get prestigeResetConfirmExecuteButton;
+
+  /// No description provided for @cosmeticsEquipTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック設定'**
+  String get cosmeticsEquipTitle;
+
+  /// No description provided for @cosmeticsEquipSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティックを装備しました'**
+  String get cosmeticsEquipSuccess;
+
+  /// No description provided for @cosmeticsUnequipSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティックを外しました'**
+  String get cosmeticsUnequipSuccess;
+
+  /// No description provided for @cosmeticsUnitSkinTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユニットスキン'**
+  String get cosmeticsUnitSkinTitle;
+
+  /// No description provided for @cosmeticsUiThemeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'UIテーマ'**
+  String get cosmeticsUiThemeTitle;
+
+  /// No description provided for @cosmeticsEquippedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'装備中:'**
+  String get cosmeticsEquippedLabel;
+
+  /// No description provided for @cosmeticsUnknownName.
+  ///
+  /// In ja, this message translates to:
+  /// **'不明'**
+  String get cosmeticsUnknownName;
+
+  /// No description provided for @cosmeticsUnequipButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'外す'**
+  String get cosmeticsUnequipButton;
+
+  /// No description provided for @cosmeticsEquippedBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'装備中'**
+  String get cosmeticsEquippedBadge;
+
+  /// No description provided for @cosmeticsEquipButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'装備する'**
+  String get cosmeticsEquipButton;
+
+  /// No description provided for @cosmeticsNoCosmeticsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'{type}はまだ解放されていません'**
+  String cosmeticsNoCosmeticsTitle(String type);
+
+  /// No description provided for @cosmeticsNoCosmeticsHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベルアップやプレスティジで解放されます'**
+  String get cosmeticsNoCosmeticsHint;
+
+  /// No description provided for @cosmeticsAcquisitionLevelMilestone.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル報酬'**
+  String get cosmeticsAcquisitionLevelMilestone;
+
+  /// No description provided for @cosmeticsAcquisitionAchievement.
+  ///
+  /// In ja, this message translates to:
+  /// **'アチーブメント'**
+  String get cosmeticsAcquisitionAchievement;
+
+  /// No description provided for @cosmeticsAcquisitionPrestige.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジ報酬'**
+  String get cosmeticsAcquisitionPrestige;
+
+  /// No description provided for @cosmeticsAcquisitionBattlePass.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパス'**
+  String get cosmeticsAcquisitionBattlePass;
+
+  /// No description provided for @cosmeticsAcquisitionEvent.
+  ///
+  /// In ja, this message translates to:
+  /// **'イベント報酬'**
+  String get cosmeticsAcquisitionEvent;
+
+  /// No description provided for @cosmeticsPrestigeRankLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジランク'**
+  String get cosmeticsPrestigeRankLabel;
+
+  /// No description provided for @cosmeticsResetCountLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'リセット回数: {count}'**
+  String cosmeticsResetCountLabel(int count);
+
+  /// No description provided for @cosmeticsPointsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ポイント: {points}'**
+  String cosmeticsPointsLabel(int points);
+
+  /// No description provided for @cosmeticsShowcaseTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジコスメティック'**
+  String get cosmeticsShowcaseTitle;
+
+  /// No description provided for @cosmeticsShowcaseRankLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'ランク: {rank}'**
+  String cosmeticsShowcaseRankLine(String rank);
+
+  /// No description provided for @cosmeticsShowcaseEquippedSkinLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'装備中のユニットスキン'**
+  String get cosmeticsShowcaseEquippedSkinLabel;
+
+  /// No description provided for @cosmeticsShowcaseEquippedThemeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'装備中のUIテーマ'**
+  String get cosmeticsShowcaseEquippedThemeLabel;
+
+  /// No description provided for @cosmeticsShowcaseEmpty.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジコスメティックがまだ装備されていません'**
+  String get cosmeticsShowcaseEmpty;
+
+  /// No description provided for @cosmeticsPrestigeSectionEmptyHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセットを行うと解放されます'**
+  String get cosmeticsPrestigeSectionEmptyHint;
+
+  /// No description provided for @cosmeticsPrestigeCurrentRankLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のプレスティジランク: {rank}'**
+  String cosmeticsPrestigeCurrentRankLine(String rank);
+
+  /// No description provided for @cosmeticsPrestigeUnitSkinTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジユニットスキン'**
+  String get cosmeticsPrestigeUnitSkinTitle;
+
+  /// No description provided for @cosmeticsPrestigeUiThemeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジUIテーマ'**
+  String get cosmeticsPrestigeUiThemeTitle;
+
+  /// No description provided for @cosmeticsPrestigeTierSilver.
+  ///
+  /// In ja, this message translates to:
+  /// **'シルバー'**
+  String get cosmeticsPrestigeTierSilver;
+
+  /// No description provided for @cosmeticsPrestigeTierGold.
+  ///
+  /// In ja, this message translates to:
+  /// **'ゴールド'**
+  String get cosmeticsPrestigeTierGold;
+
+  /// No description provided for @cosmeticsPrestigeTierPlatinum.
+  ///
+  /// In ja, this message translates to:
+  /// **'プラチナ'**
+  String get cosmeticsPrestigeTierPlatinum;
+
+  /// No description provided for @cosmeticsPrestigeTierDiamond.
+  ///
+  /// In ja, this message translates to:
+  /// **'ダイヤモンド'**
+  String get cosmeticsPrestigeTierDiamond;
+
+  /// No description provided for @cosmeticsPrestigeTierUnknown.
+  ///
+  /// In ja, this message translates to:
+  /// **'不明'**
+  String get cosmeticsPrestigeTierUnknown;
 }
 
 class _AppLocalizationsDelegate

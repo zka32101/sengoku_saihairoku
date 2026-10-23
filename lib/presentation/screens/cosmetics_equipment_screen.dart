@@ -4,6 +4,7 @@ import '../../data/models/cosmetic.dart';
 import '../../data/models/user_progression.dart';
 import '../../data/repositories/reward_repository.dart';
 import '../../data/repositories/progression_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/screen_transition.dart';
 import 'dart:async';
 
@@ -57,6 +58,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
   }
 
   Future<void> _equipCosmetic(String cosmeticId, CosmeticType type) async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     if (userId == null) return;
 
@@ -68,20 +70,21 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('コスメティックを装備しました')),
+          SnackBar(content: Text(l10n.cosmeticsEquipSuccess)),
         );
       }
     } catch (e) {
       debugPrint('Error equipping cosmetic: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('エラーが発生しました: $e')),
+          SnackBar(content: Text(l10n.prestigeResetErrorMessage(e.toString()))),
         );
       }
     }
   }
 
   Future<void> _unequipCosmetic(CosmeticType type) async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     if (userId == null) return;
 
@@ -93,14 +96,14 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('コスメティックを外しました')),
+          SnackBar(content: Text(l10n.cosmeticsUnequipSuccess)),
         );
       }
     } catch (e) {
       debugPrint('Error unequipping cosmetic: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('エラーが発生しました: $e')),
+          SnackBar(content: Text(l10n.prestigeResetErrorMessage(e.toString()))),
         );
       }
     }
@@ -108,9 +111,10 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('コスメティック設定')),
+        appBar: AppBar(title: Text(l10n.cosmeticsEquipTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -131,7 +135,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('コスメティック設定')),
+      appBar: AppBar(title: Text(l10n.cosmeticsEquipTitle)),
       body: ScreenTransition(
         duration: const Duration(milliseconds: 600),
         child: SingleChildScrollView(
@@ -140,7 +144,7 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_userProgression != null)
-                _PrestigeTierBadge(progression: _userProgression!)
+                _PrestigeTierBadge(progression: _userProgression!, l10n: l10n)
               else
                 const SizedBox.shrink(),
               if (_userProgression != null)
@@ -156,53 +160,58 @@ class _CosmeticsEquipmentScreenState extends State<CosmeticsEquipmentScreen> {
                       _equipCosmetic(cosmeticId, CosmeticType.unitSkin),
                   onEquipUiTheme: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.uiTheme),
+                  l10n: l10n,
                 ),
               const SizedBox(height: 24),
               if (unitSkins.isNotEmpty)
                 _CosmeticCategorySection(
-                  title: 'ユニットスキン',
+                  title: l10n.cosmeticsUnitSkinTitle,
                   cosmetics: unitSkins,
                   equippedId: _equippedCosmetics?.unitSkinId,
                   onEquip: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.unitSkin),
                   onUnequip: () =>
                       _unequipCosmetic(CosmeticType.unitSkin),
+                  l10n: l10n,
                 )
               else
-                const _NoCosmeticsCard(type: 'ユニットスキン'),
+                _NoCosmeticsCard(type: l10n.cosmeticsUnitSkinTitle, l10n: l10n),
               const SizedBox(height: 24),
               if (uiThemes.isNotEmpty)
                 _CosmeticCategorySection(
-                  title: 'UIテーマ',
+                  title: l10n.cosmeticsUiThemeTitle,
                   cosmetics: uiThemes,
                   equippedId: _equippedCosmetics?.uiThemeId,
                   onEquip: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.uiTheme),
                   onUnequip: () => _unequipCosmetic(CosmeticType.uiTheme),
+                  l10n: l10n,
                 )
               else
-                const _NoCosmeticsCard(type: 'UIテーマ'),
+                _NoCosmeticsCard(type: l10n.cosmeticsUiThemeTitle, l10n: l10n),
               const SizedBox(height: 24),
               if (_userProgression != null)
                 _PrestigeCosmeticsSection(
                   progression: _userProgression!,
-                  title: 'プレスティジユニットスキン',
+                  title: l10n.cosmeticsPrestigeUnitSkinTitle,
                   prestigeCosmetics: prestigeSkins,
                   equippedId: _equippedCosmetics?.unitSkinId,
                   cosmeticType: CosmeticType.unitSkin,
                   onEquip: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.unitSkin),
+                  l10n: l10n,
                 ),
               const SizedBox(height: 24),
               if (_userProgression != null)
                 _PrestigeCosmeticsSection(
                   progression: _userProgression!,
-                  title: 'プレスティジUIテーマ',
+                  title: l10n.cosmeticsPrestigeUiThemeTitle,
                   prestigeCosmetics: prestigeThemes,
                   equippedId: _equippedCosmetics?.uiThemeId,
                   cosmeticType: CosmeticType.uiTheme,
                   onEquip: (cosmeticId) =>
                       _equipCosmetic(cosmeticId, CosmeticType.uiTheme),
+                  l10n: l10n,
                 ),
             ],
           ),
@@ -218,6 +227,7 @@ class _CosmeticCategorySection extends StatelessWidget {
   final String? equippedId;
   final Function(String) onEquip;
   final VoidCallback onUnequip;
+  final AppLocalizations l10n;
 
   const _CosmeticCategorySection({
     required this.title,
@@ -225,6 +235,7 @@ class _CosmeticCategorySection extends StatelessWidget {
     required this.equippedId,
     required this.onEquip,
     required this.onUnequip,
+    required this.l10n,
   });
 
   @override
@@ -254,9 +265,9 @@ class _CosmeticCategorySection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '装備中:',
-                    style: TextStyle(
+                  Text(
+                    l10n.cosmeticsEquippedLabel,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                       fontWeight: FontWeight.w600,
@@ -273,7 +284,7 @@ class _CosmeticCategorySection extends StatelessWidget {
                                 (c) => c.id == equippedId,
                                 orElse: () => Cosmetic(
                                   id: '',
-                                  name: '不明',
+                                  name: l10n.cosmeticsUnknownName,
                                   description: '',
                                   type: CosmeticType.unitSkin,
                                   acquisitionMethod:
@@ -291,7 +302,7 @@ class _CosmeticCategorySection extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: onUnequip,
                         icon: const Icon(Icons.close, size: 16),
-                        label: const Text('外す'),
+                        label: Text(l10n.cosmeticsUnequipButton),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
@@ -322,6 +333,7 @@ class _CosmeticCategorySection extends StatelessWidget {
               cosmetic: cosmetic,
               isEquipped: isEquipped,
               onEquip: () => onEquip(cosmetic.id),
+              l10n: l10n,
             );
           },
         ),
@@ -335,12 +347,14 @@ class _AnimatedCosmeticCard extends StatefulWidget {
   final Cosmetic cosmetic;
   final bool isEquipped;
   final VoidCallback onEquip;
+  final AppLocalizations l10n;
 
   const _AnimatedCosmeticCard({
     required this.index,
     required this.cosmetic,
     required this.isEquipped,
     required this.onEquip,
+    required this.l10n,
   });
 
   @override
@@ -392,6 +406,7 @@ class _AnimatedCosmeticCardState extends State<_AnimatedCosmeticCard>
           cosmetic: widget.cosmetic,
           isEquipped: widget.isEquipped,
           onEquip: widget.onEquip,
+          l10n: widget.l10n,
         ),
       ),
     );
@@ -402,20 +417,22 @@ class _CosmeticEquipmentCard extends StatelessWidget {
   final Cosmetic cosmetic;
   final bool isEquipped;
   final VoidCallback onEquip;
+  final AppLocalizations l10n;
 
   const _CosmeticEquipmentCard({
     required this.cosmetic,
     required this.isEquipped,
     required this.onEquip,
+    required this.l10n,
   });
 
   String _getAcquisitionMethodLabel(AcquisitionMethod method) {
     return switch (method) {
-      AcquisitionMethod.levelMilestone => 'レベル報酬',
-      AcquisitionMethod.achievement => 'アチーブメント',
-      AcquisitionMethod.prestigeReward => 'プレスティジ報酬',
-      AcquisitionMethod.battlePass => 'バトルパス',
-      AcquisitionMethod.eventReward => 'イベント報酬',
+      AcquisitionMethod.levelMilestone => l10n.cosmeticsAcquisitionLevelMilestone,
+      AcquisitionMethod.achievement => l10n.cosmeticsAcquisitionAchievement,
+      AcquisitionMethod.prestigeReward => l10n.cosmeticsAcquisitionPrestige,
+      AcquisitionMethod.battlePass => l10n.cosmeticsAcquisitionBattlePass,
+      AcquisitionMethod.eventReward => l10n.cosmeticsAcquisitionEvent,
     };
   }
 
@@ -503,9 +520,9 @@ class _CosmeticEquipmentCard extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: const Text(
-                                '装備中',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.cosmeticsEquippedBadge,
+                                style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFFFFD700),
@@ -535,7 +552,9 @@ class _CosmeticEquipmentCard extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: isEquipped ? null : onEquip,
                 icon: Icon(isEquipped ? Icons.check : Icons.add),
-                label: Text(isEquipped ? '装備中' : '装備する'),
+                label: Text(isEquipped
+                    ? l10n.cosmeticsEquippedBadge
+                    : l10n.cosmeticsEquipButton),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isEquipped
                       ? Colors.grey[700]
@@ -554,8 +573,9 @@ class _CosmeticEquipmentCard extends StatelessWidget {
 
 class _PrestigeTierBadge extends StatelessWidget {
   final UserProgression progression;
+  final AppLocalizations l10n;
 
-  const _PrestigeTierBadge({required this.progression});
+  const _PrestigeTierBadge({required this.progression, required this.l10n});
 
   String _getTierEmoji(PrestigeTier tier) {
     return switch (tier) {
@@ -609,7 +629,7 @@ class _PrestigeTierBadge extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'プレスティジランク',
+                      l10n.cosmeticsPrestigeRankLabel,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[400],
@@ -644,14 +664,14 @@ class _PrestigeTierBadge extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'リセット回数: $resetCount',
+                      l10n.cosmeticsResetCountLabel(resetCount),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white70,
                       ),
                     ),
                     Text(
-                      'ポイント: $points',
+                      l10n.cosmeticsPointsLabel(points),
                       style: TextStyle(
                         fontSize: 13,
                         color: _getTierColor(tier),
@@ -671,8 +691,9 @@ class _PrestigeTierBadge extends StatelessWidget {
 
 class _NoCosmeticsCard extends StatelessWidget {
   final String type;
+  final AppLocalizations l10n;
 
-  const _NoCosmeticsCard({required this.type});
+  const _NoCosmeticsCard({required this.type, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -688,7 +709,7 @@ class _NoCosmeticsCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              '$typeはまだ解放されていません',
+              l10n.cosmeticsNoCosmeticsTitle(type),
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -698,7 +719,7 @@ class _NoCosmeticsCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'レベルアップやプレスティジで解放されます',
+              l10n.cosmeticsNoCosmeticsHint,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[400],
@@ -720,6 +741,7 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
   final String? equippedUiThemeId;
   final Function(String) onEquipUnitSkin;
   final Function(String) onEquipUiTheme;
+  final AppLocalizations l10n;
 
   const _CosmeticsShowcaseSection({
     required this.progression,
@@ -729,6 +751,7 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
     required this.equippedUiThemeId,
     required this.onEquipUnitSkin,
     required this.onEquipUiTheme,
+    required this.l10n,
   });
 
   @override
@@ -776,9 +799,9 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'プレスティジコスメティック',
-                          style: TextStyle(
+                        Text(
+                          l10n.cosmeticsShowcaseTitle,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFFFFD700),
@@ -786,7 +809,8 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'ランク: ${progression.prestigeRank.displayName}',
+                          l10n.cosmeticsShowcaseRankLine(
+                              progression.prestigeRank.displayName),
                           style: TextStyle(
                             fontSize: 12,
                             color: Color(progression.prestigeRank.color),
@@ -803,21 +827,21 @@ class _CosmeticsShowcaseSection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: _ShowcaseItem(
-                    label: '装備中のユニットスキン',
+                    label: l10n.cosmeticsShowcaseEquippedSkinLabel,
                     cosmetic: equippedSkin,
                     isEquipped: true,
                   ),
                 ),
               if (equippedTheme != null)
                 _ShowcaseItem(
-                  label: '装備中のUIテーマ',
+                  label: l10n.cosmeticsShowcaseEquippedThemeLabel,
                   cosmetic: equippedTheme,
                   isEquipped: true,
                 ),
               if (equippedSkin == null && equippedTheme == null)
                 Center(
                   child: Text(
-                    'プレスティジコスメティックがまだ装備されていません',
+                    l10n.cosmeticsShowcaseEmpty,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[400],
@@ -899,6 +923,7 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
   final String? equippedId;
   final CosmeticType cosmeticType;
   final Function(String) onEquip;
+  final AppLocalizations l10n;
 
   const _PrestigeCosmeticsSection({
     required this.progression,
@@ -907,14 +932,15 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
     required this.equippedId,
     required this.cosmeticType,
     required this.onEquip,
+    required this.l10n,
   });
 
-  String _getPrestigeTierName(String cosmeticId) {
-    if (cosmeticId.contains('silver')) return 'シルバー';
-    if (cosmeticId.contains('gold')) return 'ゴールド';
-    if (cosmeticId.contains('platinum')) return 'プラチナ';
-    if (cosmeticId.contains('diamond')) return 'ダイヤモンド';
-    return '不明';
+  String _getPrestigeTierKey(String cosmeticId) {
+    if (cosmeticId.contains('silver')) return 'silver';
+    if (cosmeticId.contains('gold')) return 'gold';
+    if (cosmeticId.contains('platinum')) return 'platinum';
+    if (cosmeticId.contains('diamond')) return 'diamond';
+    return 'unknown';
   }
 
   @override
@@ -942,7 +968,7 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'プレスティジリセットを行うと解放されます',
+                l10n.cosmeticsPrestigeSectionEmptyHint,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[400],
@@ -981,7 +1007,8 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            '現在のプレスティジランク: ${progression.prestigeRank.displayName}',
+            l10n.cosmeticsPrestigeCurrentRankLine(
+                progression.prestigeRank.displayName),
             style: TextStyle(
               fontSize: 12,
               color: Color(progression.prestigeRank.color),
@@ -998,13 +1025,14 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
           itemBuilder: (context, index) {
             final cosmetic = prestigeCosmetics[index];
             final isEquipped = equippedId == cosmetic.id;
-            final tierName = _getPrestigeTierName(cosmetic.id);
+            final tierKey = _getPrestigeTierKey(cosmetic.id);
 
             return _PrestigeCosmeticCard(
               cosmetic: cosmetic,
-              tierName: tierName,
+              tierKey: tierKey,
               isEquipped: isEquipped,
               onEquip: () => onEquip(cosmetic.id),
+              l10n: l10n,
             );
           },
         ),
@@ -1015,30 +1043,43 @@ class _PrestigeCosmeticsSection extends StatelessWidget {
 
 class _PrestigeCosmeticCard extends StatelessWidget {
   final Cosmetic cosmetic;
-  final String tierName;
+  final String tierKey;
   final bool isEquipped;
   final VoidCallback onEquip;
+  final AppLocalizations l10n;
 
   const _PrestigeCosmeticCard({
     required this.cosmetic,
-    required this.tierName,
+    required this.tierKey,
     required this.isEquipped,
     required this.onEquip,
+    required this.l10n,
   });
 
-  Color _getTierColor(String tierName) {
-    return switch (tierName) {
-      'シルバー' => const Color(0xFFC0C0C0),
-      'ゴールド' => const Color(0xFFFFD700),
-      'プラチナ' => const Color(0xFFE5E4E2),
-      'ダイヤモンド' => const Color(0xFF00D9FF),
+  Color _getTierColor(String tierKey) {
+    return switch (tierKey) {
+      'silver' => const Color(0xFFC0C0C0),
+      'gold' => const Color(0xFFFFD700),
+      'platinum' => const Color(0xFFE5E4E2),
+      'diamond' => const Color(0xFF00D9FF),
       _ => Colors.grey,
+    };
+  }
+
+  String _getTierName(String tierKey) {
+    return switch (tierKey) {
+      'silver' => l10n.cosmeticsPrestigeTierSilver,
+      'gold' => l10n.cosmeticsPrestigeTierGold,
+      'platinum' => l10n.cosmeticsPrestigeTierPlatinum,
+      'diamond' => l10n.cosmeticsPrestigeTierDiamond,
+      _ => l10n.cosmeticsPrestigeTierUnknown,
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    final tierColor = _getTierColor(tierName);
+    final tierColor = _getTierColor(tierKey);
+    final tierName = _getTierName(tierKey);
 
     return Card(
       color: isEquipped
@@ -1109,9 +1150,9 @@ class _PrestigeCosmeticCard extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: const Text(
-                                '装備中',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.cosmeticsEquippedBadge,
+                                style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFFFFD700),
@@ -1139,7 +1180,9 @@ class _PrestigeCosmeticCard extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: isEquipped ? null : onEquip,
                 icon: Icon(isEquipped ? Icons.check : Icons.add),
-                label: Text(isEquipped ? '装備中' : '装備する'),
+                label: Text(isEquipped
+                    ? l10n.cosmeticsEquippedBadge
+                    : l10n.cosmeticsEquipButton),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isEquipped
                       ? Colors.grey[700]

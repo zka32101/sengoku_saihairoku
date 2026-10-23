@@ -623,5 +623,54 @@
   "prestigeResetConfirmCurrentLevel": "現在のレベル",
   "prestigeResetConfirmRank": "リセット後のランク",
   "prestigeResetIrreversibleWarning": "この操作は取り消せません",
-  "prestigeResetConfirmExecuteButton": "リセットを実行"
+  "prestigeResetConfirmExecuteButton": "リセットを実行",
+  "cosmeticsEquipTitle": "コスメティック設定",
+  "cosmeticsEquipSuccess": "コスメティックを装備しました",
+  "cosmeticsUnequipSuccess": "コスメティックを外しました",
+  "cosmeticsUnitSkinTitle": "ユニットスキン",
+  "cosmeticsUiThemeTitle": "UIテーマ",
+  "cosmeticsEquippedLabel": "装備中:",
+  "cosmeticsUnknownName": "不明",
+  "cosmeticsUnequipButton": "外す",
+  "cosmeticsEquippedBadge": "装備中",
+  "cosmeticsEquipButton": "装備する",
+  "cosmeticsNoCosmeticsTitle": "{type}はまだ解放されていません",
+  "@cosmeticsNoCosmeticsTitle": {
+    "placeholders": { "type": { "type": "String" } }
+  },
+  "cosmeticsNoCosmeticsHint": "レベルアップやプレスティジで解放されます",
+  "cosmeticsAcquisitionLevelMilestone": "レベル報酬",
+  "cosmeticsAcquisitionAchievement": "アチーブメント",
+  "cosmeticsAcquisitionPrestige": "プレスティジ報酬",
+  "cosmeticsAcquisitionBattlePass": "バトルパス",
+  "cosmeticsAcquisitionEvent": "イベント報酬",
+  "cosmeticsPrestigeRankLabel": "プレスティジランク",
+  "cosmeticsResetCountLabel": "リセット回数: {count}",
+  "@cosmeticsResetCountLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "cosmeticsPointsLabel": "ポイント: {points}",
+  "@cosmeticsPointsLabel": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "cosmeticsShowcaseTitle": "プレスティジコスメティック",
+  "cosmeticsShowcaseRankLine": "ランク: {rank}",
+  "@cosmeticsShowcaseRankLine": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "cosmeticsShowcaseEquippedSkinLabel": "装備中のユニットスキン",
+  "cosmeticsShowcaseEquippedThemeLabel": "装備中のUIテーマ",
+  "cosmeticsShowcaseEmpty": "プレスティジコスメティックがまだ装備されていません",
+  "cosmeticsPrestigeSectionEmptyHint": "プレスティジリセットを行うと解放されます",
+  "cosmeticsPrestigeCurrentRankLine": "現在のプレスティジランク: {rank}",
+  "@cosmeticsPrestigeCurrentRankLine": {
+    "placeholders": { "rank": { "type": "String" } }
+  },
+  "cosmeticsPrestigeUnitSkinTitle": "プレスティジユニットスキン",
+  "cosmeticsPrestigeUiThemeTitle": "プレスティジUIテーマ",
+  "cosmeticsPrestigeTierSilver": "シルバー",
+  "cosmeticsPrestigeTierGold": "ゴールド",
+  "cosmeticsPrestigeTierPlatinum": "プラチナ",
+  "cosmeticsPrestigeTierDiamond": "ダイヤモンド",
+  "cosmeticsPrestigeTierUnknown": "不明"
 }

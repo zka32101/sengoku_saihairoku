@@ -5,6 +5,7 @@ import '../../core/services/firebase_service.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/repositories/friend_repository.dart';
 import '../../data/repositories/friend_challenge_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// フレンド管理画面：自分のフレンドコード表示・共有、
 /// フレンド追加、フレンド限定ランキング表示
@@ -72,6 +73,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Future<void> _addFriend() async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     final code = _codeController.text.trim();
     if (userId == null || code.isEmpty) return;
@@ -91,10 +93,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
       await _loadData();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('フレンドを追加しました！')),
+        SnackBar(content: Text(l10n.friendsAddedSuccess)),
       );
     } else {
-      setState(() => _errorMessage = 'コードが無効か、既にフレンド登録済みです');
+      setState(() => _errorMessage = l10n.friendsAddFailed);
     }
   }
 
@@ -106,10 +108,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   Future<void> _challengeFriend(FriendInfo friend) async {
+    final l10n = AppLocalizations.of(context)!;
     final scenario = await showDialog<Scenario>(
       context: context,
       builder: (ctx) => SimpleDialog(
-        title: const Text('挑戦するシナリオを選ぶ'),
+        title: Text(l10n.friendsChallengeScenarioTitle),
         children: Scenario.values
             .map((s) => SimpleDialogOption(
                   onPressed: () => Navigator.pop(ctx, s),
@@ -126,7 +129,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
     if (bestScore == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('このフレンドはまだこのシナリオの記録がありません')),
+        SnackBar(content: Text(l10n.friendsNoRecordYet)),
       );
       return;
     }
@@ -144,8 +147,8 @@ class _FriendsScreenState extends State<FriendsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          '目標設定: ${friend.friendCode}の${scenario.displayNameJa}スコア '
-          '$bestScore点を超えよう！シナリオ選択から出陣してください',
+          l10n.friendsChallengeSetMessage(
+              friend.friendCode, scenario.displayNameJa, bestScore),
         ),
         duration: const Duration(seconds: 4),
       ),
@@ -153,30 +156,33 @@ class _FriendsScreenState extends State<FriendsScreen> {
   }
 
   void _shareMyCode() {
+    final l10n = AppLocalizations.of(context)!;
     final code = _myCode;
     if (code == null) return;
     SharePlus.instance.share(
       ShareParams(
-        text: '戦国采配録で対戦しよう！\nフレンドコード: $code',
+        text: l10n.friendsShareMyCodeText(code),
       ),
     );
   }
 
   void _copyMyCode() {
+    final l10n = AppLocalizations.of(context)!;
     final code = _myCode;
     if (code == null) return;
     Clipboard.setData(ClipboardData(text: code));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('フレンドコードをコピーしました')),
+      SnackBar(content: Text(l10n.friendsCopySuccess)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final myUserId = FirebaseService().userId;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('フレンド')),
+      appBar: AppBar(title: Text(l10n.friendsTitle)),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
@@ -188,6 +194,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     code: _myCode ?? '----',
                     onCopy: _copyMyCode,
                     onShare: _shareMyCode,
+                    l10n: l10n,
                   ),
                   const SizedBox(height: 16),
                   _AddFriendCard(
@@ -195,10 +202,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     isLoading: _isAddingFriend,
                     errorMessage: _errorMessage,
                     onSubmit: _addFriend,
+                    l10n: l10n,
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'フレンドランキング（合計スコア）',
+                    l10n.friendsRankingTitle,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -207,12 +215,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   ),
                   const SizedBox(height: 12),
                   if (_ranking.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: Text(
-                          'まだ戦績がありません',
-                          style: TextStyle(color: Colors.grey),
+                          l10n.friendsNoRecordsYet,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     )
@@ -222,11 +230,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                             rank: entry.key + 1,
                             entry: entry.value,
                             isMe: entry.value.userId == myUserId,
+                            l10n: l10n,
                           ),
                         ),
                   const SizedBox(height: 24),
                   Text(
-                    '最近の戦績',
+                    l10n.friendsRecentActivityTitle,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -235,12 +244,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   ),
                   const SizedBox(height: 12),
                   if (_activity.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: Text(
-                          'まだ戦績がありません',
-                          style: TextStyle(color: Colors.grey),
+                          l10n.friendsNoRecordsYet,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     )
@@ -249,11 +258,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                       (entry) => _ActivityRow(
                         entry: entry,
                         friendCode: _friendCodeFor(entry.userId),
+                        l10n: l10n,
                       ),
                     ),
                   const SizedBox(height: 24),
                   Text(
-                    'フレンド一覧 (${_friends.length})',
+                    l10n.friendsListTitle(_friends.length),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -262,12 +272,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   ),
                   const SizedBox(height: 12),
                   if (_friends.isEmpty)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: Text(
-                          'まだフレンドがいません',
-                          style: TextStyle(color: Colors.grey),
+                          l10n.friendsNoFriendsYet,
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ),
                     )
@@ -277,6 +287,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         friend: friend,
                         onRemove: () => _removeFriend(friend.userId),
                         onChallenge: () => _challengeFriend(friend),
+                        l10n: l10n,
                       ),
                     ),
                 ],
@@ -290,11 +301,13 @@ class _MyCodeCard extends StatelessWidget {
   final String code;
   final VoidCallback onCopy;
   final VoidCallback onShare;
+  final AppLocalizations l10n;
 
   const _MyCodeCard({
     required this.code,
     required this.onCopy,
     required this.onShare,
+    required this.l10n,
   });
 
   @override
@@ -316,9 +329,9 @@ class _MyCodeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'あなたのフレンドコード',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+          Text(
+            l10n.friendsMyCodeLabel,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
           ),
           const SizedBox(height: 8),
           Text(
@@ -337,7 +350,7 @@ class _MyCodeCard extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: onCopy,
                   icon: const Icon(Icons.copy, size: 18),
-                  label: const Text('コピー'),
+                  label: Text(l10n.friendsCopyButton),
                 ),
               ),
               const SizedBox(width: 8),
@@ -345,7 +358,7 @@ class _MyCodeCard extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: onShare,
                   icon: const Icon(Icons.share, size: 18),
-                  label: const Text('共有'),
+                  label: Text(l10n.friendsShareButton),
                 ),
               ),
             ],
@@ -361,12 +374,14 @@ class _AddFriendCard extends StatelessWidget {
   final bool isLoading;
   final String? errorMessage;
   final VoidCallback onSubmit;
+  final AppLocalizations l10n;
 
   const _AddFriendCard({
     required this.controller,
     required this.isLoading,
     required this.errorMessage,
     required this.onSubmit,
+    required this.l10n,
   });
 
   @override
@@ -377,9 +392,9 @@ class _AddFriendCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'フレンドを追加',
-              style: TextStyle(
+            Text(
+              l10n.friendsAddFriendTitle,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFE8D5B0),
@@ -392,10 +407,10 @@ class _AddFriendCard extends StatelessWidget {
                   child: TextField(
                     controller: controller,
                     textCapitalization: TextCapitalization.characters,
-                    decoration: const InputDecoration(
-                      hintText: 'フレンドコードを入力',
+                    decoration: InputDecoration(
+                      hintText: l10n.friendsCodeHint,
                       isDense: true,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ),
@@ -408,7 +423,7 @@ class _AddFriendCard extends StatelessWidget {
                           height: 16,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('追加'),
+                      : Text(l10n.friendsAddButton),
                 ),
               ],
             ),
@@ -430,11 +445,13 @@ class _RankingRow extends StatelessWidget {
   final int rank;
   final FriendRankingEntry entry;
   final bool isMe;
+  final AppLocalizations l10n;
 
   const _RankingRow({
     required this.rank,
     required this.entry,
     required this.isMe,
+    required this.l10n,
   });
 
   @override
@@ -467,7 +484,7 @@ class _RankingRow extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                isMe ? 'あなた' : entry.userId.substring(0, 8),
+                isMe ? l10n.friendsYouLabel : entry.userId.substring(0, 8),
                 style: const TextStyle(color: Color(0xFFE8D5B0)),
               ),
             ),
@@ -488,8 +505,13 @@ class _RankingRow extends StatelessWidget {
 class _ActivityRow extends StatelessWidget {
   final FriendActivityEntry entry;
   final String? friendCode; // nullなら自分自身
+  final AppLocalizations l10n;
 
-  const _ActivityRow({required this.entry, required this.friendCode});
+  const _ActivityRow({
+    required this.entry,
+    required this.friendCode,
+    required this.l10n,
+  });
 
   String get _scenarioLabel {
     try {
@@ -501,11 +523,11 @@ class _ActivityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final playerLabel = friendCode ?? 'あなた';
+    final playerLabel = friendCode ?? l10n.friendsYouLabel;
     final minutesAgo = DateTime.now().difference(entry.playedAt).inMinutes;
     final timeLabel = minutesAgo < 60
-        ? '$minutesAgo分前'
-        : '${entry.playedAt.month}月${entry.playedAt.day}日';
+        ? l10n.statisticsTimeMinutesAgo(minutesAgo)
+        : l10n.statisticsTimeMonthDay(entry.playedAt.month, entry.playedAt.day);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
@@ -514,7 +536,11 @@ class _ActivityRow extends StatelessWidget {
           entry.won ? Icons.emoji_events : Icons.close,
           color: entry.won ? Colors.amber : Colors.grey,
         ),
-        title: Text('$playerLabel が$_scenarioLabelで${entry.won ? '勝利' : '敗北'}'),
+        title: Text(l10n.friendsActivityLine(
+          playerLabel,
+          _scenarioLabel,
+          entry.won ? l10n.chainBattleWin : l10n.chainBattleLoss,
+        )),
         subtitle: Text(timeLabel, style: const TextStyle(fontSize: 12)),
         trailing: Text(
           '${entry.score} pt',
@@ -529,11 +555,13 @@ class _FriendRow extends StatelessWidget {
   final FriendInfo friend;
   final VoidCallback onRemove;
   final VoidCallback onChallenge;
+  final AppLocalizations l10n;
 
   const _FriendRow({
     required this.friend,
     required this.onRemove,
     required this.onChallenge,
+    required this.l10n,
   });
 
   @override
@@ -547,7 +575,7 @@ class _FriendRow extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.sports_kabaddi, color: Color(0xFFFFD700)),
-              tooltip: '挑戦する',
+              tooltip: l10n.friendsChallengeTooltip,
               onPressed: onChallenge,
             ),
             IconButton(

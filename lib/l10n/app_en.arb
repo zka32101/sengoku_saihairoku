@@ -669,5 +669,47 @@
   "cosmeticsPrestigeTierGold": "Gold",
   "cosmeticsPrestigeTierPlatinum": "Platinum",
   "cosmeticsPrestigeTierDiamond": "Diamond",
-  "cosmeticsPrestigeTierUnknown": "Unknown"
+  "cosmeticsPrestigeTierUnknown": "Unknown",
+  "friendsTitle": "Friends",
+  "friendsAddedSuccess": "Friend added!",
+  "friendsAddFailed": "The code is invalid or you're already friends",
+  "friendsChallengeScenarioTitle": "Choose a scenario to challenge",
+  "friendsNoRecordYet": "This friend has no record for this scenario yet",
+  "friendsChallengeSetMessage": "Goal set: beat {friend}'s {scenario} score of {score}! Sortie from the scenario select screen",
+  "@friendsChallengeSetMessage": {
+    "placeholders": {
+      "friend": { "type": "String" },
+      "scenario": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "friendsShareMyCodeText": "Let's battle in Sengoku Saihairoku!\nFriend code: {code}",
+  "@friendsShareMyCodeText": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "friendsCopySuccess": "Friend code copied",
+  "friendsMyCodeLabel": "Your Friend Code",
+  "friendsCopyButton": "Copy",
+  "friendsShareButton": "Share",
+  "friendsAddFriendTitle": "Add a Friend",
+  "friendsCodeHint": "Enter a friend code",
+  "friendsAddButton": "Add",
+  "friendsRankingTitle": "Friend Ranking (Total Score)",
+  "friendsNoRecordsYet": "No records yet",
+  "friendsRecentActivityTitle": "Recent Activity",
+  "friendsListTitle": "Friends ({count})",
+  "@friendsListTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "friendsNoFriendsYet": "No friends yet",
+  "friendsYouLabel": "You",
+  "friendsActivityLine": "{player} got a {result} in {scenario}",
+  "@friendsActivityLine": {
+    "placeholders": {
+      "player": { "type": "String" },
+      "scenario": { "type": "String" },
+      "result": { "type": "String" }
+    }
+  },
+  "friendsChallengeTooltip": "Challenge"
 }

@@ -1487,4 +1487,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cosmeticsPrestigeTierUnknown => 'Unknown';
+
+  @override
+  String get friendsTitle => 'Friends';
+
+  @override
+  String get friendsAddedSuccess => 'Friend added!';
+
+  @override
+  String get friendsAddFailed =>
+      'The code is invalid or you\'re already friends';
+
+  @override
+  String get friendsChallengeScenarioTitle => 'Choose a scenario to challenge';
+
+  @override
+  String get friendsNoRecordYet =>
+      'This friend has no record for this scenario yet';
+
+  @override
+  String friendsChallengeSetMessage(String friend, String scenario, int score) {
+    return 'Goal set: beat $friend\'s $scenario score of $score! Sortie from the scenario select screen';
+  }
+
+  @override
+  String friendsShareMyCodeText(String code) {
+    return 'Let\'s battle in Sengoku Saihairoku!\nFriend code: $code';
+  }
+
+  @override
+  String get friendsCopySuccess => 'Friend code copied';
+
+  @override
+  String get friendsMyCodeLabel => 'Your Friend Code';
+
+  @override
+  String get friendsCopyButton => 'Copy';
+
+  @override
+  String get friendsShareButton => 'Share';
+
+  @override
+  String get friendsAddFriendTitle => 'Add a Friend';
+
+  @override
+  String get friendsCodeHint => 'Enter a friend code';
+
+  @override
+  String get friendsAddButton => 'Add';
+
+  @override
+  String get friendsRankingTitle => 'Friend Ranking (Total Score)';
+
+  @override
+  String get friendsNoRecordsYet => 'No records yet';
+
+  @override
+  String get friendsRecentActivityTitle => 'Recent Activity';
+
+  @override
+  String friendsListTitle(int count) {
+    return 'Friends ($count)';
+  }
+
+  @override
+  String get friendsNoFriendsYet => 'No friends yet';
+
+  @override
+  String get friendsYouLabel => 'You';
+
+  @override
+  String friendsActivityLine(String player, String scenario, String result) {
+    return '$player got a $result in $scenario';
+  }
+
+  @override
+  String get friendsChallengeTooltip => 'Challenge';
 }

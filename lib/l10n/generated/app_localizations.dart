@@ -2718,6 +2718,138 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'不明'**
   String get cosmeticsPrestigeTierUnknown;
+
+  /// No description provided for @friendsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンド'**
+  String get friendsTitle;
+
+  /// No description provided for @friendsAddedSuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドを追加しました！'**
+  String get friendsAddedSuccess;
+
+  /// No description provided for @friendsAddFailed.
+  ///
+  /// In ja, this message translates to:
+  /// **'コードが無効か、既にフレンド登録済みです'**
+  String get friendsAddFailed;
+
+  /// No description provided for @friendsChallengeScenarioTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'挑戦するシナリオを選ぶ'**
+  String get friendsChallengeScenarioTitle;
+
+  /// No description provided for @friendsNoRecordYet.
+  ///
+  /// In ja, this message translates to:
+  /// **'このフレンドはまだこのシナリオの記録がありません'**
+  String get friendsNoRecordYet;
+
+  /// No description provided for @friendsChallengeSetMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'目標設定: {friend}の{scenario}スコア {score}点を超えよう！シナリオ選択から出陣してください'**
+  String friendsChallengeSetMessage(String friend, String scenario, int score);
+
+  /// No description provided for @friendsShareMyCodeText.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録で対戦しよう！\nフレンドコード: {code}'**
+  String friendsShareMyCodeText(String code);
+
+  /// No description provided for @friendsCopySuccess.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドコードをコピーしました'**
+  String get friendsCopySuccess;
+
+  /// No description provided for @friendsMyCodeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'あなたのフレンドコード'**
+  String get friendsMyCodeLabel;
+
+  /// No description provided for @friendsCopyButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'コピー'**
+  String get friendsCopyButton;
+
+  /// No description provided for @friendsShareButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有'**
+  String get friendsShareButton;
+
+  /// No description provided for @friendsAddFriendTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドを追加'**
+  String get friendsAddFriendTitle;
+
+  /// No description provided for @friendsCodeHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドコードを入力'**
+  String get friendsCodeHint;
+
+  /// No description provided for @friendsAddButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'追加'**
+  String get friendsAddButton;
+
+  /// No description provided for @friendsRankingTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンドランキング（合計スコア）'**
+  String get friendsRankingTitle;
+
+  /// No description provided for @friendsNoRecordsYet.
+  ///
+  /// In ja, this message translates to:
+  /// **'まだ戦績がありません'**
+  String get friendsNoRecordsYet;
+
+  /// No description provided for @friendsRecentActivityTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'最近の戦績'**
+  String get friendsRecentActivityTitle;
+
+  /// No description provided for @friendsListTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンド一覧 ({count})'**
+  String friendsListTitle(int count);
+
+  /// No description provided for @friendsNoFriendsYet.
+  ///
+  /// In ja, this message translates to:
+  /// **'まだフレンドがいません'**
+  String get friendsNoFriendsYet;
+
+  /// No description provided for @friendsYouLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'あなた'**
+  String get friendsYouLabel;
+
+  /// No description provided for @friendsActivityLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{player} が{scenario}で{result}'**
+  String friendsActivityLine(String player, String scenario, String result);
+
+  /// No description provided for @friendsChallengeTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'挑戦する'**
+  String get friendsChallengeTooltip;
 }
 
 class _AppLocalizationsDelegate

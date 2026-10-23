@@ -1451,4 +1451,78 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cosmeticsPrestigeTierUnknown => '不明';
+
+  @override
+  String get friendsTitle => 'フレンド';
+
+  @override
+  String get friendsAddedSuccess => 'フレンドを追加しました！';
+
+  @override
+  String get friendsAddFailed => 'コードが無効か、既にフレンド登録済みです';
+
+  @override
+  String get friendsChallengeScenarioTitle => '挑戦するシナリオを選ぶ';
+
+  @override
+  String get friendsNoRecordYet => 'このフレンドはまだこのシナリオの記録がありません';
+
+  @override
+  String friendsChallengeSetMessage(String friend, String scenario, int score) {
+    return '目標設定: $friendの$scenarioスコア $score点を超えよう！シナリオ選択から出陣してください';
+  }
+
+  @override
+  String friendsShareMyCodeText(String code) {
+    return '戦国采配録で対戦しよう！\nフレンドコード: $code';
+  }
+
+  @override
+  String get friendsCopySuccess => 'フレンドコードをコピーしました';
+
+  @override
+  String get friendsMyCodeLabel => 'あなたのフレンドコード';
+
+  @override
+  String get friendsCopyButton => 'コピー';
+
+  @override
+  String get friendsShareButton => '共有';
+
+  @override
+  String get friendsAddFriendTitle => 'フレンドを追加';
+
+  @override
+  String get friendsCodeHint => 'フレンドコードを入力';
+
+  @override
+  String get friendsAddButton => '追加';
+
+  @override
+  String get friendsRankingTitle => 'フレンドランキング（合計スコア）';
+
+  @override
+  String get friendsNoRecordsYet => 'まだ戦績がありません';
+
+  @override
+  String get friendsRecentActivityTitle => '最近の戦績';
+
+  @override
+  String friendsListTitle(int count) {
+    return 'フレンド一覧 ($count)';
+  }
+
+  @override
+  String get friendsNoFriendsYet => 'まだフレンドがいません';
+
+  @override
+  String get friendsYouLabel => 'あなた';
+
+  @override
+  String friendsActivityLine(String player, String scenario, String result) {
+    return '$player が$scenarioで$result';
+  }
+
+  @override
+  String get friendsChallengeTooltip => '挑戦する';
 }

@@ -672,5 +672,47 @@
   "cosmeticsPrestigeTierGold": "ゴールド",
   "cosmeticsPrestigeTierPlatinum": "プラチナ",
   "cosmeticsPrestigeTierDiamond": "ダイヤモンド",
-  "cosmeticsPrestigeTierUnknown": "不明"
+  "cosmeticsPrestigeTierUnknown": "不明",
+  "friendsTitle": "フレンド",
+  "friendsAddedSuccess": "フレンドを追加しました！",
+  "friendsAddFailed": "コードが無効か、既にフレンド登録済みです",
+  "friendsChallengeScenarioTitle": "挑戦するシナリオを選ぶ",
+  "friendsNoRecordYet": "このフレンドはまだこのシナリオの記録がありません",
+  "friendsChallengeSetMessage": "目標設定: {friend}の{scenario}スコア {score}点を超えよう！シナリオ選択から出陣してください",
+  "@friendsChallengeSetMessage": {
+    "placeholders": {
+      "friend": { "type": "String" },
+      "scenario": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "friendsShareMyCodeText": "戦国采配録で対戦しよう！\nフレンドコード: {code}",
+  "@friendsShareMyCodeText": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "friendsCopySuccess": "フレンドコードをコピーしました",
+  "friendsMyCodeLabel": "あなたのフレンドコード",
+  "friendsCopyButton": "コピー",
+  "friendsShareButton": "共有",
+  "friendsAddFriendTitle": "フレンドを追加",
+  "friendsCodeHint": "フレンドコードを入力",
+  "friendsAddButton": "追加",
+  "friendsRankingTitle": "フレンドランキング（合計スコア）",
+  "friendsNoRecordsYet": "まだ戦績がありません",
+  "friendsRecentActivityTitle": "最近の戦績",
+  "friendsListTitle": "フレンド一覧 ({count})",
+  "@friendsListTitle": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "friendsNoFriendsYet": "まだフレンドがいません",
+  "friendsYouLabel": "あなた",
+  "friendsActivityLine": "{player} が{scenario}で{result}",
+  "@friendsActivityLine": {
+    "placeholders": {
+      "player": { "type": "String" },
+      "scenario": { "type": "String" },
+      "result": { "type": "String" }
+    }
+  },
+  "friendsChallengeTooltip": "挑戦する"
 }

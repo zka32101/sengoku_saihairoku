@@ -1228,4 +1228,59 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tutorialStepChargeResult =>
       'Full charge! You broke through the enemy\'s main camp and claimed victory!';
+
+  @override
+  String get chainBattleTitle => 'Chain Battle';
+
+  @override
+  String chainBattleDifficultyIntro(int count) {
+    return 'Chain Battle clears all $count battles back to back with no rest. Your army\'s strength drops from fatigue as stages progress. Choose a difficulty.';
+  }
+
+  @override
+  String chainBattleStageLabel(int current, int total) {
+    return 'Stage $current / $total';
+  }
+
+  @override
+  String chainBattleFatigueMultiplier(String multiplier) {
+    return 'Fatigue strength multiplier: ×$multiplier';
+  }
+
+  @override
+  String chainBattleResultLine(String scenario, String result, int score) {
+    return '$scenario: $result ($score pts)';
+  }
+
+  @override
+  String get chainBattleWin => 'Victory';
+
+  @override
+  String get chainBattleLoss => 'Defeat';
+
+  @override
+  String get chainSummaryTitle => 'Chain Battle Complete';
+
+  @override
+  String chainSummaryWins(int wins, int total) {
+    return '$wins / $total Wins';
+  }
+
+  @override
+  String chainSummaryTotalScore(int score) {
+    return 'Total Score: $score pts';
+  }
+
+  @override
+  String chainSummaryResultLine(String result, int score) {
+    return '$result $score pts';
+  }
+
+  @override
+  String get chainSummaryHomeButton => 'Back to Home';
+
+  @override
+  String chainCompletionAdLabel(int amount) {
+    return 'Watch an ad to earn a $amount gold bonus for your hard work';
+  }
 }

@@ -535,5 +535,55 @@
   "tutorialStepRallyResult": "Troop morale rose, boosting attack power!",
   "tutorialStepChargeLabel": "Charge",
   "tutorialStepChargePrompt": "The enemy is faltering. Finish them with a \"Charge\"\nand press the advantage!",
-  "tutorialStepChargeResult": "Full charge! You broke through the enemy's main camp and claimed victory!"
+  "tutorialStepChargeResult": "Full charge! You broke through the enemy's main camp and claimed victory!",
+  "chainBattleTitle": "Chain Battle",
+  "chainBattleDifficultyIntro": "Chain Battle clears all {count} battles back to back with no rest. Your army's strength drops from fatigue as stages progress. Choose a difficulty.",
+  "@chainBattleDifficultyIntro": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "chainBattleStageLabel": "Stage {current} / {total}",
+  "@chainBattleStageLabel": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "chainBattleFatigueMultiplier": "Fatigue strength multiplier: ×{multiplier}",
+  "@chainBattleFatigueMultiplier": {
+    "placeholders": { "multiplier": { "type": "String" } }
+  },
+  "chainBattleResultLine": "{scenario}: {result} ({score} pts)",
+  "@chainBattleResultLine": {
+    "placeholders": {
+      "scenario": { "type": "String" },
+      "result": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "chainBattleWin": "Victory",
+  "chainBattleLoss": "Defeat",
+  "chainSummaryTitle": "Chain Battle Complete",
+  "chainSummaryWins": "{wins} / {total} Wins",
+  "@chainSummaryWins": {
+    "placeholders": {
+      "wins": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "chainSummaryTotalScore": "Total Score: {score} pts",
+  "@chainSummaryTotalScore": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "chainSummaryResultLine": "{result} {score} pts",
+  "@chainSummaryResultLine": {
+    "placeholders": {
+      "result": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "chainSummaryHomeButton": "Back to Home",
+  "chainCompletionAdLabel": "Watch an ad to earn a {amount} gold bonus for your hard work",
+  "@chainCompletionAdLabel": {
+    "placeholders": { "amount": { "type": "int" } }
+  }
 }

@@ -1200,4 +1200,59 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tutorialStepChargeResult => '全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！';
+
+  @override
+  String get chainBattleTitle => '連戦モード';
+
+  @override
+  String chainBattleDifficultyIntro(int count) {
+    return '連戦モードは全$count戦を休憩なしで攻略します。ステージが進むほど自軍兵力が疲労で減少します。難易度を選んでください。';
+  }
+
+  @override
+  String chainBattleStageLabel(int current, int total) {
+    return 'ステージ $current / $total';
+  }
+
+  @override
+  String chainBattleFatigueMultiplier(String multiplier) {
+    return '疲労による兵力倍率: ×$multiplier';
+  }
+
+  @override
+  String chainBattleResultLine(String scenario, String result, int score) {
+    return '$scenario: $result（$score点）';
+  }
+
+  @override
+  String get chainBattleWin => '勝利';
+
+  @override
+  String get chainBattleLoss => '敗北';
+
+  @override
+  String get chainSummaryTitle => '連戦終了';
+
+  @override
+  String chainSummaryWins(int wins, int total) {
+    return '$wins / $total 勝利';
+  }
+
+  @override
+  String chainSummaryTotalScore(int score) {
+    return '合計スコア: $score点';
+  }
+
+  @override
+  String chainSummaryResultLine(String result, int score) {
+    return '$result $score点';
+  }
+
+  @override
+  String get chainSummaryHomeButton => 'ホームに戻る';
+
+  @override
+  String chainCompletionAdLabel(int amount) {
+    return '広告を見て連戦の労をねぎらうボーナス$amountゴールドを獲得';
+  }
 }

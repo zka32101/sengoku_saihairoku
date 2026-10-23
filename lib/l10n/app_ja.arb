@@ -538,5 +538,55 @@
   "tutorialStepRallyResult": "将兵の士気が上がり、攻撃力が上昇した！",
   "tutorialStepChargeLabel": "突撃",
   "tutorialStepChargePrompt": "敵は崩れかけている。最後は「突撃」で\n一気に畳み掛けよう！",
-  "tutorialStepChargeResult": "全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！"
+  "tutorialStepChargeResult": "全軍突撃！敵将本陣を突き崩し、勝利を掴んだ！",
+  "chainBattleTitle": "連戦モード",
+  "chainBattleDifficultyIntro": "連戦モードは全{count}戦を休憩なしで攻略します。ステージが進むほど自軍兵力が疲労で減少します。難易度を選んでください。",
+  "@chainBattleDifficultyIntro": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "chainBattleStageLabel": "ステージ {current} / {total}",
+  "@chainBattleStageLabel": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "chainBattleFatigueMultiplier": "疲労による兵力倍率: ×{multiplier}",
+  "@chainBattleFatigueMultiplier": {
+    "placeholders": { "multiplier": { "type": "String" } }
+  },
+  "chainBattleResultLine": "{scenario}: {result}（{score}点）",
+  "@chainBattleResultLine": {
+    "placeholders": {
+      "scenario": { "type": "String" },
+      "result": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "chainBattleWin": "勝利",
+  "chainBattleLoss": "敗北",
+  "chainSummaryTitle": "連戦終了",
+  "chainSummaryWins": "{wins} / {total} 勝利",
+  "@chainSummaryWins": {
+    "placeholders": {
+      "wins": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "chainSummaryTotalScore": "合計スコア: {score}点",
+  "@chainSummaryTotalScore": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "chainSummaryResultLine": "{result} {score}点",
+  "@chainSummaryResultLine": {
+    "placeholders": {
+      "result": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  },
+  "chainSummaryHomeButton": "ホームに戻る",
+  "chainCompletionAdLabel": "広告を見て連戦の労をねぎらうボーナス{amount}ゴールドを獲得",
+  "@chainCompletionAdLabel": {
+    "placeholders": { "amount": { "type": "int" } }
+  }
 }

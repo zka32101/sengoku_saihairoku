@@ -3,6 +3,7 @@ import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../domain/state/battle_state.dart';
 import '../../core/services/ad_service.dart';
+import '../../l10n/generated/app_localizations.dart';
 import 'battle_screen.dart';
 
 /// 連戦モード：全シナリオを休憩なしで連続攻略する高難度モード。
@@ -70,6 +71,7 @@ class _ChainBattleScreenState extends State<ChainBattleScreen> {
   bool get _isFinished => _currentIndex >= Scenario.values.length;
 
   Future<void> _watchAdForBonusGold() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _isWatchingAd = true);
     final earned = await _adService.showRewardedAdForGold();
     if (!mounted) return;
@@ -78,24 +80,30 @@ class _ChainBattleScreenState extends State<ChainBattleScreen> {
     if (earned) {
       setState(() => _bonusGoldClaimed = true);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${_adService.rewardGoldAmount}ゴールドを獲得しました！')),
+        SnackBar(
+            content: Text(
+                l10n.goldShopAdRewardEarned(_adService.rewardGoldAmount))),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('広告を表示できませんでした。しばらくしてから再度お試しください')),
+        SnackBar(content: Text(l10n.goldShopAdFailure)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('連戦モード')),
+      appBar: AppBar(title: Text(l10n.chainBattleTitle)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: _difficulty == null
-              ? _DifficultyPicker(onSelected: (d) => setState(() => _difficulty = d))
+              ? _DifficultyPicker(
+                  onSelected: (d) => setState(() => _difficulty = d),
+                  l10n: l10n,
+                )
               : _isFinished
                   ? _ChainSummary(
                       results: _results,
@@ -104,6 +112,7 @@ class _ChainBattleScreenState extends State<ChainBattleScreen> {
                       bonusGoldClaimed: _bonusGoldClaimed,
                       rewardGoldAmount: _adService.rewardGoldAmount,
                       onWatchAd: _watchAdForBonusGold,
+                      l10n: l10n,
                     )
                   : _StageProgress(
                       currentIndex: _currentIndex,
@@ -112,6 +121,7 @@ class _ChainBattleScreenState extends State<ChainBattleScreen> {
                       fatigueMultiplier: _fatigueMultiplier,
                       results: _results,
                       onStart: _startStage,
+                      l10n: l10n,
                     ),
         ),
       ),
@@ -133,8 +143,9 @@ class _StageResult {
 
 class _DifficultyPicker extends StatelessWidget {
   final ValueChanged<DifficultyMode> onSelected;
+  final AppLocalizations l10n;
 
-  const _DifficultyPicker({required this.onSelected});
+  const _DifficultyPicker({required this.onSelected, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +153,7 @@ class _DifficultyPicker extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '連戦モードは全${Scenario.values.length}戦を休憩なしで攻略します。'
-          'ステージが進むほど自軍兵力が疲労で減少します。難易度を選んでください。',
+          l10n.chainBattleDifficultyIntro(Scenario.values.length),
           style: const TextStyle(fontSize: 14, color: Color(0xFFE8D5B0)),
         ),
         const SizedBox(height: 24),
@@ -170,6 +180,7 @@ class _StageProgress extends StatelessWidget {
   final double fatigueMultiplier;
   final List<_StageResult> results;
   final VoidCallback onStart;
+  final AppLocalizations l10n;
 
   const _StageProgress({
     required this.currentIndex,
@@ -178,6 +189,7 @@ class _StageProgress extends StatelessWidget {
     required this.fatigueMultiplier,
     required this.results,
     required this.onStart,
+    required this.l10n,
   });
 
   @override
@@ -186,7 +198,7 @@ class _StageProgress extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'ステージ ${currentIndex + 1} / $totalStages',
+          l10n.chainBattleStageLabel(currentIndex + 1, totalStages),
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -200,14 +212,17 @@ class _StageProgress extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '疲労による兵力倍率: ×${fatigueMultiplier.toStringAsFixed(2)}',
+          l10n.chainBattleFatigueMultiplier(fatigueMultiplier.toStringAsFixed(2)),
           style: TextStyle(color: Colors.grey[400]),
         ),
         const SizedBox(height: 24),
         for (final result in results)
           Text(
-            '${result.scenario.displayNameJa}: '
-            '${result.won ? '勝利' : '敗北'}（${result.score}点）',
+            l10n.chainBattleResultLine(
+              result.scenario.displayNameJa,
+              result.won ? l10n.chainBattleWin : l10n.chainBattleLoss,
+              result.score,
+            ),
             style: TextStyle(
               fontSize: 12,
               color: result.won ? Colors.lightGreenAccent : Colors.redAccent,
@@ -218,7 +233,7 @@ class _StageProgress extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: onStart,
-            child: const Text('出陣'),
+            child: Text(l10n.commonSortie),
           ),
         ),
       ],
@@ -233,6 +248,7 @@ class _ChainSummary extends StatelessWidget {
   final bool bonusGoldClaimed;
   final int rewardGoldAmount;
   final VoidCallback onWatchAd;
+  final AppLocalizations l10n;
 
   const _ChainSummary({
     required this.results,
@@ -241,6 +257,7 @@ class _ChainSummary extends StatelessWidget {
     required this.bonusGoldClaimed,
     required this.rewardGoldAmount,
     required this.onWatchAd,
+    required this.l10n,
   });
 
   @override
@@ -249,23 +266,24 @@ class _ChainSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '連戦終了',
-          style: TextStyle(
+        Text(
+          l10n.chainSummaryTitle,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Color(0xFFFFD700),
           ),
         ),
         const SizedBox(height: 8),
-        Text('$wins / ${results.length} 勝利'),
-        Text('合計スコア: $totalScore点'),
+        Text(l10n.chainSummaryWins(wins, results.length)),
+        Text(l10n.chainSummaryTotalScore(totalScore)),
         if (!bonusGoldClaimed) ...[
           const SizedBox(height: 16),
           _ChainCompletionAdCard(
             isWatching: isWatchingAd,
             rewardGoldAmount: rewardGoldAmount,
             onWatch: onWatchAd,
+            l10n: l10n,
           ),
         ],
         const SizedBox(height: 16),
@@ -275,7 +293,10 @@ class _ChainSummary extends StatelessWidget {
                 .map((r) => ListTile(
                       title: Text(r.scenario.displayNameJa),
                       trailing: Text(
-                        '${r.won ? '勝利' : '敗北'} ${r.score}点',
+                        l10n.chainSummaryResultLine(
+                          r.won ? l10n.chainBattleWin : l10n.chainBattleLoss,
+                          r.score,
+                        ),
                         style: TextStyle(
                           color: r.won ? Colors.lightGreenAccent : Colors.redAccent,
                         ),
@@ -288,7 +309,7 @@ class _ChainSummary extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('ホームに戻る'),
+            child: Text(l10n.chainSummaryHomeButton),
           ),
         ),
       ],
@@ -303,11 +324,13 @@ class _ChainCompletionAdCard extends StatelessWidget {
   final bool isWatching;
   final int rewardGoldAmount;
   final VoidCallback onWatch;
+  final AppLocalizations l10n;
 
   const _ChainCompletionAdCard({
     required this.isWatching,
     required this.rewardGoldAmount,
     required this.onWatch,
+    required this.l10n,
   });
 
   @override
@@ -332,7 +355,7 @@ class _ChainCompletionAdCard extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              '広告を見て連戦の労をねぎらうボーナス$rewardGoldAmountゴールドを獲得',
+              l10n.chainCompletionAdLabel(rewardGoldAmount),
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -358,7 +381,7 @@ class _ChainCompletionAdCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     )
-                  : const Text('視聴する'),
+                  : Text(l10n.goldShopWatchButton),
             ),
           ),
         ],

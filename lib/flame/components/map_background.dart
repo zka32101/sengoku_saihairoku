@@ -88,6 +88,8 @@ class MapBackground extends PositionComponent {
         _drawItsukushima(canvas);
       case Scenario.oshiJo:
         _drawOshijo(canvas);
+      case Scenario.mikatagahara:
+        _drawMikatagahara(canvas);
     }
   }
 
@@ -176,6 +178,23 @@ class MapBackground extends PositionComponent {
     // 堤防（石田堤）
     _drawBarricade(canvas, 20, 340, 340);
     _drawLabel(canvas, '石田堤', 150, 345, const Color(0xFFAAAAAA));
+  }
+
+  void _drawMikatagahara(Canvas canvas) {
+    // 三方ヶ原台地（広い平野）
+    final plainPaint = Paint()..color = const Color(0xFF2A2515);
+    canvas.drawRect(Rect.fromLTWH(0, 250, 360, 180), plainPaint);
+    _drawLabel(canvas, '三方ヶ原台地', 120, 330, const Color(0xFFAAAAAA));
+
+    // 浜松城（徳川本陣、画面下）
+    _drawBuilding(canvas, 160, 480, 36, 36);
+    _drawLabel(canvas, '浜松城', 148, 520, const Color(0xFFFF6644));
+
+    // 薄暮の霧（夕刻の奇襲を示す薄い霞）
+    final mistPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.08)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
+    canvas.drawRect(Rect.fromLTWH(0, 150, 360, 200), mistPaint);
   }
 
   // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで

@@ -1982,6 +1982,30 @@ abstract class AppLocalizations {
   /// **'敵将討死'**
   String get resultTpOshijo4;
 
+  /// No description provided for @resultTpMikatagahara1.
+  ///
+  /// In ja, this message translates to:
+  /// **'無謀な出陣を思い止まる'**
+  String get resultTpMikatagahara1;
+
+  /// No description provided for @resultTpMikatagahara2.
+  ///
+  /// In ja, this message translates to:
+  /// **'三方ヶ原台地での混戦を耐える'**
+  String get resultTpMikatagahara2;
+
+  /// No description provided for @resultTpMikatagahara3.
+  ///
+  /// In ja, this message translates to:
+  /// **'啄木鳥戦法で反撃する'**
+  String get resultTpMikatagahara3;
+
+  /// No description provided for @resultTpMikatagahara4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpMikatagahara4;
+
   /// No description provided for @scenarioSelectTitle.
   ///
   /// In ja, this message translates to:
@@ -2179,6 +2203,12 @@ abstract class AppLocalizations {
   /// **'忍城の戦い'**
   String get scenarioNameOshijo;
 
+  /// No description provided for @scenarioNameMikatagahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'三方ヶ原の戦い'**
+  String get scenarioNameMikatagahara;
+
   /// No description provided for @scenarioDescItsukushima.
   ///
   /// In ja, this message translates to:
@@ -2202,6 +2232,18 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'4〜5分'**
   String get scenarioPlayTimeOshijo;
+
+  /// No description provided for @scenarioDescMikatagahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'8,000 vs 25,000 — 無謀な出陣から、史実にない大逆転を目指せ'**
+  String get scenarioDescMikatagahara;
+
+  /// No description provided for @scenarioPlayTimeMikatagahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeMikatagahara;
 
   /// No description provided for @tutorialTitle.
   ///
@@ -3982,6 +4024,12 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'忍城'**
   String get challengeCardScenarioOshijo;
+
+  /// No description provided for @challengeCardScenarioMikatagahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'三方ヶ原'**
+  String get challengeCardScenarioMikatagahara;
 
   /// No description provided for @challengeCardRewardLabel.
   ///

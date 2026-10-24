@@ -1042,6 +1042,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resultTpOshijo4 => '敵将討死';
 
   @override
+  String get resultTpMikatagahara1 => '無謀な出陣を思い止まる';
+
+  @override
+  String get resultTpMikatagahara2 => '三方ヶ原台地での混戦を耐える';
+
+  @override
+  String get resultTpMikatagahara3 => '啄木鳥戦法で反撃する';
+
+  @override
+  String get resultTpMikatagahara4 => '敵将討死';
+
+  @override
   String get scenarioSelectTitle => 'シナリオを選ぶ';
 
   @override
@@ -1150,6 +1162,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scenarioNameOshijo => '忍城の戦い';
 
   @override
+  String get scenarioNameMikatagahara => '三方ヶ原の戦い';
+
+  @override
   String get scenarioDescItsukushima => '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ';
 
   @override
@@ -1160,6 +1175,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeOshijo => '4〜5分';
+
+  @override
+  String get scenarioDescMikatagahara =>
+      '8,000 vs 25,000 — 無謀な出陣から、史実にない大逆転を目指せ';
+
+  @override
+  String get scenarioPlayTimeMikatagahara => '4〜5分';
 
   @override
   String get tutorialTitle => '初陣：采配の基本';
@@ -2191,6 +2213,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeCardScenarioOshijo => '忍城';
+
+  @override
+  String get challengeCardScenarioMikatagahara => '三方ヶ原';
 
   @override
   String get challengeCardRewardLabel => '報酬';

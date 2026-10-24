@@ -771,6 +771,13 @@ class _TurningPointCard extends StatelessWidget {
           l10n.resultTpOshijo3,
           l10n.resultTpOshijo4,
         ];
+      case Scenario.mikatagahara:
+        return [
+          l10n.resultTpMikatagahara1,
+          l10n.resultTpMikatagahara2,
+          l10n.resultTpMikatagahara3,
+          l10n.resultTpMikatagahara4,
+        ];
     }
   }
 

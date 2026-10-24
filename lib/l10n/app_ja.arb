@@ -727,5 +727,45 @@
   "onboardingPage4Title": "ターニングポイントを狙え",
   "onboardingPage4Description": "各シナリオには史実に基づいた\n「ターニングポイント」が用意されている。\n条件を満たして達成し、高得点を狙おう。",
   "onboardingPage5Title": "成長し続ける武将",
-  "onboardingPage5Description": "レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！"
+  "onboardingPage5Description": "レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！",
+  "replayWatchSharedTooltip": "共有コードで観戦",
+  "replayDeleteConfirmTitle": "削除確認",
+  "replayDeleteConfirmBody": "このリプレイを削除しますか？",
+  "replayDeleteButton": "削除",
+  "replayShareIssuingCode": "共有コードを発行中...",
+  "replayShareCodeTitle": "共有コード",
+  "replayShareCodeHint": "このコードをフレンドに伝えると観戦できます",
+  "replayShareButton": "共有する",
+  "replayShareMenuItem": "共有",
+  "replayShareFailure": "共有に失敗しました: {error}",
+  "@replayShareFailure": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "replayShareText": "戦国采配録のリプレイを見てください！\n共有コード: {code}",
+  "@replayShareText": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "replayCodeEntryTitle": "共有コードで観戦",
+  "replayCodeEntryHint": "例: A3F9QZ",
+  "replayWatchButton": "観戦する",
+  "replayFetchingReplay": "リプレイを取得中...",
+  "replayNotFound": "リプレイが見つかりませんでした",
+  "replayFilterAll": "すべて",
+  "replayEmptyMessage": "リプレイがありません",
+  "replayLikeCountSuffix": "{count} いいね",
+  "@replayLikeCountSuffix": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "replayCommentHint": "コメントを残す",
+  "replayStatsTotalLabel": "総リプレイ数",
+  "replayStatsWinRateLabel": "勝率",
+  "replayStatsAverageScoreLabel": "平均スコア",
+  "replayStatsWinLossLabel": "勝/敗",
+  "replayDifficultyScoreLine": "{difficulty} • スコア: {score}",
+  "@replayDifficultyScoreLine": {
+    "placeholders": {
+      "difficulty": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  }
 }

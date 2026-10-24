@@ -5,6 +5,7 @@ import '../../data/models/battle_replay.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../data/repositories/replay_repository.dart';
 import '../../data/repositories/shared_replay_repository.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/replay_player.dart';
 
 /// リプレイ一覧・再生画面
@@ -46,15 +47,16 @@ class _ReplayScreenState extends State<ReplayScreen> {
   }
 
   void _deleteReplay(String id) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('削除確認'),
-        content: const Text('このリプレイを削除しますか？'),
+        title: Text(l10n.replayDeleteConfirmTitle),
+        content: Text(l10n.replayDeleteConfirmBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('キャンセル'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () {
@@ -62,7 +64,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
               Navigator.pop(ctx);
               _loadReplays();
             },
-            child: const Text('削除', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.replayDeleteButton, style: const TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -70,18 +72,19 @@ class _ReplayScreenState extends State<ReplayScreen> {
   }
 
   Future<void> _shareReplay(BattleReplay replay) async {
+    final l10n = AppLocalizations.of(context)!;
     final userId = FirebaseService().userId;
     if (userId == null) return;
 
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) => const AlertDialog(
+      builder: (ctx) => AlertDialog(
         content: Row(
           children: [
-            CircularProgressIndicator(),
-            SizedBox(width: 16),
-            Text('共有コードを発行中...'),
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16),
+            Text(l10n.replayShareIssuingCode),
           ],
         ),
       ),
@@ -95,7 +98,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('共有コード'),
+          title: Text(l10n.replayShareCodeTitle),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -108,21 +111,21 @@ class _ReplayScreenState extends State<ReplayScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text('このコードをフレンドに伝えると観戦できます'),
+              Text(l10n.replayShareCodeHint),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('閉じる'),
+              child: Text(l10n.commonClose),
             ),
             TextButton(
               onPressed: () {
                 SharePlus.instance.share(ShareParams(
-                  text: '戦国采配録のリプレイを見てください！\n共有コード: $code',
+                  text: l10n.replayShareText(code),
                 ));
               },
-              child: const Text('共有する'),
+              child: Text(l10n.replayShareButton),
             ),
           ],
         ),
@@ -131,27 +134,28 @@ class _ReplayScreenState extends State<ReplayScreen> {
       if (!mounted) return;
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('共有に失敗しました: $e')),
+        SnackBar(content: Text(l10n.replayShareFailure(e.toString()))),
       );
     }
   }
 
   void _showCodeEntryDialog() {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController();
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('共有コードで観戦'),
+        title: Text(l10n.replayCodeEntryTitle),
         content: TextField(
           controller: controller,
           textCapitalization: TextCapitalization.characters,
           maxLength: 6,
-          decoration: const InputDecoration(hintText: '例: A3F9QZ'),
+          decoration: InputDecoration(hintText: l10n.replayCodeEntryHint),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('キャンセル'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () async {
@@ -160,7 +164,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
               if (code.isEmpty) return;
               await _viewSharedReplay(code);
             },
-            child: const Text('観戦する'),
+            child: Text(l10n.replayWatchButton),
           ),
         ],
       ),
@@ -168,15 +172,16 @@ class _ReplayScreenState extends State<ReplayScreen> {
   }
 
   Future<void> _viewSharedReplay(String code) async {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) => const AlertDialog(
+      builder: (ctx) => AlertDialog(
         content: Row(
           children: [
-            CircularProgressIndicator(),
-            SizedBox(width: 16),
-            Text('リプレイを取得中...'),
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16),
+            Text(l10n.replayFetchingReplay),
           ],
         ),
       ),
@@ -188,7 +193,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
 
     if (replay == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('リプレイが見つかりませんでした')),
+        SnackBar(content: Text(l10n.replayNotFound)),
       );
       return;
     }
@@ -198,14 +203,15 @@ class _ReplayScreenState extends State<ReplayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('バトルリプレイ'),
+        title: Text(l10n.homeReplayTitle),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.remove_red_eye),
-            tooltip: '共有コードで観戦',
+            tooltip: l10n.replayWatchSharedTooltip,
             onPressed: _showCodeEntryDialog,
           ),
         ],
@@ -231,7 +237,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                     }
 
                     final stats = statsSnapshot.data!;
-                    return _ReplayStatsCard(stats: stats);
+                    return _ReplayStatsCard(stats: stats, l10n: l10n);
                   },
                 ),
               ),
@@ -244,7 +250,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                   child: Row(
                     children: [
                       _FilterChip(
-                        label: 'すべて',
+                        label: l10n.replayFilterAll,
                         selected: _selectedFilter == 0,
                         onTap: () {
                           setState(() => _selectedFilter = 0);
@@ -253,7 +259,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                       ),
                       const SizedBox(width: 8),
                       _FilterChip(
-                        label: '勝利',
+                        label: l10n.chainBattleWin,
                         selected: _selectedFilter == 1,
                         color: Colors.green,
                         onTap: () {
@@ -263,7 +269,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                       ),
                       const SizedBox(width: 8),
                       _FilterChip(
-                        label: '敗北',
+                        label: l10n.chainBattleLoss,
                         selected: _selectedFilter == 2,
                         color: Colors.red,
                         onTap: () {
@@ -291,7 +297,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'リプレイがありません',
+                          l10n.replayEmptyMessage,
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -308,6 +314,7 @@ class _ReplayScreenState extends State<ReplayScreen> {
                         onTap: () => _showReplayPlayer(replay),
                         onDelete: () => _deleteReplay(replay.id),
                         onShare: () => _shareReplay(replay),
+                        l10n: l10n,
                       );
                     },
                     childCount: replays.length,
@@ -419,6 +426,7 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       child: Column(
@@ -433,7 +441,9 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
                   color: Colors.redAccent,
                 ),
               ),
-              Text(_likeCount == null ? '...' : '$_likeCount いいね'),
+              Text(_likeCount == null
+                  ? '...'
+                  : l10n.replayLikeCountSuffix(_likeCount!)),
             ],
           ),
           Row(
@@ -442,8 +452,8 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
                 child: TextField(
                   controller: _commentController,
                   maxLength: 140,
-                  decoration: const InputDecoration(
-                    hintText: 'コメントを残す',
+                  decoration: InputDecoration(
+                    hintText: l10n.replayCommentHint,
                     isDense: true,
                     counterText: '',
                   ),
@@ -472,8 +482,9 @@ class _ReplayLikeBarState extends State<_ReplayLikeBar> {
 /// リプレイ統計カード
 class _ReplayStatsCard extends StatelessWidget {
   final ReplayStats stats;
+  final AppLocalizations l10n;
 
-  const _ReplayStatsCard({required this.stats});
+  const _ReplayStatsCard({required this.stats, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -490,8 +501,8 @@ class _ReplayStatsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '総リプレイ数',
-            style: TextStyle(fontSize: 12, color: Colors.white70),
+            l10n.replayStatsTotalLabel,
+            style: const TextStyle(fontSize: 12, color: Colors.white70),
           ),
           const SizedBox(height: 4),
           Text(
@@ -510,8 +521,8 @@ class _ReplayStatsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '勝率',
-                    style: TextStyle(fontSize: 11, color: Colors.white70),
+                    l10n.replayStatsWinRateLabel,
+                    style: const TextStyle(fontSize: 11, color: Colors.white70),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -528,8 +539,8 @@ class _ReplayStatsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '平均スコア',
-                    style: TextStyle(fontSize: 11, color: Colors.white70),
+                    l10n.replayStatsAverageScoreLabel,
+                    style: const TextStyle(fontSize: 11, color: Colors.white70),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -546,8 +557,8 @@ class _ReplayStatsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '勝/敗',
-                    style: TextStyle(fontSize: 11, color: Colors.white70),
+                    l10n.replayStatsWinLossLabel,
+                    style: const TextStyle(fontSize: 11, color: Colors.white70),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -604,12 +615,14 @@ class _ReplayListTile extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onDelete;
   final VoidCallback onShare;
+  final AppLocalizations l10n;
 
   const _ReplayListTile({
     required this.replay,
     required this.onTap,
     required this.onDelete,
     required this.onShare,
+    required this.l10n,
   });
 
   @override
@@ -637,7 +650,8 @@ class _ReplayListTile extends StatelessWidget {
           children: [
             const SizedBox(height: 4),
             Text(
-              '${replay.difficulty.displayName} • スコア: ${replay.finalScore}',
+              l10n.replayDifficultyScoreLine(
+                  replay.difficulty.displayName, replay.finalScore),
               style: const TextStyle(fontSize: 12),
             ),
             Text(
@@ -650,11 +664,11 @@ class _ReplayListTile extends StatelessWidget {
           itemBuilder: (ctx) => [
             PopupMenuItem(
               onTap: onShare,
-              child: const Text('共有'),
+              child: Text(l10n.replayShareMenuItem),
             ),
             PopupMenuItem(
               onTap: onDelete,
-              child: const Text('削除'),
+              child: Text(l10n.replayDeleteButton),
             ),
           ],
         ),

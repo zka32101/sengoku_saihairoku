@@ -1569,4 +1569,87 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get onboardingPage5Description =>
       'レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！';
+
+  @override
+  String get replayWatchSharedTooltip => '共有コードで観戦';
+
+  @override
+  String get replayDeleteConfirmTitle => '削除確認';
+
+  @override
+  String get replayDeleteConfirmBody => 'このリプレイを削除しますか？';
+
+  @override
+  String get replayDeleteButton => '削除';
+
+  @override
+  String get replayShareIssuingCode => '共有コードを発行中...';
+
+  @override
+  String get replayShareCodeTitle => '共有コード';
+
+  @override
+  String get replayShareCodeHint => 'このコードをフレンドに伝えると観戦できます';
+
+  @override
+  String get replayShareButton => '共有する';
+
+  @override
+  String get replayShareMenuItem => '共有';
+
+  @override
+  String replayShareFailure(String error) {
+    return '共有に失敗しました: $error';
+  }
+
+  @override
+  String replayShareText(String code) {
+    return '戦国采配録のリプレイを見てください！\n共有コード: $code';
+  }
+
+  @override
+  String get replayCodeEntryTitle => '共有コードで観戦';
+
+  @override
+  String get replayCodeEntryHint => '例: A3F9QZ';
+
+  @override
+  String get replayWatchButton => '観戦する';
+
+  @override
+  String get replayFetchingReplay => 'リプレイを取得中...';
+
+  @override
+  String get replayNotFound => 'リプレイが見つかりませんでした';
+
+  @override
+  String get replayFilterAll => 'すべて';
+
+  @override
+  String get replayEmptyMessage => 'リプレイがありません';
+
+  @override
+  String replayLikeCountSuffix(int count) {
+    return '$count いいね';
+  }
+
+  @override
+  String get replayCommentHint => 'コメントを残す';
+
+  @override
+  String get replayStatsTotalLabel => '総リプレイ数';
+
+  @override
+  String get replayStatsWinRateLabel => '勝率';
+
+  @override
+  String get replayStatsAverageScoreLabel => '平均スコア';
+
+  @override
+  String get replayStatsWinLossLabel => '勝/敗';
+
+  @override
+  String replayDifficultyScoreLine(String difficulty, int score) {
+    return '$difficulty • スコア: $score';
+  }
 }

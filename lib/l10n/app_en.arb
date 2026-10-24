@@ -724,5 +724,45 @@
   "onboardingPage4Title": "Aim for the Turning Points",
   "onboardingPage4Description": "Each scenario has historically-based\n\"Turning Points\" to discover.\nMeet their conditions for a high score.",
   "onboardingPage5Title": "A Warlord Who Keeps Growing",
-  "onboardingPage5Description": "Level, achievements, Battle Pass, Prestige…\nThe more you fight, the more your warlord grows.\nNow, take command of your first battle!"
+  "onboardingPage5Description": "Level, achievements, Battle Pass, Prestige…\nThe more you fight, the more your warlord grows.\nNow, take command of your first battle!",
+  "replayWatchSharedTooltip": "Watch with a share code",
+  "replayDeleteConfirmTitle": "Confirm Deletion",
+  "replayDeleteConfirmBody": "Delete this replay?",
+  "replayDeleteButton": "Delete",
+  "replayShareIssuingCode": "Issuing share code...",
+  "replayShareCodeTitle": "Share Code",
+  "replayShareCodeHint": "Share this code with a friend so they can watch",
+  "replayShareButton": "Share",
+  "replayShareMenuItem": "Share",
+  "replayShareFailure": "Failed to share: {error}",
+  "@replayShareFailure": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "replayShareText": "Check out my replay on Sengoku Saihairoku!\nShare code: {code}",
+  "@replayShareText": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "replayCodeEntryTitle": "Watch with a Share Code",
+  "replayCodeEntryHint": "e.g. A3F9QZ",
+  "replayWatchButton": "Watch",
+  "replayFetchingReplay": "Fetching replay...",
+  "replayNotFound": "Replay not found",
+  "replayFilterAll": "All",
+  "replayEmptyMessage": "No replays",
+  "replayLikeCountSuffix": "{count} likes",
+  "@replayLikeCountSuffix": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "replayCommentHint": "Leave a comment",
+  "replayStatsTotalLabel": "Total Replays",
+  "replayStatsWinRateLabel": "Win Rate",
+  "replayStatsAverageScoreLabel": "Average Score",
+  "replayStatsWinLossLabel": "W/L",
+  "replayDifficultyScoreLine": "{difficulty} • Score: {score}",
+  "@replayDifficultyScoreLine": {
+    "placeholders": {
+      "difficulty": { "type": "String" },
+      "score": { "type": "int" }
+    }
+  }
 }

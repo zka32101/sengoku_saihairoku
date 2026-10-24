@@ -1607,4 +1607,88 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingPage5Description =>
       'Level, achievements, Battle Pass, Prestige…\nThe more you fight, the more your warlord grows.\nNow, take command of your first battle!';
+
+  @override
+  String get replayWatchSharedTooltip => 'Watch with a share code';
+
+  @override
+  String get replayDeleteConfirmTitle => 'Confirm Deletion';
+
+  @override
+  String get replayDeleteConfirmBody => 'Delete this replay?';
+
+  @override
+  String get replayDeleteButton => 'Delete';
+
+  @override
+  String get replayShareIssuingCode => 'Issuing share code...';
+
+  @override
+  String get replayShareCodeTitle => 'Share Code';
+
+  @override
+  String get replayShareCodeHint =>
+      'Share this code with a friend so they can watch';
+
+  @override
+  String get replayShareButton => 'Share';
+
+  @override
+  String get replayShareMenuItem => 'Share';
+
+  @override
+  String replayShareFailure(String error) {
+    return 'Failed to share: $error';
+  }
+
+  @override
+  String replayShareText(String code) {
+    return 'Check out my replay on Sengoku Saihairoku!\nShare code: $code';
+  }
+
+  @override
+  String get replayCodeEntryTitle => 'Watch with a Share Code';
+
+  @override
+  String get replayCodeEntryHint => 'e.g. A3F9QZ';
+
+  @override
+  String get replayWatchButton => 'Watch';
+
+  @override
+  String get replayFetchingReplay => 'Fetching replay...';
+
+  @override
+  String get replayNotFound => 'Replay not found';
+
+  @override
+  String get replayFilterAll => 'All';
+
+  @override
+  String get replayEmptyMessage => 'No replays';
+
+  @override
+  String replayLikeCountSuffix(int count) {
+    return '$count likes';
+  }
+
+  @override
+  String get replayCommentHint => 'Leave a comment';
+
+  @override
+  String get replayStatsTotalLabel => 'Total Replays';
+
+  @override
+  String get replayStatsWinRateLabel => 'Win Rate';
+
+  @override
+  String get replayStatsAverageScoreLabel => 'Average Score';
+
+  @override
+  String get replayStatsWinLossLabel => 'W/L';
+
+  @override
+  String replayDifficultyScoreLine(String difficulty, int score) {
+    return '$difficulty • Score: $score';
+  }
 }

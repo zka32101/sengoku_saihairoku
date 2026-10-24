@@ -4120,6 +4120,36 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'戦国采配録で実績「{name}」を解放した！\n{description}\n#戦国采配録'**
   String achievementShareText(String name, String description);
+
+  /// No description provided for @challengeConditionVictory.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオをクリア'**
+  String get challengeConditionVictory;
+
+  /// No description provided for @challengeConditionTurnLimit.
+  ///
+  /// In ja, this message translates to:
+  /// **'{turns}ターン以内でクリア'**
+  String challengeConditionTurnLimit(int turns);
+
+  /// No description provided for @challengeConditionNoDefeats.
+  ///
+  /// In ja, this message translates to:
+  /// **'主要ユニットを損失せずクリア'**
+  String get challengeConditionNoDefeats;
+
+  /// No description provided for @challengeConditionTpTarget.
+  ///
+  /// In ja, this message translates to:
+  /// **'{count}個以上のTPを達成'**
+  String challengeConditionTpTarget(int count);
+
+  /// No description provided for @challengeConditionScoreTarget.
+  ///
+  /// In ja, this message translates to:
+  /// **'{score}ポイント以上のスコア獲得'**
+  String challengeConditionScoreTarget(int score);
 }
 
 class _AppLocalizationsDelegate

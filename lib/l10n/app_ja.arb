@@ -1141,5 +1141,19 @@
       "name": { "type": "String" },
       "description": { "type": "String" }
     }
+  },
+  "challengeConditionVictory": "シナリオをクリア",
+  "challengeConditionTurnLimit": "{turns}ターン以内でクリア",
+  "@challengeConditionTurnLimit": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "challengeConditionNoDefeats": "主要ユニットを損失せずクリア",
+  "challengeConditionTpTarget": "{count}個以上のTPを達成",
+  "@challengeConditionTpTarget": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "challengeConditionScoreTarget": "{score}ポイント以上のスコア獲得",
+  "@challengeConditionScoreTarget": {
+    "placeholders": { "score": { "type": "int" } }
   }
 }

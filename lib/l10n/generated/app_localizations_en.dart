@@ -2317,4 +2317,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String achievementShareText(String name, String description) {
     return 'I unlocked the achievement \"$name\" in Sengoku Saihairoku!\n$description\n#SengokuSaihairoku';
   }
+
+  @override
+  String get challengeConditionVictory => 'Clear the scenario';
+
+  @override
+  String challengeConditionTurnLimit(int turns) {
+    return 'Clear within $turns turns';
+  }
+
+  @override
+  String get challengeConditionNoDefeats => 'Clear without losing key units';
+
+  @override
+  String challengeConditionTpTarget(int count) {
+    return 'Achieve $count or more TPs';
+  }
+
+  @override
+  String challengeConditionScoreTarget(int score) {
+    return 'Earn a score of $score or more';
+  }
 }

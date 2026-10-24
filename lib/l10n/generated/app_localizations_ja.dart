@@ -2272,4 +2272,25 @@ class AppLocalizationsJa extends AppLocalizations {
   String achievementShareText(String name, String description) {
     return '戦国采配録で実績「$name」を解放した！\n$description\n#戦国采配録';
   }
+
+  @override
+  String get challengeConditionVictory => 'シナリオをクリア';
+
+  @override
+  String challengeConditionTurnLimit(int turns) {
+    return '$turnsターン以内でクリア';
+  }
+
+  @override
+  String get challengeConditionNoDefeats => '主要ユニットを損失せずクリア';
+
+  @override
+  String challengeConditionTpTarget(int count) {
+    return '$count個以上のTPを達成';
+  }
+
+  @override
+  String challengeConditionScoreTarget(int score) {
+    return '$scoreポイント以上のスコア獲得';
+  }
 }

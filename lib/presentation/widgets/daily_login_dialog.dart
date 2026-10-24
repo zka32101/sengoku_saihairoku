@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/daily_login_bonus.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// デイリーログインボーナス受取ダイアログ
 class DailyLoginDialog extends StatelessWidget {
@@ -14,6 +15,7 @@ class DailyLoginDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Dialog(
       backgroundColor: const Color(0xFF2A1A0A),
       shape: RoundedRectangleBorder(
@@ -27,9 +29,9 @@ class DailyLoginDialog extends StatelessWidget {
           children: [
             const Icon(Icons.calendar_today, color: Color(0xFFFFD700), size: 40),
             const SizedBox(height: 12),
-            const Text(
-              '本日のログインボーナス',
-              style: TextStyle(
+            Text(
+              l10n.dailyLoginTitle,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFFFFD700),
@@ -37,7 +39,7 @@ class DailyLoginDialog extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '連続ログイン ${status.currentStreak}日目',
+              l10n.dailyLoginStreakLabel(status.currentStreak),
               style: const TextStyle(color: Color(0xFFE8D5B0)),
             ),
             const SizedBox(height: 16),
@@ -96,7 +98,7 @@ class DailyLoginDialog extends StatelessWidget {
                   onClaim();
                   Navigator.pop(context);
                 },
-                child: const Text('受け取る'),
+                child: Text(l10n.dailyLoginClaimButton),
               ),
             ),
           ],

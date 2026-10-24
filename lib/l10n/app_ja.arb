@@ -1099,5 +1099,11 @@
   "challengeCardScenarioItsukushima": "厳島",
   "challengeCardScenarioOshijo": "忍城",
   "challengeCardRewardLabel": "報酬",
-  "challengeCardApLabel": "AP"
+  "challengeCardApLabel": "AP",
+  "dailyLoginTitle": "本日のログインボーナス",
+  "dailyLoginStreakLabel": "連続ログイン {streak}日目",
+  "@dailyLoginStreakLabel": {
+    "placeholders": { "streak": { "type": "int" } }
+  },
+  "dailyLoginClaimButton": "受け取る"
 }

@@ -2238,4 +2238,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get challengeCardApLabel => 'AP';
+
+  @override
+  String get dailyLoginTitle => 'Daily Login Bonus';
+
+  @override
+  String dailyLoginStreakLabel(int streak) {
+    return 'Day $streak streak';
+  }
+
+  @override
+  String get dailyLoginClaimButton => 'Claim';
 }

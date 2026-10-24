@@ -3994,6 +3994,24 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'AP'**
   String get challengeCardApLabel;
+
+  /// No description provided for @dailyLoginTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日のログインボーナス'**
+  String get dailyLoginTitle;
+
+  /// No description provided for @dailyLoginStreakLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'連続ログイン {streak}日目'**
+  String dailyLoginStreakLabel(int streak);
+
+  /// No description provided for @dailyLoginClaimButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'受け取る'**
+  String get dailyLoginClaimButton;
 }
 
 class _AppLocalizationsDelegate

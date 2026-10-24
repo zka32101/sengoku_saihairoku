@@ -821,5 +821,45 @@
     "placeholders": { "xp": { "type": "int" } }
   },
   "battlePassMaxTierReached": "Max tier reached!",
-  "battlePassFreeBadge": "Free"
+  "battlePassFreeBadge": "Free",
+  "battleScenarioLoadError": "Failed to load scenario: {error}",
+  "@battleScenarioLoadError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "battlePlayerSideLabel": "Allies",
+  "battleEnemySideLabel": "Enemy",
+  "battleTpCounter": "TP: {count} / {total}",
+  "@battleTpCounter": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "battleComboCounter": "Combo: {count}",
+  "@battleComboCounter": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "battleCommandScore": "Score: {score}",
+  "@battleCommandScore": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "battleCommandAdvance": "Advance",
+  "battleCommandRetreat": "Retreat",
+  "battleCommandWait": "Wait",
+  "battleCommandAmbush": "Ambush",
+  "battleCommandCharge": "Charge",
+  "battleCommandRally": "Rally",
+  "battleCommandShield": "Shield",
+  "battleCommandFormation": "Formation",
+  "battleCommandSpecialLabel": "Special",
+  "battleTurningPointAchievedTitle": "Turning Point Achieved!",
+  "battleTurningPointRewardLine": "{name}  +{points} pts",
+  "@battleTurningPointRewardLine": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "points": { "type": "int" }
+    }
+  },
+  "battleMomentumEnemyLabel": "Enemy Advantage",
+  "battleMomentumPlayerLabel": "Ally Advantage"
 }

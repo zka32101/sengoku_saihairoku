@@ -3216,6 +3216,120 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'フリー'**
   String get battlePassFreeBadge;
+
+  /// No description provided for @battleScenarioLoadError.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオの読み込みに失敗しました: {error}'**
+  String battleScenarioLoadError(String error);
+
+  /// No description provided for @battlePlayerSideLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'味方'**
+  String get battlePlayerSideLabel;
+
+  /// No description provided for @battleEnemySideLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵'**
+  String get battleEnemySideLabel;
+
+  /// No description provided for @battleTpCounter.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP: {count} / {total}'**
+  String battleTpCounter(int count, int total);
+
+  /// No description provided for @battleComboCounter.
+  ///
+  /// In ja, this message translates to:
+  /// **'コンボ: {count}'**
+  String battleComboCounter(int count);
+
+  /// No description provided for @battleCommandScore.
+  ///
+  /// In ja, this message translates to:
+  /// **'采配: {score}'**
+  String battleCommandScore(int score);
+
+  /// No description provided for @battleCommandAdvance.
+  ///
+  /// In ja, this message translates to:
+  /// **'進軍'**
+  String get battleCommandAdvance;
+
+  /// No description provided for @battleCommandRetreat.
+  ///
+  /// In ja, this message translates to:
+  /// **'撤退'**
+  String get battleCommandRetreat;
+
+  /// No description provided for @battleCommandWait.
+  ///
+  /// In ja, this message translates to:
+  /// **'待機'**
+  String get battleCommandWait;
+
+  /// No description provided for @battleCommandAmbush.
+  ///
+  /// In ja, this message translates to:
+  /// **'奇襲'**
+  String get battleCommandAmbush;
+
+  /// No description provided for @battleCommandCharge.
+  ///
+  /// In ja, this message translates to:
+  /// **'突撃'**
+  String get battleCommandCharge;
+
+  /// No description provided for @battleCommandRally.
+  ///
+  /// In ja, this message translates to:
+  /// **'激励'**
+  String get battleCommandRally;
+
+  /// No description provided for @battleCommandShield.
+  ///
+  /// In ja, this message translates to:
+  /// **'盾陣'**
+  String get battleCommandShield;
+
+  /// No description provided for @battleCommandFormation.
+  ///
+  /// In ja, this message translates to:
+  /// **'陣形'**
+  String get battleCommandFormation;
+
+  /// No description provided for @battleCommandSpecialLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'特殊'**
+  String get battleCommandSpecialLabel;
+
+  /// No description provided for @battleTurningPointAchievedTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターニングポイント達成！'**
+  String get battleTurningPointAchievedTitle;
+
+  /// No description provided for @battleTurningPointRewardLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{name}  +{points}点'**
+  String battleTurningPointRewardLine(String name, int points);
+
+  /// No description provided for @battleMomentumEnemyLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵優勢'**
+  String get battleMomentumEnemyLabel;
+
+  /// No description provided for @battleMomentumPlayerLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'味方優勢'**
+  String get battleMomentumPlayerLabel;
 }
 
 class _AppLocalizationsDelegate

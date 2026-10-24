@@ -824,5 +824,45 @@
     "placeholders": { "xp": { "type": "int" } }
   },
   "battlePassMaxTierReached": "最大ティアに達成しました！",
-  "battlePassFreeBadge": "フリー"
+  "battlePassFreeBadge": "フリー",
+  "battleScenarioLoadError": "シナリオの読み込みに失敗しました: {error}",
+  "@battleScenarioLoadError": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "battlePlayerSideLabel": "味方",
+  "battleEnemySideLabel": "敵",
+  "battleTpCounter": "TP: {count} / {total}",
+  "@battleTpCounter": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "battleComboCounter": "コンボ: {count}",
+  "@battleComboCounter": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "battleCommandScore": "采配: {score}",
+  "@battleCommandScore": {
+    "placeholders": { "score": { "type": "int" } }
+  },
+  "battleCommandAdvance": "進軍",
+  "battleCommandRetreat": "撤退",
+  "battleCommandWait": "待機",
+  "battleCommandAmbush": "奇襲",
+  "battleCommandCharge": "突撃",
+  "battleCommandRally": "激励",
+  "battleCommandShield": "盾陣",
+  "battleCommandFormation": "陣形",
+  "battleCommandSpecialLabel": "特殊",
+  "battleTurningPointAchievedTitle": "ターニングポイント達成！",
+  "battleTurningPointRewardLine": "{name}  +{points}点",
+  "@battleTurningPointRewardLine": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "points": { "type": "int" }
+    }
+  },
+  "battleMomentumEnemyLabel": "敵優勢",
+  "battleMomentumPlayerLabel": "味方優勢"
 }

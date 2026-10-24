@@ -1152,5 +1152,6 @@
   "challengeConditionScoreTarget": "Earn a score of {score} or more",
   "@challengeConditionScoreTarget": {
     "placeholders": { "score": { "type": "int" } }
-  }
+  },
+  "effectCriticalLabel": "Critical"
 }

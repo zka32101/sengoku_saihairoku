@@ -158,7 +158,8 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '戦国采配録',
+      title: lookupAppLocalizations(LocaleController.instance.resolvedLocale)
+          .homeAppTitle,
       theme: _buildTheme(),
       locale: LocaleController.instance.value,
       supportedLocales: LocaleController.supportedLocales,

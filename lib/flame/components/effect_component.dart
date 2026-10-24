@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import '../../core/services/locale_controller.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// 衝突時フラッシュ（0.4秒）—豪華版
 class HitFlashEffect extends PositionComponent {
@@ -348,7 +350,9 @@ class DamageNumberEffect extends PositionComponent {
 
     // テキストスタイル
     final textSpan = TextSpan(
-      text: isCritical ? 'クリティカル\n$damage' : '$damage',
+      text: isCritical
+          ? '${lookupAppLocalizations(LocaleController.instance.resolvedLocale).effectCriticalLabel}\n$damage'
+          : '$damage',
       style: TextStyle(
         color: isCritical
           ? const Color(0xFFFF3333).withValues(alpha: alpha)

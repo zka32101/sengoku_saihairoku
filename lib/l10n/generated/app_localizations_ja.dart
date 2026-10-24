@@ -2293,4 +2293,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String challengeConditionScoreTarget(int score) {
     return '$scoreポイント以上のスコア獲得';
   }
+
+  @override
+  String get effectCriticalLabel => 'クリティカル';
 }

@@ -1155,5 +1155,6 @@
   "challengeConditionScoreTarget": "{score}ポイント以上のスコア獲得",
   "@challengeConditionScoreTarget": {
     "placeholders": { "score": { "type": "int" } }
-  }
+  },
+  "effectCriticalLabel": "クリティカル"
 }

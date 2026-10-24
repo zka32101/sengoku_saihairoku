@@ -1844,4 +1844,113 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get battleMomentumPlayerLabel => 'Ally Advantage';
+
+  @override
+  String get achievementConditionBattleWins => 'Battle Wins';
+
+  @override
+  String get achievementConditionLevelReached => 'Level Reached';
+
+  @override
+  String get achievementConditionPrestigeRank => 'Prestige Rank';
+
+  @override
+  String get achievementConditionTurnEfficiency => 'Turn Efficiency';
+
+  @override
+  String get achievementConditionCosmeticUnlocked => 'Cosmetic Unlocked';
+
+  @override
+  String get achievementConditionTotalPlayTime => 'Total Play Time';
+
+  @override
+  String get achievementConditionScenarioCleared => 'Scenario Cleared';
+
+  @override
+  String get achievementConditionPerfectBattle => 'Perfect Battle';
+
+  @override
+  String get achievementConditionPrestigeResetCount => 'Prestige Reset Count';
+
+  @override
+  String get achievementConditionEventChallengeCompleted =>
+      'Event Challenge Completed';
+
+  @override
+  String get achievementConditionWarlordsCollected => 'Warlords Collected';
+
+  @override
+  String achievementDescBattleWins(int value) {
+    return 'Win $value battles';
+  }
+
+  @override
+  String achievementDescLevelReached(int value) {
+    return 'Reach level $value';
+  }
+
+  @override
+  String achievementDescPrestigeRank(int value) {
+    return 'Prestige rank $value';
+  }
+
+  @override
+  String achievementDescTurnEfficiency(int value) {
+    return 'Clear within $value turns';
+  }
+
+  @override
+  String achievementDescCosmeticUnlocked(int value) {
+    return 'Unlock $value cosmetics';
+  }
+
+  @override
+  String achievementDescTotalPlayTime(int value) {
+    return 'Total play time $value hours';
+  }
+
+  @override
+  String get achievementDescScenarioCleared => 'Clear the scenario';
+
+  @override
+  String get achievementDescPerfectBattle => 'Clear without losing a unit';
+
+  @override
+  String achievementDescPrestigeResetCount(int value) {
+    return 'Prestige reset $value times';
+  }
+
+  @override
+  String achievementDescEventChallengeCompleted(int value) {
+    return 'Complete $value event challenges';
+  }
+
+  @override
+  String achievementDescWarlordsCollected(int value) {
+    return 'Register $value warlords in the compendium';
+  }
+
+  @override
+  String get achievementDetailUnlockedBadge => 'Unlocked';
+
+  @override
+  String get achievementDetailLockedBadge => 'Locked';
+
+  @override
+  String get achievementDetailCategoryLabel => 'Category';
+
+  @override
+  String get achievementDetailDifficultyLabel => 'Difficulty';
+
+  @override
+  String get achievementDetailPointsLabel => 'Points';
+
+  @override
+  String get achievementDetailDescriptionLabel => 'Description';
+
+  @override
+  String get achievementDetailConditionLabel => 'Condition';
+
+  @override
+  String get achievementDetailRewardLabel => 'Reward';
 }

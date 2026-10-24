@@ -1805,4 +1805,112 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get battleMomentumPlayerLabel => '味方優勢';
+
+  @override
+  String get achievementConditionBattleWins => '戦闘勝利';
+
+  @override
+  String get achievementConditionLevelReached => 'レベル到達';
+
+  @override
+  String get achievementConditionPrestigeRank => 'プレスティジランク';
+
+  @override
+  String get achievementConditionTurnEfficiency => 'ターン効率';
+
+  @override
+  String get achievementConditionCosmeticUnlocked => 'コスメティック解放';
+
+  @override
+  String get achievementConditionTotalPlayTime => 'プレイ時間';
+
+  @override
+  String get achievementConditionScenarioCleared => 'シナリオクリア';
+
+  @override
+  String get achievementConditionPerfectBattle => 'パーフェクト戦闘';
+
+  @override
+  String get achievementConditionPrestigeResetCount => 'プレスティジリセット回数';
+
+  @override
+  String get achievementConditionEventChallengeCompleted => 'イベントチャレンジ達成';
+
+  @override
+  String get achievementConditionWarlordsCollected => '武将図鑑解放数';
+
+  @override
+  String achievementDescBattleWins(int value) {
+    return '$value 回の戦闘に勝利';
+  }
+
+  @override
+  String achievementDescLevelReached(int value) {
+    return 'レベル $value に到達';
+  }
+
+  @override
+  String achievementDescPrestigeRank(int value) {
+    return 'プレスティジランク $value';
+  }
+
+  @override
+  String achievementDescTurnEfficiency(int value) {
+    return '$value ターン以内にクリア';
+  }
+
+  @override
+  String achievementDescCosmeticUnlocked(int value) {
+    return '$value 個のコスメティックを解放';
+  }
+
+  @override
+  String achievementDescTotalPlayTime(int value) {
+    return '総プレイ時間 $value 時間';
+  }
+
+  @override
+  String get achievementDescScenarioCleared => 'シナリオをクリア';
+
+  @override
+  String get achievementDescPerfectBattle => 'ユニットロスなしでクリア';
+
+  @override
+  String achievementDescPrestigeResetCount(int value) {
+    return '$value 回プレスティジリセット';
+  }
+
+  @override
+  String achievementDescEventChallengeCompleted(int value) {
+    return '$value 個のイベントチャレンジを達成';
+  }
+
+  @override
+  String achievementDescWarlordsCollected(int value) {
+    return '$value 人の武将を図鑑に登録';
+  }
+
+  @override
+  String get achievementDetailUnlockedBadge => 'クリア済み';
+
+  @override
+  String get achievementDetailLockedBadge => 'ロック中';
+
+  @override
+  String get achievementDetailCategoryLabel => 'カテゴリー';
+
+  @override
+  String get achievementDetailDifficultyLabel => '難易度';
+
+  @override
+  String get achievementDetailPointsLabel => 'ポイント';
+
+  @override
+  String get achievementDetailDescriptionLabel => '説明';
+
+  @override
+  String get achievementDetailConditionLabel => '達成条件';
+
+  @override
+  String get achievementDetailRewardLabel => '報酬';
 }

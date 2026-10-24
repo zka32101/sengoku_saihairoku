@@ -3330,6 +3330,186 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'味方優勢'**
   String get battleMomentumPlayerLabel;
+
+  /// No description provided for @achievementConditionBattleWins.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘勝利'**
+  String get achievementConditionBattleWins;
+
+  /// No description provided for @achievementConditionLevelReached.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル到達'**
+  String get achievementConditionLevelReached;
+
+  /// No description provided for @achievementConditionPrestigeRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジランク'**
+  String get achievementConditionPrestigeRank;
+
+  /// No description provided for @achievementConditionTurnEfficiency.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターン効率'**
+  String get achievementConditionTurnEfficiency;
+
+  /// No description provided for @achievementConditionCosmeticUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'コスメティック解放'**
+  String get achievementConditionCosmeticUnlocked;
+
+  /// No description provided for @achievementConditionTotalPlayTime.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間'**
+  String get achievementConditionTotalPlayTime;
+
+  /// No description provided for @achievementConditionScenarioCleared.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオクリア'**
+  String get achievementConditionScenarioCleared;
+
+  /// No description provided for @achievementConditionPerfectBattle.
+  ///
+  /// In ja, this message translates to:
+  /// **'パーフェクト戦闘'**
+  String get achievementConditionPerfectBattle;
+
+  /// No description provided for @achievementConditionPrestigeResetCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジリセット回数'**
+  String get achievementConditionPrestigeResetCount;
+
+  /// No description provided for @achievementConditionEventChallengeCompleted.
+  ///
+  /// In ja, this message translates to:
+  /// **'イベントチャレンジ達成'**
+  String get achievementConditionEventChallengeCompleted;
+
+  /// No description provided for @achievementConditionWarlordsCollected.
+  ///
+  /// In ja, this message translates to:
+  /// **'武将図鑑解放数'**
+  String get achievementConditionWarlordsCollected;
+
+  /// No description provided for @achievementDescBattleWins.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} 回の戦闘に勝利'**
+  String achievementDescBattleWins(int value);
+
+  /// No description provided for @achievementDescLevelReached.
+  ///
+  /// In ja, this message translates to:
+  /// **'レベル {value} に到達'**
+  String achievementDescLevelReached(int value);
+
+  /// No description provided for @achievementDescPrestigeRank.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレスティジランク {value}'**
+  String achievementDescPrestigeRank(int value);
+
+  /// No description provided for @achievementDescTurnEfficiency.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} ターン以内にクリア'**
+  String achievementDescTurnEfficiency(int value);
+
+  /// No description provided for @achievementDescCosmeticUnlocked.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} 個のコスメティックを解放'**
+  String achievementDescCosmeticUnlocked(int value);
+
+  /// No description provided for @achievementDescTotalPlayTime.
+  ///
+  /// In ja, this message translates to:
+  /// **'総プレイ時間 {value} 時間'**
+  String achievementDescTotalPlayTime(int value);
+
+  /// No description provided for @achievementDescScenarioCleared.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオをクリア'**
+  String get achievementDescScenarioCleared;
+
+  /// No description provided for @achievementDescPerfectBattle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ユニットロスなしでクリア'**
+  String get achievementDescPerfectBattle;
+
+  /// No description provided for @achievementDescPrestigeResetCount.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} 回プレスティジリセット'**
+  String achievementDescPrestigeResetCount(int value);
+
+  /// No description provided for @achievementDescEventChallengeCompleted.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} 個のイベントチャレンジを達成'**
+  String achievementDescEventChallengeCompleted(int value);
+
+  /// No description provided for @achievementDescWarlordsCollected.
+  ///
+  /// In ja, this message translates to:
+  /// **'{value} 人の武将を図鑑に登録'**
+  String achievementDescWarlordsCollected(int value);
+
+  /// No description provided for @achievementDetailUnlockedBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリア済み'**
+  String get achievementDetailUnlockedBadge;
+
+  /// No description provided for @achievementDetailLockedBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'ロック中'**
+  String get achievementDetailLockedBadge;
+
+  /// No description provided for @achievementDetailCategoryLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'カテゴリー'**
+  String get achievementDetailCategoryLabel;
+
+  /// No description provided for @achievementDetailDifficultyLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度'**
+  String get achievementDetailDifficultyLabel;
+
+  /// No description provided for @achievementDetailPointsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ポイント'**
+  String get achievementDetailPointsLabel;
+
+  /// No description provided for @achievementDetailDescriptionLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'説明'**
+  String get achievementDetailDescriptionLabel;
+
+  /// No description provided for @achievementDetailConditionLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'達成条件'**
+  String get achievementDetailConditionLabel;
+
+  /// No description provided for @achievementDetailRewardLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬'**
+  String get achievementDetailRewardLabel;
 }
 
 class _AppLocalizationsDelegate

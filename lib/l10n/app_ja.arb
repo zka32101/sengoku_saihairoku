@@ -1034,5 +1034,13 @@
   "advStatsAverageScoreLine": "平均 {score}pt",
   "@advStatsAverageScoreLine": {
     "placeholders": { "score": { "type": "int" } }
-  }
+  },
+  "helpModalTabTutorial": "チュートリアル",
+  "helpModalTabCommands": "コマンド",
+  "helpModalTabTactics": "戦術ヒント",
+  "helpModalCloseButton": "閉じる",
+  "helpModalNoHintsForDifficulty": "この難易度のヒントはありません",
+  "helpModalEffectLabel": "効果",
+  "helpModalLimitationLabel": "制限事項",
+  "helpModalRecommendationsLabel": "推奨事項"
 }

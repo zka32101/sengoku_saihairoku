@@ -1031,5 +1031,13 @@
   "advStatsAverageScoreLine": "Avg {score}pt",
   "@advStatsAverageScoreLine": {
     "placeholders": { "score": { "type": "int" } }
-  }
+  },
+  "helpModalTabTutorial": "Tutorial",
+  "helpModalTabCommands": "Commands",
+  "helpModalTabTactics": "Tactics",
+  "helpModalCloseButton": "Close",
+  "helpModalNoHintsForDifficulty": "No hints for this difficulty",
+  "helpModalEffectLabel": "Effect",
+  "helpModalLimitationLabel": "Limitations",
+  "helpModalRecommendationsLabel": "Recommendations"
 }

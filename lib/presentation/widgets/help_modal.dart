@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/repositories/tutorial_repository.dart';
 import '../../data/models/tutorial_content.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// チュートリアル・ヘルプモーダルダイアログ
 class HelpModal extends StatefulWidget {
@@ -42,6 +43,7 @@ class _HelpModalState extends State<HelpModal>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Dialog(
       backgroundColor: const Color(0xFF1A1A0A),
       child: Column(
@@ -49,10 +51,10 @@ class _HelpModalState extends State<HelpModal>
         children: [
           TabBar(
             controller: _tabController,
-            tabs: const [
-              Tab(text: 'チュートリアル'),
-              Tab(text: 'コマンド'),
-              Tab(text: '戦術ヒント'),
+            tabs: [
+              Tab(text: l10n.helpModalTabTutorial),
+              Tab(text: l10n.helpModalTabCommands),
+              Tab(text: l10n.helpModalTabTactics),
             ],
             labelColor: const Color(0xFFFFD700),
             unselectedLabelColor: Colors.grey,
@@ -77,9 +79,9 @@ class _HelpModalState extends State<HelpModal>
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFFFD700)),
                 ),
-                child: const Text(
-                  '閉じる',
-                  style: TextStyle(color: Color(0xFFFFD700)),
+                child: Text(
+                  l10n.helpModalCloseButton,
+                  style: const TextStyle(color: Color(0xFFFFD700)),
                 ),
               ),
             ),
@@ -148,12 +150,12 @@ class _HelpModalState extends State<HelpModal>
             : hints;
 
         if (filteredHints.isEmpty) {
-          return const Center(
+          return Center(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Text(
-                'この難易度のヒントはありません',
-                style: TextStyle(color: Colors.grey),
+                AppLocalizations.of(context)!.helpModalNoHintsForDifficulty,
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
           );
@@ -265,6 +267,7 @@ class _CommandCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: const Color(0xFF2A1A0A),
       margin: const EdgeInsets.only(bottom: 12),
@@ -287,7 +290,7 @@ class _CommandCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '効果',
+                  l10n.helpModalEffectLabel,
                   style: const TextStyle(
                     color: Color(0xFFFFD700),
                     fontWeight: FontWeight.bold,
@@ -300,7 +303,7 @@ class _CommandCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  '制限事項',
+                  l10n.helpModalLimitationLabel,
                   style: const TextStyle(
                     color: Color(0xFFFFD700),
                     fontWeight: FontWeight.bold,
@@ -337,6 +340,7 @@ class _TacticalHintCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: const Color(0xFF2A1A0A),
       margin: const EdgeInsets.only(bottom: 12),
@@ -364,7 +368,7 @@ class _TacticalHintCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  '推奨事項',
+                  l10n.helpModalRecommendationsLabel,
                   style: const TextStyle(
                     color: Color(0xFFFFD700),
                     fontWeight: FontWeight.bold,

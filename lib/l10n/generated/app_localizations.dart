@@ -3784,6 +3784,54 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'平均 {score}pt'**
   String advStatsAverageScoreLine(int score);
+
+  /// No description provided for @helpModalTabTutorial.
+  ///
+  /// In ja, this message translates to:
+  /// **'チュートリアル'**
+  String get helpModalTabTutorial;
+
+  /// No description provided for @helpModalTabCommands.
+  ///
+  /// In ja, this message translates to:
+  /// **'コマンド'**
+  String get helpModalTabCommands;
+
+  /// No description provided for @helpModalTabTactics.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦術ヒント'**
+  String get helpModalTabTactics;
+
+  /// No description provided for @helpModalCloseButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'閉じる'**
+  String get helpModalCloseButton;
+
+  /// No description provided for @helpModalNoHintsForDifficulty.
+  ///
+  /// In ja, this message translates to:
+  /// **'この難易度のヒントはありません'**
+  String get helpModalNoHintsForDifficulty;
+
+  /// No description provided for @helpModalEffectLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'効果'**
+  String get helpModalEffectLabel;
+
+  /// No description provided for @helpModalLimitationLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'制限事項'**
+  String get helpModalLimitationLabel;
+
+  /// No description provided for @helpModalRecommendationsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'推奨事項'**
+  String get helpModalRecommendationsLabel;
 }
 
 class _AppLocalizationsDelegate

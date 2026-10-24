@@ -1105,5 +1105,9 @@
   "@dailyLoginStreakLabel": {
     "placeholders": { "streak": { "type": "int" } }
   },
-  "dailyLoginClaimButton": "受け取る"
+  "dailyLoginClaimButton": "受け取る",
+  "trendSparklineInsufficientData": "{label}: データが不足しています",
+  "@trendSparklineInsufficientData": {
+    "placeholders": { "label": { "type": "String" } }
+  }
 }

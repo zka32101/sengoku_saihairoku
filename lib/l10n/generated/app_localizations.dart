@@ -4012,6 +4012,12 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'受け取る'**
   String get dailyLoginClaimButton;
+
+  /// No description provided for @trendSparklineInsufficientData.
+  ///
+  /// In ja, this message translates to:
+  /// **'{label}: データが不足しています'**
+  String trendSparklineInsufficientData(String label);
 }
 
 class _AppLocalizationsDelegate

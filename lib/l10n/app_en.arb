@@ -1102,5 +1102,9 @@
   "@dailyLoginStreakLabel": {
     "placeholders": { "streak": { "type": "int" } }
   },
-  "dailyLoginClaimButton": "Claim"
+  "dailyLoginClaimButton": "Claim",
+  "trendSparklineInsufficientData": "{label}: Not enough data",
+  "@trendSparklineInsufficientData": {
+    "placeholders": { "label": { "type": "String" } }
+  }
 }

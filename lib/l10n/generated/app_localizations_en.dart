@@ -2249,4 +2249,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dailyLoginClaimButton => 'Claim';
+
+  @override
+  String trendSparklineInsufficientData(String label) {
+    return '$label: Not enough data';
+  }
 }

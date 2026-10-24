@@ -928,5 +928,63 @@
   "achievementDetailPointsLabel": "Points",
   "achievementDetailDescriptionLabel": "Description",
   "achievementDetailConditionLabel": "Condition",
-  "achievementDetailRewardLabel": "Reward"
+  "achievementDetailRewardLabel": "Reward",
+  "statsDashboardCombatStatsTitle": "Combat Stats",
+  "statsDashboardPlayTimeTitle": "Play Time",
+  "statsDashboardScoreTitle": "Score",
+  "statsDashboardWinRateAnalysisTitle": "Win Rate Analysis",
+  "statsDashboardTurningPointTitle": "Turning Points",
+  "statsDashboardViewDetailsButton": "View Detailed Stats",
+  "statsDashboardPointsSuffix": "{points} pts",
+  "@statsDashboardPointsSuffix": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "statsDashboardAchievementsLine": "Achievements: {unlocked}/{total}",
+  "@statsDashboardAchievementsLine": {
+    "placeholders": {
+      "unlocked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsDashboardTotalBattlesLabel": "Total Battles",
+  "statsDashboardTotalWinsLabel": "Wins",
+  "statsDashboardTotalLossesLabel": "Losses",
+  "statsDashboardTpAchievedLabel": "TPs Achieved",
+  "statsDashboardDurationHoursMinutes": "{hours}h {minutes}m",
+  "@statsDashboardDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "statsDashboardDurationMinutesSeconds": "{minutes}m {seconds}s",
+  "@statsDashboardDurationMinutesSeconds": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "seconds": { "type": "int" }
+    }
+  },
+  "statsDashboardDurationSeconds": "{seconds}s",
+  "@statsDashboardDurationSeconds": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "statsDashboardTotalPlayTimeLabel": "Total Play Time",
+  "statsDashboardAveragePlayTimeLabel": "Avg. Battle Time",
+  "statsDashboardAverageBattleMinutes": "{minutes}m",
+  "@statsDashboardAverageBattleMinutes": {
+    "placeholders": { "minutes": { "type": "String" } }
+  },
+  "statsDashboardFirstPlayLine": "First played: {date}",
+  "@statsDashboardFirstPlayLine": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "statsDashboardLastPlayLine": "Last played: {date}",
+  "@statsDashboardLastPlayLine": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "statsDashboardTotalScoreLabel": "Total Score",
+  "statsDashboardAverageScoreLabel": "Average Score",
+  "statsDashboardWinRateLabel": "Win Rate",
+  "statsDashboardTotalTpLabel": "Total TPs",
+  "statsDashboardAverageTpLabel": "Avg. TPs"
 }

@@ -931,5 +931,63 @@
   "achievementDetailPointsLabel": "ポイント",
   "achievementDetailDescriptionLabel": "説明",
   "achievementDetailConditionLabel": "達成条件",
-  "achievementDetailRewardLabel": "報酬"
+  "achievementDetailRewardLabel": "報酬",
+  "statsDashboardCombatStatsTitle": "戦闘統計",
+  "statsDashboardPlayTimeTitle": "プレイ時間",
+  "statsDashboardScoreTitle": "スコア",
+  "statsDashboardWinRateAnalysisTitle": "勝率分析",
+  "statsDashboardTurningPointTitle": "ターニングポイント",
+  "statsDashboardViewDetailsButton": "詳細統計を見る",
+  "statsDashboardPointsSuffix": "{points} ポイント",
+  "@statsDashboardPointsSuffix": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "statsDashboardAchievementsLine": "アチーブメント: {unlocked}/{total}",
+  "@statsDashboardAchievementsLine": {
+    "placeholders": {
+      "unlocked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "statsDashboardTotalBattlesLabel": "総戦闘数",
+  "statsDashboardTotalWinsLabel": "勝利数",
+  "statsDashboardTotalLossesLabel": "敗北数",
+  "statsDashboardTpAchievedLabel": "TP達成数",
+  "statsDashboardDurationHoursMinutes": "{hours}時間 {minutes}分",
+  "@statsDashboardDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "statsDashboardDurationMinutesSeconds": "{minutes}分 {seconds}秒",
+  "@statsDashboardDurationMinutesSeconds": {
+    "placeholders": {
+      "minutes": { "type": "int" },
+      "seconds": { "type": "int" }
+    }
+  },
+  "statsDashboardDurationSeconds": "{seconds}秒",
+  "@statsDashboardDurationSeconds": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "statsDashboardTotalPlayTimeLabel": "総プレイ時間",
+  "statsDashboardAveragePlayTimeLabel": "平均戦闘時間",
+  "statsDashboardAverageBattleMinutes": "{minutes}分",
+  "@statsDashboardAverageBattleMinutes": {
+    "placeholders": { "minutes": { "type": "String" } }
+  },
+  "statsDashboardFirstPlayLine": "初プレイ: {date}",
+  "@statsDashboardFirstPlayLine": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "statsDashboardLastPlayLine": "最終プレイ: {date}",
+  "@statsDashboardLastPlayLine": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "statsDashboardTotalScoreLabel": "総スコア",
+  "statsDashboardAverageScoreLabel": "平均スコア",
+  "statsDashboardWinRateLabel": "勝率",
+  "statsDashboardTotalTpLabel": "総達成数",
+  "statsDashboardAverageTpLabel": "平均達成数"
 }

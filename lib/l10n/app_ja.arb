@@ -1124,5 +1124,9 @@
     "placeholders": { "days": { "type": "int" } }
   },
   "notifServerEventChannelName": "サーバーイベント通知",
-  "notifServerEventChannelDescription": "フレンド追加やランキング更新などのお知らせ"
+  "notifServerEventChannelDescription": "フレンド追加やランキング更新などのお知らせ",
+  "battlePassOverlayTierUpTitle": "バトルパス ティアアップ！",
+  "battlePassOverlayRewardTitle": "報酬獲得！",
+  "battlePassOverlayPremiumTitle": "プレミアム アクティベート",
+  "battlePassOverlayPremiumBody": "プレミアムトラックの全報酬がアンロックされました"
 }

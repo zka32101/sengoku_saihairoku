@@ -1121,5 +1121,9 @@
     "placeholders": { "days": { "type": "int" } }
   },
   "notifServerEventChannelName": "Server Event Notifications",
-  "notifServerEventChannelDescription": "Alerts for friend requests, ranking updates, and more"
+  "notifServerEventChannelDescription": "Alerts for friend requests, ranking updates, and more",
+  "battlePassOverlayTierUpTitle": "Battle Pass Tier Up!",
+  "battlePassOverlayRewardTitle": "Reward Earned!",
+  "battlePassOverlayPremiumTitle": "Premium Activated",
+  "battlePassOverlayPremiumBody": "All premium track rewards have been unlocked"
 }

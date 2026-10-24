@@ -2288,4 +2288,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifServerEventChannelDescription =>
       'Alerts for friend requests, ranking updates, and more';
+
+  @override
+  String get battlePassOverlayTierUpTitle => 'Battle Pass Tier Up!';
+
+  @override
+  String get battlePassOverlayRewardTitle => 'Reward Earned!';
+
+  @override
+  String get battlePassOverlayPremiumTitle => 'Premium Activated';
+
+  @override
+  String get battlePassOverlayPremiumBody =>
+      'All premium track rewards have been unlocked';
 }

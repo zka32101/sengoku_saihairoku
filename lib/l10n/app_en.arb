@@ -764,5 +764,62 @@
       "difficulty": { "type": "String" },
       "score": { "type": "int" }
     }
-  }
+  },
+  "battlePassTitle": "Battle Pass",
+  "battlePassPremiumUnlockedSnackbar": "Premium track unlocked!",
+  "battlePassPurchaseFailedSnackbar": "Purchase failed: {error}",
+  "@battlePassPurchaseFailedSnackbar": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "battlePassUnknownError": "Unknown error",
+  "battlePassSeasonEndLabel": "Season Ends",
+  "battlePassSeasonEndDate": "{year}/{month}/{day}",
+  "@battlePassSeasonEndDate": {
+    "placeholders": {
+      "year": { "type": "int" },
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  },
+  "battlePassDaysRemainingLabel": "Days Remaining",
+  "battlePassDaysRemainingValue": "{days}d",
+  "@battlePassDaysRemainingValue": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "battlePassStoreUnavailable": "Store unavailable",
+  "battlePassPremiumUnlockTitle": "Unlock Premium Track",
+  "battlePassPremiumUnlockDescription": "Instantly claim all premium rewards up to your current tier, and keep receiving premium rewards as you tier up.",
+  "battlePassMissedRewardWarning": "You've already missed {count} premium rewards!",
+  "@battlePassMissedRewardWarning": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "battlePassUnlockForPrice": "Unlock for {priceLabel}",
+  "@battlePassUnlockForPrice": {
+    "placeholders": { "priceLabel": { "type": "String" } }
+  },
+  "battlePassRestorePurchase": "Restore Purchase",
+  "battlePassTierRewardsTitle": "Tier Rewards",
+  "battlePassCurrentTierLabel": "Current Tier",
+  "battlePassTierOfMax": "Tier {current} / {max}",
+  "@battlePassTierOfMax": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "max": { "type": "int" }
+    }
+  },
+  "battlePassPremiumBadge": "Premium",
+  "battlePassProgressLabel": "Progress",
+  "battlePassXpOfTotal": "{current} / {total}",
+  "@battlePassXpOfTotal": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "battlePassXpUntilNextTier": "{xp} XP until next tier",
+  "@battlePassXpUntilNextTier": {
+    "placeholders": { "xp": { "type": "int" } }
+  },
+  "battlePassMaxTierReached": "Max tier reached!",
+  "battlePassFreeBadge": "Free"
 }

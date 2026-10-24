@@ -6,6 +6,7 @@ import '../../core/services/purchase_service.dart';
 import '../../core/services/notification_service.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../data/models/battle_pass.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class BattlePassScreen extends StatefulWidget {
   const BattlePassScreen({super.key});
@@ -37,14 +38,18 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
       if (!mounted) return;
       setState(() => _purchaseState = state);
 
+      final l10n = AppLocalizations.of(context)!;
       if (state == PurchaseState.success) {
         _loadBattlePassData();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('プレミアムトラックを解放しました！')),
+          SnackBar(content: Text(l10n.battlePassPremiumUnlockedSnackbar)),
         );
       } else if (state == PurchaseState.error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('購入に失敗しました: ${_purchaseService.lastError ?? "不明なエラー"}')),
+          SnackBar(
+            content: Text(l10n.battlePassPurchaseFailedSnackbar(
+                _purchaseService.lastError ?? l10n.battlePassUnknownError)),
+          ),
         );
       }
     });
@@ -89,9 +94,10 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_loading || _currentBattlePass == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text('バトルパス')),
+        appBar: AppBar(title: Text(l10n.battlePassTitle)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
@@ -100,13 +106,17 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
     final daysRemaining = _battlePassRepo.getDaysRemaining();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('バトルパス')),
+      appBar: AppBar(title: Text(l10n.battlePassTitle)),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Season Header
-            _SeasonHeader(battlePass: _currentBattlePass!, daysRemaining: daysRemaining),
+            _SeasonHeader(
+              battlePass: _currentBattlePass!,
+              daysRemaining: daysRemaining,
+              l10n: l10n,
+            ),
             const SizedBox(height: 24),
 
             // Current Tier Progress
@@ -115,6 +125,7 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
               child: _CurrentTierCard(
                 progress: progress,
                 battlePass: _currentBattlePass!,
+                l10n: l10n,
               ),
             ),
             const SizedBox(height: 24),
@@ -130,6 +141,7 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
                       _currentBattlePass!.missedPremiumRewardCount(progress),
                   onBuy: () => _purchaseService.buyPremiumBattlePass(),
                   onRestore: () => _purchaseService.restorePurchases(),
+                  l10n: l10n,
                 ),
               ),
             if (!progress.hasPremium) const SizedBox(height: 24),
@@ -137,9 +149,9 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
             // Tier List
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const Text(
-                'ティア報酬',
-                style: TextStyle(
+              child: Text(
+                l10n.battlePassTierRewardsTitle,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFFFD700),
@@ -162,6 +174,7 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
                   isCurrentTier: isCurrentTier,
                   currentProgress: progress,
                   userHasPremium: progress.hasPremium,
+                  l10n: l10n,
                 );
               },
             ),
@@ -176,10 +189,12 @@ class _BattlePassScreenState extends State<BattlePassScreen> {
 class _SeasonHeader extends StatelessWidget {
   final BattlePass battlePass;
   final int daysRemaining;
+  final AppLocalizations l10n;
 
   const _SeasonHeader({
     required this.battlePass,
     required this.daysRemaining,
+    required this.l10n,
   });
 
   @override
@@ -225,16 +240,17 @@ class _SeasonHeader extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'シーズン終了',
-                    style: TextStyle(
+                  Text(
+                    l10n.battlePassSeasonEndLabel,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${battlePass.endDate.year}年${battlePass.endDate.month}月${battlePass.endDate.day}日',
+                    l10n.battlePassSeasonEndDate(battlePass.endDate.year,
+                        battlePass.endDate.month, battlePass.endDate.day),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -246,16 +262,16 @@ class _SeasonHeader extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
-                    '残り日数',
-                    style: TextStyle(
+                  Text(
+                    l10n.battlePassDaysRemainingLabel,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '$daysRemaining日',
+                    l10n.battlePassDaysRemainingValue(daysRemaining),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -279,6 +295,7 @@ class _PremiumUpsellCard extends StatelessWidget {
   final int missedRewardCount;
   final VoidCallback onBuy;
   final VoidCallback onRestore;
+  final AppLocalizations l10n;
 
   const _PremiumUpsellCard({
     required this.product,
@@ -287,11 +304,13 @@ class _PremiumUpsellCard extends StatelessWidget {
     required this.missedRewardCount,
     required this.onBuy,
     required this.onRestore,
+    required this.l10n,
   });
 
   @override
   Widget build(BuildContext context) {
-    final priceLabel = product?.price ?? (isStoreAvailable ? '---' : 'ストア利用不可');
+    final priceLabel =
+        product?.price ?? (isStoreAvailable ? '---' : l10n.battlePassStoreUnavailable);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -314,10 +333,10 @@ class _PremiumUpsellCard extends StatelessWidget {
             children: [
               const Icon(Icons.workspace_premium, color: Colors.purple, size: 28),
               const SizedBox(width: 8),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'プレミアムトラックを解放',
-                  style: TextStyle(
+                  l10n.battlePassPremiumUnlockTitle,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.purple,
@@ -327,10 +346,9 @@ class _PremiumUpsellCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Text(
-            '現在のティアまでのプレミアム限定報酬をすべて即座に獲得し、'
-            '以降のティアアップでも継続してプレミアム報酬を受け取れます。',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+          Text(
+            l10n.battlePassPremiumUnlockDescription,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
           ),
           if (missedRewardCount > 0) ...[
             const SizedBox(height: 12),
@@ -347,7 +365,7 @@ class _PremiumUpsellCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'すでに$missedRewardCount件のプレミアム報酬を受け取り逃しています！',
+                      l10n.battlePassMissedRewardWarning(missedRewardCount),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -380,16 +398,16 @@ class _PremiumUpsellCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     )
-                  : Text('$priceLabel で解放する'),
+                  : Text(l10n.battlePassUnlockForPrice(priceLabel)),
             ),
           ),
           const SizedBox(height: 8),
           Center(
             child: TextButton(
               onPressed: isPurchasing ? null : onRestore,
-              child: const Text(
-                '購入を復元',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+              child: Text(
+                l10n.battlePassRestorePurchase,
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ),
           ),
@@ -402,10 +420,12 @@ class _PremiumUpsellCard extends StatelessWidget {
 class _CurrentTierCard extends StatelessWidget {
   final BattlePassProgressView progress;
   final BattlePass battlePass;
+  final AppLocalizations l10n;
 
   const _CurrentTierCard({
     required this.progress,
     required this.battlePass,
+    required this.l10n,
   });
 
   @override
@@ -438,16 +458,16 @@ class _CurrentTierCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '現在のティア',
-                      style: TextStyle(
+                    Text(
+                      l10n.battlePassCurrentTierLabel,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ティア $currentTier / $maxTier',
+                      l10n.battlePassTierOfMax(currentTier, maxTier),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -467,9 +487,9 @@ class _CurrentTierCard extends StatelessWidget {
                       border: Border.all(color: Colors.purple, width: 1),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'プレミアム',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.battlePassPremiumBadge,
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.purple,
@@ -488,14 +508,15 @@ class _CurrentTierCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '進捗',
+                        l10n.battlePassProgressLabel,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[400],
                         ),
                       ),
                       Text(
-                        '${progress.currentXp} / ${currentTierData?.xpRequired ?? 0}',
+                        l10n.battlePassXpOfTotal(
+                            progress.currentXp, currentTierData?.xpRequired ?? 0),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -520,7 +541,7 @@ class _CurrentTierCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '次のティアまで $xpUntilNext XP',
+                    l10n.battlePassXpUntilNextTier(xpUntilNext),
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[400],
@@ -531,7 +552,7 @@ class _CurrentTierCard extends StatelessWidget {
             ] else
               Center(
                 child: Text(
-                  '最大ティアに達成しました！',
+                  l10n.battlePassMaxTierReached,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -552,6 +573,7 @@ class _TierRewardCard extends StatelessWidget {
   final bool isCurrentTier;
   final BattlePassProgressView currentProgress;
   final bool userHasPremium;
+  final AppLocalizations l10n;
 
   const _TierRewardCard({
     required this.tier,
@@ -559,6 +581,7 @@ class _TierRewardCard extends StatelessWidget {
     required this.isCurrentTier,
     required this.currentProgress,
     required this.userHasPremium,
+    required this.l10n,
   });
 
   bool get _canAccess {
@@ -654,8 +677,8 @@ class _TierRewardCard extends StatelessWidget {
                         ),
                         child: Text(
                           tier.track == BattlePassTrack.free
-                              ? 'フリー'
-                              : 'プレミアム',
+                              ? l10n.battlePassFreeBadge
+                              : l10n.battlePassPremiumBadge,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,

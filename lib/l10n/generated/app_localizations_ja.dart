@@ -1652,4 +1652,90 @@ class AppLocalizationsJa extends AppLocalizations {
   String replayDifficultyScoreLine(String difficulty, int score) {
     return '$difficulty • スコア: $score';
   }
+
+  @override
+  String get battlePassTitle => 'バトルパス';
+
+  @override
+  String get battlePassPremiumUnlockedSnackbar => 'プレミアムトラックを解放しました！';
+
+  @override
+  String battlePassPurchaseFailedSnackbar(String error) {
+    return '購入に失敗しました: $error';
+  }
+
+  @override
+  String get battlePassUnknownError => '不明なエラー';
+
+  @override
+  String get battlePassSeasonEndLabel => 'シーズン終了';
+
+  @override
+  String battlePassSeasonEndDate(int year, int month, int day) {
+    return '$year年$month月$day日';
+  }
+
+  @override
+  String get battlePassDaysRemainingLabel => '残り日数';
+
+  @override
+  String battlePassDaysRemainingValue(int days) {
+    return '$days日';
+  }
+
+  @override
+  String get battlePassStoreUnavailable => 'ストア利用不可';
+
+  @override
+  String get battlePassPremiumUnlockTitle => 'プレミアムトラックを解放';
+
+  @override
+  String get battlePassPremiumUnlockDescription =>
+      '現在のティアまでのプレミアム限定報酬をすべて即座に獲得し、以降のティアアップでも継続してプレミアム報酬を受け取れます。';
+
+  @override
+  String battlePassMissedRewardWarning(int count) {
+    return 'すでに$count件のプレミアム報酬を受け取り逃しています！';
+  }
+
+  @override
+  String battlePassUnlockForPrice(String priceLabel) {
+    return '$priceLabel で解放する';
+  }
+
+  @override
+  String get battlePassRestorePurchase => '購入を復元';
+
+  @override
+  String get battlePassTierRewardsTitle => 'ティア報酬';
+
+  @override
+  String get battlePassCurrentTierLabel => '現在のティア';
+
+  @override
+  String battlePassTierOfMax(int current, int max) {
+    return 'ティア $current / $max';
+  }
+
+  @override
+  String get battlePassPremiumBadge => 'プレミアム';
+
+  @override
+  String get battlePassProgressLabel => '進捗';
+
+  @override
+  String battlePassXpOfTotal(int current, int total) {
+    return '$current / $total';
+  }
+
+  @override
+  String battlePassXpUntilNextTier(int xp) {
+    return '次のティアまで $xp XP';
+  }
+
+  @override
+  String get battlePassMaxTierReached => '最大ティアに達成しました！';
+
+  @override
+  String get battlePassFreeBadge => 'フリー';
 }

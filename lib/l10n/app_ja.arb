@@ -996,5 +996,43 @@
   "statsDashboardAverageScoreLabel": "平均スコア",
   "statsDashboardWinRateLabel": "勝率",
   "statsDashboardTotalTpLabel": "総達成数",
-  "statsDashboardAverageTpLabel": "平均達成数"
+  "statsDashboardAverageTpLabel": "平均達成数",
+  "advStatsWinRateLabel": "勝率",
+  "advStatsTotalBattlesLabel": "戦闘数",
+  "advStatsVictoriesLabel": "勝利",
+  "advStatsDefeatsLabel": "敗北",
+  "advStatsBestScoreLabel": "最高スコア",
+  "advStatsDifficultyAnalysisTitle": "難易度別分析",
+  "advStatsVictoryDefeatBattleLine": "{victories}勝 {defeats}敗 ({battles}戦)",
+  "@advStatsVictoryDefeatBattleLine": {
+    "placeholders": {
+      "victories": { "type": "int" },
+      "defeats": { "type": "int" },
+      "battles": { "type": "int" }
+    }
+  },
+  "advStatsScenariosClearedLine": "{cleared}/{total}制覇",
+  "@advStatsScenariosClearedLine": {
+    "placeholders": {
+      "cleared": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "advStatsNoData": "データなし",
+  "advStatsScenarioRankingTitle": "シナリオランキング (勝率)",
+  "advStatsRankSuffix": "{rank}位",
+  "@advStatsRankSuffix": {
+    "placeholders": { "rank": { "type": "int" } }
+  },
+  "advStatsVictoryDefeatLine": "{victories}勝 {defeats}敗",
+  "@advStatsVictoryDefeatLine": {
+    "placeholders": {
+      "victories": { "type": "int" },
+      "defeats": { "type": "int" }
+    }
+  },
+  "advStatsAverageScoreLine": "平均 {score}pt",
+  "@advStatsAverageScoreLine": {
+    "placeholders": { "score": { "type": "int" } }
+  }
 }

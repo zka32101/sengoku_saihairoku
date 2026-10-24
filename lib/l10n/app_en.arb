@@ -993,5 +993,43 @@
   "statsDashboardAverageScoreLabel": "Average Score",
   "statsDashboardWinRateLabel": "Win Rate",
   "statsDashboardTotalTpLabel": "Total TPs",
-  "statsDashboardAverageTpLabel": "Avg. TPs"
+  "statsDashboardAverageTpLabel": "Avg. TPs",
+  "advStatsWinRateLabel": "Win Rate",
+  "advStatsTotalBattlesLabel": "Battles",
+  "advStatsVictoriesLabel": "Wins",
+  "advStatsDefeatsLabel": "Losses",
+  "advStatsBestScoreLabel": "Best Score",
+  "advStatsDifficultyAnalysisTitle": "Difficulty Analysis",
+  "advStatsVictoryDefeatBattleLine": "{victories}W {defeats}L ({battles} battles)",
+  "@advStatsVictoryDefeatBattleLine": {
+    "placeholders": {
+      "victories": { "type": "int" },
+      "defeats": { "type": "int" },
+      "battles": { "type": "int" }
+    }
+  },
+  "advStatsScenariosClearedLine": "{cleared}/{total} cleared",
+  "@advStatsScenariosClearedLine": {
+    "placeholders": {
+      "cleared": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "advStatsNoData": "No data",
+  "advStatsScenarioRankingTitle": "Scenario Ranking (Win Rate)",
+  "advStatsRankSuffix": "#{rank}",
+  "@advStatsRankSuffix": {
+    "placeholders": { "rank": { "type": "int" } }
+  },
+  "advStatsVictoryDefeatLine": "{victories}W {defeats}L",
+  "@advStatsVictoryDefeatLine": {
+    "placeholders": {
+      "victories": { "type": "int" },
+      "defeats": { "type": "int" }
+    }
+  },
+  "advStatsAverageScoreLine": "Avg {score}pt",
+  "@advStatsAverageScoreLine": {
+    "placeholders": { "score": { "type": "int" } }
+  }
 }

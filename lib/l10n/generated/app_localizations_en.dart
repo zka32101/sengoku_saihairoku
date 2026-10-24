@@ -2066,4 +2066,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statsDashboardAverageTpLabel => 'Avg. TPs';
+
+  @override
+  String get advStatsWinRateLabel => 'Win Rate';
+
+  @override
+  String get advStatsTotalBattlesLabel => 'Battles';
+
+  @override
+  String get advStatsVictoriesLabel => 'Wins';
+
+  @override
+  String get advStatsDefeatsLabel => 'Losses';
+
+  @override
+  String get advStatsBestScoreLabel => 'Best Score';
+
+  @override
+  String get advStatsDifficultyAnalysisTitle => 'Difficulty Analysis';
+
+  @override
+  String advStatsVictoryDefeatBattleLine(
+    int victories,
+    int defeats,
+    int battles,
+  ) {
+    return '${victories}W ${defeats}L ($battles battles)';
+  }
+
+  @override
+  String advStatsScenariosClearedLine(int cleared, int total) {
+    return '$cleared/$total cleared';
+  }
+
+  @override
+  String get advStatsNoData => 'No data';
+
+  @override
+  String get advStatsScenarioRankingTitle => 'Scenario Ranking (Win Rate)';
+
+  @override
+  String advStatsRankSuffix(int rank) {
+    return '#$rank';
+  }
+
+  @override
+  String advStatsVictoryDefeatLine(int victories, int defeats) {
+    return '${victories}W ${defeats}L';
+  }
+
+  @override
+  String advStatsAverageScoreLine(int score) {
+    return 'Avg ${score}pt';
+  }
 }

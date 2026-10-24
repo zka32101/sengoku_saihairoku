@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/advanced_statistics.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// シナリオ別パフォーマンスカード
 class ScenarioPerformanceCard extends StatelessWidget {
@@ -14,6 +15,7 @@ class ScenarioPerformanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final winRatePercent = (performance.winRate * 100).toStringAsFixed(1);
     final winRateColor = performance.winRate > 0.6
         ? Colors.green
@@ -77,7 +79,7 @@ class ScenarioPerformanceCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '勝率',
+                      l10n.advStatsWinRateLabel,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -97,21 +99,21 @@ class ScenarioPerformanceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _StatColumn(
-                  label: '戦闘数',
+                  label: l10n.advStatsTotalBattlesLabel,
                   value: '${performance.totalBattles}',
                 ),
                 _StatColumn(
-                  label: '勝利',
+                  label: l10n.advStatsVictoriesLabel,
                   value: '${performance.victories}',
                   color: Colors.green,
                 ),
                 _StatColumn(
-                  label: '敗北',
+                  label: l10n.advStatsDefeatsLabel,
                   value: '${performance.defeats}',
                   color: Colors.red,
                 ),
                 _StatColumn(
-                  label: '最高スコア',
+                  label: l10n.advStatsBestScoreLabel,
                   value: '${performance.bestScore}',
                 ),
               ],
@@ -244,6 +246,7 @@ class DifficultyComparisonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Padding(
@@ -251,9 +254,9 @@ class DifficultyComparisonCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '難易度別分析',
-              style: TextStyle(
+            Text(
+              l10n.advStatsDifficultyAnalysisTitle,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -279,6 +282,7 @@ class _DifficultyComparisonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final winRatePercent = (stats.winRate * 100).toStringAsFixed(1);
 
     return Padding(
@@ -323,14 +327,16 @@ class _DifficultyComparisonRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${stats.victories}勝 ${stats.defeats}敗 (${stats.totalBattles}戦)',
+                l10n.advStatsVictoryDefeatBattleLine(
+                    stats.victories, stats.defeats, stats.totalBattles),
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[600],
                 ),
               ),
               Text(
-                '${stats.scenariosCleared}/5制覇',
+                l10n.advStatsScenariosClearedLine(
+                    stats.scenariosCleared, Scenario.values.length),
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.blue[600],
@@ -356,6 +362,7 @@ class ScenarioRankingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (ranking.isEmpty) {
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -363,7 +370,7 @@ class ScenarioRankingCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Center(
             child: Text(
-              'データなし',
+              l10n.advStatsNoData,
               style: TextStyle(color: Colors.grey[600]),
             ),
           ),
@@ -378,9 +385,9 @@ class ScenarioRankingCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'シナリオランキング (勝率)',
-              style: TextStyle(
+            Text(
+              l10n.advStatsScenarioRankingTitle,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -410,8 +417,15 @@ class _RankingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final winRatePercent = (performance.winRate * 100).toStringAsFixed(1);
-    final medal = rank == 1 ? '🥇' : rank == 2 ? '🥈' : rank == 3 ? '🥉' : '$rank位';
+    final medal = rank == 1
+        ? '🥇'
+        : rank == 2
+            ? '🥈'
+            : rank == 3
+                ? '🥉'
+                : l10n.advStatsRankSuffix(rank);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -436,7 +450,8 @@ class _RankingItem extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${performance.victories}勝 ${performance.defeats}敗',
+                  l10n.advStatsVictoryDefeatLine(
+                      performance.victories, performance.defeats),
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -456,7 +471,7 @@ class _RankingItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '平均 ${performance.averageScore}pt',
+                l10n.advStatsAverageScoreLine(performance.averageScore),
                 style: TextStyle(
                   fontSize: 11,
                   color: Colors.grey[600],

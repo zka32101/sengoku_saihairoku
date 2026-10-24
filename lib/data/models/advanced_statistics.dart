@@ -137,7 +137,8 @@ class DifficultyModeStats {
     required this.scenariosCleared,
   });
 
-  String get summary => '$scenariosCleared/5シナリオ制覇 (勝率: ${(winRate * 100).toStringAsFixed(1)}%)';
+  String get summary =>
+      '$scenariosCleared/${Scenario.values.length}シナリオ制覇 (勝率: ${(winRate * 100).toStringAsFixed(1)}%)';
 }
 
 /// パフォーマンストレンド

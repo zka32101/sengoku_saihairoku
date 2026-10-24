@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../data/models/daily_challenge.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// 本日のチャレンジを表示するカード
 class ChallengeCard extends StatelessWidget {
@@ -32,20 +33,21 @@ class ChallengeCard extends StatelessWidget {
     };
   }
 
-  String _getScenarioName(Scenario scenario) {
+  String _getScenarioName(AppLocalizations l10n, Scenario scenario) {
     return switch (scenario) {
-      Scenario.odigahara => '桶狭間',
-      Scenario.nagashino => '長篠',
-      Scenario.honnoJi => '本能寺',
-      Scenario.sekigahara => '関ヶ原',
-      Scenario.kawanakajima => '川中島',
-      Scenario.itsukushima => '厳島',
-      Scenario.oshiJo => '忍城',
+      Scenario.odigahara => l10n.challengeCardScenarioOdigahara,
+      Scenario.nagashino => l10n.challengeCardScenarioNagashino,
+      Scenario.honnoJi => l10n.challengeCardScenarioHonnoji,
+      Scenario.sekigahara => l10n.challengeCardScenarioSekigahara,
+      Scenario.kawanakajima => l10n.challengeCardScenarioKawanakajima,
+      Scenario.itsukushima => l10n.challengeCardScenarioItsukushima,
+      Scenario.oshiJo => l10n.challengeCardScenarioOshijo,
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isCompleted = progress?.isCompleted ?? false;
     final isClaimed = progress?.claimed ?? false;
 
@@ -116,7 +118,7 @@ class ChallengeCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      _getScenarioName(challenge.scenario),
+                      _getScenarioName(l10n, challenge.scenario),
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.white,
@@ -170,13 +172,13 @@ class ChallengeCard extends StatelessWidget {
                 children: [
                   _RewardItem(
                     icon: Icons.monetization_on,
-                    label: '報酬',
+                    label: l10n.challengeCardRewardLabel,
                     value: challenge.baseReward.toString(),
                     color: const Color(0xFFFFD700),
                   ),
                   _RewardItem(
                     icon: Icons.star,
-                    label: 'AP',
+                    label: l10n.challengeCardApLabel,
                     value: challenge.achievementPoints.toString(),
                     color: Colors.amber,
                   ),

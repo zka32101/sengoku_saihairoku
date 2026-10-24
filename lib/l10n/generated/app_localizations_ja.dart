@@ -2170,4 +2170,31 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get eventBannerClaimedLabel => '達成済み';
+
+  @override
+  String get challengeCardScenarioOdigahara => '桶狭間';
+
+  @override
+  String get challengeCardScenarioNagashino => '長篠';
+
+  @override
+  String get challengeCardScenarioHonnoji => '本能寺';
+
+  @override
+  String get challengeCardScenarioSekigahara => '関ヶ原';
+
+  @override
+  String get challengeCardScenarioKawanakajima => '川中島';
+
+  @override
+  String get challengeCardScenarioItsukushima => '厳島';
+
+  @override
+  String get challengeCardScenarioOshijo => '忍城';
+
+  @override
+  String get challengeCardRewardLabel => '報酬';
+
+  @override
+  String get challengeCardApLabel => 'AP';
 }

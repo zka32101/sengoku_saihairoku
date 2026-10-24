@@ -2006,6 +2006,30 @@ abstract class AppLocalizations {
   /// **'敵将討死'**
   String get resultTpMikatagahara4;
 
+  /// No description provided for @resultTpAnegawa1.
+  ///
+  /// In ja, this message translates to:
+  /// **'緒戦の混戦に対応する'**
+  String get resultTpAnegawa1;
+
+  /// No description provided for @resultTpAnegawa2.
+  ///
+  /// In ja, this message translates to:
+  /// **'横山城包囲を維持する'**
+  String get resultTpAnegawa2;
+
+  /// No description provided for @resultTpAnegawa3.
+  ///
+  /// In ja, this message translates to:
+  /// **'小谷城方面へ攻勢をかける'**
+  String get resultTpAnegawa3;
+
+  /// No description provided for @resultTpAnegawa4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpAnegawa4;
+
   /// No description provided for @scenarioSelectTitle.
   ///
   /// In ja, this message translates to:
@@ -2209,6 +2233,12 @@ abstract class AppLocalizations {
   /// **'三方ヶ原の戦い'**
   String get scenarioNameMikatagahara;
 
+  /// No description provided for @scenarioNameAnegawa.
+  ///
+  /// In ja, this message translates to:
+  /// **'姉川の戦い'**
+  String get scenarioNameAnegawa;
+
   /// No description provided for @scenarioDescItsukushima.
   ///
   /// In ja, this message translates to:
@@ -2244,6 +2274,18 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'4〜5分'**
   String get scenarioPlayTimeMikatagahara;
+
+  /// No description provided for @scenarioDescAnegawa.
+  ///
+  /// In ja, this message translates to:
+  /// **'5,000 vs 12,000 — 緒戦の混戦を乗り越え、乱戦からの大逆転を狙え'**
+  String get scenarioDescAnegawa;
+
+  /// No description provided for @scenarioPlayTimeAnegawa.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeAnegawa;
 
   /// No description provided for @tutorialTitle.
   ///
@@ -4030,6 +4072,12 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'三方ヶ原'**
   String get challengeCardScenarioMikatagahara;
+
+  /// No description provided for @challengeCardScenarioAnegawa.
+  ///
+  /// In ja, this message translates to:
+  /// **'姉川'**
+  String get challengeCardScenarioAnegawa;
 
   /// No description provided for @challengeCardRewardLabel.
   ///

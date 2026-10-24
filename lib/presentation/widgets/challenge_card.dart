@@ -43,6 +43,7 @@ class ChallengeCard extends StatelessWidget {
       Scenario.itsukushima => l10n.challengeCardScenarioItsukushima,
       Scenario.oshiJo => l10n.challengeCardScenarioOshijo,
       Scenario.mikatagahara => l10n.challengeCardScenarioMikatagahara,
+      Scenario.anegawa => l10n.challengeCardScenarioAnegawa,
     };
   }
 

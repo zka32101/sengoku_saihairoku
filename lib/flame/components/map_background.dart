@@ -86,6 +86,8 @@ class MapBackground extends PositionComponent {
         _drawKawanakajima(canvas);
       case Scenario.itsukushima:
         _drawItsukushima(canvas);
+      case Scenario.oshiJo:
+        _drawOshijo(canvas);
     }
   }
 
@@ -158,6 +160,22 @@ class MapBackground extends PositionComponent {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25);
     canvas.drawRect(Rect.fromLTWH(0, 100, 360, 300), stormPaint);
     _drawLabel(canvas, '暴風雨', 150, 150, const Color(0xFFAAAAAA));
+  }
+
+  void _drawOshijo(Canvas canvas) {
+    // 水攻めによる湖水（城の周囲を囲む）
+    final floodPaint = Paint()..color = const Color(0xFF1A4A6A);
+    canvas.drawRect(Rect.fromLTWH(0, 340, 360, 300), floodPaint);
+    _drawLabel(canvas, '水攻めの湖水', 120, 350, const Color(0xFF64B5F6));
+
+    // 忍城（浮き城、中央の丘の上）
+    _drawHill(canvas, 160, 290, 55);
+    _drawBuilding(canvas, 160, 270, 36, 36);
+    _drawLabel(canvas, '忍城', 148, 320, const Color(0xFFFF6644));
+
+    // 堤防（石田堤）
+    _drawBarricade(canvas, 20, 340, 340);
+    _drawLabel(canvas, '石田堤', 150, 345, const Color(0xFFAAAAAA));
   }
 
   // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで

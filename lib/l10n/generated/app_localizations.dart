@@ -1958,6 +1958,30 @@ abstract class AppLocalizations {
   /// **'敵将討死'**
   String get resultTpItsukushima4;
 
+  /// No description provided for @resultTpOshijo1.
+  ///
+  /// In ja, this message translates to:
+  /// **'偽情報で敵を翻弄'**
+  String get resultTpOshijo1;
+
+  /// No description provided for @resultTpOshijo2.
+  ///
+  /// In ja, this message translates to:
+  /// **'堤防決壊で敵陣を打撃'**
+  String get resultTpOshijo2;
+
+  /// No description provided for @resultTpOshijo3.
+  ///
+  /// In ja, this message translates to:
+  /// **'寄せ手の猛攻を耐え抜く'**
+  String get resultTpOshijo3;
+
+  /// No description provided for @resultTpOshijo4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpOshijo4;
+
   /// No description provided for @scenarioSelectTitle.
   ///
   /// In ja, this message translates to:
@@ -2149,6 +2173,12 @@ abstract class AppLocalizations {
   /// **'厳島の戦'**
   String get scenarioNameItsukushima;
 
+  /// No description provided for @scenarioNameOshijo.
+  ///
+  /// In ja, this message translates to:
+  /// **'忍城の戦い'**
+  String get scenarioNameOshijo;
+
   /// No description provided for @scenarioDescItsukushima.
   ///
   /// In ja, this message translates to:
@@ -2160,6 +2190,18 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'4〜5分'**
   String get scenarioPlayTimeItsukushima;
+
+  /// No description provided for @scenarioDescOshijo.
+  ///
+  /// In ja, this message translates to:
+  /// **'3,000 vs 20,000 — 水攻めに耐え、寡兵で大軍を退けよ'**
+  String get scenarioDescOshijo;
+
+  /// No description provided for @scenarioPlayTimeOshijo.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeOshijo;
 
   /// No description provided for @tutorialTitle.
   ///

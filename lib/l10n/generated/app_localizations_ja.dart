@@ -1030,6 +1030,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resultTpItsukushima4 => '敵将討死';
 
   @override
+  String get resultTpOshijo1 => '偽情報で敵を翻弄';
+
+  @override
+  String get resultTpOshijo2 => '堤防決壊で敵陣を打撃';
+
+  @override
+  String get resultTpOshijo3 => '寄せ手の猛攻を耐え抜く';
+
+  @override
+  String get resultTpOshijo4 => '敵将討死';
+
+  @override
   String get scenarioSelectTitle => 'シナリオを選ぶ';
 
   @override
@@ -1135,10 +1147,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scenarioNameItsukushima => '厳島の戦';
 
   @override
+  String get scenarioNameOshijo => '忍城の戦い';
+
+  @override
   String get scenarioDescItsukushima => '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ';
 
   @override
   String get scenarioPlayTimeItsukushima => '4〜5分';
+
+  @override
+  String get scenarioDescOshijo => '3,000 vs 20,000 — 水攻めに耐え、寡兵で大軍を退けよ';
+
+  @override
+  String get scenarioPlayTimeOshijo => '4〜5分';
 
   @override
   String get tutorialTitle => '初陣：采配の基本';

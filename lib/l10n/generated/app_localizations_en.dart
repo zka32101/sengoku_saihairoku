@@ -1691,4 +1691,90 @@ class AppLocalizationsEn extends AppLocalizations {
   String replayDifficultyScoreLine(String difficulty, int score) {
     return '$difficulty • Score: $score';
   }
+
+  @override
+  String get battlePassTitle => 'Battle Pass';
+
+  @override
+  String get battlePassPremiumUnlockedSnackbar => 'Premium track unlocked!';
+
+  @override
+  String battlePassPurchaseFailedSnackbar(String error) {
+    return 'Purchase failed: $error';
+  }
+
+  @override
+  String get battlePassUnknownError => 'Unknown error';
+
+  @override
+  String get battlePassSeasonEndLabel => 'Season Ends';
+
+  @override
+  String battlePassSeasonEndDate(int year, int month, int day) {
+    return '$year/$month/$day';
+  }
+
+  @override
+  String get battlePassDaysRemainingLabel => 'Days Remaining';
+
+  @override
+  String battlePassDaysRemainingValue(int days) {
+    return '${days}d';
+  }
+
+  @override
+  String get battlePassStoreUnavailable => 'Store unavailable';
+
+  @override
+  String get battlePassPremiumUnlockTitle => 'Unlock Premium Track';
+
+  @override
+  String get battlePassPremiumUnlockDescription =>
+      'Instantly claim all premium rewards up to your current tier, and keep receiving premium rewards as you tier up.';
+
+  @override
+  String battlePassMissedRewardWarning(int count) {
+    return 'You\'ve already missed $count premium rewards!';
+  }
+
+  @override
+  String battlePassUnlockForPrice(String priceLabel) {
+    return 'Unlock for $priceLabel';
+  }
+
+  @override
+  String get battlePassRestorePurchase => 'Restore Purchase';
+
+  @override
+  String get battlePassTierRewardsTitle => 'Tier Rewards';
+
+  @override
+  String get battlePassCurrentTierLabel => 'Current Tier';
+
+  @override
+  String battlePassTierOfMax(int current, int max) {
+    return 'Tier $current / $max';
+  }
+
+  @override
+  String get battlePassPremiumBadge => 'Premium';
+
+  @override
+  String get battlePassProgressLabel => 'Progress';
+
+  @override
+  String battlePassXpOfTotal(int current, int total) {
+    return '$current / $total';
+  }
+
+  @override
+  String battlePassXpUntilNextTier(int xp) {
+    return '$xp XP until next tier';
+  }
+
+  @override
+  String get battlePassMaxTierReached => 'Max tier reached!';
+
+  @override
+  String get battlePassFreeBadge => 'Free';
 }

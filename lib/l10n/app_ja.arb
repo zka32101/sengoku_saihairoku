@@ -767,5 +767,62 @@
       "difficulty": { "type": "String" },
       "score": { "type": "int" }
     }
-  }
+  },
+  "battlePassTitle": "バトルパス",
+  "battlePassPremiumUnlockedSnackbar": "プレミアムトラックを解放しました！",
+  "battlePassPurchaseFailedSnackbar": "購入に失敗しました: {error}",
+  "@battlePassPurchaseFailedSnackbar": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+  "battlePassUnknownError": "不明なエラー",
+  "battlePassSeasonEndLabel": "シーズン終了",
+  "battlePassSeasonEndDate": "{year}年{month}月{day}日",
+  "@battlePassSeasonEndDate": {
+    "placeholders": {
+      "year": { "type": "int" },
+      "month": { "type": "int" },
+      "day": { "type": "int" }
+    }
+  },
+  "battlePassDaysRemainingLabel": "残り日数",
+  "battlePassDaysRemainingValue": "{days}日",
+  "@battlePassDaysRemainingValue": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "battlePassStoreUnavailable": "ストア利用不可",
+  "battlePassPremiumUnlockTitle": "プレミアムトラックを解放",
+  "battlePassPremiumUnlockDescription": "現在のティアまでのプレミアム限定報酬をすべて即座に獲得し、以降のティアアップでも継続してプレミアム報酬を受け取れます。",
+  "battlePassMissedRewardWarning": "すでに{count}件のプレミアム報酬を受け取り逃しています！",
+  "@battlePassMissedRewardWarning": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "battlePassUnlockForPrice": "{priceLabel} で解放する",
+  "@battlePassUnlockForPrice": {
+    "placeholders": { "priceLabel": { "type": "String" } }
+  },
+  "battlePassRestorePurchase": "購入を復元",
+  "battlePassTierRewardsTitle": "ティア報酬",
+  "battlePassCurrentTierLabel": "現在のティア",
+  "battlePassTierOfMax": "ティア {current} / {max}",
+  "@battlePassTierOfMax": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "max": { "type": "int" }
+    }
+  },
+  "battlePassPremiumBadge": "プレミアム",
+  "battlePassProgressLabel": "進捗",
+  "battlePassXpOfTotal": "{current} / {total}",
+  "@battlePassXpOfTotal": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "battlePassXpUntilNextTier": "次のティアまで {xp} XP",
+  "@battlePassXpUntilNextTier": {
+    "placeholders": { "xp": { "type": "int" } }
+  },
+  "battlePassMaxTierReached": "最大ティアに達成しました！",
+  "battlePassFreeBadge": "フリー"
 }

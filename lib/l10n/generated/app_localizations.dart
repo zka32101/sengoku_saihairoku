@@ -3078,6 +3078,144 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{difficulty} • スコア: {score}'**
   String replayDifficultyScoreLine(String difficulty, int score);
+
+  /// No description provided for @battlePassTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパス'**
+  String get battlePassTitle;
+
+  /// No description provided for @battlePassPremiumUnlockedSnackbar.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアムトラックを解放しました！'**
+  String get battlePassPremiumUnlockedSnackbar;
+
+  /// No description provided for @battlePassPurchaseFailedSnackbar.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入に失敗しました: {error}'**
+  String battlePassPurchaseFailedSnackbar(String error);
+
+  /// No description provided for @battlePassUnknownError.
+  ///
+  /// In ja, this message translates to:
+  /// **'不明なエラー'**
+  String get battlePassUnknownError;
+
+  /// No description provided for @battlePassSeasonEndLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'シーズン終了'**
+  String get battlePassSeasonEndLabel;
+
+  /// No description provided for @battlePassSeasonEndDate.
+  ///
+  /// In ja, this message translates to:
+  /// **'{year}年{month}月{day}日'**
+  String battlePassSeasonEndDate(int year, int month, int day);
+
+  /// No description provided for @battlePassDaysRemainingLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'残り日数'**
+  String get battlePassDaysRemainingLabel;
+
+  /// No description provided for @battlePassDaysRemainingValue.
+  ///
+  /// In ja, this message translates to:
+  /// **'{days}日'**
+  String battlePassDaysRemainingValue(int days);
+
+  /// No description provided for @battlePassStoreUnavailable.
+  ///
+  /// In ja, this message translates to:
+  /// **'ストア利用不可'**
+  String get battlePassStoreUnavailable;
+
+  /// No description provided for @battlePassPremiumUnlockTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアムトラックを解放'**
+  String get battlePassPremiumUnlockTitle;
+
+  /// No description provided for @battlePassPremiumUnlockDescription.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のティアまでのプレミアム限定報酬をすべて即座に獲得し、以降のティアアップでも継続してプレミアム報酬を受け取れます。'**
+  String get battlePassPremiumUnlockDescription;
+
+  /// No description provided for @battlePassMissedRewardWarning.
+  ///
+  /// In ja, this message translates to:
+  /// **'すでに{count}件のプレミアム報酬を受け取り逃しています！'**
+  String battlePassMissedRewardWarning(int count);
+
+  /// No description provided for @battlePassUnlockForPrice.
+  ///
+  /// In ja, this message translates to:
+  /// **'{priceLabel} で解放する'**
+  String battlePassUnlockForPrice(String priceLabel);
+
+  /// No description provided for @battlePassRestorePurchase.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入を復元'**
+  String get battlePassRestorePurchase;
+
+  /// No description provided for @battlePassTierRewardsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ティア報酬'**
+  String get battlePassTierRewardsTitle;
+
+  /// No description provided for @battlePassCurrentTierLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'現在のティア'**
+  String get battlePassCurrentTierLabel;
+
+  /// No description provided for @battlePassTierOfMax.
+  ///
+  /// In ja, this message translates to:
+  /// **'ティア {current} / {max}'**
+  String battlePassTierOfMax(int current, int max);
+
+  /// No description provided for @battlePassPremiumBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアム'**
+  String get battlePassPremiumBadge;
+
+  /// No description provided for @battlePassProgressLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'進捗'**
+  String get battlePassProgressLabel;
+
+  /// No description provided for @battlePassXpOfTotal.
+  ///
+  /// In ja, this message translates to:
+  /// **'{current} / {total}'**
+  String battlePassXpOfTotal(int current, int total);
+
+  /// No description provided for @battlePassXpUntilNextTier.
+  ///
+  /// In ja, this message translates to:
+  /// **'次のティアまで {xp} XP'**
+  String battlePassXpUntilNextTier(int xp);
+
+  /// No description provided for @battlePassMaxTierReached.
+  ///
+  /// In ja, this message translates to:
+  /// **'最大ティアに達成しました！'**
+  String get battlePassMaxTierReached;
+
+  /// No description provided for @battlePassFreeBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'フリー'**
+  String get battlePassFreeBadge;
 }
 
 class _AppLocalizationsDelegate

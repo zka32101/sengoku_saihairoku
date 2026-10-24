@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/services/audio_manager.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/locale_controller.dart';
+import '../../core/services/message_settings.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../widgets/balance_diagnostic_panel.dart';
 import '../../data/models/scenario_data.dart';
@@ -18,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _sfxEnabled = true;
   bool _bgmEnabled = true;
+  bool _storyMessagesEnabled = MessageSettings().storyMessagesEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   } else {
                     AudioManager().resumeBgm();
                   }
+                },
+              ),
+              SwitchListTile(
+                title: Text(l10n.settingsStoryMessages,
+                    style: const TextStyle(color: Color(0xFFE8D5B0))),
+                subtitle: Text(l10n.settingsStoryMessagesSubtitle,
+                    style: TextStyle(color: Colors.grey[600])),
+                value: _storyMessagesEnabled,
+                activeThumbColor: const Color(0xFFFFD700),
+                onChanged: (v) {
+                  setState(() => _storyMessagesEnabled = v);
+                  MessageSettings().setStoryMessagesEnabled(v);
                 },
               ),
             ],

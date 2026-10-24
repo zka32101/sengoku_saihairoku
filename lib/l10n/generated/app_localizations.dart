@@ -218,6 +218,18 @@ abstract class AppLocalizations {
   /// **'バックグラウンドミュージック'**
   String get settingsBgmSubtitle;
 
+  /// No description provided for @settingsStoryMessages.
+  ///
+  /// In ja, this message translates to:
+  /// **'ストーリーメッセージ'**
+  String get settingsStoryMessages;
+
+  /// No description provided for @settingsStoryMessagesSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘後のエピローグ閲覧ボタンの表示'**
+  String get settingsStoryMessagesSubtitle;
+
   /// No description provided for @settingsLanguageSection.
   ///
   /// In ja, this message translates to:

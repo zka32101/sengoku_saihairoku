@@ -20,6 +20,8 @@
   "settingsSfxSubtitle": "SFX",
   "settingsBgm": "Music",
   "settingsBgmSubtitle": "Background music",
+  "settingsStoryMessages": "Story Messages",
+  "settingsStoryMessagesSubtitle": "Show the post-battle epilogue button",
   "settingsLanguageSection": "Language",
   "settingsDisplayLanguage": "Display Language",
   "settingsLanguageSystem": "Follow system setting",

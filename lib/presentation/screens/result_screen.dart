@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/ad_service.dart';
+import '../../core/services/message_settings.dart';
 import '../../data/models/battle_result_data.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
@@ -876,20 +877,22 @@ class _ActionButtons extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ElevatedButton.icon(
-          onPressed: () => Navigator.pushNamed(
-            context,
-            '/message',
-            arguments: MessageScreenArgs(
-              scenario: args.scenario,
-              won: args.data.won,
-              allTpAchieved: args.data.tpAchievements.every((a) => a),
+        if (MessageSettings().storyMessagesEnabled) ...[
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pushNamed(
+              context,
+              '/message',
+              arguments: MessageScreenArgs(
+                scenario: args.scenario,
+                won: args.data.won,
+                allTpAchieved: args.data.tpAchievements.every((a) => a),
+              ),
             ),
+            icon: const Icon(Icons.history_edu),
+            label: Text(l10n.resultViewHistoryButton),
           ),
-          icon: const Icon(Icons.history_edu),
-          label: Text(l10n.resultViewHistoryButton),
-        ),
-        const SizedBox(height: 8),
+          const SizedBox(height: 8),
+        ],
         ElevatedButton.icon(
           onPressed: () => Navigator.pushNamed(context, '/ranking'),
           icon: const Icon(Icons.leaderboard),

@@ -69,6 +69,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsBgmSubtitle => 'Background music';
 
   @override
+  String get settingsStoryMessages => 'Story Messages';
+
+  @override
+  String get settingsStoryMessagesSubtitle =>
+      'Show the post-battle epilogue button';
+
+  @override
   String get settingsLanguageSection => 'Language';
 
   @override

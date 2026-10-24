@@ -69,6 +69,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsBgmSubtitle => 'バックグラウンドミュージック';
 
   @override
+  String get settingsStoryMessages => 'ストーリーメッセージ';
+
+  @override
+  String get settingsStoryMessagesSubtitle => '戦闘後のエピローグ閲覧ボタンの表示';
+
+  @override
   String get settingsLanguageSection => '言語 / Language';
 
   @override

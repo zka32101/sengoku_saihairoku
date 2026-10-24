@@ -23,6 +23,8 @@
   "settingsSfxSubtitle": "SE",
   "settingsBgm": "BGM",
   "settingsBgmSubtitle": "バックグラウンドミュージック",
+  "settingsStoryMessages": "ストーリーメッセージ",
+  "settingsStoryMessagesSubtitle": "戦闘後のエピローグ閲覧ボタンの表示",
   "settingsLanguageSection": "言語 / Language",
   "settingsDisplayLanguage": "表示言語",
   "settingsLanguageSystem": "端末の設定に従う",

@@ -1068,6 +1068,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resultTpMikatagahara4 => 'Defeat the enemy general';
 
   @override
+  String get resultTpAnegawa1 => 'Respond to the opening melee';
+
+  @override
+  String get resultTpAnegawa2 => 'Maintain the siege of Yokoyama Castle';
+
+  @override
+  String get resultTpAnegawa3 => 'Push toward Odani Castle';
+
+  @override
+  String get resultTpAnegawa4 => 'Defeat the enemy general';
+
+  @override
   String get scenarioSelectTitle => 'Choose a Scenario';
 
   @override
@@ -1185,6 +1197,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scenarioNameMikatagahara => 'Battle of Mikatagahara';
 
   @override
+  String get scenarioNameAnegawa => 'Battle of Anegawa';
+
+  @override
   String get scenarioDescItsukushima =>
       '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
 
@@ -1204,6 +1219,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeMikatagahara => '4-5 min';
+
+  @override
+  String get scenarioDescAnegawa =>
+      '5,000 vs 12,000 — overcome the opening melee and turn the chaos into victory';
+
+  @override
+  String get scenarioPlayTimeAnegawa => '4-5 min';
 
   @override
   String get tutorialTitle => 'First Battle: Command Basics';
@@ -2259,6 +2281,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get challengeCardScenarioMikatagahara => 'Mikatagahara';
+
+  @override
+  String get challengeCardScenarioAnegawa => 'Anegawa';
 
   @override
   String get challengeCardRewardLabel => 'Reward';

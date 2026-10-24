@@ -90,6 +90,8 @@ class MapBackground extends PositionComponent {
         _drawOshijo(canvas);
       case Scenario.mikatagahara:
         _drawMikatagahara(canvas);
+      case Scenario.anegawa:
+        _drawAnegawa(canvas);
     }
   }
 
@@ -195,6 +197,24 @@ class MapBackground extends PositionComponent {
       ..color = Colors.white.withValues(alpha: 0.08)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
     canvas.drawRect(Rect.fromLTWH(0, 150, 360, 200), mistPaint);
+  }
+
+  void _drawAnegawa(Canvas canvas) {
+    // 姉川（画面中央を横断する浅瀬の川）
+    final riverPaint = Paint()..color = const Color(0xFF1A4A6A);
+    canvas.drawRect(Rect.fromLTWH(0, 310, 360, 40), riverPaint);
+    _drawLabel(canvas, '姉川', 160, 325, const Color(0xFF64B5F6));
+
+    // 横山城（遠景の丘上の城）
+    _drawHill(canvas, 60, 180, 35);
+    _drawBuilding(canvas, 60, 165, 24, 24);
+    _drawLabel(canvas, '横山城', 30, 200, const Color(0xFFFF6644));
+
+    // 乱戦の砂塵（川の両岸での混戦を示す薄い土煙）
+    final dustPaint = Paint()
+      ..color = const Color(0xFFCCAA77).withValues(alpha: 0.12)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18);
+    canvas.drawRect(Rect.fromLTWH(0, 260, 360, 140), dustPaint);
   }
 
   // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで

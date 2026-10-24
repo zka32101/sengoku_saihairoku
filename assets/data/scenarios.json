@@ -1038,5 +1038,87 @@
         "bronze": 40
       }
     }
+  },
+  "anegawa": {
+    "id": "anegawa",
+    "displayName": "姉川の戦い",
+    "year": 1570,
+    "description": "織田・徳川連合軍が浅井・朝倉連合軍と激突した姉川。緒戦の混戦を乗り越え、乱戦からの大逆転を狙う。",
+    "playerInitialStrength": 5000,
+    "enemyInitialStrength": 12000,
+    "difficulty": 2,
+    "estimatedDuration": 300,
+    "backgroundImage": "assets/images/maps/anegawa_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "緒戦の混戦に対応する",
+        "description": "開戦直後(30秒以内)に盾陣で守りを固める",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "横山城包囲を維持する",
+        "description": "開戦から1分以上持ちこたえる",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp3",
+        "name": "小谷城方面へ攻勢をかける",
+        "description": "2分経過後に進軍コマンドで反撃する",
+        "rewardPoints": 4000
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "敵将を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_spear_1",
+        "name": "徳川槍兵隊",
+        "type": "spear",
+        "strength": 3000
+      },
+      {
+        "id": "player_archer_1",
+        "name": "織田弓兵隊",
+        "type": "archer",
+        "strength": 2000
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "浅井騎馬隊",
+        "type": "cavalry",
+        "strength": 6000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "朝倉槍兵隊",
+        "type": "spear",
+        "strength": 6000
+      }
+    ],
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
+    }
   }
 }

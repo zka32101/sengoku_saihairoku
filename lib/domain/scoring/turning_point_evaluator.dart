@@ -188,6 +188,22 @@ class TurningPointEvaluator {
             // 武田信玄を討ち取る
             return enemyCommanderKilled;
         }
+        break;
+      case Scenario.anegawa:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に盾陣で守りを固める
+            return eventLog.hasCommandBefore(PlayerCommand.shield, 30.0);
+          case 'tp2':
+            // 開戦から1分以上持ちこたえる
+            return elapsedTime >= 60.0;
+          case 'tp3':
+            // 2分経過後に進軍コマンドで反撃する
+            return eventLog.hasCommandAfter(PlayerCommand.advance, 120.0);
+          case 'tp4':
+            // 敵将を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

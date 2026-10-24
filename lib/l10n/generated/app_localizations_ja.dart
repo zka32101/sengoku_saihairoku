@@ -2244,4 +2244,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get notifServerEventChannelDescription => 'フレンド追加やランキング更新などのお知らせ';
+
+  @override
+  String get battlePassOverlayTierUpTitle => 'バトルパス ティアアップ！';
+
+  @override
+  String get battlePassOverlayRewardTitle => '報酬獲得！';
+
+  @override
+  String get battlePassOverlayPremiumTitle => 'プレミアム アクティベート';
+
+  @override
+  String get battlePassOverlayPremiumBody => 'プレミアムトラックの全報酬がアンロックされました';
 }

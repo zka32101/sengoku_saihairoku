@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/battle_pass.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class BattlePassNotificationService {
   static final BattlePassNotificationService _instance =
@@ -168,9 +169,9 @@ class _BattlePassTierUpNotificationState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'バトルパス ティアアップ！',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.battlePassOverlayTierUpTitle,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.cyan,
@@ -333,9 +334,9 @@ class _BattlePassRewardNotificationState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      '報酬獲得！',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.battlePassOverlayRewardTitle,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
@@ -455,9 +456,9 @@ class _BattlePassPremiumNotificationState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'プレミアム アクティベート',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.battlePassOverlayPremiumTitle,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.purple,
@@ -474,9 +475,9 @@ class _BattlePassPremiumNotificationState
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'プレミアムトラックの全報酬がアンロックされました',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.battlePassOverlayPremiumBody,
+                  style: const TextStyle(
                     fontSize: 13,
                     color: Color(0xFFE8D5B0),
                   ),

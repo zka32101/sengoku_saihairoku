@@ -4072,6 +4072,30 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'フレンド追加やランキング更新などのお知らせ'**
   String get notifServerEventChannelDescription;
+
+  /// No description provided for @battlePassOverlayTierUpTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパス ティアアップ！'**
+  String get battlePassOverlayTierUpTitle;
+
+  /// No description provided for @battlePassOverlayRewardTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬獲得！'**
+  String get battlePassOverlayRewardTitle;
+
+  /// No description provided for @battlePassOverlayPremiumTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアム アクティベート'**
+  String get battlePassOverlayPremiumTitle;
+
+  /// No description provided for @battlePassOverlayPremiumBody.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレミアムトラックの全報酬がアンロックされました'**
+  String get battlePassOverlayPremiumBody;
 }
 
 class _AppLocalizationsDelegate

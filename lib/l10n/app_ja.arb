@@ -1109,5 +1109,20 @@
   "trendSparklineInsufficientData": "{label}: データが不足しています",
   "@trendSparklineInsufficientData": {
     "placeholders": { "label": { "type": "String" } }
-  }
+  },
+  "notifReminderChannelName": "リマインダー",
+  "notifReminderChannelDescription": "デイリーチャレンジ・バトルパスの通知",
+  "notifDailyChallengeTitle": "本日のデイリーチャレンジ",
+  "notifDailyChallengeBodyStreak": "{streak}日連続達成中！今日挑戦しないとストリークが途切れてしまいます。",
+  "@notifDailyChallengeBodyStreak": {
+    "placeholders": { "streak": { "type": "int" } }
+  },
+  "notifDailyChallengeBodyNoStreak": "新しいデイリーチャレンジに挑戦しましょう！",
+  "notifBattlePassExpiryTitle": "バトルパスもうすぐ終了",
+  "notifBattlePassExpiryBody": "シーズン終了まであと{days}日。報酬を取り逃さないようにしましょう！",
+  "@notifBattlePassExpiryBody": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "notifServerEventChannelName": "サーバーイベント通知",
+  "notifServerEventChannelDescription": "フレンド追加やランキング更新などのお知らせ"
 }

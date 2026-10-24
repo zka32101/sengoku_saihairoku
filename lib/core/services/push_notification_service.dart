@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/foundation.dart';
+import '../../l10n/generated/app_localizations.dart';
+import 'locale_controller.dart';
 
 /// バックグラウンド/終了時にFCMメッセージを受信した際のハンドラ。
 /// トップレベル関数である必要がある（Flutterの制約）。
@@ -45,14 +47,16 @@ class PushNotificationService {
     final notification = message.notification;
     if (notification == null) return;
 
-    const androidDetails = AndroidNotificationDetails(
+    final l10n =
+        lookupAppLocalizations(LocaleController.instance.resolvedLocale);
+    final androidDetails = AndroidNotificationDetails(
       'server_events',
-      'サーバーイベント通知',
-      channelDescription: 'フレンド追加やランキング更新などのお知らせ',
+      l10n.notifServerEventChannelName,
+      channelDescription: l10n.notifServerEventChannelDescription,
       importance: Importance.high,
       priority: Priority.high,
     );
-    const details = NotificationDetails(android: androidDetails);
+    final details = NotificationDetails(android: androidDetails);
 
     await _localNotifications.show(
       _serverEventChannelId,

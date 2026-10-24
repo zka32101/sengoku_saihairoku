@@ -4018,6 +4018,60 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{label}: データが不足しています'**
   String trendSparklineInsufficientData(String label);
+
+  /// No description provided for @notifReminderChannelName.
+  ///
+  /// In ja, this message translates to:
+  /// **'リマインダー'**
+  String get notifReminderChannelName;
+
+  /// No description provided for @notifReminderChannelDescription.
+  ///
+  /// In ja, this message translates to:
+  /// **'デイリーチャレンジ・バトルパスの通知'**
+  String get notifReminderChannelDescription;
+
+  /// No description provided for @notifDailyChallengeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'本日のデイリーチャレンジ'**
+  String get notifDailyChallengeTitle;
+
+  /// No description provided for @notifDailyChallengeBodyStreak.
+  ///
+  /// In ja, this message translates to:
+  /// **'{streak}日連続達成中！今日挑戦しないとストリークが途切れてしまいます。'**
+  String notifDailyChallengeBodyStreak(int streak);
+
+  /// No description provided for @notifDailyChallengeBodyNoStreak.
+  ///
+  /// In ja, this message translates to:
+  /// **'新しいデイリーチャレンジに挑戦しましょう！'**
+  String get notifDailyChallengeBodyNoStreak;
+
+  /// No description provided for @notifBattlePassExpiryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'バトルパスもうすぐ終了'**
+  String get notifBattlePassExpiryTitle;
+
+  /// No description provided for @notifBattlePassExpiryBody.
+  ///
+  /// In ja, this message translates to:
+  /// **'シーズン終了まであと{days}日。報酬を取り逃さないようにしましょう！'**
+  String notifBattlePassExpiryBody(int days);
+
+  /// No description provided for @notifServerEventChannelName.
+  ///
+  /// In ja, this message translates to:
+  /// **'サーバーイベント通知'**
+  String get notifServerEventChannelName;
+
+  /// No description provided for @notifServerEventChannelDescription.
+  ///
+  /// In ja, this message translates to:
+  /// **'フレンド追加やランキング更新などのお知らせ'**
+  String get notifServerEventChannelDescription;
 }
 
 class _AppLocalizationsDelegate

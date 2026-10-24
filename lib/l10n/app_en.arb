@@ -1106,5 +1106,20 @@
   "trendSparklineInsufficientData": "{label}: Not enough data",
   "@trendSparklineInsufficientData": {
     "placeholders": { "label": { "type": "String" } }
-  }
+  },
+  "notifReminderChannelName": "Reminders",
+  "notifReminderChannelDescription": "Daily challenge and battle pass notifications",
+  "notifDailyChallengeTitle": "Today's Daily Challenge",
+  "notifDailyChallengeBodyStreak": "{streak}-day streak! Play today or your streak will break.",
+  "@notifDailyChallengeBodyStreak": {
+    "placeholders": { "streak": { "type": "int" } }
+  },
+  "notifDailyChallengeBodyNoStreak": "Take on a new daily challenge!",
+  "notifBattlePassExpiryTitle": "Battle Pass Ending Soon",
+  "notifBattlePassExpiryBody": "{days} days left this season. Don't miss out on your rewards!",
+  "@notifBattlePassExpiryBody": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "notifServerEventChannelName": "Server Event Notifications",
+  "notifServerEventChannelDescription": "Alerts for friend requests, ranking updates, and more"
 }

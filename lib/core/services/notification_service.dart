@@ -1,6 +1,8 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
+import '../../l10n/generated/app_localizations.dart';
+import 'locale_controller.dart';
 
 /// リテンション向けのローカル通知（プッシュ通知の簡易版）を管理するサービス。
 ///
@@ -55,15 +57,18 @@ class NotificationService {
     _initialized = true;
   }
 
-  NotificationDetails get _reminderDetails => const NotificationDetails(
+  AppLocalizations get _l10n =>
+      lookupAppLocalizations(LocaleController.instance.resolvedLocale);
+
+  NotificationDetails get _reminderDetails => NotificationDetails(
         android: AndroidNotificationDetails(
           'reminders',
-          'リマインダー',
-          channelDescription: 'デイリーチャレンジ・バトルパスの通知',
+          _l10n.notifReminderChannelName,
+          channelDescription: _l10n.notifReminderChannelDescription,
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,
         ),
-        iOS: DarwinNotificationDetails(),
+        iOS: const DarwinNotificationDetails(),
       );
 
   /// 本日のデイリーチャレンジが未達成の場合、翌日の朝にリマインダーを予約する。
@@ -76,11 +81,11 @@ class NotificationService {
 
     final tomorrow = _nextInstanceOfHour(10, daysFromNow: 1);
     final body = currentStreak > 0
-        ? '$currentStreak日連続達成中！今日挑戦しないとストリークが途切れてしまいます。'
-        : '新しいデイリーチャレンジに挑戦しましょう！';
+        ? _l10n.notifDailyChallengeBodyStreak(currentStreak)
+        : _l10n.notifDailyChallengeBodyNoStreak;
     await _plugin.zonedSchedule(
       _dailyChallengeNotificationId,
-      '本日のデイリーチャレンジ',
+      _l10n.notifDailyChallengeTitle,
       body,
       tomorrow,
       _reminderDetails,
@@ -105,8 +110,8 @@ class NotificationService {
     final reminderTime = _nextInstanceOfHour(10, daysFromNow: 1);
     await _plugin.zonedSchedule(
       _battlePassExpiryNotificationId,
-      'バトルパスもうすぐ終了',
-      'シーズン終了まであと$daysRemaining日。報酬を取り逃さないようにしましょう！',
+      _l10n.notifBattlePassExpiryTitle,
+      _l10n.notifBattlePassExpiryBody(daysRemaining),
       reminderTime,
       _reminderDetails,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

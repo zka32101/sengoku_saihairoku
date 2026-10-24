@@ -1,12 +1,8 @@
+import 'dart:ui' show PlatformDispatcher;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// アプリ全体の表示言語を管理するコントローラ。
-///
-/// 現時点でのローカライズ対象は`lib/l10n/*.arb`で定義した一部の共通文言
-/// （ナビゲーション・共通ボタン等）のみで、画面全体の多言語化は未着手。
-/// 国別の追加コンテンツパック（将来構想）は、この基盤の上に
-/// 言語ごとのアセット/データを切り替える形で乗せる想定。
 ///
 /// `null`を「端末の言語設定に従う」として扱い、設定画面での明示的な
 /// 選択のみSharedPreferencesに保存する。
@@ -20,6 +16,20 @@ class LocaleController extends ValueNotifier<Locale?> {
     Locale('ja'),
     Locale('en'),
   ];
+
+  /// BuildContextを持たないバックグラウンド処理（ローカル通知等）が
+  /// `AppLocalizations`を取得する際に使う、現在の実効ロケール。
+  /// 明示的な選択（[value]）があればそれを、無ければ端末の言語設定を
+  /// サポート対象から探し、どちらも無ければ`ja`にフォールバックする。
+  Locale get resolvedLocale {
+    final explicit = value;
+    if (explicit != null) return explicit;
+    final deviceLocale = PlatformDispatcher.instance.locale;
+    for (final locale in supportedLocales) {
+      if (locale.languageCode == deviceLocale.languageCode) return locale;
+    }
+    return const Locale('ja');
+  }
 
   Future<void> loadSaved() async {
     final prefs = await SharedPreferences.getInstance();

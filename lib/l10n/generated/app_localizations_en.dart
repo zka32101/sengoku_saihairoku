@@ -2254,4 +2254,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String trendSparklineInsufficientData(String label) {
     return '$label: Not enough data';
   }
+
+  @override
+  String get notifReminderChannelName => 'Reminders';
+
+  @override
+  String get notifReminderChannelDescription =>
+      'Daily challenge and battle pass notifications';
+
+  @override
+  String get notifDailyChallengeTitle => 'Today\'s Daily Challenge';
+
+  @override
+  String notifDailyChallengeBodyStreak(int streak) {
+    return '$streak-day streak! Play today or your streak will break.';
+  }
+
+  @override
+  String get notifDailyChallengeBodyNoStreak =>
+      'Take on a new daily challenge!';
+
+  @override
+  String get notifBattlePassExpiryTitle => 'Battle Pass Ending Soon';
+
+  @override
+  String notifBattlePassExpiryBody(int days) {
+    return '$days days left this season. Don\'t miss out on your rewards!';
+  }
+
+  @override
+  String get notifServerEventChannelName => 'Server Event Notifications';
+
+  @override
+  String get notifServerEventChannelDescription =>
+      'Alerts for friend requests, ranking updates, and more';
 }

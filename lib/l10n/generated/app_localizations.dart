@@ -4150,6 +4150,12 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'{score}ポイント以上のスコア獲得'**
   String challengeConditionScoreTarget(int score);
+
+  /// No description provided for @effectCriticalLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリティカル'**
+  String get effectCriticalLabel;
 }
 
 class _AppLocalizationsDelegate

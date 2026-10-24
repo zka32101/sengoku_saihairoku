@@ -1,7 +1,9 @@
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import '../core/services/audio_manager.dart';
+import '../core/services/locale_controller.dart';
 import '../data/models/scenario_data.dart';
+import '../l10n/generated/app_localizations.dart';
 import '../domain/scoring/battle_event_log.dart';
 import '../domain/scoring/score_calculator.dart';
 import '../domain/state/battle_state.dart';
@@ -122,15 +124,17 @@ class BattleGame extends FlameGame {
 
   void _spawnCommandFeedback(PlayerCommand command) {
     // 画面中央上部にコマンド名を表示
+    final l10n =
+        lookupAppLocalizations(LocaleController.instance.resolvedLocale);
     final commandName = switch (command) {
-      PlayerCommand.advance => '進軍',
-      PlayerCommand.retreat => '撤退',
-      PlayerCommand.wait => '待機',
-      PlayerCommand.ambush => '奇襲',
-      PlayerCommand.formation => '陣形',
-      PlayerCommand.rally => '激励',
-      PlayerCommand.shield => '盾陣',
-      PlayerCommand.charge => '突撃',
+      PlayerCommand.advance => l10n.battleCommandAdvance,
+      PlayerCommand.retreat => l10n.battleCommandRetreat,
+      PlayerCommand.wait => l10n.battleCommandWait,
+      PlayerCommand.ambush => l10n.battleCommandAmbush,
+      PlayerCommand.formation => l10n.battleCommandFormation,
+      PlayerCommand.rally => l10n.battleCommandRally,
+      PlayerCommand.shield => l10n.battleCommandShield,
+      PlayerCommand.charge => l10n.battleCommandCharge,
     };
 
     _world.add(CommandFeedbackEffect(

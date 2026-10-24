@@ -2338,4 +2338,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String challengeConditionScoreTarget(int score) {
     return 'Earn a score of $score or more';
   }
+
+  @override
+  String get effectCriticalLabel => 'Critical';
 }

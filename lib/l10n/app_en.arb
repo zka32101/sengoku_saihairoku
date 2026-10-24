@@ -1125,5 +1125,18 @@
   "battlePassOverlayTierUpTitle": "Battle Pass Tier Up!",
   "battlePassOverlayRewardTitle": "Reward Earned!",
   "battlePassOverlayPremiumTitle": "Premium Activated",
-  "battlePassOverlayPremiumBody": "All premium track rewards have been unlocked"
+  "battlePassOverlayPremiumBody": "All premium track rewards have been unlocked",
+  "achievementOverlayUnlockedLabel": "Achievement Unlocked!",
+  "achievementOverlayPointsSuffix": "+{points} pts",
+  "@achievementOverlayPointsSuffix": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "achievementOverlayShareButton": "Share",
+  "achievementShareText": "I unlocked the achievement \"{name}\" in Sengoku Saihairoku!\n{description}\n#SengokuSaihairoku",
+  "@achievementShareText": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "description": { "type": "String" }
+    }
+  }
 }

@@ -2256,4 +2256,20 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get battlePassOverlayPremiumBody => 'プレミアムトラックの全報酬がアンロックされました';
+
+  @override
+  String get achievementOverlayUnlockedLabel => '実績解放！';
+
+  @override
+  String achievementOverlayPointsSuffix(int points) {
+    return '+$points ポイント';
+  }
+
+  @override
+  String get achievementOverlayShareButton => 'シェアする';
+
+  @override
+  String achievementShareText(String name, String description) {
+    return '戦国采配録で実績「$name」を解放した！\n$description\n#戦国采配録';
+  }
 }

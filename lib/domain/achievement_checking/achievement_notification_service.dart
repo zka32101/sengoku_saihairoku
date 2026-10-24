@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../data/models/achievement.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// この難易度以上の実績解放時はシェアボタンを表示する
 /// （誰でも獲れるbronze/silverで毎回シェアを促すとノイズになるため、
@@ -10,12 +11,11 @@ const _shareableDifficulties = {
   AchievementDifficulty.diamond,
 };
 
-void _shareAchievement(Achievement achievement) {
+void _shareAchievement(AppLocalizations l10n, Achievement achievement) {
   SharePlus.instance.share(
     ShareParams(
-      text: '戦国采配録で実績「${achievement.name}」を解放した！\n'
-          '${achievement.description}\n'
-          '#戦国采配録',
+      text: l10n.achievementShareText(
+          achievement.name, achievement.description),
     ),
   );
 }
@@ -160,6 +160,7 @@ class _AchievementNotificationWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SlideTransition(
       position: _slideAnimation,
       child: FadeTransition(
@@ -230,9 +231,9 @@ class _AchievementNotificationWidgetState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                '実績解放！',
-                                style: TextStyle(
+                              Text(
+                                l10n.achievementOverlayUnlockedLabel,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFFFFD700),
@@ -306,7 +307,8 @@ class _AchievementNotificationWidgetState
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '+${widget.achievement.points} ポイント',
+                            l10n.achievementOverlayPointsSuffix(
+                                widget.achievement.points!),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -322,9 +324,10 @@ class _AchievementNotificationWidgetState
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton.icon(
-                          onPressed: () => _shareAchievement(widget.achievement),
+                          onPressed: () =>
+                              _shareAchievement(l10n, widget.achievement),
                           icon: const Icon(Icons.share, size: 16),
-                          label: const Text('シェアする'),
+                          label: Text(l10n.achievementOverlayShareButton),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: const Color(0xFFFFD700),
                             side: const BorderSide(color: Color(0xFFFFD700)),

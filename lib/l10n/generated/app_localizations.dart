@@ -4096,6 +4096,30 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'プレミアムトラックの全報酬がアンロックされました'**
   String get battlePassOverlayPremiumBody;
+
+  /// No description provided for @achievementOverlayUnlockedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'実績解放！'**
+  String get achievementOverlayUnlockedLabel;
+
+  /// No description provided for @achievementOverlayPointsSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'+{points} ポイント'**
+  String achievementOverlayPointsSuffix(int points);
+
+  /// No description provided for @achievementOverlayShareButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'シェアする'**
+  String get achievementOverlayShareButton;
+
+  /// No description provided for @achievementShareText.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録で実績「{name}」を解放した！\n{description}\n#戦国采配録'**
+  String achievementShareText(String name, String description);
 }
 
 class _AppLocalizationsDelegate

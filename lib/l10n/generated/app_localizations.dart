@@ -3702,6 +3702,88 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'平均達成数'**
   String get statsDashboardAverageTpLabel;
+
+  /// No description provided for @advStatsWinRateLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率'**
+  String get advStatsWinRateLabel;
+
+  /// No description provided for @advStatsTotalBattlesLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘数'**
+  String get advStatsTotalBattlesLabel;
+
+  /// No description provided for @advStatsVictoriesLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利'**
+  String get advStatsVictoriesLabel;
+
+  /// No description provided for @advStatsDefeatsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北'**
+  String get advStatsDefeatsLabel;
+
+  /// No description provided for @advStatsBestScoreLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'最高スコア'**
+  String get advStatsBestScoreLabel;
+
+  /// No description provided for @advStatsDifficultyAnalysisTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'難易度別分析'**
+  String get advStatsDifficultyAnalysisTitle;
+
+  /// No description provided for @advStatsVictoryDefeatBattleLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{victories}勝 {defeats}敗 ({battles}戦)'**
+  String advStatsVictoryDefeatBattleLine(
+    int victories,
+    int defeats,
+    int battles,
+  );
+
+  /// No description provided for @advStatsScenariosClearedLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{cleared}/{total}制覇'**
+  String advStatsScenariosClearedLine(int cleared, int total);
+
+  /// No description provided for @advStatsNoData.
+  ///
+  /// In ja, this message translates to:
+  /// **'データなし'**
+  String get advStatsNoData;
+
+  /// No description provided for @advStatsScenarioRankingTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'シナリオランキング (勝率)'**
+  String get advStatsScenarioRankingTitle;
+
+  /// No description provided for @advStatsRankSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{rank}位'**
+  String advStatsRankSuffix(int rank);
+
+  /// No description provided for @advStatsVictoryDefeatLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{victories}勝 {defeats}敗'**
+  String advStatsVictoryDefeatLine(int victories, int defeats);
+
+  /// No description provided for @advStatsAverageScoreLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均 {score}pt'**
+  String advStatsAverageScoreLine(int score);
 }
 
 class _AppLocalizationsDelegate

@@ -1039,5 +1039,53 @@
   "helpModalNoHintsForDifficulty": "No hints for this difficulty",
   "helpModalEffectLabel": "Effect",
   "helpModalLimitationLabel": "Limitations",
-  "helpModalRecommendationsLabel": "Recommendations"
+  "helpModalRecommendationsLabel": "Recommendations",
+  "replayPlayerTurnLabel": "Turn {turn}",
+  "@replayPlayerTurnLabel": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "replayPlayerCommandUsedLabel": "Command: {command}",
+  "@replayPlayerCommandUsedLabel": {
+    "placeholders": { "command": { "type": "String" } }
+  },
+  "replayPlayerPlayerLabel": "Player",
+  "replayPlayerEnemyLabel": "Enemy",
+  "replayPlayerEventLabel": "Event",
+  "replayPlayerTpAchievedBadge": "✨ Turning Point Achieved",
+  "replayPlayerTurnProgressLabel": "Turn Progress",
+  "replayPlayerTurnFraction": "{current}/{total}",
+  "@replayPlayerTurnFraction": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "replayPlayerSpeedLabel": "Speed: ",
+  "replayPlayerHpLabel": "HP",
+  "replayPlayerUnitsLabel": "Troops",
+  "eventBannerRemainingDays": "{days}d {hours}h left",
+  "@eventBannerRemainingDays": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "hours": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingHours": "{hours}h {minutes}m left",
+  "@eventBannerRemainingHours": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingMinutes": "{minutes}m left",
+  "@eventBannerRemainingMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "eventBannerLimitedEventLabel": "Limited-Time Event",
+  "eventBannerRewardMultiplier": "{multiplier}x Rewards",
+  "@eventBannerRewardMultiplier": {
+    "placeholders": { "multiplier": { "type": "String" } }
+  },
+  "eventBannerClaimRewardButton": "Claim Reward",
+  "eventBannerClaimedLabel": "Claimed"
 }

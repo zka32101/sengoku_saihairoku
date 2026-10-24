@@ -2143,4 +2143,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpModalRecommendationsLabel => 'Recommendations';
+
+  @override
+  String replayPlayerTurnLabel(int turn) {
+    return 'Turn $turn';
+  }
+
+  @override
+  String replayPlayerCommandUsedLabel(String command) {
+    return 'Command: $command';
+  }
+
+  @override
+  String get replayPlayerPlayerLabel => 'Player';
+
+  @override
+  String get replayPlayerEnemyLabel => 'Enemy';
+
+  @override
+  String get replayPlayerEventLabel => 'Event';
+
+  @override
+  String get replayPlayerTpAchievedBadge => '✨ Turning Point Achieved';
+
+  @override
+  String get replayPlayerTurnProgressLabel => 'Turn Progress';
+
+  @override
+  String replayPlayerTurnFraction(int current, int total) {
+    return '$current/$total';
+  }
+
+  @override
+  String get replayPlayerSpeedLabel => 'Speed: ';
+
+  @override
+  String get replayPlayerHpLabel => 'HP';
+
+  @override
+  String get replayPlayerUnitsLabel => 'Troops';
+
+  @override
+  String eventBannerRemainingDays(int days, int hours) {
+    return '${days}d ${hours}h left';
+  }
+
+  @override
+  String eventBannerRemainingHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m left';
+  }
+
+  @override
+  String eventBannerRemainingMinutes(int minutes) {
+    return '${minutes}m left';
+  }
+
+  @override
+  String get eventBannerLimitedEventLabel => 'Limited-Time Event';
+
+  @override
+  String eventBannerRewardMultiplier(String multiplier) {
+    return '${multiplier}x Rewards';
+  }
+
+  @override
+  String get eventBannerClaimRewardButton => 'Claim Reward';
+
+  @override
+  String get eventBannerClaimedLabel => 'Claimed';
 }

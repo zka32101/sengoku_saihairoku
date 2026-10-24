@@ -1042,5 +1042,53 @@
   "helpModalNoHintsForDifficulty": "この難易度のヒントはありません",
   "helpModalEffectLabel": "効果",
   "helpModalLimitationLabel": "制限事項",
-  "helpModalRecommendationsLabel": "推奨事項"
+  "helpModalRecommendationsLabel": "推奨事項",
+  "replayPlayerTurnLabel": "ターン {turn}",
+  "@replayPlayerTurnLabel": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "replayPlayerCommandUsedLabel": "コマンド: {command}",
+  "@replayPlayerCommandUsedLabel": {
+    "placeholders": { "command": { "type": "String" } }
+  },
+  "replayPlayerPlayerLabel": "プレイヤー",
+  "replayPlayerEnemyLabel": "敵",
+  "replayPlayerEventLabel": "イベント",
+  "replayPlayerTpAchievedBadge": "✨ ターニングポイント達成",
+  "replayPlayerTurnProgressLabel": "ターン進行",
+  "replayPlayerTurnFraction": "{current}/{total}",
+  "@replayPlayerTurnFraction": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "replayPlayerSpeedLabel": "速度: ",
+  "replayPlayerHpLabel": "HP",
+  "replayPlayerUnitsLabel": "兵力",
+  "eventBannerRemainingDays": "あと{days}日{hours}時間",
+  "@eventBannerRemainingDays": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "hours": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingHours": "あと{hours}時間{minutes}分",
+  "@eventBannerRemainingHours": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingMinutes": "あと{minutes}分",
+  "@eventBannerRemainingMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "eventBannerLimitedEventLabel": "期間限定イベント",
+  "eventBannerRewardMultiplier": "報酬{multiplier}倍",
+  "@eventBannerRewardMultiplier": {
+    "placeholders": { "multiplier": { "type": "String" } }
+  },
+  "eventBannerClaimRewardButton": "報酬を受け取る",
+  "eventBannerClaimedLabel": "達成済み"
 }

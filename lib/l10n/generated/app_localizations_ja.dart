@@ -2102,4 +2102,72 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get helpModalRecommendationsLabel => '推奨事項';
+
+  @override
+  String replayPlayerTurnLabel(int turn) {
+    return 'ターン $turn';
+  }
+
+  @override
+  String replayPlayerCommandUsedLabel(String command) {
+    return 'コマンド: $command';
+  }
+
+  @override
+  String get replayPlayerPlayerLabel => 'プレイヤー';
+
+  @override
+  String get replayPlayerEnemyLabel => '敵';
+
+  @override
+  String get replayPlayerEventLabel => 'イベント';
+
+  @override
+  String get replayPlayerTpAchievedBadge => '✨ ターニングポイント達成';
+
+  @override
+  String get replayPlayerTurnProgressLabel => 'ターン進行';
+
+  @override
+  String replayPlayerTurnFraction(int current, int total) {
+    return '$current/$total';
+  }
+
+  @override
+  String get replayPlayerSpeedLabel => '速度: ';
+
+  @override
+  String get replayPlayerHpLabel => 'HP';
+
+  @override
+  String get replayPlayerUnitsLabel => '兵力';
+
+  @override
+  String eventBannerRemainingDays(int days, int hours) {
+    return 'あと$days日$hours時間';
+  }
+
+  @override
+  String eventBannerRemainingHours(int hours, int minutes) {
+    return 'あと$hours時間$minutes分';
+  }
+
+  @override
+  String eventBannerRemainingMinutes(int minutes) {
+    return 'あと$minutes分';
+  }
+
+  @override
+  String get eventBannerLimitedEventLabel => '期間限定イベント';
+
+  @override
+  String eventBannerRewardMultiplier(String multiplier) {
+    return '報酬$multiplier倍';
+  }
+
+  @override
+  String get eventBannerClaimRewardButton => '報酬を受け取る';
+
+  @override
+  String get eventBannerClaimedLabel => '達成済み';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/battle_replay.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// リプレイプレイヤーウィジェット
 class ReplayPlayer extends StatefulWidget {
@@ -63,6 +64,7 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -103,7 +105,7 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'ターン ${_currentState.turnNumber}',
+                    l10n.replayPlayerTurnLabel(_currentState.turnNumber),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -120,7 +122,8 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        'コマンド: ${_currentState.commandUsed}',
+                        l10n.replayPlayerCommandUsedLabel(
+                            _currentState.commandUsed ?? ''),
                         style: const TextStyle(fontSize: 12),
                       ),
                     ),
@@ -133,13 +136,13 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _UnitDisplay(
-                    label: 'プレイヤー',
+                    label: l10n.replayPlayerPlayerLabel,
                     hp: _currentState.playerHp,
                     units: _currentState.playerUnits,
                     color: Colors.blue,
                   ),
                   _UnitDisplay(
-                    label: '敵',
+                    label: l10n.replayPlayerEnemyLabel,
                     hp: _currentState.enemyHp,
                     units: _currentState.enemyUnits,
                     color: Colors.red,
@@ -158,9 +161,9 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'イベント',
-                      style: TextStyle(
+                    Text(
+                      l10n.replayPlayerEventLabel,
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -183,9 +186,9 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                             color: Colors.amber[100],
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: const Text(
-                            '✨ ターニングポイント達成',
-                            style: TextStyle(
+                          child: Text(
+                            l10n.replayPlayerTpAchievedBadge,
+                            style: const TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFFD4A017),
@@ -212,9 +215,10 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('ターン進行'),
+                      Text(l10n.replayPlayerTurnProgressLabel),
                       Text(
-                        '${_currentTurnIndex + 1}/${widget.replay.turnStates.length}',
+                        l10n.replayPlayerTurnFraction(_currentTurnIndex + 1,
+                            widget.replay.turnStates.length),
                         style: const TextStyle(fontSize: 12),
                       ),
                     ],
@@ -267,7 +271,7 @@ class _ReplayPlayerState extends State<ReplayPlayer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('速度: '),
+                  Text(l10n.replayPlayerSpeedLabel),
                   SegmentedButton<int>(
                     segments: const [
                       ButtonSegment(value: 1, label: Text('1x')),
@@ -305,6 +309,7 @@ class _UnitDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -330,7 +335,7 @@ class _UnitDisplay extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('HP', style: TextStyle(fontSize: 11)),
+                    Text(l10n.replayPlayerHpLabel, style: const TextStyle(fontSize: 11)),
                     Text(
                       '$hp',
                       style: const TextStyle(
@@ -343,7 +348,7 @@ class _UnitDisplay extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('兵力', style: TextStyle(fontSize: 11)),
+                    Text(l10n.replayPlayerUnitsLabel, style: const TextStyle(fontSize: 11)),
                     Text(
                       '$units',
                       style: const TextStyle(

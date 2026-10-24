@@ -1953,4 +1953,95 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get achievementDetailRewardLabel => 'Reward';
+
+  @override
+  String get statsDashboardCombatStatsTitle => 'Combat Stats';
+
+  @override
+  String get statsDashboardPlayTimeTitle => 'Play Time';
+
+  @override
+  String get statsDashboardScoreTitle => 'Score';
+
+  @override
+  String get statsDashboardWinRateAnalysisTitle => 'Win Rate Analysis';
+
+  @override
+  String get statsDashboardTurningPointTitle => 'Turning Points';
+
+  @override
+  String get statsDashboardViewDetailsButton => 'View Detailed Stats';
+
+  @override
+  String statsDashboardPointsSuffix(int points) {
+    return '$points pts';
+  }
+
+  @override
+  String statsDashboardAchievementsLine(int unlocked, int total) {
+    return 'Achievements: $unlocked/$total';
+  }
+
+  @override
+  String get statsDashboardTotalBattlesLabel => 'Total Battles';
+
+  @override
+  String get statsDashboardTotalWinsLabel => 'Wins';
+
+  @override
+  String get statsDashboardTotalLossesLabel => 'Losses';
+
+  @override
+  String get statsDashboardTpAchievedLabel => 'TPs Achieved';
+
+  @override
+  String statsDashboardDurationHoursMinutes(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String statsDashboardDurationMinutesSeconds(int minutes, int seconds) {
+    return '${minutes}m ${seconds}s';
+  }
+
+  @override
+  String statsDashboardDurationSeconds(int seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String get statsDashboardTotalPlayTimeLabel => 'Total Play Time';
+
+  @override
+  String get statsDashboardAveragePlayTimeLabel => 'Avg. Battle Time';
+
+  @override
+  String statsDashboardAverageBattleMinutes(String minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String statsDashboardFirstPlayLine(String date) {
+    return 'First played: $date';
+  }
+
+  @override
+  String statsDashboardLastPlayLine(String date) {
+    return 'Last played: $date';
+  }
+
+  @override
+  String get statsDashboardTotalScoreLabel => 'Total Score';
+
+  @override
+  String get statsDashboardAverageScoreLabel => 'Average Score';
+
+  @override
+  String get statsDashboardWinRateLabel => 'Win Rate';
+
+  @override
+  String get statsDashboardTotalTpLabel => 'Total TPs';
+
+  @override
+  String get statsDashboardAverageTpLabel => 'Avg. TPs';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/game_statistics.dart';
 import '../../data/models/achievement.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../screens/advanced_statistics_screen.dart';
 
 /// ゲーム統計ダッシュボード
@@ -18,6 +19,7 @@ class StatisticsDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final playerRank = PlayerRank.fromPoints(totalAchievementPoints);
     final unlockedAchievements =
         achievements.where((a) => a.isUnlocked).length;
@@ -33,52 +35,53 @@ class StatisticsDashboard extends StatelessWidget {
             points: totalAchievementPoints,
             achievements: unlockedAchievements,
             totalAchievements: achievements.length,
+            l10n: l10n,
           ),
           const SizedBox(height: 16),
 
           // 主要統計
           Text(
-            '戦闘統計',
+            l10n.statsDashboardCombatStatsTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
-          _StatisticsGrid(statistics: statistics),
+          _StatisticsGrid(statistics: statistics, l10n: l10n),
           const SizedBox(height: 16),
 
           // 時間統計
           Text(
-            'プレイ時間',
+            l10n.statsDashboardPlayTimeTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
-          _PlayTimeCard(statistics: statistics),
+          _PlayTimeCard(statistics: statistics, l10n: l10n),
           const SizedBox(height: 16),
 
           // スコア統計
           Text(
-            'スコア',
+            l10n.statsDashboardScoreTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
-          _ScoreStatisticsCard(statistics: statistics),
+          _ScoreStatisticsCard(statistics: statistics, l10n: l10n),
           const SizedBox(height: 16),
 
           // 勝率グラフ
           Text(
-            '勝率分析',
+            l10n.statsDashboardWinRateAnalysisTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
-          _WinRateIndicator(winRate: statistics.winRate),
+          _WinRateIndicator(winRate: statistics.winRate, l10n: l10n),
           const SizedBox(height: 16),
 
           // ターニングポイント統計
           Text(
-            'ターニングポイント',
+            l10n.statsDashboardTurningPointTitle,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 12),
-          _TPStatisticsCard(statistics: statistics),
+          _TPStatisticsCard(statistics: statistics, l10n: l10n),
           const SizedBox(height: 24),
 
           // 詳細統計ボタン
@@ -92,7 +95,7 @@ class StatisticsDashboard extends StatelessWidget {
                 ),
               ),
               icon: const Icon(Icons.analytics),
-              label: const Text('詳細統計を見る'),
+              label: Text(l10n.statsDashboardViewDetailsButton),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
@@ -110,12 +113,14 @@ class _PlayerRankCard extends StatelessWidget {
   final int points;
   final int achievements;
   final int totalAchievements;
+  final AppLocalizations l10n;
 
   const _PlayerRankCard({
     required this.rank,
     required this.points,
     required this.achievements,
     required this.totalAchievements,
+    required this.l10n,
   });
 
   @override
@@ -136,7 +141,7 @@ class _PlayerRankCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '$points ポイント',
+              l10n.statsDashboardPointsSuffix(points),
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.amber,
                     fontWeight: FontWeight.bold,
@@ -150,7 +155,7 @@ class _PlayerRankCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                'アチーブメント: $achievements/$totalAchievements',
+                l10n.statsDashboardAchievementsLine(achievements, totalAchievements),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
@@ -164,8 +169,9 @@ class _PlayerRankCard extends StatelessWidget {
 /// 統計グリッド
 class _StatisticsGrid extends StatelessWidget {
   final GameStatistics statistics;
+  final AppLocalizations l10n;
 
-  const _StatisticsGrid({required this.statistics});
+  const _StatisticsGrid({required this.statistics, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -177,22 +183,22 @@ class _StatisticsGrid extends StatelessWidget {
       crossAxisSpacing: 12,
       children: [
         _StatisticTile(
-          label: '総戦闘数',
+          label: l10n.statsDashboardTotalBattlesLabel,
           value: '${statistics.totalBattles}',
           icon: '⚔️',
         ),
         _StatisticTile(
-          label: '勝利数',
+          label: l10n.statsDashboardTotalWinsLabel,
           value: '${statistics.totalWins}',
           icon: '🏆',
         ),
         _StatisticTile(
-          label: '敗北数',
+          label: l10n.statsDashboardTotalLossesLabel,
           value: '${statistics.totalLosses}',
           icon: '💔',
         ),
         _StatisticTile(
-          label: 'TP達成数',
+          label: l10n.statsDashboardTpAchievedLabel,
           value: '${statistics.totalTPsAchieved}',
           icon: '📍',
         ),
@@ -204,19 +210,20 @@ class _StatisticsGrid extends StatelessWidget {
 /// プレイ時間カード
 class _PlayTimeCard extends StatelessWidget {
   final GameStatistics statistics;
+  final AppLocalizations l10n;
 
-  const _PlayTimeCard({required this.statistics});
+  const _PlayTimeCard({required this.statistics, required this.l10n});
 
   String _formatDuration(Duration d) {
     final hours = d.inHours;
     final minutes = d.inMinutes.remainder(60);
     final seconds = d.inSeconds.remainder(60);
     if (hours > 0) {
-      return '$hours時間 $minutes分';
+      return l10n.statsDashboardDurationHoursMinutes(hours, minutes);
     } else if (minutes > 0) {
-      return '$minutes分 $seconds秒';
+      return l10n.statsDashboardDurationMinutesSeconds(minutes, seconds);
     } else {
-      return '$seconds秒';
+      return l10n.statsDashboardDurationSeconds(seconds);
     }
   }
 
@@ -233,7 +240,7 @@ class _PlayTimeCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('総プレイ時間'),
+                    Text(l10n.statsDashboardTotalPlayTimeLabel),
                     Text(
                       _formatDuration(statistics.totalPlayTime),
                       style: const TextStyle(
@@ -246,9 +253,11 @@ class _PlayTimeCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('平均戦闘時間'),
+                    Text(l10n.statsDashboardAveragePlayTimeLabel),
                     Text(
-                      '${(statistics.averageBattleDuration.inSeconds / 60).toStringAsFixed(1)}分',
+                      l10n.statsDashboardAverageBattleMinutes(
+                          (statistics.averageBattleDuration.inSeconds / 60)
+                              .toStringAsFixed(1)),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -265,11 +274,13 @@ class _PlayTimeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '初プレイ: ${statistics.firstBattleAt.toString().split(' ')[0]}',
+                  l10n.statsDashboardFirstPlayLine(
+                      statistics.firstBattleAt.toString().split(' ')[0]),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 Text(
-                  '最終プレイ: ${statistics.lastBattleAt.toString().split(' ')[0]}',
+                  l10n.statsDashboardLastPlayLine(
+                      statistics.lastBattleAt.toString().split(' ')[0]),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -284,8 +295,9 @@ class _PlayTimeCard extends StatelessWidget {
 /// スコア統計カード
 class _ScoreStatisticsCard extends StatelessWidget {
   final GameStatistics statistics;
+  final AppLocalizations l10n;
 
-  const _ScoreStatisticsCard({required this.statistics});
+  const _ScoreStatisticsCard({required this.statistics, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -295,7 +307,7 @@ class _ScoreStatisticsCard extends StatelessWidget {
         child: Column(
           children: [
             _ScoreStat(
-              label: '総スコア',
+              label: l10n.statsDashboardTotalScoreLabel,
               value: statistics.totalScore,
               isTotal: true,
             ),
@@ -303,7 +315,7 @@ class _ScoreStatisticsCard extends StatelessWidget {
             const Divider(),
             const SizedBox(height: 12),
             _ScoreStat(
-              label: '平均スコア',
+              label: l10n.statsDashboardAverageScoreLabel,
               value: statistics.averageScore,
             ),
           ],
@@ -347,8 +359,9 @@ class _ScoreStat extends StatelessWidget {
 /// 勝率インジケーター
 class _WinRateIndicator extends StatelessWidget {
   final double winRate;
+  final AppLocalizations l10n;
 
-  const _WinRateIndicator({required this.winRate});
+  const _WinRateIndicator({required this.winRate, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +390,7 @@ class _WinRateIndicator extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('勝率'),
+                Text(l10n.statsDashboardWinRateLabel),
                 Text(
                   '$percentage%',
                   style: const TextStyle(
@@ -397,8 +410,9 @@ class _WinRateIndicator extends StatelessWidget {
 /// TP統計カード
 class _TPStatisticsCard extends StatelessWidget {
   final GameStatistics statistics;
+  final AppLocalizations l10n;
 
-  const _TPStatisticsCard({required this.statistics});
+  const _TPStatisticsCard({required this.statistics, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -411,7 +425,7 @@ class _TPStatisticsCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('総達成数'),
+                Text(l10n.statsDashboardTotalTpLabel),
                 Text(
                   '${statistics.totalTPsAchieved}',
                   style: const TextStyle(
@@ -424,7 +438,7 @@ class _TPStatisticsCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text('平均達成数'),
+                Text(l10n.statsDashboardAverageTpLabel),
                 Text(
                   statistics.totalBattles > 0
                       ? (statistics.totalTPsAchieved / statistics.totalBattles)

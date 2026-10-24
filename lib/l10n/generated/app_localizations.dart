@@ -3510,6 +3510,156 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'報酬'**
   String get achievementDetailRewardLabel;
+
+  /// No description provided for @statsDashboardCombatStatsTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘統計'**
+  String get statsDashboardCombatStatsTitle;
+
+  /// No description provided for @statsDashboardPlayTimeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイ時間'**
+  String get statsDashboardPlayTimeTitle;
+
+  /// No description provided for @statsDashboardScoreTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'スコア'**
+  String get statsDashboardScoreTitle;
+
+  /// No description provided for @statsDashboardWinRateAnalysisTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率分析'**
+  String get statsDashboardWinRateAnalysisTitle;
+
+  /// No description provided for @statsDashboardTurningPointTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターニングポイント'**
+  String get statsDashboardTurningPointTitle;
+
+  /// No description provided for @statsDashboardViewDetailsButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'詳細統計を見る'**
+  String get statsDashboardViewDetailsButton;
+
+  /// No description provided for @statsDashboardPointsSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{points} ポイント'**
+  String statsDashboardPointsSuffix(int points);
+
+  /// No description provided for @statsDashboardAchievementsLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'アチーブメント: {unlocked}/{total}'**
+  String statsDashboardAchievementsLine(int unlocked, int total);
+
+  /// No description provided for @statsDashboardTotalBattlesLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総戦闘数'**
+  String get statsDashboardTotalBattlesLabel;
+
+  /// No description provided for @statsDashboardTotalWinsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝利数'**
+  String get statsDashboardTotalWinsLabel;
+
+  /// No description provided for @statsDashboardTotalLossesLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敗北数'**
+  String get statsDashboardTotalLossesLabel;
+
+  /// No description provided for @statsDashboardTpAchievedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'TP達成数'**
+  String get statsDashboardTpAchievedLabel;
+
+  /// No description provided for @statsDashboardDurationHoursMinutes.
+  ///
+  /// In ja, this message translates to:
+  /// **'{hours}時間 {minutes}分'**
+  String statsDashboardDurationHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @statsDashboardDurationMinutesSeconds.
+  ///
+  /// In ja, this message translates to:
+  /// **'{minutes}分 {seconds}秒'**
+  String statsDashboardDurationMinutesSeconds(int minutes, int seconds);
+
+  /// No description provided for @statsDashboardDurationSeconds.
+  ///
+  /// In ja, this message translates to:
+  /// **'{seconds}秒'**
+  String statsDashboardDurationSeconds(int seconds);
+
+  /// No description provided for @statsDashboardTotalPlayTimeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総プレイ時間'**
+  String get statsDashboardTotalPlayTimeLabel;
+
+  /// No description provided for @statsDashboardAveragePlayTimeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均戦闘時間'**
+  String get statsDashboardAveragePlayTimeLabel;
+
+  /// No description provided for @statsDashboardAverageBattleMinutes.
+  ///
+  /// In ja, this message translates to:
+  /// **'{minutes}分'**
+  String statsDashboardAverageBattleMinutes(String minutes);
+
+  /// No description provided for @statsDashboardFirstPlayLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'初プレイ: {date}'**
+  String statsDashboardFirstPlayLine(String date);
+
+  /// No description provided for @statsDashboardLastPlayLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'最終プレイ: {date}'**
+  String statsDashboardLastPlayLine(String date);
+
+  /// No description provided for @statsDashboardTotalScoreLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総スコア'**
+  String get statsDashboardTotalScoreLabel;
+
+  /// No description provided for @statsDashboardAverageScoreLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均スコア'**
+  String get statsDashboardAverageScoreLabel;
+
+  /// No description provided for @statsDashboardWinRateLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率'**
+  String get statsDashboardWinRateLabel;
+
+  /// No description provided for @statsDashboardTotalTpLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総達成数'**
+  String get statsDashboardTotalTpLabel;
+
+  /// No description provided for @statsDashboardAverageTpLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均達成数'**
+  String get statsDashboardAverageTpLabel;
 }
 
 class _AppLocalizationsDelegate

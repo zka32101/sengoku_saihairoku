@@ -1,5 +1,6 @@
 import 'scenario_data.dart';
 import 'difficulty_mode.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// 日替わりチャレンジシステムのモデル
 
@@ -71,19 +72,19 @@ class DailyChallenge {
   }
 
   /// チャレンジの説明テキスト生成
-  String get conditionDescription {
+  String conditionDescription(AppLocalizations l10n) {
     return conditions.map((c) {
       switch (c.type) {
         case ChallengeConditionType.victory:
-          return 'シナリオをクリア';
+          return l10n.challengeConditionVictory;
         case ChallengeConditionType.turnLimit:
-          return '${c.value}ターン以内でクリア';
+          return l10n.challengeConditionTurnLimit(c.value);
         case ChallengeConditionType.noDefeats:
-          return '主要ユニットを損失せずクリア';
+          return l10n.challengeConditionNoDefeats;
         case ChallengeConditionType.tpTarget:
-          return '${c.value}個以上のTPを達成';
+          return l10n.challengeConditionTpTarget(c.value);
         case ChallengeConditionType.scoreTarget:
-          return '${c.value}ポイント以上のスコア獲得';
+          return l10n.challengeConditionScoreTarget(c.value);
       }
     }).join('\n');
   }

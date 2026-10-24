@@ -157,7 +157,7 @@ class ChallengeCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  challenge.conditionDescription,
+                  challenge.conditionDescription(l10n),
                   style: TextStyle(
                     fontSize: 11,
                     color: Colors.grey[300],

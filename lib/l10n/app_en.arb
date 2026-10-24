@@ -1138,5 +1138,19 @@
       "name": { "type": "String" },
       "description": { "type": "String" }
     }
+  },
+  "challengeConditionVictory": "Clear the scenario",
+  "challengeConditionTurnLimit": "Clear within {turns} turns",
+  "@challengeConditionTurnLimit": {
+    "placeholders": { "turns": { "type": "int" } }
+  },
+  "challengeConditionNoDefeats": "Clear without losing key units",
+  "challengeConditionTpTarget": "Achieve {count} or more TPs",
+  "@challengeConditionTpTarget": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "challengeConditionScoreTarget": "Earn a score of {score} or more",
+  "@challengeConditionScoreTarget": {
+    "placeholders": { "score": { "type": "int" } }
   }
 }

@@ -8,6 +8,7 @@ enum Scenario {
   oshiJo,
   mikatagahara,
   anegawa,
+  shizugatake,
 }
 
 /// 画面間で表記がずれないよう、シナリオの日本語表示名を一箇所にまとめる
@@ -23,6 +24,7 @@ extension ScenarioDisplayName on Scenario {
         Scenario.oshiJo => '忍城の戦い',
         Scenario.mikatagahara => '三方ヶ原の戦い',
         Scenario.anegawa => '姉川の戦い',
+        Scenario.shizugatake => '賤ヶ岳の戦い',
       };
 }
 
@@ -38,6 +40,7 @@ extension ScenarioThumbnail on Scenario {
         Scenario.oshiJo => 'assets/images/scenario_oshijo.png',
         Scenario.mikatagahara => 'assets/images/scenario_mikatagahara.png',
         Scenario.anegawa => 'assets/images/scenario_anegawa.png',
+        Scenario.shizugatake => 'assets/images/scenario_shizugatake.png',
       };
 }
 

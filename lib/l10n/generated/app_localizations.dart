@@ -2030,6 +2030,30 @@ abstract class AppLocalizations {
   /// **'敵将討死'**
   String get resultTpAnegawa4;
 
+  /// No description provided for @resultTpShizugatake1.
+  ///
+  /// In ja, this message translates to:
+  /// **'美濃大返しの急襲'**
+  String get resultTpShizugatake1;
+
+  /// No description provided for @resultTpShizugatake2.
+  ///
+  /// In ja, this message translates to:
+  /// **'七本槍の奮戦'**
+  String get resultTpShizugatake2;
+
+  /// No description provided for @resultTpShizugatake3.
+  ///
+  /// In ja, this message translates to:
+  /// **'賤ヶ岳の陣を突破する'**
+  String get resultTpShizugatake3;
+
+  /// No description provided for @resultTpShizugatake4.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵将討死'**
+  String get resultTpShizugatake4;
+
   /// No description provided for @scenarioSelectTitle.
   ///
   /// In ja, this message translates to:
@@ -2239,6 +2263,12 @@ abstract class AppLocalizations {
   /// **'姉川の戦い'**
   String get scenarioNameAnegawa;
 
+  /// No description provided for @scenarioNameShizugatake.
+  ///
+  /// In ja, this message translates to:
+  /// **'賤ヶ岳の戦い'**
+  String get scenarioNameShizugatake;
+
   /// No description provided for @scenarioDescItsukushima.
   ///
   /// In ja, this message translates to:
@@ -2286,6 +2316,18 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'4〜5分'**
   String get scenarioPlayTimeAnegawa;
+
+  /// No description provided for @scenarioDescShizugatake.
+  ///
+  /// In ja, this message translates to:
+  /// **'7,000 vs 16,000 — 美濃大返しの急襲で、豊臣政権確立への道を切り開け'**
+  String get scenarioDescShizugatake;
+
+  /// No description provided for @scenarioPlayTimeShizugatake.
+  ///
+  /// In ja, this message translates to:
+  /// **'4〜5分'**
+  String get scenarioPlayTimeShizugatake;
 
   /// No description provided for @tutorialTitle.
   ///
@@ -4078,6 +4120,12 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'姉川'**
   String get challengeCardScenarioAnegawa;
+
+  /// No description provided for @challengeCardScenarioShizugatake.
+  ///
+  /// In ja, this message translates to:
+  /// **'賤ヶ岳'**
+  String get challengeCardScenarioShizugatake;
 
   /// No description provided for @challengeCardRewardLabel.
   ///

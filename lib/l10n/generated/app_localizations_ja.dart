@@ -1066,6 +1066,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get resultTpAnegawa4 => '敵将討死';
 
   @override
+  String get resultTpShizugatake1 => '美濃大返しの急襲';
+
+  @override
+  String get resultTpShizugatake2 => '七本槍の奮戦';
+
+  @override
+  String get resultTpShizugatake3 => '賤ヶ岳の陣を突破する';
+
+  @override
+  String get resultTpShizugatake4 => '敵将討死';
+
+  @override
   String get scenarioSelectTitle => 'シナリオを選ぶ';
 
   @override
@@ -1180,6 +1192,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scenarioNameAnegawa => '姉川の戦い';
 
   @override
+  String get scenarioNameShizugatake => '賤ヶ岳の戦い';
+
+  @override
   String get scenarioDescItsukushima => '4,000 vs 15,000 — 暴風雨に乗じた奇襲で殲滅せよ';
 
   @override
@@ -1203,6 +1218,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeAnegawa => '4〜5分';
+
+  @override
+  String get scenarioDescShizugatake =>
+      '7,000 vs 16,000 — 美濃大返しの急襲で、豊臣政権確立への道を切り開け';
+
+  @override
+  String get scenarioPlayTimeShizugatake => '4〜5分';
 
   @override
   String get tutorialTitle => '初陣：采配の基本';
@@ -2240,6 +2262,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeCardScenarioAnegawa => '姉川';
+
+  @override
+  String get challengeCardScenarioShizugatake => '賤ヶ岳';
 
   @override
   String get challengeCardRewardLabel => '報酬';

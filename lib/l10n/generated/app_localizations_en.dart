@@ -1080,6 +1080,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resultTpAnegawa4 => 'Defeat the enemy general';
 
   @override
+  String get resultTpShizugatake1 => 'The Mino forced march strike';
+
+  @override
+  String get resultTpShizugatake2 => 'The Seven Spears\' valiant stand';
+
+  @override
+  String get resultTpShizugatake3 => 'Break through the Shizugatake line';
+
+  @override
+  String get resultTpShizugatake4 => 'Defeat the enemy general';
+
+  @override
   String get scenarioSelectTitle => 'Choose a Scenario';
 
   @override
@@ -1200,6 +1212,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scenarioNameAnegawa => 'Battle of Anegawa';
 
   @override
+  String get scenarioNameShizugatake => 'Battle of Shizugatake';
+
+  @override
   String get scenarioDescItsukushima =>
       '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
 
@@ -1226,6 +1241,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeAnegawa => '4-5 min';
+
+  @override
+  String get scenarioDescShizugatake =>
+      '7,000 vs 16,000 — strike with the Mino forced march and pave the way to Toyotomi rule';
+
+  @override
+  String get scenarioPlayTimeShizugatake => '4-5 min';
 
   @override
   String get tutorialTitle => 'First Battle: Command Basics';
@@ -2284,6 +2306,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get challengeCardScenarioAnegawa => 'Anegawa';
+
+  @override
+  String get challengeCardScenarioShizugatake => 'Shizugatake';
 
   @override
   String get challengeCardRewardLabel => 'Reward';

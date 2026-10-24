@@ -204,6 +204,22 @@ class TurningPointEvaluator {
             // 敵将を討ち取る
             return enemyCommanderKilled;
         }
+        break;
+      case Scenario.shizugatake:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に奇襲コマンドで柴田軍を突く
+            return eventLog.hasCommandBefore(PlayerCommand.ambush, 30.0);
+          case 'tp2':
+            // 盾陣で敵の猛攻を耐え抜く
+            return eventLog.lastCommand == PlayerCommand.shield && inCombat;
+          case 'tp3':
+            // 2分経過後に進軍コマンドで反撃する
+            return eventLog.hasCommandAfter(PlayerCommand.advance, 120.0);
+          case 'tp4':
+            // 柴田勝家を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

@@ -785,6 +785,13 @@ class _TurningPointCard extends StatelessWidget {
           l10n.resultTpAnegawa3,
           l10n.resultTpAnegawa4,
         ];
+      case Scenario.shizugatake:
+        return [
+          l10n.resultTpShizugatake1,
+          l10n.resultTpShizugatake2,
+          l10n.resultTpShizugatake3,
+          l10n.resultTpShizugatake4,
+        ];
     }
   }
 

@@ -2213,4 +2213,35 @@ class AppLocalizationsJa extends AppLocalizations {
   String trendSparklineInsufficientData(String label) {
     return '$label: データが不足しています';
   }
+
+  @override
+  String get notifReminderChannelName => 'リマインダー';
+
+  @override
+  String get notifReminderChannelDescription => 'デイリーチャレンジ・バトルパスの通知';
+
+  @override
+  String get notifDailyChallengeTitle => '本日のデイリーチャレンジ';
+
+  @override
+  String notifDailyChallengeBodyStreak(int streak) {
+    return '$streak日連続達成中！今日挑戦しないとストリークが途切れてしまいます。';
+  }
+
+  @override
+  String get notifDailyChallengeBodyNoStreak => '新しいデイリーチャレンジに挑戦しましょう！';
+
+  @override
+  String get notifBattlePassExpiryTitle => 'バトルパスもうすぐ終了';
+
+  @override
+  String notifBattlePassExpiryBody(int days) {
+    return 'シーズン終了まであと$days日。報酬を取り逃さないようにしましょう！';
+  }
+
+  @override
+  String get notifServerEventChannelName => 'サーバーイベント通知';
+
+  @override
+  String get notifServerEventChannelDescription => 'フレンド追加やランキング更新などのお知らせ';
 }

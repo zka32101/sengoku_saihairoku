@@ -2301,4 +2301,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get battlePassOverlayPremiumBody =>
       'All premium track rewards have been unlocked';
+
+  @override
+  String get achievementOverlayUnlockedLabel => 'Achievement Unlocked!';
+
+  @override
+  String achievementOverlayPointsSuffix(int points) {
+    return '+$points pts';
+  }
+
+  @override
+  String get achievementOverlayShareButton => 'Share';
+
+  @override
+  String achievementShareText(String name, String description) {
+    return 'I unlocked the achievement \"$name\" in Sengoku Saihairoku!\n$description\n#SengokuSaihairoku';
+  }
 }

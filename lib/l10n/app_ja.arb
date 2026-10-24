@@ -1128,5 +1128,18 @@
   "battlePassOverlayTierUpTitle": "バトルパス ティアアップ！",
   "battlePassOverlayRewardTitle": "報酬獲得！",
   "battlePassOverlayPremiumTitle": "プレミアム アクティベート",
-  "battlePassOverlayPremiumBody": "プレミアムトラックの全報酬がアンロックされました"
+  "battlePassOverlayPremiumBody": "プレミアムトラックの全報酬がアンロックされました",
+  "achievementOverlayUnlockedLabel": "実績解放！",
+  "achievementOverlayPointsSuffix": "+{points} ポイント",
+  "@achievementOverlayPointsSuffix": {
+    "placeholders": { "points": { "type": "int" } }
+  },
+  "achievementOverlayShareButton": "シェアする",
+  "achievementShareText": "戦国采配録で実績「{name}」を解放した！\n{description}\n#戦国采配録",
+  "@achievementShareText": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "description": { "type": "String" }
+    }
+  }
 }

@@ -176,6 +176,7 @@ class BattleGame extends FlameGame {
         Scenario.kawanakajima => 'assets/audio/bgm_kawanakajima.wav',
         Scenario.itsukushima => 'assets/audio/bgm_itsukushima.wav',
         Scenario.oshiJo => 'assets/audio/bgm_oshijo.wav',
+        Scenario.mikatagahara => 'assets/audio/bgm_mikatagahara.wav',
       };
 
   double get elapsedTime => _ready ? _battleState.elapsedTime : 0;

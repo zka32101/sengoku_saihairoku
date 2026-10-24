@@ -1054,6 +1054,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resultTpOshijo4 => 'Defeat the enemy general';
 
   @override
+  String get resultTpMikatagahara1 => 'Hold back from a reckless sortie';
+
+  @override
+  String get resultTpMikatagahara2 =>
+      'Endure the melee on the Mikatagahara plateau';
+
+  @override
+  String get resultTpMikatagahara3 =>
+      'Counterattack with the woodpecker tactic';
+
+  @override
+  String get resultTpMikatagahara4 => 'Defeat the enemy general';
+
+  @override
   String get scenarioSelectTitle => 'Choose a Scenario';
 
   @override
@@ -1168,6 +1182,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scenarioNameOshijo => 'Siege of Oshi Castle';
 
   @override
+  String get scenarioNameMikatagahara => 'Battle of Mikatagahara';
+
+  @override
   String get scenarioDescItsukushima =>
       '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
 
@@ -1180,6 +1197,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scenarioPlayTimeOshijo => '4-5 min';
+
+  @override
+  String get scenarioDescMikatagahara =>
+      '8,000 vs 25,000 — turn a reckless sortie into a victory unknown to history';
+
+  @override
+  String get scenarioPlayTimeMikatagahara => '4-5 min';
 
   @override
   String get tutorialTitle => 'First Battle: Command Basics';
@@ -2232,6 +2256,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get challengeCardScenarioOshijo => 'Oshi Castle';
+
+  @override
+  String get challengeCardScenarioMikatagahara => 'Mikatagahara';
 
   @override
   String get challengeCardRewardLabel => 'Reward';

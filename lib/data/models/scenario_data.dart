@@ -6,6 +6,7 @@ enum Scenario {
   kawanakajima,
   itsukushima,
   oshiJo,
+  mikatagahara,
 }
 
 /// 画面間で表記がずれないよう、シナリオの日本語表示名を一箇所にまとめる
@@ -19,6 +20,7 @@ extension ScenarioDisplayName on Scenario {
         Scenario.kawanakajima => '川中島の戦い',
         Scenario.itsukushima => '厳島の戦い',
         Scenario.oshiJo => '忍城の戦い',
+        Scenario.mikatagahara => '三方ヶ原の戦い',
       };
 }
 
@@ -32,6 +34,7 @@ extension ScenarioThumbnail on Scenario {
         Scenario.kawanakajima => 'assets/images/scenario_kawanakajima.png',
         Scenario.itsukushima => 'assets/images/scenario_itsukushima.png',
         Scenario.oshiJo => 'assets/images/scenario_oshijo.png',
+        Scenario.mikatagahara => 'assets/images/scenario_mikatagahara.png',
       };
 }
 

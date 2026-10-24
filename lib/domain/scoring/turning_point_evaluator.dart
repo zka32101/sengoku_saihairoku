@@ -172,6 +172,22 @@ class TurningPointEvaluator {
             // 敵将を討ち取る
             return enemyCommanderKilled;
         }
+        break;
+      case Scenario.mikatagahara:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に待機コマンドで武田軍の出方を探る
+            return eventLog.hasCommandBefore(PlayerCommand.wait, 30.0);
+          case 'tp2':
+            // 盾陣で敵の猛攻を耐え抜く
+            return eventLog.lastCommand == PlayerCommand.shield && inCombat;
+          case 'tp3':
+            // 2分経過後に奇襲コマンドで武田軍の隙を突く
+            return eventLog.hasCommandAfter(PlayerCommand.ambush, 120.0);
+          case 'tp4':
+            // 武田信玄を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

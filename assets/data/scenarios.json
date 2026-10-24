@@ -956,5 +956,87 @@
         "bronze": 40
       }
     }
+  },
+  "mikatagahara": {
+    "id": "mikatagahara",
+    "displayName": "三方ヶ原の戦い",
+    "year": 1573,
+    "description": "徳川家康が武田信玄の大軍に完敗した三方ヶ原。無謀な出陣から、史実にない大逆転を目指す。",
+    "playerInitialStrength": 8000,
+    "enemyInitialStrength": 25000,
+    "difficulty": 3,
+    "estimatedDuration": 300,
+    "backgroundImage": "assets/images/maps/mikatagahara_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "無謀な出陣を思い止まる",
+        "description": "開戦直後(30秒以内)に待機コマンドで武田軍の出方を探る",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "三方ヶ原台地での混戦を耐える",
+        "description": "盾陣で敵の猛攻を耐え抜く",
+        "rewardPoints": 3500
+      },
+      {
+        "id": "tp3",
+        "name": "啄木鳥戦法で反撃する",
+        "description": "2分経過後に奇襲コマンドで武田軍の隙を突く",
+        "rewardPoints": 3500
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "武田信玄を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_spear_1",
+        "name": "徳川槍兵隊",
+        "type": "spear",
+        "strength": 4500
+      },
+      {
+        "id": "player_archer_1",
+        "name": "徳川弓兵隊",
+        "type": "archer",
+        "strength": 3500
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_cavalry_1",
+        "name": "武田騎馬隊",
+        "type": "cavalry",
+        "strength": 15000
+      },
+      {
+        "id": "enemy_spear_1",
+        "name": "武田槍兵隊",
+        "type": "spear",
+        "strength": 10000
+      }
+    ],
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
+    }
   }
 }

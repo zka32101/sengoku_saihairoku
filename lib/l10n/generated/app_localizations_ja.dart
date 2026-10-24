@@ -2197,4 +2197,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get challengeCardApLabel => 'AP';
+
+  @override
+  String get dailyLoginTitle => '本日のログインボーナス';
+
+  @override
+  String dailyLoginStreakLabel(int streak) {
+    return '連続ログイン $streak日目';
+  }
+
+  @override
+  String get dailyLoginClaimButton => '受け取る';
 }

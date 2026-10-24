@@ -1096,5 +1096,11 @@
   "challengeCardScenarioItsukushima": "Itsukushima",
   "challengeCardScenarioOshijo": "Oshi Castle",
   "challengeCardRewardLabel": "Reward",
-  "challengeCardApLabel": "AP"
+  "challengeCardApLabel": "AP",
+  "dailyLoginTitle": "Daily Login Bonus",
+  "dailyLoginStreakLabel": "Day {streak} streak",
+  "@dailyLoginStreakLabel": {
+    "placeholders": { "streak": { "type": "int" } }
+  },
+  "dailyLoginClaimButton": "Claim"
 }

@@ -2119,4 +2119,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String advStatsAverageScoreLine(int score) {
     return 'Avg ${score}pt';
   }
+
+  @override
+  String get helpModalTabTutorial => 'Tutorial';
+
+  @override
+  String get helpModalTabCommands => 'Commands';
+
+  @override
+  String get helpModalTabTactics => 'Tactics';
+
+  @override
+  String get helpModalCloseButton => 'Close';
+
+  @override
+  String get helpModalNoHintsForDifficulty => 'No hints for this difficulty';
+
+  @override
+  String get helpModalEffectLabel => 'Effect';
+
+  @override
+  String get helpModalLimitationLabel => 'Limitations';
+
+  @override
+  String get helpModalRecommendationsLabel => 'Recommendations';
 }

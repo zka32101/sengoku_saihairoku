@@ -2078,4 +2078,28 @@ class AppLocalizationsJa extends AppLocalizations {
   String advStatsAverageScoreLine(int score) {
     return '平均 ${score}pt';
   }
+
+  @override
+  String get helpModalTabTutorial => 'チュートリアル';
+
+  @override
+  String get helpModalTabCommands => 'コマンド';
+
+  @override
+  String get helpModalTabTactics => '戦術ヒント';
+
+  @override
+  String get helpModalCloseButton => '閉じる';
+
+  @override
+  String get helpModalNoHintsForDifficulty => 'この難易度のヒントはありません';
+
+  @override
+  String get helpModalEffectLabel => '効果';
+
+  @override
+  String get helpModalLimitationLabel => '制限事項';
+
+  @override
+  String get helpModalRecommendationsLabel => '推奨事項';
 }

@@ -864,5 +864,72 @@
     }
   },
   "battleMomentumEnemyLabel": "敵優勢",
-  "battleMomentumPlayerLabel": "味方優勢"
+  "battleMomentumPlayerLabel": "味方優勢",
+  "achievementCategoryCombat": "戦闘",
+  "achievementCategoryProgression": "進行度",
+  "achievementCategoryPrestige": "プレスティジ",
+  "achievementCategoryCosmetic": "コスメティック",
+  "achievementCategoryMilestone": "マイルストーン",
+  "achievementCategoryEvent": "イベント",
+  "achievementDifficultyBronze": "ブロンズ",
+  "achievementDifficultySilver": "シルバー",
+  "achievementDifficultyGold": "ゴールド",
+  "achievementDifficultyDiamond": "ダイヤモンド",
+  "achievementConditionBattleWins": "戦闘勝利",
+  "achievementConditionLevelReached": "レベル到達",
+  "achievementConditionPrestigeRank": "プレスティジランク",
+  "achievementConditionTurnEfficiency": "ターン効率",
+  "achievementConditionCosmeticUnlocked": "コスメティック解放",
+  "achievementConditionTotalPlayTime": "プレイ時間",
+  "achievementConditionScenarioCleared": "シナリオクリア",
+  "achievementConditionPerfectBattle": "パーフェクト戦闘",
+  "achievementConditionPrestigeResetCount": "プレスティジリセット回数",
+  "achievementConditionEventChallengeCompleted": "イベントチャレンジ達成",
+  "achievementConditionWarlordsCollected": "武将図鑑解放数",
+  "achievementDescBattleWins": "{value} 回の戦闘に勝利",
+  "@achievementDescBattleWins": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescLevelReached": "レベル {value} に到達",
+  "@achievementDescLevelReached": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescPrestigeRank": "プレスティジランク {value}",
+  "@achievementDescPrestigeRank": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescTurnEfficiency": "{value} ターン以内にクリア",
+  "@achievementDescTurnEfficiency": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescCosmeticUnlocked": "{value} 個のコスメティックを解放",
+  "@achievementDescCosmeticUnlocked": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescTotalPlayTime": "総プレイ時間 {value} 時間",
+  "@achievementDescTotalPlayTime": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescScenarioCleared": "シナリオをクリア",
+  "achievementDescPerfectBattle": "ユニットロスなしでクリア",
+  "achievementDescPrestigeResetCount": "{value} 回プレスティジリセット",
+  "@achievementDescPrestigeResetCount": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescEventChallengeCompleted": "{value} 個のイベントチャレンジを達成",
+  "@achievementDescEventChallengeCompleted": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescWarlordsCollected": "{value} 人の武将を図鑑に登録",
+  "@achievementDescWarlordsCollected": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDetailUnlockedBadge": "クリア済み",
+  "achievementDetailLockedBadge": "ロック中",
+  "achievementDetailCategoryLabel": "カテゴリー",
+  "achievementDetailDifficultyLabel": "難易度",
+  "achievementDetailPointsLabel": "ポイント",
+  "achievementDetailDescriptionLabel": "説明",
+  "achievementDetailConditionLabel": "達成条件",
+  "achievementDetailRewardLabel": "報酬"
 }

@@ -861,5 +861,72 @@
     }
   },
   "battleMomentumEnemyLabel": "Enemy Advantage",
-  "battleMomentumPlayerLabel": "Ally Advantage"
+  "battleMomentumPlayerLabel": "Ally Advantage",
+  "achievementCategoryCombat": "Combat",
+  "achievementCategoryProgression": "Progression",
+  "achievementCategoryPrestige": "Prestige",
+  "achievementCategoryCosmetic": "Cosmetic",
+  "achievementCategoryMilestone": "Milestone",
+  "achievementCategoryEvent": "Event",
+  "achievementDifficultyBronze": "Bronze",
+  "achievementDifficultySilver": "Silver",
+  "achievementDifficultyGold": "Gold",
+  "achievementDifficultyDiamond": "Diamond",
+  "achievementConditionBattleWins": "Battle Wins",
+  "achievementConditionLevelReached": "Level Reached",
+  "achievementConditionPrestigeRank": "Prestige Rank",
+  "achievementConditionTurnEfficiency": "Turn Efficiency",
+  "achievementConditionCosmeticUnlocked": "Cosmetic Unlocked",
+  "achievementConditionTotalPlayTime": "Total Play Time",
+  "achievementConditionScenarioCleared": "Scenario Cleared",
+  "achievementConditionPerfectBattle": "Perfect Battle",
+  "achievementConditionPrestigeResetCount": "Prestige Reset Count",
+  "achievementConditionEventChallengeCompleted": "Event Challenge Completed",
+  "achievementConditionWarlordsCollected": "Warlords Collected",
+  "achievementDescBattleWins": "Win {value} battles",
+  "@achievementDescBattleWins": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescLevelReached": "Reach level {value}",
+  "@achievementDescLevelReached": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescPrestigeRank": "Prestige rank {value}",
+  "@achievementDescPrestigeRank": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescTurnEfficiency": "Clear within {value} turns",
+  "@achievementDescTurnEfficiency": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescCosmeticUnlocked": "Unlock {value} cosmetics",
+  "@achievementDescCosmeticUnlocked": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescTotalPlayTime": "Total play time {value} hours",
+  "@achievementDescTotalPlayTime": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescScenarioCleared": "Clear the scenario",
+  "achievementDescPerfectBattle": "Clear without losing a unit",
+  "achievementDescPrestigeResetCount": "Prestige reset {value} times",
+  "@achievementDescPrestigeResetCount": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescEventChallengeCompleted": "Complete {value} event challenges",
+  "@achievementDescEventChallengeCompleted": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDescWarlordsCollected": "Register {value} warlords in the compendium",
+  "@achievementDescWarlordsCollected": {
+    "placeholders": { "value": { "type": "int" } }
+  },
+  "achievementDetailUnlockedBadge": "Unlocked",
+  "achievementDetailLockedBadge": "Locked",
+  "achievementDetailCategoryLabel": "Category",
+  "achievementDetailDifficultyLabel": "Difficulty",
+  "achievementDetailPointsLabel": "Points",
+  "achievementDetailDescriptionLabel": "Description",
+  "achievementDetailConditionLabel": "Condition",
+  "achievementDetailRewardLabel": "Reward"
 }

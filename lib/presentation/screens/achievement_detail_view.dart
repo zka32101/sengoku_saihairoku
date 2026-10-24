@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/achievement.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 class AchievementDetailView extends StatelessWidget {
   final Achievement achievement;
@@ -11,33 +12,33 @@ class AchievementDetailView extends StatelessWidget {
     required this.isUnlocked,
   });
 
-  String _getCategoryLabel(AchievementCategory category) {
+  String _getCategoryLabel(AppLocalizations l10n, AchievementCategory category) {
     switch (category) {
       case AchievementCategory.combat:
-        return '戦闘';
+        return l10n.achievementCategoryCombat;
       case AchievementCategory.progression:
-        return '進行度';
+        return l10n.achievementCategoryProgression;
       case AchievementCategory.prestige:
-        return 'プレスティジ';
+        return l10n.achievementCategoryPrestige;
       case AchievementCategory.cosmetic:
-        return 'コスメティック';
+        return l10n.achievementCategoryCosmetic;
       case AchievementCategory.milestone:
-        return 'マイルストーン';
+        return l10n.achievementCategoryMilestone;
       case AchievementCategory.event:
-        return 'イベント';
+        return l10n.achievementCategoryEvent;
     }
   }
 
-  String _getDifficultyLabel(AchievementDifficulty difficulty) {
+  String _getDifficultyLabel(AppLocalizations l10n, AchievementDifficulty difficulty) {
     switch (difficulty) {
       case AchievementDifficulty.bronze:
-        return 'ブロンズ';
+        return l10n.achievementDifficultyBronze;
       case AchievementDifficulty.silver:
-        return 'シルバー';
+        return l10n.achievementDifficultySilver;
       case AchievementDifficulty.gold:
-        return 'ゴールド';
+        return l10n.achievementDifficultyGold;
       case AchievementDifficulty.diamond:
-        return 'ダイヤモンド';
+        return l10n.achievementDifficultyDiamond;
     }
   }
 
@@ -54,65 +55,67 @@ class AchievementDetailView extends StatelessWidget {
     }
   }
 
-  String _getConditionLabel(AchievementConditionType conditionType) {
+  String _getConditionLabel(AppLocalizations l10n, AchievementConditionType conditionType) {
     switch (conditionType) {
       case AchievementConditionType.battleWins:
-        return '戦闘勝利';
+        return l10n.achievementConditionBattleWins;
       case AchievementConditionType.levelReached:
-        return 'レベル到達';
+        return l10n.achievementConditionLevelReached;
       case AchievementConditionType.prestigeRank:
-        return 'プレスティジランク';
+        return l10n.achievementConditionPrestigeRank;
       case AchievementConditionType.turnEfficiency:
-        return 'ターン効率';
+        return l10n.achievementConditionTurnEfficiency;
       case AchievementConditionType.cosmeticUnlocked:
-        return 'コスメティック解放';
+        return l10n.achievementConditionCosmeticUnlocked;
       case AchievementConditionType.totalPlayTime:
-        return 'プレイ時間';
+        return l10n.achievementConditionTotalPlayTime;
       case AchievementConditionType.scenarioCleared:
-        return 'シナリオクリア';
+        return l10n.achievementConditionScenarioCleared;
       case AchievementConditionType.perfectBattle:
-        return 'パーフェクト戦闘';
+        return l10n.achievementConditionPerfectBattle;
       case AchievementConditionType.prestigeResetCount:
-        return 'プレスティジリセット回数';
+        return l10n.achievementConditionPrestigeResetCount;
       case AchievementConditionType.eventChallengeCompleted:
-        return 'イベントチャレンジ達成';
+        return l10n.achievementConditionEventChallengeCompleted;
       case AchievementConditionType.warlordsCollected:
-        return '武将図鑑解放数';
+        return l10n.achievementConditionWarlordsCollected;
     }
   }
 
   String _getConditionDescription(
+    AppLocalizations l10n,
     AchievementConditionType conditionType,
     int conditionValue,
   ) {
     switch (conditionType) {
       case AchievementConditionType.battleWins:
-        return '$conditionValue 回の戦闘に勝利';
+        return l10n.achievementDescBattleWins(conditionValue);
       case AchievementConditionType.levelReached:
-        return 'レベル $conditionValue に到達';
+        return l10n.achievementDescLevelReached(conditionValue);
       case AchievementConditionType.prestigeRank:
-        return 'プレスティジランク $conditionValue';
+        return l10n.achievementDescPrestigeRank(conditionValue);
       case AchievementConditionType.turnEfficiency:
-        return '$conditionValue ターン以内にクリア';
+        return l10n.achievementDescTurnEfficiency(conditionValue);
       case AchievementConditionType.cosmeticUnlocked:
-        return '$conditionValue 個のコスメティックを解放';
+        return l10n.achievementDescCosmeticUnlocked(conditionValue);
       case AchievementConditionType.totalPlayTime:
-        return '総プレイ時間 $conditionValue 時間';
+        return l10n.achievementDescTotalPlayTime(conditionValue);
       case AchievementConditionType.scenarioCleared:
-        return 'シナリオをクリア';
+        return l10n.achievementDescScenarioCleared;
       case AchievementConditionType.perfectBattle:
-        return 'ユニットロスなしでクリア';
+        return l10n.achievementDescPerfectBattle;
       case AchievementConditionType.prestigeResetCount:
-        return '$conditionValue 回プレスティジリセット';
+        return l10n.achievementDescPrestigeResetCount(conditionValue);
       case AchievementConditionType.eventChallengeCompleted:
-        return '$conditionValue 個のイベントチャレンジを達成';
+        return l10n.achievementDescEventChallengeCompleted(conditionValue);
       case AchievementConditionType.warlordsCollected:
-        return '$conditionValue 人の武将を図鑑に登録';
+        return l10n.achievementDescWarlordsCollected(conditionValue);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return DraggableScrollableSheet(
       expand: false,
       initialChildSize: 0.7,
@@ -181,7 +184,9 @@ class AchievementDetailView extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      isUnlocked ? 'クリア済み' : 'ロック中',
+                      isUnlocked
+                          ? l10n.achievementDetailUnlockedBadge
+                          : l10n.achievementDetailLockedBadge,
                       style: TextStyle(
                         color: isUnlocked ? Colors.green : Colors.red,
                         fontSize: 12,
@@ -212,16 +217,16 @@ class AchievementDetailView extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'カテゴリー',
-                            style: TextStyle(
+                          Text(
+                            l10n.achievementDetailCategoryLabel,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFFB0A090),
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            _getCategoryLabel(achievement.category),
+                            _getCategoryLabel(l10n, achievement.category),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -233,9 +238,9 @@ class AchievementDetailView extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            '難易度',
-                            style: TextStyle(
+                          Text(
+                            l10n.achievementDetailDifficultyLabel,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFFB0A090),
                             ),
@@ -256,7 +261,7 @@ class AchievementDetailView extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              _getDifficultyLabel(achievement.difficulty),
+                              _getDifficultyLabel(l10n, achievement.difficulty),
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -273,9 +278,9 @@ class AchievementDetailView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'ポイント',
-                          style: TextStyle(
+                        Text(
+                          l10n.achievementDetailPointsLabel,
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Color(0xFFB0A090),
                           ),
@@ -300,9 +305,9 @@ class AchievementDetailView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '説明',
-                  style: TextStyle(
+                Text(
+                  l10n.achievementDetailDescriptionLabel,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -325,9 +330,9 @@ class AchievementDetailView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '達成条件',
-                  style: TextStyle(
+                Text(
+                  l10n.achievementDetailConditionLabel,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -348,7 +353,7 @@ class AchievementDetailView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _getConditionLabel(achievement.conditionType),
+                        _getConditionLabel(l10n, achievement.conditionType),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -358,6 +363,7 @@ class AchievementDetailView extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         _getConditionDescription(
+                          l10n,
                           achievement.conditionType,
                           achievement.conditionValue,
                         ),
@@ -376,9 +382,9 @@ class AchievementDetailView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '報酬',
-                    style: TextStyle(
+                  Text(
+                    l10n.achievementDetailRewardLabel,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFFD700),

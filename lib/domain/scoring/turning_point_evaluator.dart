@@ -156,6 +156,22 @@ class TurningPointEvaluator {
             // 陶晴賢を討ち取る
             return enemyCommanderKilled;
         }
+        break;
+      case Scenario.oshiJo:
+        switch (tp.id) {
+          case 'tp1':
+            // 開戦直後(30秒以内)に待機コマンドで敵の出方を探る
+            return eventLog.hasCommandBefore(PlayerCommand.wait, 30.0);
+          case 'tp2':
+            // 2分経過後に奇襲コマンドで水攻めの隙を突く
+            return eventLog.hasCommandAfter(PlayerCommand.ambush, 120.0);
+          case 'tp3':
+            // 盾陣で敵の猛攻を耐え抜く
+            return eventLog.lastCommand == PlayerCommand.shield && inCombat;
+          case 'tp4':
+            // 敵将を討ち取る
+            return enemyCommanderKilled;
+        }
     }
     return false;
   }

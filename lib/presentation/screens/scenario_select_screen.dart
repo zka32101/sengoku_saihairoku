@@ -54,6 +54,8 @@ class ScenarioSelectScreen extends StatelessWidget {
     _ScenarioEntry(Scenario.itsukushima, l10n.scenarioNameItsukushima, 1555,
         3, l10n.scenarioPlayTimeItsukushima, l10n.scenarioDescItsukushima,
         true),
+    _ScenarioEntry(Scenario.oshiJo, l10n.scenarioNameOshijo, 1590, 2,
+        l10n.scenarioPlayTimeOshijo, l10n.scenarioDescOshijo, true),
   ];
 
   @override

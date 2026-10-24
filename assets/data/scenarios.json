@@ -874,5 +874,87 @@
         "bronze": 40
       }
     }
+  },
+  "oshiJo": {
+    "id": "oshiJo",
+    "displayName": "忍城の戦い",
+    "year": 1590,
+    "description": "石田三成率いる大軍の水攻めを受けた忍城。わずかな兵で籠城を耐え抜き、大逆転を狙う。",
+    "playerInitialStrength": 3000,
+    "enemyInitialStrength": 20000,
+    "difficulty": 2,
+    "estimatedDuration": 300,
+    "backgroundImage": "assets/images/maps/oshijo_bg.png",
+    "turningPoints": [
+      {
+        "id": "tp1",
+        "name": "偽情報で敵を翻弄",
+        "description": "開戦直後(30秒以内)に待機コマンドで敵の出方を探る",
+        "rewardPoints": 3000
+      },
+      {
+        "id": "tp2",
+        "name": "堤防決壊で敵陣を打撃",
+        "description": "2分経過後に奇襲コマンドで水攻めの隙を突く",
+        "rewardPoints": 3500
+      },
+      {
+        "id": "tp3",
+        "name": "寄せ手の猛攻を耐え抜く",
+        "description": "盾陣で敵の猛攻を耐え抜く",
+        "rewardPoints": 3500
+      },
+      {
+        "id": "tp4",
+        "name": "敵将討死",
+        "description": "敵将を討ち取る",
+        "rewardPoints": 5000
+      }
+    ],
+    "playerUnits": [
+      {
+        "id": "player_spear_1",
+        "name": "忍城槍兵隊",
+        "type": "spear",
+        "strength": 1800
+      },
+      {
+        "id": "player_archer_1",
+        "name": "忍城弓兵隊",
+        "type": "archer",
+        "strength": 1200
+      }
+    ],
+    "enemyUnits": [
+      {
+        "id": "enemy_spear_1",
+        "name": "石田軍槍兵隊",
+        "type": "spear",
+        "strength": 10000
+      },
+      {
+        "id": "enemy_musket_1",
+        "name": "石田軍鉄砲隊",
+        "type": "musket",
+        "strength": 10000
+      }
+    ],
+    "turnCriteria": {
+      "easy": {
+        "gold": 15,
+        "silver": 20,
+        "bronze": 30
+      },
+      "normal": {
+        "gold": 20,
+        "silver": 25,
+        "bronze": 35
+      },
+      "hard": {
+        "gold": 25,
+        "silver": 30,
+        "bronze": 40
+      }
+    }
   }
 }

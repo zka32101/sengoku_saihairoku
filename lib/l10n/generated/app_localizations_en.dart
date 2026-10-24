@@ -1042,6 +1042,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resultTpItsukushima4 => 'Defeat the enemy general';
 
   @override
+  String get resultTpOshijo1 => 'Confuse the enemy with misinformation';
+
+  @override
+  String get resultTpOshijo2 => 'Strike the camp by breaching the dike';
+
+  @override
+  String get resultTpOshijo3 => 'Withstand the assault';
+
+  @override
+  String get resultTpOshijo4 => 'Defeat the enemy general';
+
+  @override
   String get scenarioSelectTitle => 'Choose a Scenario';
 
   @override
@@ -1153,11 +1165,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scenarioNameItsukushima => 'Battle of Itsukushima';
 
   @override
+  String get scenarioNameOshijo => 'Siege of Oshi Castle';
+
+  @override
   String get scenarioDescItsukushima =>
       '4,000 vs 15,000 — annihilate with a storm-borne surprise attack';
 
   @override
   String get scenarioPlayTimeItsukushima => '4-5 min';
+
+  @override
+  String get scenarioDescOshijo =>
+      '3,000 vs 20,000 — withstand the flood and repel the great army';
+
+  @override
+  String get scenarioPlayTimeOshijo => '4-5 min';
 
   @override
   String get tutorialTitle => 'First Battle: Command Basics';

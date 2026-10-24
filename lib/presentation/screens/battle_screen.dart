@@ -9,6 +9,7 @@ import '../../domain/scoring/battle_event_log.dart';
 import '../../domain/state/battle_state.dart';
 import '../../core/services/audio_manager.dart';
 import '../../flame/battle_game.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
 import 'result_screen.dart';
 
@@ -141,7 +142,8 @@ class _BattleScreenState extends State<BattleScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'シナリオの読み込みに失敗しました: $e';
+          _errorMessage =
+              AppLocalizations.of(context)!.battleScenarioLoadError(e.toString());
           _loading = false;
         });
       }
@@ -247,6 +249,7 @@ class _BattleScreenState extends State<BattleScreen> {
 
     final game = _battleGame!;
     final data = _scenarioData!;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A1A0A),
@@ -261,12 +264,13 @@ class _BattleScreenState extends State<BattleScreen> {
               battleMomentum: _battleMomentum,
               context: context,
               difficultyMode: widget.difficultyMode,
+              l10n: l10n,
             ),
             Expanded(
               child: Stack(
                 children: [
                   GameWidget(game: game),
-                  if (_lastTP != null) _TurningPointBanner(tp: _lastTP!),
+                  if (_lastTP != null) _TurningPointBanner(tp: _lastTP!, l10n: l10n),
                   if (_debugMode)
                     _DebugPanel(
                       elapsed: _elapsed,
@@ -288,6 +292,7 @@ class _BattleScreenState extends State<BattleScreen> {
               commandScore: _commandScore,
               comboCount: _comboCount,
               comboMultiplier: _comboMultiplier,
+              l10n: l10n,
               onCommand: (cmd) {
                 game.executeCommand(cmd);
                 if (_debugMode) {
@@ -315,6 +320,7 @@ class _BattleStatusBar extends StatelessWidget {
   final double battleMomentum;
   final BuildContext context;
   final DifficultyMode difficultyMode;
+  final AppLocalizations l10n;
 
   const _BattleStatusBar({
     required this.displayName,
@@ -324,6 +330,7 @@ class _BattleStatusBar extends StatelessWidget {
     required this.battleMomentum,
     required this.context,
     required this.difficultyMode,
+    required this.l10n,
   });
 
   String _formatTime(double seconds) {
@@ -449,9 +456,9 @@ class _BattleStatusBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(color: Colors.red, width: 1),
                 ),
-                child: const Text(
-                  '味方',
-                  style: TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.bold),
+                child: Text(
+                  l10n.battlePlayerSideLabel,
+                  style: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(width: 8),
@@ -474,16 +481,16 @@ class _BattleStatusBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(color: Colors.blue, width: 1),
                 ),
-                child: const Text(
-                  '敵',
-                  style: TextStyle(color: Colors.blue, fontSize: 11, fontWeight: FontWeight.bold),
+                child: Text(
+                  l10n.battleEnemySideLabel,
+                  style: const TextStyle(color: Colors.blue, fontSize: 11, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
           // 戦闘勢い表示
-          _BattleMomentumBar(momentum: battleMomentum),
+          _BattleMomentumBar(momentum: battleMomentum, l10n: l10n),
         ],
       ),
     );
@@ -561,6 +568,7 @@ class _BattleCommandUI extends StatelessWidget {
   final int commandScore;
   final int comboCount;
   final double comboMultiplier;
+  final AppLocalizations l10n;
   final void Function(PlayerCommand) onCommand;
 
   const _BattleCommandUI({
@@ -569,6 +577,7 @@ class _BattleCommandUI extends StatelessWidget {
     required this.commandScore,
     required this.comboCount,
     required this.comboMultiplier,
+    required this.l10n,
     required this.onCommand,
   });
 
@@ -620,7 +629,7 @@ class _BattleCommandUI extends StatelessWidget {
                     const Icon(Icons.stars, size: 16, color: Color(0xFFFFD700)),
                     const SizedBox(width: 6),
                     Text(
-                      'TP: $tpCount / $tpTotal',
+                      l10n.battleTpCounter(tpCount, tpTotal),
                       style: const TextStyle(
                         color: Color(0xFFFFD700),
                         fontSize: 13,
@@ -636,7 +645,7 @@ class _BattleCommandUI extends StatelessWidget {
                       const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
                       const SizedBox(width: 4),
                       Text(
-                        'コンボ: $comboCount',
+                        l10n.battleComboCounter(comboCount),
                         style: const TextStyle(
                           color: Color(0xFFFFAA00),
                           fontSize: 13,
@@ -659,7 +668,7 @@ class _BattleCommandUI extends StatelessWidget {
                     const Icon(Icons.trending_up, size: 16, color: Colors.orange),
                     const SizedBox(width: 6),
                     Text(
-                      '采配: $commandScore',
+                      l10n.battleCommandScore(commandScore),
                       style: const TextStyle(
                         color: Colors.orange,
                         fontSize: 13,
@@ -676,28 +685,28 @@ class _BattleCommandUI extends StatelessWidget {
           Row(
             children: [
               _CommandButton(
-                label: '進軍',
+                label: l10n.battleCommandAdvance,
                 icon: Icons.arrow_upward,
                 color: Colors.red,
                 onTap: () => onCommand(PlayerCommand.advance),
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '撤退',
+                label: l10n.battleCommandRetreat,
                 icon: Icons.arrow_downward,
                 color: Colors.blue,
                 onTap: () => onCommand(PlayerCommand.retreat),
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '待機',
+                label: l10n.battleCommandWait,
                 icon: Icons.pause,
                 color: Colors.grey,
                 onTap: () => onCommand(PlayerCommand.wait),
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '奇襲',
+                label: l10n.battleCommandAmbush,
                 icon: Icons.bolt,
                 color: Colors.orange,
                 onTap: () => onCommand(PlayerCommand.ambush),
@@ -709,7 +718,7 @@ class _BattleCommandUI extends StatelessWidget {
           Row(
             children: [
               _CommandButton(
-                label: '突撃',
+                label: l10n.battleCommandCharge,
                 icon: Icons.double_arrow,
                 color: const Color(0xFFFF4444),
                 onTap: () => onCommand(PlayerCommand.charge),
@@ -717,7 +726,7 @@ class _BattleCommandUI extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '激励',
+                label: l10n.battleCommandRally,
                 icon: Icons.local_fire_department,
                 color: const Color(0xFFFFAA00),
                 onTap: () => onCommand(PlayerCommand.rally),
@@ -725,7 +734,7 @@ class _BattleCommandUI extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '盾陣',
+                label: l10n.battleCommandShield,
                 icon: Icons.shield,
                 color: const Color(0xFF44AAFF),
                 onTap: () => onCommand(PlayerCommand.shield),
@@ -733,7 +742,7 @@ class _BattleCommandUI extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               _CommandButton(
-                label: '陣形',
+                label: l10n.battleCommandFormation,
                 icon: Icons.grid_view,
                 color: const Color(0xFF88BB44),
                 onTap: () => onCommand(PlayerCommand.formation),
@@ -760,6 +769,9 @@ class _CommandButton extends StatelessWidget {
     required this.onTap,
     this.isSpecial = false,
   });
+
+  String _specialLabel(BuildContext context) =>
+      AppLocalizations.of(context)!.battleCommandSpecialLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -812,7 +824,7 @@ class _CommandButton extends StatelessWidget {
               ),
               if (isSpecial)
                 Text(
-                  '特殊',
+                  _specialLabel(context),
                   style: TextStyle(
                     color: color.withValues(alpha: 0.6),
                     fontSize: 9,
@@ -898,8 +910,9 @@ class _DebugPanel extends StatelessWidget {
 
 class _TurningPointBanner extends StatelessWidget {
   final TurningPoint tp;
+  final AppLocalizations l10n;
 
-  const _TurningPointBanner({required this.tp});
+  const _TurningPointBanner({required this.tp, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -921,16 +934,16 @@ class _TurningPointBanner extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'ターニングポイント達成！',
-                    style: TextStyle(
+                  Text(
+                    l10n.battleTurningPointAchievedTitle,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    '${tp.name}  +${tp.rewardPoints}点',
+                    l10n.battleTurningPointRewardLine(tp.name, tp.rewardPoints),
                     style: const TextStyle(color: Colors.black87, fontSize: 11),
                   ),
                 ],
@@ -945,8 +958,9 @@ class _TurningPointBanner extends StatelessWidget {
 
 class _BattleMomentumBar extends StatelessWidget {
   final double momentum; // 0.0 = 敵優勢, 0.5 = イーブン, 1.0 = プレイヤー優勢
+  final AppLocalizations l10n;
 
-  const _BattleMomentumBar({required this.momentum});
+  const _BattleMomentumBar({required this.momentum, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -956,9 +970,9 @@ class _BattleMomentumBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '敵優勢',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
+            Text(
+              l10n.battleMomentumEnemyLabel,
+              style: const TextStyle(color: Colors.grey, fontSize: 10),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -1026,9 +1040,9 @@ class _BattleMomentumBar extends StatelessWidget {
               }),
             ),
             const SizedBox(width: 8),
-            const Text(
-              '味方優勢',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
+            Text(
+              l10n.battleMomentumPlayerLabel,
+              style: const TextStyle(color: Colors.grey, fontSize: 10),
             ),
           ],
         ),

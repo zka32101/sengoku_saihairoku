@@ -1777,4 +1777,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get battlePassFreeBadge => 'Free';
+
+  @override
+  String battleScenarioLoadError(String error) {
+    return 'Failed to load scenario: $error';
+  }
+
+  @override
+  String get battlePlayerSideLabel => 'Allies';
+
+  @override
+  String get battleEnemySideLabel => 'Enemy';
+
+  @override
+  String battleTpCounter(int count, int total) {
+    return 'TP: $count / $total';
+  }
+
+  @override
+  String battleComboCounter(int count) {
+    return 'Combo: $count';
+  }
+
+  @override
+  String battleCommandScore(int score) {
+    return 'Score: $score';
+  }
+
+  @override
+  String get battleCommandAdvance => 'Advance';
+
+  @override
+  String get battleCommandRetreat => 'Retreat';
+
+  @override
+  String get battleCommandWait => 'Wait';
+
+  @override
+  String get battleCommandAmbush => 'Ambush';
+
+  @override
+  String get battleCommandCharge => 'Charge';
+
+  @override
+  String get battleCommandRally => 'Rally';
+
+  @override
+  String get battleCommandShield => 'Shield';
+
+  @override
+  String get battleCommandFormation => 'Formation';
+
+  @override
+  String get battleCommandSpecialLabel => 'Special';
+
+  @override
+  String get battleTurningPointAchievedTitle => 'Turning Point Achieved!';
+
+  @override
+  String battleTurningPointRewardLine(String name, int points) {
+    return '$name  +$points pts';
+  }
+
+  @override
+  String get battleMomentumEnemyLabel => 'Enemy Advantage';
+
+  @override
+  String get battleMomentumPlayerLabel => 'Ally Advantage';
 }

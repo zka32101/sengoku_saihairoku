@@ -1738,4 +1738,71 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get battlePassFreeBadge => 'フリー';
+
+  @override
+  String battleScenarioLoadError(String error) {
+    return 'シナリオの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String get battlePlayerSideLabel => '味方';
+
+  @override
+  String get battleEnemySideLabel => '敵';
+
+  @override
+  String battleTpCounter(int count, int total) {
+    return 'TP: $count / $total';
+  }
+
+  @override
+  String battleComboCounter(int count) {
+    return 'コンボ: $count';
+  }
+
+  @override
+  String battleCommandScore(int score) {
+    return '采配: $score';
+  }
+
+  @override
+  String get battleCommandAdvance => '進軍';
+
+  @override
+  String get battleCommandRetreat => '撤退';
+
+  @override
+  String get battleCommandWait => '待機';
+
+  @override
+  String get battleCommandAmbush => '奇襲';
+
+  @override
+  String get battleCommandCharge => '突撃';
+
+  @override
+  String get battleCommandRally => '激励';
+
+  @override
+  String get battleCommandShield => '盾陣';
+
+  @override
+  String get battleCommandFormation => '陣形';
+
+  @override
+  String get battleCommandSpecialLabel => '特殊';
+
+  @override
+  String get battleTurningPointAchievedTitle => 'ターニングポイント達成！';
+
+  @override
+  String battleTurningPointRewardLine(String name, int points) {
+    return '$name  +$points点';
+  }
+
+  @override
+  String get battleMomentumEnemyLabel => '敵優勢';
+
+  @override
+  String get battleMomentumPlayerLabel => '味方優勢';
 }

@@ -2208,4 +2208,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dailyLoginClaimButton => '受け取る';
+
+  @override
+  String trendSparklineInsufficientData(String label) {
+    return '$label: データが不足しています';
+  }
 }

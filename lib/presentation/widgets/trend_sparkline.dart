@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/advanced_statistics.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// [PerformanceTrend]の時系列データを折れ線グラフで描画するスパークライン
 ///
@@ -26,7 +27,7 @@ class TrendSparkline extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Text(
-          '$label: データが不足しています',
+          AppLocalizations.of(context)!.trendSparklineInsufficientData(label),
           style: TextStyle(fontSize: 12, color: Colors.grey[500]),
         ),
       );

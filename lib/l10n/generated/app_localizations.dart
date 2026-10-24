@@ -3940,6 +3940,60 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'達成済み'**
   String get eventBannerClaimedLabel;
+
+  /// No description provided for @challengeCardScenarioOdigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'桶狭間'**
+  String get challengeCardScenarioOdigahara;
+
+  /// No description provided for @challengeCardScenarioNagashino.
+  ///
+  /// In ja, this message translates to:
+  /// **'長篠'**
+  String get challengeCardScenarioNagashino;
+
+  /// No description provided for @challengeCardScenarioHonnoji.
+  ///
+  /// In ja, this message translates to:
+  /// **'本能寺'**
+  String get challengeCardScenarioHonnoji;
+
+  /// No description provided for @challengeCardScenarioSekigahara.
+  ///
+  /// In ja, this message translates to:
+  /// **'関ヶ原'**
+  String get challengeCardScenarioSekigahara;
+
+  /// No description provided for @challengeCardScenarioKawanakajima.
+  ///
+  /// In ja, this message translates to:
+  /// **'川中島'**
+  String get challengeCardScenarioKawanakajima;
+
+  /// No description provided for @challengeCardScenarioItsukushima.
+  ///
+  /// In ja, this message translates to:
+  /// **'厳島'**
+  String get challengeCardScenarioItsukushima;
+
+  /// No description provided for @challengeCardScenarioOshijo.
+  ///
+  /// In ja, this message translates to:
+  /// **'忍城'**
+  String get challengeCardScenarioOshijo;
+
+  /// No description provided for @challengeCardRewardLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬'**
+  String get challengeCardRewardLabel;
+
+  /// No description provided for @challengeCardApLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'AP'**
+  String get challengeCardApLabel;
 }
 
 class _AppLocalizationsDelegate

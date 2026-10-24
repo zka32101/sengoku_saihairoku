@@ -2211,4 +2211,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventBannerClaimedLabel => 'Claimed';
+
+  @override
+  String get challengeCardScenarioOdigahara => 'Okehazama';
+
+  @override
+  String get challengeCardScenarioNagashino => 'Nagashino';
+
+  @override
+  String get challengeCardScenarioHonnoji => 'Honno-ji';
+
+  @override
+  String get challengeCardScenarioSekigahara => 'Sekigahara';
+
+  @override
+  String get challengeCardScenarioKawanakajima => 'Kawanakajima';
+
+  @override
+  String get challengeCardScenarioItsukushima => 'Itsukushima';
+
+  @override
+  String get challengeCardScenarioOshijo => 'Oshi Castle';
+
+  @override
+  String get challengeCardRewardLabel => 'Reward';
+
+  @override
+  String get challengeCardApLabel => 'AP';
 }

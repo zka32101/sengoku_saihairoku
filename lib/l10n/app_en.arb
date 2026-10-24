@@ -1087,5 +1087,14 @@
     "placeholders": { "multiplier": { "type": "String" } }
   },
   "eventBannerClaimRewardButton": "Claim Reward",
-  "eventBannerClaimedLabel": "Claimed"
+  "eventBannerClaimedLabel": "Claimed",
+  "challengeCardScenarioOdigahara": "Okehazama",
+  "challengeCardScenarioNagashino": "Nagashino",
+  "challengeCardScenarioHonnoji": "Honno-ji",
+  "challengeCardScenarioSekigahara": "Sekigahara",
+  "challengeCardScenarioKawanakajima": "Kawanakajima",
+  "challengeCardScenarioItsukushima": "Itsukushima",
+  "challengeCardScenarioOshijo": "Oshi Castle",
+  "challengeCardRewardLabel": "Reward",
+  "challengeCardApLabel": "AP"
 }

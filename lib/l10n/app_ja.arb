@@ -1090,5 +1090,14 @@
     "placeholders": { "multiplier": { "type": "String" } }
   },
   "eventBannerClaimRewardButton": "報酬を受け取る",
-  "eventBannerClaimedLabel": "達成済み"
+  "eventBannerClaimedLabel": "達成済み",
+  "challengeCardScenarioOdigahara": "桶狭間",
+  "challengeCardScenarioNagashino": "長篠",
+  "challengeCardScenarioHonnoji": "本能寺",
+  "challengeCardScenarioSekigahara": "関ヶ原",
+  "challengeCardScenarioKawanakajima": "川中島",
+  "challengeCardScenarioItsukushima": "厳島",
+  "challengeCardScenarioOshijo": "忍城",
+  "challengeCardRewardLabel": "報酬",
+  "challengeCardApLabel": "AP"
 }

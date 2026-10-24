@@ -2928,6 +2928,156 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'レベル・実績・バトルパス・プレスティジ…\n戦えば戦うほど武将は成長する。\nさあ、初陣の采配を振るおう！'**
   String get onboardingPage5Description;
+
+  /// No description provided for @replayWatchSharedTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有コードで観戦'**
+  String get replayWatchSharedTooltip;
+
+  /// No description provided for @replayDeleteConfirmTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除確認'**
+  String get replayDeleteConfirmTitle;
+
+  /// No description provided for @replayDeleteConfirmBody.
+  ///
+  /// In ja, this message translates to:
+  /// **'このリプレイを削除しますか？'**
+  String get replayDeleteConfirmBody;
+
+  /// No description provided for @replayDeleteButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'削除'**
+  String get replayDeleteButton;
+
+  /// No description provided for @replayShareIssuingCode.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有コードを発行中...'**
+  String get replayShareIssuingCode;
+
+  /// No description provided for @replayShareCodeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有コード'**
+  String get replayShareCodeTitle;
+
+  /// No description provided for @replayShareCodeHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'このコードをフレンドに伝えると観戦できます'**
+  String get replayShareCodeHint;
+
+  /// No description provided for @replayShareButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有する'**
+  String get replayShareButton;
+
+  /// No description provided for @replayShareMenuItem.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有'**
+  String get replayShareMenuItem;
+
+  /// No description provided for @replayShareFailure.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有に失敗しました: {error}'**
+  String replayShareFailure(String error);
+
+  /// No description provided for @replayShareText.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦国采配録のリプレイを見てください！\n共有コード: {code}'**
+  String replayShareText(String code);
+
+  /// No description provided for @replayCodeEntryTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'共有コードで観戦'**
+  String get replayCodeEntryTitle;
+
+  /// No description provided for @replayCodeEntryHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'例: A3F9QZ'**
+  String get replayCodeEntryHint;
+
+  /// No description provided for @replayWatchButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'観戦する'**
+  String get replayWatchButton;
+
+  /// No description provided for @replayFetchingReplay.
+  ///
+  /// In ja, this message translates to:
+  /// **'リプレイを取得中...'**
+  String get replayFetchingReplay;
+
+  /// No description provided for @replayNotFound.
+  ///
+  /// In ja, this message translates to:
+  /// **'リプレイが見つかりませんでした'**
+  String get replayNotFound;
+
+  /// No description provided for @replayFilterAll.
+  ///
+  /// In ja, this message translates to:
+  /// **'すべて'**
+  String get replayFilterAll;
+
+  /// No description provided for @replayEmptyMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'リプレイがありません'**
+  String get replayEmptyMessage;
+
+  /// No description provided for @replayLikeCountSuffix.
+  ///
+  /// In ja, this message translates to:
+  /// **'{count} いいね'**
+  String replayLikeCountSuffix(int count);
+
+  /// No description provided for @replayCommentHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'コメントを残す'**
+  String get replayCommentHint;
+
+  /// No description provided for @replayStatsTotalLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'総リプレイ数'**
+  String get replayStatsTotalLabel;
+
+  /// No description provided for @replayStatsWinRateLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝率'**
+  String get replayStatsWinRateLabel;
+
+  /// No description provided for @replayStatsAverageScoreLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'平均スコア'**
+  String get replayStatsAverageScoreLabel;
+
+  /// No description provided for @replayStatsWinLossLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'勝/敗'**
+  String get replayStatsWinLossLabel;
+
+  /// No description provided for @replayDifficultyScoreLine.
+  ///
+  /// In ja, this message translates to:
+  /// **'{difficulty} • スコア: {score}'**
+  String replayDifficultyScoreLine(String difficulty, int score);
 }
 
 class _AppLocalizationsDelegate

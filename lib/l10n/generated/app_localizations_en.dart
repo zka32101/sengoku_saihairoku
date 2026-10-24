@@ -2182,4 +2182,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get replayPlayerUnitsLabel => 'Troops';
+
+  @override
+  String eventBannerRemainingDays(int days, int hours) {
+    return '${days}d ${hours}h left';
+  }
+
+  @override
+  String eventBannerRemainingHours(int hours, int minutes) {
+    return '${hours}h ${minutes}m left';
+  }
+
+  @override
+  String eventBannerRemainingMinutes(int minutes) {
+    return '${minutes}m left';
+  }
+
+  @override
+  String get eventBannerLimitedEventLabel => 'Limited-Time Event';
+
+  @override
+  String eventBannerRewardMultiplier(String multiplier) {
+    return '${multiplier}x Rewards';
+  }
+
+  @override
+  String get eventBannerClaimRewardButton => 'Claim Reward';
+
+  @override
+  String get eventBannerClaimedLabel => 'Claimed';
 }

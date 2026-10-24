@@ -3898,6 +3898,48 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'兵力'**
   String get replayPlayerUnitsLabel;
+
+  /// No description provided for @eventBannerRemainingDays.
+  ///
+  /// In ja, this message translates to:
+  /// **'あと{days}日{hours}時間'**
+  String eventBannerRemainingDays(int days, int hours);
+
+  /// No description provided for @eventBannerRemainingHours.
+  ///
+  /// In ja, this message translates to:
+  /// **'あと{hours}時間{minutes}分'**
+  String eventBannerRemainingHours(int hours, int minutes);
+
+  /// No description provided for @eventBannerRemainingMinutes.
+  ///
+  /// In ja, this message translates to:
+  /// **'あと{minutes}分'**
+  String eventBannerRemainingMinutes(int minutes);
+
+  /// No description provided for @eventBannerLimitedEventLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'期間限定イベント'**
+  String get eventBannerLimitedEventLabel;
+
+  /// No description provided for @eventBannerRewardMultiplier.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬{multiplier}倍'**
+  String eventBannerRewardMultiplier(String multiplier);
+
+  /// No description provided for @eventBannerClaimRewardButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'報酬を受け取る'**
+  String get eventBannerClaimRewardButton;
+
+  /// No description provided for @eventBannerClaimedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'達成済み'**
+  String get eventBannerClaimedLabel;
 }
 
 class _AppLocalizationsDelegate

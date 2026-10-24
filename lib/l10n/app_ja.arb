@@ -1065,5 +1065,30 @@
   },
   "replayPlayerSpeedLabel": "速度: ",
   "replayPlayerHpLabel": "HP",
-  "replayPlayerUnitsLabel": "兵力"
+  "replayPlayerUnitsLabel": "兵力",
+  "eventBannerRemainingDays": "あと{days}日{hours}時間",
+  "@eventBannerRemainingDays": {
+    "placeholders": {
+      "days": { "type": "int" },
+      "hours": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingHours": "あと{hours}時間{minutes}分",
+  "@eventBannerRemainingHours": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "eventBannerRemainingMinutes": "あと{minutes}分",
+  "@eventBannerRemainingMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "eventBannerLimitedEventLabel": "期間限定イベント",
+  "eventBannerRewardMultiplier": "報酬{multiplier}倍",
+  "@eventBannerRewardMultiplier": {
+    "placeholders": { "multiplier": { "type": "String" } }
+  },
+  "eventBannerClaimRewardButton": "報酬を受け取る",
+  "eventBannerClaimedLabel": "達成済み"
 }

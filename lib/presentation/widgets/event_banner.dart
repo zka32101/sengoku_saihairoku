@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../data/models/event_challenge.dart';
+import '../../l10n/generated/app_localizations.dart';
 
 /// 期間限定イベントチャレンジのバナー（ホーム画面上部に表示）
 class EventBanner extends StatelessWidget {
@@ -16,14 +17,19 @@ class EventBanner extends StatelessWidget {
     this.onClaim,
   });
 
-  String _formatRemaining(Duration d) {
-    if (d.inDays > 0) return 'あと${d.inDays}日${d.inHours % 24}時間';
-    if (d.inHours > 0) return 'あと${d.inHours}時間${d.inMinutes % 60}分';
-    return 'あと${d.inMinutes}分';
+  String _formatRemaining(AppLocalizations l10n, Duration d) {
+    if (d.inDays > 0) {
+      return l10n.eventBannerRemainingDays(d.inDays, d.inHours % 24);
+    }
+    if (d.inHours > 0) {
+      return l10n.eventBannerRemainingHours(d.inHours, d.inMinutes % 60);
+    }
+    return l10n.eventBannerRemainingMinutes(d.inMinutes);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isCompleted = progress != null;
     final isClaimed = progress?.claimed ?? false;
 
@@ -48,9 +54,9 @@ class EventBanner extends StatelessWidget {
               children: [
                 const Icon(Icons.event, color: Color(0xFFFFD700), size: 20),
                 const SizedBox(width: 6),
-                const Text(
-                  '期間限定イベント',
-                  style: TextStyle(
+                Text(
+                  l10n.eventBannerLimitedEventLabel,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFFD700),
@@ -58,7 +64,7 @@ class EventBanner extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  _formatRemaining(event.remaining),
+                  _formatRemaining(l10n, event.remaining),
                   style: const TextStyle(fontSize: 11, color: Colors.white70),
                 ),
               ],
@@ -91,7 +97,8 @@ class EventBanner extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      '報酬${event.rewardMultiplier.toStringAsFixed(1)}倍',
+                      l10n.eventBannerRewardMultiplier(
+                          event.rewardMultiplier.toStringAsFixed(1)),
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -109,12 +116,12 @@ class EventBanner extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 4),
                     ),
-                    child: const Text('報酬を受け取る',
-                        style: TextStyle(fontSize: 12)),
+                    child: Text(l10n.eventBannerClaimRewardButton,
+                        style: const TextStyle(fontSize: 12)),
                   )
                 else if (isClaimed)
-                  const Text('達成済み',
-                      style: TextStyle(
+                  Text(l10n.eventBannerClaimedLabel,
+                      style: const TextStyle(
                           fontSize: 12,
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.bold)),

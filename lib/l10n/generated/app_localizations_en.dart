@@ -2143,4 +2143,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpModalRecommendationsLabel => 'Recommendations';
+
+  @override
+  String replayPlayerTurnLabel(int turn) {
+    return 'Turn $turn';
+  }
+
+  @override
+  String replayPlayerCommandUsedLabel(String command) {
+    return 'Command: $command';
+  }
+
+  @override
+  String get replayPlayerPlayerLabel => 'Player';
+
+  @override
+  String get replayPlayerEnemyLabel => 'Enemy';
+
+  @override
+  String get replayPlayerEventLabel => 'Event';
+
+  @override
+  String get replayPlayerTpAchievedBadge => '✨ Turning Point Achieved';
+
+  @override
+  String get replayPlayerTurnProgressLabel => 'Turn Progress';
+
+  @override
+  String replayPlayerTurnFraction(int current, int total) {
+    return '$current/$total';
+  }
+
+  @override
+  String get replayPlayerSpeedLabel => 'Speed: ';
+
+  @override
+  String get replayPlayerHpLabel => 'HP';
+
+  @override
+  String get replayPlayerUnitsLabel => 'Troops';
 }

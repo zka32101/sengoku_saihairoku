@@ -3832,6 +3832,72 @@ abstract class AppLocalizations {
   /// In ja, this message translates to:
   /// **'推奨事項'**
   String get helpModalRecommendationsLabel;
+
+  /// No description provided for @replayPlayerTurnLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターン {turn}'**
+  String replayPlayerTurnLabel(int turn);
+
+  /// No description provided for @replayPlayerCommandUsedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'コマンド: {command}'**
+  String replayPlayerCommandUsedLabel(String command);
+
+  /// No description provided for @replayPlayerPlayerLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'プレイヤー'**
+  String get replayPlayerPlayerLabel;
+
+  /// No description provided for @replayPlayerEnemyLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'敵'**
+  String get replayPlayerEnemyLabel;
+
+  /// No description provided for @replayPlayerEventLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'イベント'**
+  String get replayPlayerEventLabel;
+
+  /// No description provided for @replayPlayerTpAchievedBadge.
+  ///
+  /// In ja, this message translates to:
+  /// **'✨ ターニングポイント達成'**
+  String get replayPlayerTpAchievedBadge;
+
+  /// No description provided for @replayPlayerTurnProgressLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'ターン進行'**
+  String get replayPlayerTurnProgressLabel;
+
+  /// No description provided for @replayPlayerTurnFraction.
+  ///
+  /// In ja, this message translates to:
+  /// **'{current}/{total}'**
+  String replayPlayerTurnFraction(int current, int total);
+
+  /// No description provided for @replayPlayerSpeedLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'速度: '**
+  String get replayPlayerSpeedLabel;
+
+  /// No description provided for @replayPlayerHpLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'HP'**
+  String get replayPlayerHpLabel;
+
+  /// No description provided for @replayPlayerUnitsLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'兵力'**
+  String get replayPlayerUnitsLabel;
 }
 
 class _AppLocalizationsDelegate

@@ -1039,5 +1039,28 @@
   "helpModalNoHintsForDifficulty": "No hints for this difficulty",
   "helpModalEffectLabel": "Effect",
   "helpModalLimitationLabel": "Limitations",
-  "helpModalRecommendationsLabel": "Recommendations"
+  "helpModalRecommendationsLabel": "Recommendations",
+  "replayPlayerTurnLabel": "Turn {turn}",
+  "@replayPlayerTurnLabel": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "replayPlayerCommandUsedLabel": "Command: {command}",
+  "@replayPlayerCommandUsedLabel": {
+    "placeholders": { "command": { "type": "String" } }
+  },
+  "replayPlayerPlayerLabel": "Player",
+  "replayPlayerEnemyLabel": "Enemy",
+  "replayPlayerEventLabel": "Event",
+  "replayPlayerTpAchievedBadge": "✨ Turning Point Achieved",
+  "replayPlayerTurnProgressLabel": "Turn Progress",
+  "replayPlayerTurnFraction": "{current}/{total}",
+  "@replayPlayerTurnFraction": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "replayPlayerSpeedLabel": "Speed: ",
+  "replayPlayerHpLabel": "HP",
+  "replayPlayerUnitsLabel": "Troops"
 }

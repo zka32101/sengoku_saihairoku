@@ -1042,5 +1042,28 @@
   "helpModalNoHintsForDifficulty": "この難易度のヒントはありません",
   "helpModalEffectLabel": "効果",
   "helpModalLimitationLabel": "制限事項",
-  "helpModalRecommendationsLabel": "推奨事項"
+  "helpModalRecommendationsLabel": "推奨事項",
+  "replayPlayerTurnLabel": "ターン {turn}",
+  "@replayPlayerTurnLabel": {
+    "placeholders": { "turn": { "type": "int" } }
+  },
+  "replayPlayerCommandUsedLabel": "コマンド: {command}",
+  "@replayPlayerCommandUsedLabel": {
+    "placeholders": { "command": { "type": "String" } }
+  },
+  "replayPlayerPlayerLabel": "プレイヤー",
+  "replayPlayerEnemyLabel": "敵",
+  "replayPlayerEventLabel": "イベント",
+  "replayPlayerTpAchievedBadge": "✨ ターニングポイント達成",
+  "replayPlayerTurnProgressLabel": "ターン進行",
+  "replayPlayerTurnFraction": "{current}/{total}",
+  "@replayPlayerTurnFraction": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "replayPlayerSpeedLabel": "速度: ",
+  "replayPlayerHpLabel": "HP",
+  "replayPlayerUnitsLabel": "兵力"
 }

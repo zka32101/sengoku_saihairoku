@@ -92,6 +92,8 @@ class MapBackground extends PositionComponent {
         _drawMikatagahara(canvas);
       case Scenario.anegawa:
         _drawAnegawa(canvas);
+      case Scenario.shizugatake:
+        _drawShizugatake(canvas);
     }
   }
 
@@ -215,6 +217,23 @@ class MapBackground extends PositionComponent {
       ..color = const Color(0xFFCCAA77).withValues(alpha: 0.12)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18);
     canvas.drawRect(Rect.fromLTWH(0, 260, 360, 140), dustPaint);
+  }
+
+  void _drawShizugatake(Canvas canvas) {
+    // 賤ヶ岳（中央の険しい山）
+    _drawHill(canvas, 160, 280, 65);
+    _drawLabel(canvas, '賤ヶ岳', 148, 290, const Color(0xFFAA8844));
+
+    // 余呉湖（画面上部の湖）
+    final lakePaint = Paint()..color = const Color(0xFF1A4A6A);
+    canvas.drawRect(Rect.fromLTWH(0, 60, 360, 60), lakePaint);
+    _drawLabel(canvas, '余呉湖', 155, 85, const Color(0xFF64B5F6));
+
+    // 美濃大返しの急行軍を示す土煙の帯（画面右から中央へ）
+    final dustPaint = Paint()
+      ..color = const Color(0xFFCCAA77).withValues(alpha: 0.15)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16);
+    canvas.drawRect(Rect.fromLTWH(220, 180, 140, 280), dustPaint);
   }
 
   // 地面に対する「押しつぶし率」：真円ではなく縦に潰した楕円にすることで

@@ -61,6 +61,9 @@ class ScenarioSelectScreen extends StatelessWidget {
         true),
     _ScenarioEntry(Scenario.anegawa, l10n.scenarioNameAnegawa, 1570, 2,
         l10n.scenarioPlayTimeAnegawa, l10n.scenarioDescAnegawa, true),
+    _ScenarioEntry(Scenario.shizugatake, l10n.scenarioNameShizugatake, 1583,
+        3, l10n.scenarioPlayTimeShizugatake, l10n.scenarioDescShizugatake,
+        true),
   ];
 
   @override

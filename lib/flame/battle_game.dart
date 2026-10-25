@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import '../core/services/audio_manager.dart';
@@ -22,6 +23,11 @@ class BattleGame extends FlameGame {
   late final BattleState _battleState;
   final _ScaledWorld _world = _ScaledWorld();
   bool _ready = false;
+
+  final _rng = Random();
+  double _shakeTimeLeft = 0;
+  double _shakeDuration = 0;
+  double _shakeMagnitude = 0;
 
   BattleGame({
     required this.scenarioData,
@@ -91,6 +97,7 @@ class BattleGame extends FlameGame {
           ));
           if (isCritical ?? false) {
             AudioManager().playSe('crit', 'assets/audio/crit.wav');
+            _triggerShake(6, 0.2);
           }
         }
     }
@@ -99,6 +106,7 @@ class BattleGame extends FlameGame {
   void _spawnTpEffect() {
     // TP達成エフェクトはフィールド中央に表示
     _world.add(TpSparkleEffect(pos: Vector2(180, 320)));
+    _triggerShake(8, 0.3);
   }
 
   @override
@@ -113,6 +121,29 @@ class BattleGame extends FlameGame {
   void update(double dt) {
     super.update(dt);
     if (_ready) _battleState.update(dt);
+    _updateShake(dt);
+  }
+
+  /// 迫力を演出する画面シェイク。クリティカルヒット・TP達成・敵将討死の瞬間に
+  /// [_triggerShake]で呼び出され、時間経過とともに揺れ幅が減衰する。
+  void _updateShake(double dt) {
+    if (_shakeTimeLeft <= 0) {
+      if (_world.position != Vector2.zero()) _world.position = Vector2.zero();
+      return;
+    }
+    _shakeTimeLeft -= dt;
+    final decay = (_shakeTimeLeft / _shakeDuration).clamp(0.0, 1.0);
+    final magnitude = _shakeMagnitude * decay;
+    _world.position = Vector2(
+      (_rng.nextDouble() * 2 - 1) * magnitude,
+      (_rng.nextDouble() * 2 - 1) * magnitude,
+    );
+  }
+
+  void _triggerShake(double magnitude, double duration) {
+    _shakeMagnitude = magnitude;
+    _shakeDuration = duration;
+    _shakeTimeLeft = duration;
   }
 
   void executeCommand(PlayerCommand command) {

@@ -41,6 +41,25 @@ class MessageLoader {
     }
   }
 
+  /// ターニングポイント達成時のフレーバーテキストを取得する。
+  /// `index`は[TurningPointEvaluator]のonAchievedが渡すターニングポイントの
+  /// インデックス（0始まり）と対応する。
+  String? getTpFlavor(String scenarioId, int index) {
+    if (!_isInitialized) {
+      throw Exception('MessageLoader not initialized. Call initialize() first.');
+    }
+
+    try {
+      final scenarioMessages = _messages[scenarioId] as Map<String, dynamic>?;
+      if (scenarioMessages == null) return null;
+      final flavors = scenarioMessages['tpFlavor'] as List<dynamic>?;
+      if (flavors == null || index < 0 || index >= flavors.length) return null;
+      return flavors[index] as String?;
+    } catch (e) {
+      return null;
+    }
+  }
+
   List<String> getScenarioMessages(String scenarioId) {
     if (!_isInitialized) {
       throw Exception('MessageLoader not initialized. Call initialize() first.');

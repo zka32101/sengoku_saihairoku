@@ -8,6 +8,8 @@ import '../../data/repositories/scenario_repository.dart';
 import '../../domain/scoring/battle_event_log.dart';
 import '../../domain/state/battle_state.dart';
 import '../../core/services/audio_manager.dart';
+import '../../core/services/message_loader.dart';
+import '../../core/services/message_settings.dart';
 import '../../flame/battle_game.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
@@ -48,6 +50,8 @@ class _BattleScreenState extends State<BattleScreen> {
   bool _loading = true;
   String? _errorMessage;
   TurningPoint? _lastTP;
+  String? _lastTPFlavor;
+  final _messageLoader = MessageLoader();
 
   // Cached UI values
   double _playerRatio = 1.0;
@@ -72,6 +76,7 @@ class _BattleScreenState extends State<BattleScreen> {
 
   Future<void> _loadScenario() async {
     try {
+      await _messageLoader.initialize();
       var data = await ScenarioRepository().getScenario(widget.scenario);
 
       // Apply alternative perspective if specified
@@ -108,7 +113,13 @@ class _BattleScreenState extends State<BattleScreen> {
       game.onBattleEnd = _onBattleEnd;
       game.onTurningPointAchieved = (tp, idx) {
         if (!mounted) return;
-        setState(() => _lastTP = tp);
+        final flavor = MessageSettings().storyMessagesEnabled
+            ? _messageLoader.getTpFlavor(widget.scenario.name, idx)
+            : null;
+        setState(() {
+          _lastTP = tp;
+          _lastTPFlavor = flavor;
+        });
         Future.delayed(const Duration(seconds: 2), () {
           if (mounted) setState(() => _lastTP = null);
         });
@@ -270,7 +281,9 @@ class _BattleScreenState extends State<BattleScreen> {
               child: Stack(
                 children: [
                   GameWidget(game: game),
-                  if (_lastTP != null) _TurningPointBanner(tp: _lastTP!, l10n: l10n),
+                  if (_lastTP != null)
+                    _TurningPointBanner(
+                        tp: _lastTP!, flavorText: _lastTPFlavor, l10n: l10n),
                   if (_debugMode)
                     _DebugPanel(
                       elapsed: _elapsed,
@@ -910,9 +923,11 @@ class _DebugPanel extends StatelessWidget {
 
 class _TurningPointBanner extends StatelessWidget {
   final TurningPoint tp;
+  final String? flavorText;
   final AppLocalizations l10n;
 
-  const _TurningPointBanner({required this.tp, required this.l10n});
+  const _TurningPointBanner(
+      {required this.tp, this.flavorText, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -946,6 +961,18 @@ class _TurningPointBanner extends StatelessWidget {
                     l10n.battleTurningPointRewardLine(tp.name, tp.rewardPoints),
                     style: const TextStyle(color: Colors.black87, fontSize: 11),
                   ),
+                  if (flavorText != null && flavorText!.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        flavorText!,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 11,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

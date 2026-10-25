@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'バックグラウンドミュージック'**
   String get settingsBgmSubtitle;
 
+  /// No description provided for @prologueStartButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'出陣'**
+  String get prologueStartButton;
+
   /// No description provided for @settingsStoryMessages.
   ///
   /// In ja, this message translates to:

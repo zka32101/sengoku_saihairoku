@@ -23,6 +23,7 @@
   "settingsSfxSubtitle": "SE",
   "settingsBgm": "BGM",
   "settingsBgmSubtitle": "バックグラウンドミュージック",
+  "prologueStartButton": "出陣",
   "settingsStoryMessages": "ストーリーメッセージ",
   "settingsStoryMessagesSubtitle": "戦闘後のエピローグ閲覧ボタンの表示",
   "settingsLanguageSection": "言語 / Language",

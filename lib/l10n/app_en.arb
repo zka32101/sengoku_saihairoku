@@ -20,6 +20,7 @@
   "settingsSfxSubtitle": "SFX",
   "settingsBgm": "Music",
   "settingsBgmSubtitle": "Background music",
+  "prologueStartButton": "Begin Battle",
   "settingsStoryMessages": "Story Messages",
   "settingsStoryMessagesSubtitle": "Show the post-battle epilogue button",
   "settingsLanguageSection": "Language",

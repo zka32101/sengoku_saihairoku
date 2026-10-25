@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
+import '../../core/services/message_settings.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/models/difficulty_mode.dart';
 import '../../data/models/warlord_data.dart';
@@ -12,6 +13,7 @@ import '../../domain/warlord/warlord_compatibility.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
+import 'prologue_screen.dart';
 
 class _ScenarioEntry {
   final Scenario scenario;
@@ -413,6 +415,26 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
         .setLastDifficulty(widget.scenario, difficulty);
 
     Navigator.pop(context);
+
+    final prologueArgs = PrologueScreenArgs(
+      scenario: widget.scenario,
+      alternativePerspectiveId: perspective,
+      difficultyMode: difficulty,
+      warlordStrengthMultiplier: _warlordStrengthMultiplier,
+      perUnitStrengthMultipliers: _perUnitStrengthMultipliers,
+      sortiedWarlordIds: _selectedWarlords.map((w) => w.id).toList(),
+    );
+
+    if (MessageSettings().storyMessagesEnabled) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PrologueScreen(args: prologueArgs),
+        ),
+      );
+      return;
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(

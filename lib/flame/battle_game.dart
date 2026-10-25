@@ -98,6 +98,7 @@ class BattleGame extends FlameGame {
           if (isCritical ?? false) {
             AudioManager().playSe('crit', 'assets/audio/crit.wav');
             _triggerShake(6, 0.2);
+            _world.add(CriticalHitEffect(pos: pos));
           }
         }
     }

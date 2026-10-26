@@ -348,6 +348,14 @@ class DamageNumberEffect extends PositionComponent {
     // フローアップのY移動
     final floatY = t * -40;
 
+    // 出現時に弾むスケール演出（クリティカルはより大きく弾ませる）
+    final popTarget = isCritical ? 1.5 : 1.2;
+    final scale = t < 0.15
+        ? 0.3 + (popTarget - 0.3) * (t / 0.15)
+        : t < 0.3
+            ? popTarget + (1.0 - popTarget) * ((t - 0.15) / 0.15)
+            : 1.0;
+
     // テキストスタイル
     final textSpan = TextSpan(
       text: isCritical
@@ -368,9 +376,13 @@ class DamageNumberEffect extends PositionComponent {
     );
     textPainter.layout();
 
+    canvas.save();
+    canvas.translate(0, floatY);
+    canvas.scale(scale);
+
     // 影効果
     canvas.drawCircle(
-      Offset(0, floatY),
+      Offset.zero,
       8,
       Paint()
         ..color = const Color(0xFF000000).withValues(alpha: alpha * 0.3)
@@ -380,8 +392,10 @@ class DamageNumberEffect extends PositionComponent {
     // テキスト描画
     textPainter.paint(
       canvas,
-      Offset(-textPainter.width / 2, floatY - textPainter.height / 2),
+      Offset(-textPainter.width / 2, -textPainter.height / 2),
     );
+
+    canvas.restore();
   }
 }
 

@@ -51,6 +51,8 @@ class _BattleScreenState extends State<BattleScreen> {
   String? _errorMessage;
   TurningPoint? _lastTP;
   String? _lastTPFlavor;
+  bool _showEndFlash = false;
+  bool _endFlashWon = false;
   final _messageLoader = MessageLoader();
 
   // Cached UI values
@@ -222,16 +224,25 @@ class _BattleScreenState extends State<BattleScreen> {
       return;
     }
 
-    Navigator.pushReplacementNamed(
-      context,
-      '/result',
-      arguments: ResultScreenArgs(
-        scenario: widget.scenario,
-        difficulty: widget.difficultyMode,
-        data: data,
-        sortiedWarlordIds: widget.sortiedWarlordIds,
-      ),
-    );
+    // 決着の瞬間に一拍置くため、結果画面へ遷移する前に短いフラッシュ演出を挟む。
+    setState(() {
+      _showEndFlash = true;
+      _endFlashWon = data.won;
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(
+        context,
+        '/result',
+        arguments: ResultScreenArgs(
+          scenario: widget.scenario,
+          difficulty: widget.difficultyMode,
+          data: data,
+          sortiedWarlordIds: widget.sortiedWarlordIds,
+        ),
+      );
+    });
   }
 
   @override
@@ -265,8 +276,10 @@ class _BattleScreenState extends State<BattleScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0A1A0A),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
+            Column(
+              children: [
             _BattleStatusBar(
               displayName: data.displayName,
               playerRatio: _playerRatio,
@@ -318,7 +331,58 @@ class _BattleScreenState extends State<BattleScreen> {
                 }
               },
             ),
+              ],
+            ),
+            if (_showEndFlash)
+              _BattleEndFlash(won: _endFlashWon),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BattleEndFlash extends StatefulWidget {
+  final bool won;
+
+  const _BattleEndFlash({required this.won});
+
+  @override
+  State<_BattleEndFlash> createState() => _BattleEndFlashState();
+}
+
+class _BattleEndFlashState extends State<_BattleEndFlash>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..forward();
+    _opacity = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 15),
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.0), weight: 85),
+    ]).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final color = widget.won ? const Color(0xFFFFD700) : const Color(0xFF8B1A1A);
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _opacity,
+        builder: (context, child) => Container(
+          color: color.withValues(alpha: _opacity.value * 0.6),
         ),
       ),
     );

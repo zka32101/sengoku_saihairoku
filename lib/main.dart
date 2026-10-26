@@ -31,6 +31,7 @@ import 'data/repositories/onboarding_repository.dart';
 import 'presentation/screens/friends_screen.dart';
 import 'presentation/screens/warlord_collection_screen.dart';
 import 'presentation/screens/chain_battle_screen.dart';
+import 'presentation/screens/codex_screen.dart';
 import 'data/repositories/daily_challenge_repository.dart';
 import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
@@ -187,6 +188,7 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
         '/friends': (_) => const FriendsScreen(),
         '/warlords': (_) => const WarlordCollectionScreen(),
         '/chain_battle': (_) => const ChainBattleScreen(),
+        '/codex': (_) => const CodexScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {

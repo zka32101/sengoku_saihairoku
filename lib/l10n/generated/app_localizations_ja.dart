@@ -805,6 +805,33 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeFriendsButton => 'フレンドを見る';
 
   @override
+  String get homeCodexTitle => '戦史図鑑';
+
+  @override
+  String get homeCodexSubtitle => 'クリアした合戦の序章・転機・顛末を読み返そう';
+
+  @override
+  String get homeCodexButton => '図鑑を見る';
+
+  @override
+  String get codexTitle => '戦史図鑑';
+
+  @override
+  String get codexLockedName => '？？？';
+
+  @override
+  String get codexLockedHint => 'このシナリオをクリアすると解放されます';
+
+  @override
+  String get codexPrologueHeading => '序章';
+
+  @override
+  String get codexTurningPointsHeading => '転機';
+
+  @override
+  String get codexEpilogueHeading => '顛末';
+
+  @override
   String get homeWarlordCollectionTitle => '武将図鑑';
 
   @override

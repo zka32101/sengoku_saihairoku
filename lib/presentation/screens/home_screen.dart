@@ -228,6 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildFriendsCard(context, l10n),
                     const SizedBox(height: 16),
                     _buildWarlordCollectionCard(context, l10n),
+                    const SizedBox(height: 16),
+                    _buildCodexCard(context, l10n),
                   ],
                 ),
               ),
@@ -627,6 +629,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.orangeAccent),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCodexCard(BuildContext context, AppLocalizations l10n) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.menu_book, color: Color(0xFFFFD700), size: 28),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.homeCodexTitle,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.homeCodexSubtitle,
+              style: TextStyle(color: Colors.grey[400]),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/codex'),
+                icon: const Icon(Icons.menu_book, color: Color(0xFFFFD700)),
+                label: Text(
+                  l10n.homeCodexButton,
+                  style: const TextStyle(color: Color(0xFFFFD700)),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Color(0xFFFFD700)),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),

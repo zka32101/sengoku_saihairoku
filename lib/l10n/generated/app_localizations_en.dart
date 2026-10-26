@@ -814,6 +814,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeFriendsButton => 'View Friends';
 
   @override
+  String get homeCodexTitle => 'War Chronicle';
+
+  @override
+  String get homeCodexSubtitle =>
+      'Revisit the prologue, turning points, and aftermath of cleared battles';
+
+  @override
+  String get homeCodexButton => 'View Chronicle';
+
+  @override
+  String get codexTitle => 'War Chronicle';
+
+  @override
+  String get codexLockedName => '???';
+
+  @override
+  String get codexLockedHint => 'Clear this scenario to unlock it';
+
+  @override
+  String get codexPrologueHeading => 'Prologue';
+
+  @override
+  String get codexTurningPointsHeading => 'Turning Points';
+
+  @override
+  String get codexEpilogueHeading => 'Aftermath';
+
+  @override
   String get homeWarlordCollectionTitle => 'Warlord Collection';
 
   @override

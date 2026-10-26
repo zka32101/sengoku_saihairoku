@@ -1550,6 +1550,60 @@ abstract class AppLocalizations {
   /// **'フレンドを見る'**
   String get homeFriendsButton;
 
+  /// No description provided for @homeCodexTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦史図鑑'**
+  String get homeCodexTitle;
+
+  /// No description provided for @homeCodexSubtitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'クリアした合戦の序章・転機・顛末を読み返そう'**
+  String get homeCodexSubtitle;
+
+  /// No description provided for @homeCodexButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'図鑑を見る'**
+  String get homeCodexButton;
+
+  /// No description provided for @codexTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦史図鑑'**
+  String get codexTitle;
+
+  /// No description provided for @codexLockedName.
+  ///
+  /// In ja, this message translates to:
+  /// **'？？？'**
+  String get codexLockedName;
+
+  /// No description provided for @codexLockedHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'このシナリオをクリアすると解放されます'**
+  String get codexLockedHint;
+
+  /// No description provided for @codexPrologueHeading.
+  ///
+  /// In ja, this message translates to:
+  /// **'序章'**
+  String get codexPrologueHeading;
+
+  /// No description provided for @codexTurningPointsHeading.
+  ///
+  /// In ja, this message translates to:
+  /// **'転機'**
+  String get codexTurningPointsHeading;
+
+  /// No description provided for @codexEpilogueHeading.
+  ///
+  /// In ja, this message translates to:
+  /// **'顛末'**
+  String get codexEpilogueHeading;
+
   /// No description provided for @homeWarlordCollectionTitle.
   ///
   /// In ja, this message translates to:

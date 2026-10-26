@@ -67,11 +67,19 @@ class BattleGame extends FlameGame {
         onEffect: _spawnUnitEffect,
       ));
     }
-    for (final unit in _battleState.enemyArmy.units) {
+    for (final (index, unit) in _battleState.enemyArmy.units.indexed) {
+      // 先頭ユニット＝敵将。討死の瞬間だけ演出を強める。
+      final isCommander = index == 0;
       await _world.add(UnitComponent(
         unit: unit,
         isPlayer: false,
-        onEffect: _spawnUnitEffect,
+        onEffect: (pos, type, {damage, isCritical}) => _spawnUnitEffect(
+          pos,
+          type,
+          damage: damage,
+          isCritical: isCritical,
+          isCommander: isCommander,
+        ),
       ));
     }
 
@@ -80,7 +88,8 @@ class BattleGame extends FlameGame {
     _ready = true;
   }
 
-  void _spawnUnitEffect(Vector2 pos, UnitEffectType type, {double? damage, bool? isCritical}) {
+  void _spawnUnitEffect(Vector2 pos, UnitEffectType type,
+      {double? damage, bool? isCritical, bool isCommander = false}) {
     switch (type) {
       case UnitEffectType.hit:
         _world.add(HitFlashEffect(pos: pos, isPlayer: true));
@@ -88,6 +97,10 @@ class BattleGame extends FlameGame {
       case UnitEffectType.death:
         _world.add(DeathExplosionEffect(pos: pos, isPlayer: true));
         AudioManager().playSe('death', 'assets/audio/death.wav');
+        if (isCommander) {
+          // 敵将討死の瞬間は、通常の死亡エフェクトより強い揺れで決着の重みを強調する。
+          _triggerShake(12, 0.5);
+        }
       case UnitEffectType.damage:
         if (damage != null) {
           _world.add(DamageNumberEffect(

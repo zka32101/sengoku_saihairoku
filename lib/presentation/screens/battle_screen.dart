@@ -1047,14 +1047,38 @@ class _TurningPointBanner extends StatelessWidget {
   }
 }
 
-class _BattleMomentumBar extends StatelessWidget {
+class _BattleMomentumBar extends StatefulWidget {
   final double momentum; // 0.0 = 敵優勢, 0.5 = イーブン, 1.0 = プレイヤー優勢
   final AppLocalizations l10n;
 
   const _BattleMomentumBar({required this.momentum, required this.l10n});
 
   @override
+  State<_BattleMomentumBar> createState() => _BattleMomentumBarState();
+}
+
+class _BattleMomentumBarState extends State<_BattleMomentumBar>
+    with SingleTickerProviderStateMixin {
+  // 劣勢の危機感を演出するため、形勢がこの値以下になるとバーが赤く明滅する。
+  static const _dangerThreshold = 0.2;
+
+  late final AnimationController _pulseController = AnimationController(
+    duration: const Duration(milliseconds: 600),
+    vsync: this,
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final momentum = widget.momentum;
+    final l10n = widget.l10n;
+    final inDanger = momentum <= _dangerThreshold;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1071,16 +1095,36 @@ class _BattleMomentumBar extends StatelessWidget {
                 final width = constraints.maxWidth;
                 final playerWidth = width * momentum;
 
-                return Container(
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1A1A1A),
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(
-                      color: Colors.grey.withValues(alpha: 0.3),
-                      width: 0.5,
-                    ),
-                  ),
+                return AnimatedBuilder(
+                  animation: _pulseController,
+                  builder: (context, child) {
+                    final pulse = inDanger ? _pulseController.value : 0.0;
+                    return Container(
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1A1A1A),
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(
+                          color: inDanger
+                              ? Color.lerp(const Color(0xFFFF3333),
+                                  Colors.red.withValues(alpha: 0.3), pulse)!
+                              : Colors.grey.withValues(alpha: 0.3),
+                          width: inDanger ? 1.2 : 0.5,
+                        ),
+                        boxShadow: inDanger
+                            ? [
+                                BoxShadow(
+                                  color: const Color(0xFFFF3333)
+                                      .withValues(alpha: 0.5 * pulse),
+                                  blurRadius: 6,
+                                  spreadRadius: 1,
+                                ),
+                              ]
+                            : null,
+                      ),
+                      child: child,
+                    );
+                  },
                   child: Stack(
                     children: [
                       // 敵側（左）

@@ -715,30 +715,38 @@ class _BattleCommandUI extends StatelessWidget {
                     ),
                   ],
                 ),
-                // コンボ表示（2以上のみ表示）
+                // コンボ表示（2以上のみ表示）。更新ごとに軽く弾む演出で勢いを強調する。
                 if (comboCount > 1)
-                  Row(
-                    children: [
-                      const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
-                      const SizedBox(width: 4),
-                      Text(
-                        l10n.battleComboCounter(comboCount),
-                        style: const TextStyle(
-                          color: Color(0xFFFFAA00),
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
+                  TweenAnimationBuilder<double>(
+                    key: ValueKey(comboCount),
+                    tween: Tween(begin: 1.4, end: 1.0),
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.elasticOut,
+                    builder: (context, scale, child) =>
+                        Transform.scale(scale: scale, child: child),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
+                        const SizedBox(width: 4),
+                        Text(
+                          l10n.battleComboCounter(comboCount),
+                          style: const TextStyle(
+                            color: Color(0xFFFFAA00),
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'x${comboMultiplier.toStringAsFixed(1)}',
-                        style: const TextStyle(
-                          color: Color(0xFFFF6644),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(width: 4),
+                        Text(
+                          'x${comboMultiplier.toStringAsFixed(1)}',
+                          style: const TextStyle(
+                            color: Color(0xFFFF6644),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 Row(
                   children: [

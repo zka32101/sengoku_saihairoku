@@ -67,8 +67,14 @@ class PushNotificationService {
   }
 
   /// FCMトークンを取得し、Firestoreの`users/{uid}.fcmToken`に保存する
+  ///
+  /// firebase_messaging v17では`register()`/`onRegistered`が推奨されているが、
+  /// それらが返すのはFCMトークンではなくFirebase Installation ID（FID）であり、
+  /// Cloud Functions側の送信契約（FCMトークン前提）と互換性がない。挙動を変えない
+  /// ため、意図的に非推奨のgetToken()/onTokenRefreshのままにする。
   Future<void> registerToken(String userId) async {
     try {
+      // ignore: deprecated_member_use
       final token = await _messaging.getToken();
       if (token == null) return;
 
@@ -78,6 +84,7 @@ class PushNotificationService {
           .set({'fcmToken': token}, SetOptions(merge: true));
 
       // トークンがローテーションされた場合も追従する
+      // ignore: deprecated_member_use
       _messaging.onTokenRefresh.listen((newToken) {
         FirebaseFirestore.instance
             .collection('users')

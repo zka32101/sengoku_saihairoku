@@ -21,6 +21,7 @@ import '../../data/repositories/warlord_progress_repository.dart';
 import '../../data/repositories/event_challenge_repository.dart';
 import '../../data/repositories/progression_repository.dart';
 import '../../data/repositories/reward_repository.dart';
+import '../../data/repositories/battle_stats_repository.dart';
 import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
@@ -81,6 +82,7 @@ class _ResultScreenState extends State<ResultScreen> {
   bool _friendChallengeBeaten = false;
   bool _xpBoosted = false;
   bool _xpBoosting = false;
+  bool _isFirstClearOnDifficulty = false;
 
   @override
   void initState() {
@@ -102,13 +104,17 @@ class _ResultScreenState extends State<ResultScreen> {
       _battlePassNotificationService.initialize(context);
     });
 
-    _saveBattleResult();
+    final battleResultSaved = _saveBattleResult();
     _checkEventChallengeCompletion();
     _checkWeeklyChallengeCompletion();
     _checkFriendChallengeResult();
-    // XP計算でストリークボーナスを正しく反映するため、
-    // チャレンジ達成判定（ストリーク更新を含む）の完了を待ってから実行する
-    _checkChallengeCompletion().then((_) => _recordProgressionXp());
+    // XP計算でストリークボーナスと初回クリア判定を正しく反映するため、
+    // チャレンジ達成判定（ストリーク更新を含む）と戦闘結果保存
+    // （初回クリア判定を含む）の両方の完了を待ってから実行する
+    Future.wait([
+      battleResultSaved,
+      _checkChallengeCompletion(),
+    ]).then((_) => _recordProgressionXp());
   }
 
   Future<void> _saveBattleResult() async {
@@ -144,6 +150,13 @@ class _ResultScreenState extends State<ResultScreen> {
 
     await FirebaseService().saveBattleResult(resultData);
 
+    if (data.won) {
+      _isFirstClearOnDifficulty = await BattleStatsRepository().recordVictory(
+        widget.args.scenario,
+        widget.args.difficulty,
+      );
+    }
+
     if (userId != null && data.won) {
       await RankingRepository().submitIfSeasonBest(
         userId: userId,
@@ -155,8 +168,10 @@ class _ResultScreenState extends State<ResultScreen> {
       );
 
       if (widget.args.sortiedWarlordIds.isNotEmpty) {
-        await WarlordProgressRepository()
-            .addExpToWarlords(userId, widget.args.sortiedWarlordIds);
+        await WarlordProgressRepository().addExpToWarlords(
+          userId,
+          widget.args.sortiedWarlordIds,
+        );
       }
     }
 
@@ -171,15 +186,16 @@ class _ResultScreenState extends State<ResultScreen> {
       final userId = FirebaseService().userId;
       if (userId == null) return;
 
-      final unlockedAchievements = await _achievementChecker.checkBattleAchievements(
-        userId: userId,
-        scenarioId: widget.args.scenario,
-        won: data.won,
-        casualtyRate: data.casualtyRate,
-        turnCount: data.turnCount,
-        totalScore: data.totalScore,
-        battleDuration: data.elapsedTime.toInt(),
-      );
+      final unlockedAchievements = await _achievementChecker
+          .checkBattleAchievements(
+            userId: userId,
+            scenarioId: widget.args.scenario,
+            won: data.won,
+            casualtyRate: data.casualtyRate,
+            turnCount: data.turnCount,
+            totalScore: data.totalScore,
+            battleDuration: data.elapsedTime.toInt(),
+          );
 
       if (unlockedAchievements.isNotEmpty) {
         setState(() {
@@ -189,7 +205,9 @@ class _ResultScreenState extends State<ResultScreen> {
         // Show notifications for each unlocked achievement
         if (mounted) {
           for (final achievement in unlockedAchievements) {
-            await _notificationService.showAchievementUnlockNotification(achievement);
+            await _notificationService.showAchievementUnlockNotification(
+              achievement,
+            );
           }
         }
       }
@@ -261,8 +279,10 @@ class _ResultScreenState extends State<ResultScreen> {
     if (event.scenario != widget.args.scenario) return;
     if (event.difficulty != widget.args.difficulty) return;
 
-    final existingProgress =
-        await _eventChallengeRepo.getProgress(userId, event.id);
+    final existingProgress = await _eventChallengeRepo.getProgress(
+      userId,
+      event.id,
+    );
     if (existingProgress != null) return; // 既に達成済み
 
     final isMet = ChallengeService.areConditionsMet(
@@ -279,14 +299,15 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Future<void> _checkEventChallengeAchievements(String userId) async {
     try {
-      final totalCompleted =
-          await _eventChallengeRepo.getCompletedEventCount(userId);
-
-      final unlockedAchievements =
-          await _achievementChecker.checkEventChallengeAchievements(
-        userId: userId,
-        totalEventChallengesCompleted: totalCompleted,
+      final totalCompleted = await _eventChallengeRepo.getCompletedEventCount(
+        userId,
       );
+
+      final unlockedAchievements = await _achievementChecker
+          .checkEventChallengeAchievements(
+            userId: userId,
+            totalEventChallengesCompleted: totalCompleted,
+          );
 
       if (unlockedAchievements.isNotEmpty) {
         setState(() {
@@ -295,7 +316,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
         if (mounted) {
           for (final achievement in unlockedAchievements) {
-            await _notificationService.showAchievementUnlockNotification(achievement);
+            await _notificationService.showAchievementUnlockNotification(
+              achievement,
+            );
           }
         }
       }
@@ -310,8 +333,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
     try {
       // 現在のプログレッションを取得
-      final currentProgression =
-          await _progressionRepo.getUserProgression(userId);
+      final currentProgression = await _progressionRepo.getUserProgression(
+        userId,
+      );
       if (currentProgression == null) return;
 
       final oldLevel = currentProgression.currentLevel;
@@ -321,7 +345,7 @@ class _ResultScreenState extends State<ResultScreen> {
         battleResult: widget.args.data,
         difficulty: widget.args.difficulty,
         currentChallengeStreak: _challengeRepo.getCurrentStreak(),
-        isFirstClearOnDifficulty: false, // TODO: 難易度別クリア状況を確認
+        isFirstClearOnDifficulty: _isFirstClearOnDifficulty,
         turnCount: widget.args.data.turnCount,
       );
 
@@ -340,8 +364,7 @@ class _ResultScreenState extends State<ResultScreen> {
       );
 
       // 新しいプログレッションを取得してレベルアップを確認
-      final newProgression =
-          await _progressionRepo.getUserProgression(userId);
+      final newProgression = await _progressionRepo.getUserProgression(userId);
       if (newProgression != null && newProgression.currentLevel > oldLevel) {
         setState(() {
           _leveledUp = true;
@@ -349,7 +372,10 @@ class _ResultScreenState extends State<ResultScreen> {
         });
 
         // レベルマイルストーン達成時のコスメティック解放
-        await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
+        await _unlockMilestoneCosmeticIfEarned(
+          userId,
+          newProgression.currentLevel,
+        );
 
         // レベルアップ時に関連実績をチェック
         await _checkLevelAchievements(userId, newProgression.currentLevel);
@@ -407,7 +433,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
       if (leveledUpFromBoost) {
         // 通常のXP獲得と同じく、レベルマイルストーン解放・実績チェックを行う
-        await _unlockMilestoneCosmeticIfEarned(userId, newProgression.currentLevel);
+        await _unlockMilestoneCosmeticIfEarned(
+          userId,
+          newProgression.currentLevel,
+        );
         await _checkLevelAchievements(userId, newProgression.currentLevel);
       }
     } catch (e) {
@@ -434,25 +463,58 @@ class _ResultScreenState extends State<ResultScreen> {
       );
 
       // UIに反映
-      final unlockedCosmetic = _rewardRepo.getCosmeticInfo(milestoneReward.cosmeticId);
+      final unlockedCosmetic = _rewardRepo.getCosmeticInfo(
+        milestoneReward.cosmeticId,
+      );
       setState(() {
         _cosmeticUnlocked = true;
         _unlockedCosmetic = unlockedCosmetic;
       });
 
       // コスメティック解放時に関連実績をチェック
-      // TODO: 総解放数を取得して checkCosmeticAchievements を呼び出す
+      await _checkCosmeticAchievements(userId, milestoneReward.cosmeticId);
     } catch (e) {
       debugPrint('Error unlocking milestone cosmetic: $e');
     }
   }
 
+  Future<void> _checkCosmeticAchievements(
+    String userId,
+    String unlockedCosmeticId,
+  ) async {
+    try {
+      final progression = await _progressionRepo.getUserProgression(userId);
+      final totalUnlockedCount = progression?.unlockedCosmetics.length ?? 0;
+
+      final unlockedAchievements = await _achievementChecker
+          .checkCosmeticAchievements(
+            userId: userId,
+            unlockedCosmeticId: unlockedCosmeticId,
+            totalUnlockedCount: totalUnlockedCount,
+          );
+
+      if (unlockedAchievements.isNotEmpty) {
+        setState(() {
+          _unlockedAchievements.addAll(unlockedAchievements);
+        });
+
+        if (mounted) {
+          for (final achievement in unlockedAchievements) {
+            await _notificationService.showAchievementUnlockNotification(
+              achievement,
+            );
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Error checking cosmetic achievements: $e');
+    }
+  }
+
   Future<void> _checkLevelAchievements(String userId, int newLevel) async {
     try {
-      final unlockedAchievements = await _achievementChecker.checkLevelAchievements(
-        userId: userId,
-        newLevel: newLevel,
-      );
+      final unlockedAchievements = await _achievementChecker
+          .checkLevelAchievements(userId: userId, newLevel: newLevel);
 
       if (unlockedAchievements.isNotEmpty) {
         setState(() {
@@ -462,7 +524,9 @@ class _ResultScreenState extends State<ResultScreen> {
         // Show notifications for each unlocked achievement
         if (mounted) {
           for (final achievement in unlockedAchievements) {
-            await _notificationService.showAchievementUnlockNotification(achievement);
+            await _notificationService.showAchievementUnlockNotification(
+              achievement,
+            );
           }
         }
       }
@@ -483,11 +547,16 @@ class _ResultScreenState extends State<ResultScreen> {
       if (_battlePassXpGained <= 0) return;
 
       // 現在のバトルパス進捗を取得
-      final currentProgress = await _battlePassRepo.getUserBattlePassProgress(userId);
+      final currentProgress = await _battlePassRepo.getUserBattlePassProgress(
+        userId,
+      );
       final oldTier = currentProgress?.currentTier ?? 1;
 
       // バトルパスXPを獲得
-      final newProgress = await _battlePassRepo.gainXp(userId, _battlePassXpGained);
+      final newProgress = await _battlePassRepo.gainXp(
+        userId,
+        _battlePassXpGained,
+      );
 
       if (newProgress != null && newProgress.currentTier > oldTier) {
         setState(() {
@@ -497,8 +566,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
         // ティアアップ通知を表示
         if (mounted) {
-          final tierData =
-              _battlePassRepo.getTierData(newProgress.currentTier);
+          final tierData = _battlePassRepo.getTierData(newProgress.currentTier);
           if (tierData != null) {
             await _battlePassNotificationService.showTierUpNotification(
               newProgress.currentTier,
@@ -560,7 +628,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 const SizedBox.shrink(),
               if (_leveledUp) const SizedBox(height: 16),
               if (_battlePassTierUp && _newBattlePassTier != null)
-                _BattlePassTierUpBanner(newTier: _newBattlePassTier!, l10n: l10n)
+                _BattlePassTierUpBanner(
+                  newTier: _newBattlePassTier!,
+                  l10n: l10n,
+                )
               else
                 const SizedBox.shrink(),
               if (_battlePassTierUp) const SizedBox(height: 16),
@@ -643,14 +714,9 @@ class _ResultHeaderState extends State<_ResultHeader>
     final card = Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: won
-            ? const Color(0xFF1A3A1A)
-            : const Color(0xFF3A1A1A),
+        color: won ? const Color(0xFF1A3A1A) : const Color(0xFF3A1A1A),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: won ? Colors.green : Colors.red,
-          width: 2,
-        ),
+        border: Border.all(color: won ? Colors.green : Colors.red, width: 2),
       ),
       child: Column(
         children: [
@@ -755,10 +821,12 @@ class _ScoreCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  l10n.resultScorePoints(breakdown.total.toString().replaceAllMapped(
-                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                    (m) => '${m[1]},',
-                  )),
+                  l10n.resultScorePoints(
+                    breakdown.total.toString().replaceAllMapped(
+                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (m) => '${m[1]},',
+                    ),
+                  ),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -768,16 +836,36 @@ class _ScoreCard extends StatelessWidget {
               ],
             ),
             const Divider(color: Color(0xFF8B6914)),
-            AnimatedScoreLine(l10n.resultScoreVictory, breakdown.victoryScore, 40000,
-                delayMillis: 100),
-            AnimatedScoreLine(l10n.resultScoreEfficiency, breakdown.efficiencyScore, 20000,
-                delayMillis: 200),
-            AnimatedScoreLine(l10n.resultScoreCommand, breakdown.commandScore, 15000,
-                delayMillis: 300),
-            AnimatedScoreLine(l10n.resultScoreTurningPoint, breakdown.turningPointScore, 15000,
-                delayMillis: 400),
-            AnimatedScoreLine(l10n.resultScoreHistory, breakdown.historyBonus, 10000,
-                delayMillis: 500),
+            AnimatedScoreLine(
+              l10n.resultScoreVictory,
+              breakdown.victoryScore,
+              40000,
+              delayMillis: 100,
+            ),
+            AnimatedScoreLine(
+              l10n.resultScoreEfficiency,
+              breakdown.efficiencyScore,
+              20000,
+              delayMillis: 200,
+            ),
+            AnimatedScoreLine(
+              l10n.resultScoreCommand,
+              breakdown.commandScore,
+              15000,
+              delayMillis: 300,
+            ),
+            AnimatedScoreLine(
+              l10n.resultScoreTurningPoint,
+              breakdown.turningPointScore,
+              15000,
+              delayMillis: 400,
+            ),
+            AnimatedScoreLine(
+              l10n.resultScoreHistory,
+              breakdown.historyBonus,
+              10000,
+              delayMillis: 500,
+            ),
           ],
         ),
       ),
@@ -893,8 +981,9 @@ class _TurningPointCard extends StatelessWidget {
             const SizedBox(height: 8),
             ...List.generate(achievements.length, (i) {
               final achieved = achievements[i];
-              final name =
-                  i < names.length ? names[i] : l10n.resultTpFallback(i + 1);
+              final name = i < names.length
+                  ? names[i]
+                  : l10n.resultTpFallback(i + 1);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 3),
                 child: Row(
@@ -933,7 +1022,9 @@ class _ActionButtons extends StatelessWidget {
 
   void _shareResult(BuildContext context) {
     final data = args.data;
-    final resultText = data.won ? l10n.resultShareVictory : l10n.resultShareDefeat;
+    final resultText = data.won
+        ? l10n.resultShareVictory
+        : l10n.resultShareDefeat;
     final tpCount = data.tpAchievements.where((a) => a).length;
     SharePlus.instance.share(
       ShareParams(
@@ -989,8 +1080,8 @@ class _ActionButtons extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         OutlinedButton.icon(
-          onPressed: () => Navigator.popUntil(
-              context, ModalRoute.withName('/home')),
+          onPressed: () =>
+              Navigator.popUntil(context, ModalRoute.withName('/home')),
           icon: const Icon(Icons.home, color: Color(0xFFFFD700)),
           label: Text(
             l10n.resultHomeButton,
@@ -1098,10 +1189,7 @@ class _ChallengeCompletionBanner extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   l10n.resultChallengeCompletedNote,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[400],
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                 ),
               ],
             ),
@@ -1175,7 +1263,11 @@ class _XpGainCard extends StatelessWidget {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.play_circle_outline, size: 18),
-                  label: Text(boosting ? l10n.resultXpBoostLoading : l10n.resultXpBoostButton),
+                  label: Text(
+                    boosting
+                        ? l10n.resultXpBoostLoading
+                        : l10n.resultXpBoostButton,
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.amber,
                     side: const BorderSide(color: Colors.amber),
@@ -1226,10 +1318,7 @@ class _LevelUpBanner extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             l10n.resultLevelUpSubtitle(newLevel),
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.amber,
-            ),
+            style: const TextStyle(fontSize: 16, color: Colors.amber),
           ),
         ],
       ),
@@ -1273,10 +1362,7 @@ class _BattlePassTierUpBanner extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             l10n.resultBattlePassTierUpSubtitle(newTier),
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.cyan,
-            ),
+            style: const TextStyle(fontSize: 16, color: Colors.cyan),
           ),
         ],
       ),
@@ -1329,10 +1415,7 @@ class _CosmeticUnlockBanner extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             cosmetic.description,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
             textAlign: TextAlign.center,
           ),
         ],

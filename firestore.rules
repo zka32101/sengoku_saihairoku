@@ -112,6 +112,17 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // progressions/{userId}・rewards/{userId}：プレイヤーの進行度（レベル・
+    // 武将の育成など）と報酬の記録。ドキュメントIDがユーザーIDなので、本人のみが
+    // 読み書きできる（ProgressionRepository / RewardRepository 参照）。
+    match /progressions/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    match /rewards/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
     // config/{doc}：アプリ設定。運営のみが更新する読み取り専用データ。
     match /config/{document} {
       allow read: if signedIn();

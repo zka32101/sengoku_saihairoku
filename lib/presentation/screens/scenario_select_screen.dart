@@ -745,14 +745,20 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text(l10n.commonCancel),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(l10n.commonCancel, maxLines: 1),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: _startBattle,
-                      child: Text(l10n.commonSortie),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(l10n.commonSortie, maxLines: 1),
+                      ),
                     ),
                   ),
                 ],

@@ -182,9 +182,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ChallengeCard(
                             challenge: _todayChallenge!,
                             progress: _todayProgress,
-                            onTap: () {
-                              // チャレンジ詳細表示（後で実装）
-                            },
+                            // 詳細画面は未実装のため、いまはシナリオ選択へ進める
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/scenario_select'),
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -205,7 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ChallengeCard(
                             challenge: _weeklyChallenge!,
                             progress: _weeklyProgress,
-                            onTap: () {},
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/scenario_select'),
                           ),
                           const SizedBox(height: 16),
                         ],

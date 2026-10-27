@@ -631,7 +631,8 @@ class _ResultScreenState extends State<ResultScreen> {
       widget.args.difficulty,
     );
 
-    final turnRankResult = criteria != null
+    // ターン数ランクは勝利時のみ表示する(負けても早く終われば Gold・効率100% と出てしまうため)
+    final turnRankResult = (criteria != null && data.won)
         ? TurnRankCalculator.calculateTurnRank(
             data.turnCount,
             criteria,

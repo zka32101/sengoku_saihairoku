@@ -1,6 +1,7 @@
 import '../../data/models/achievement.dart';
 import '../../data/models/scenario_data.dart';
 import '../../data/repositories/achievement_repository.dart';
+import '../../data/repositories/battle_stats_repository.dart';
 import 'package:flutter/foundation.dart';
 
 /// 実績獲得条件を確認し、達成したら自動的に解放するサービス
@@ -8,6 +9,7 @@ class AchievementChecker {
   static final AchievementChecker _instance = AchievementChecker._internal();
 
   late AchievementRepository _achievementRepo;
+  final _battleStatsRepo = BattleStatsRepository();
 
   factory AchievementChecker() {
     return _instance;
@@ -133,7 +135,8 @@ class AchievementChecker {
 
     for (final achievement in allAchievements) {
       if (achievement.category != AchievementCategory.cosmetic) continue;
-      if (achievement.conditionType != AchievementConditionType.cosmeticUnlocked) {
+      if (achievement.conditionType !=
+          AchievementConditionType.cosmeticUnlocked) {
         continue;
       }
 
@@ -221,7 +224,8 @@ class AchievementChecker {
 
     for (final achievement in allAchievements) {
       if (achievement.category != AchievementCategory.prestige) continue;
-      if (achievement.conditionType != AchievementConditionType.prestigeResetCount) {
+      if (achievement.conditionType !=
+          AchievementConditionType.prestigeResetCount) {
         continue;
       }
 
@@ -300,9 +304,8 @@ class AchievementChecker {
     String userId,
     int requiredWins,
   ) async {
-    // TODO: Firebase から戦闘勝利数を取得
-    // 現在はダミー実装
-    return false;
+    final totalWins = await _battleStatsRepo.getTotalWins();
+    return totalWins >= requiredWins;
   }
 
   /// シナリオクリア条件を確認
@@ -313,7 +316,10 @@ class AchievementChecker {
   }
 
   /// 実績が既に解放されているか確認
-  Future<bool> _isAchievementUnlocked(String userId, String achievementId) async {
+  Future<bool> _isAchievementUnlocked(
+    String userId,
+    String achievementId,
+  ) async {
     try {
       final progress = await _achievementRepo.getAchievementProgress(
         userId,

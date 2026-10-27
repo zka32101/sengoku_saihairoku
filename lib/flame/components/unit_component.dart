@@ -8,7 +8,13 @@ enum UnitEffectType { hit, death, damage }
 class UnitComponent extends PositionComponent {
   final Unit unit;
   final bool isPlayer;
-  final void Function(Vector2 pos, UnitEffectType type, {double? damage, bool? isCritical})? onEffect;
+  final void Function(
+    Vector2 pos,
+    UnitEffectType type, {
+    double? damage,
+    bool? isCritical,
+  })?
+  onEffect;
 
   static const _halfSize = 10.0;
   static const _fullSize = _halfSize * 2;
@@ -28,11 +34,8 @@ class UnitComponent extends PositionComponent {
   static const _fieldHeight = 640.0;
   double _depthScale = 1.0;
 
-  UnitComponent({
-    required this.unit,
-    required this.isPlayer,
-    this.onEffect,
-  }) : super(anchor: Anchor.center);
+  UnitComponent({required this.unit, required this.isPlayer, this.onEffect})
+    : super(anchor: Anchor.center);
 
   @override
   void update(double dt) {
@@ -142,7 +145,13 @@ class UnitComponent extends PositionComponent {
   }
 
   void _drawBody(Canvas canvas, Color fill) {
-    final borderColor = isPlayer ? const Color(0xFFFFD700) : const Color(0xFFAA4444);
+    final borderColor = isPlayer
+        ? const Color(0xFFFFD700)
+        : const Color(0xFFAA4444);
+    final bodyRect = Rect.fromCircle(
+      center: Offset.zero,
+      radius: _halfSize + 1,
+    );
 
     // グロー
     final glowPaint = Paint()
@@ -150,9 +159,40 @@ class UnitComponent extends PositionComponent {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
     canvas.drawCircle(Offset.zero, _halfSize + 3, glowPaint);
 
-    final bodyPaint = Paint()..color = fill;
+    // 立体感を出すグラデーション塗り：左上から光が当たっているように
+    // 明るい色→基本色→暗い色へ変化させ、駒を「小さな立像」のように見せる
+    final hsl = HSLColor.fromColor(fill);
+    final litFill = hsl
+        .withLightness((hsl.lightness + 0.22).clamp(0.0, 1.0))
+        .toColor()
+        .withValues(alpha: fill.a);
+    final shadedFill = hsl
+        .withLightness((hsl.lightness - 0.18).clamp(0.0, 1.0))
+        .toColor()
+        .withValues(alpha: fill.a);
+    final bodyPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [litFill, fill, shadedFill],
+        stops: const [0.0, 0.5, 1.0],
+      ).createShader(bodyRect);
+
+    // 輪郭：上面は明るく、下面は暗くした擬似ベベル（斜面に光が当たる質感）
+    final borderHsl = HSLColor.fromColor(borderColor);
     final borderPaint = Paint()
-      ..color = borderColor
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          borderHsl
+              .withLightness((borderHsl.lightness + 0.2).clamp(0.0, 1.0))
+              .toColor(),
+          borderHsl
+              .withLightness((borderHsl.lightness - 0.15).clamp(0.0, 1.0))
+              .toColor(),
+        ],
+      ).createShader(bodyRect)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
@@ -183,16 +223,34 @@ class UnitComponent extends PositionComponent {
         canvas.drawCircle(Offset.zero, _halfSize, borderPaint);
       case UnitType.musket:
         const r = Rect.fromLTRB(
-            -_halfSize + 1, -_halfSize + 1, _halfSize - 1, _halfSize - 1);
+          -_halfSize + 1,
+          -_halfSize + 1,
+          _halfSize - 1,
+          _halfSize - 1,
+        );
         canvas.drawRect(r, bodyPaint);
         canvas.drawRect(r, borderPaint);
     }
 
-    // 内部ハイライト
+    // 内部ハイライト（光源方向の艶）
     final highlightPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.2)
+      ..color = Colors.white.withValues(alpha: 0.35)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
-    canvas.drawCircle(Offset(-_halfSize * 0.3, -_halfSize * 0.3), _halfSize * 0.4, highlightPaint);
+    canvas.drawCircle(
+      Offset(-_halfSize * 0.3, -_halfSize * 0.3),
+      _halfSize * 0.35,
+      highlightPaint,
+    );
+
+    // 下面のアンビエントオクルージョン（接地面に近いほど影が濃くなる質感）
+    final aoPaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.18)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2.5);
+    canvas.drawCircle(
+      Offset(_halfSize * 0.25, _halfSize * 0.35),
+      _halfSize * 0.5,
+      aoPaint,
+    );
 
     canvas.restore();
   }
@@ -228,27 +286,26 @@ class UnitComponent extends PositionComponent {
     final hpColor = ratio > 0.6
         ? const Color(0xFF44FF44)
         : ratio > 0.3
-            ? const Color(0xFFFFAA00)
-            : const Color(0xFFFF3333);
+        ? const Color(0xFFFFAA00)
+        : const Color(0xFFFF3333);
 
     // グラデーション HP バー
-    final filledRect = Rect.fromLTWH(-_halfSize, barTop, _fullSize * ratio, _hpBarHeight);
+    final filledRect = Rect.fromLTWH(
+      -_halfSize,
+      barTop,
+      _fullSize * ratio,
+      _hpBarHeight,
+    );
     final hpPaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
-          hpColor.withValues(alpha: 0.9),
-          hpColor,
-        ],
+        colors: [hpColor.withValues(alpha: 0.9), hpColor],
       ).createShader(filledRect)
       ..style = PaintingStyle.fill;
 
     canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        filledRect,
-        const Radius.circular(1.5),
-      ),
+      RRect.fromRectAndRadius(filledRect, const Radius.circular(1.5)),
       hpPaint,
     );
 
@@ -259,7 +316,12 @@ class UnitComponent extends PositionComponent {
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromLTWH(-_halfSize - 1, barTop - 1, _fullSize * ratio + 2, _hpBarHeight + 2),
+          Rect.fromLTWH(
+            -_halfSize - 1,
+            barTop - 1,
+            _fullSize * ratio + 2,
+            _hpBarHeight + 2,
+          ),
           const Radius.circular(2.5),
         ),
         glowPaint,
@@ -274,6 +336,23 @@ class UnitComponent extends PositionComponent {
       UnitType.spear => '槍',
       UnitType.musket => '鉄',
     };
+
+    // 背後に落ち影を入れて、浮き彫りのような立体感を持たせる
+    final shadowPainter = TextPainter(
+      text: TextSpan(
+        text: icon,
+        style: TextStyle(
+          color: Colors.black.withValues(alpha: 0.45),
+          fontSize: 8,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    shadowPainter.paint(
+      canvas,
+      Offset(-shadowPainter.width / 2 + 0.6, -shadowPainter.height / 2 + 0.8),
+    );
 
     final painter = TextPainter(
       text: TextSpan(

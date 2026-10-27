@@ -209,6 +209,18 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      // 全画面の下端がナビゲーションバー(3ボタン/ジェスチャーバー)に隠れないよう、
+      // システムの下余白をアプリ全体で確保する。SingleChildScrollView を使う画面は
+      // 下余白を自動で足さないため、画面ごとに直すより一括のほうが確実。
+      builder: (context, child) => ColoredBox(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: child ?? const SizedBox.shrink(),
+        ),
+      ),
       initialRoute: widget.initialRoute,
       routes: {
         '/home': (_) => const HomeScreen(),

@@ -20,11 +20,15 @@ Mapリテラルでは**サイレントに機能しない**（無音・無表示�
 5. `lib/flame/battle_game.dart` — `_getBattleBgmPath()`にBGMパスを追加
 6. `lib/flame/components/map_background.dart` — `_drawTerrain`のswitchに
    マップ描画caseを追加
-7. `lib/presentation/screens/ranking_screen.dart` — `_getScenarioName`に
-   表示名を追加
-8. `lib/presentation/screens/result_screen.dart` — `_tpNames`マップに
-   ターニングポイント名リストを追加（**scenarios.jsonの`turningPoints[].name`と
-   1文字違わず一致させること** — ズレると結果画面の表示だけが不整合になる）
+7. `lib/data/models/scenario_data.dart` — `ScenarioDisplayName`/`ScenarioThumbnail`
+   extensionに表示名・サムネイル画像パスを追加（`ranking_screen.dart`や
+   `scenario_select_screen.dart`など画面間で共通参照されるため、ここ一箇所を
+   更新すれば全画面に反映される。以前は`ranking_screen.dart`に個別の
+   `_getScenarioName`メソッドがあったが、このextensionに統合済み）
+8. `lib/presentation/screens/result_screen.dart` — `_tpNamesFor`のswitch式に
+   ターニングポイント名リスト（l10nキー）を追加（**`lib/l10n/app_ja.arb`に
+   追加するキーの値が、scenarios.jsonの`turningPoints[].name`と
+   1文字違わず一致していること** — ズレると結果画面の表示だけが不整合になる）
 9. `lib/presentation/screens/scenario_select_screen.dart` — `_scenarios`
    リストに`_ScenarioEntry`を追加
 
@@ -63,3 +67,25 @@ Mapリテラルでは**サイレントに機能しない**（無音・無表示�
 バランス調整を検討する場合は、`PlayerCommand`（奇襲/盾陣/進軍/撤退/鼓舞/突撃等）
 の効果を反映したシミュレーション、または実機プレイテストのログを
 根拠にすること。
+
+## 4. `late`フィールド＋`initialize()`パターンのサービス/リポジトリは、
+   `main.dart`の起動シーケンスに呼び出しを追加し忘れていないか必ず確認する
+
+`AchievementChecker`・`PlaytimeTracker`・`PrestigeAchievementHandler`は、
+シングルトンの`late`フィールドを`initialize()`内でのみ設定する実装だったが、
+`main.dart`からその`initialize()`が一度も呼ばれておらず、判定メソッドを
+呼ぶたびに`LateInitializationError`が発生していた。この例外は呼び出し元
+（`result_screen.dart`等）の`try/catch`で`debugPrint`のみされてサイレントに
+握り潰されるため、**実績システムが長期間まったく機能していなかった**
+（#137, #138で修正済み）。
+
+**教訓**: 新しいシングルトンサービス/リポジトリに`late`フィールドと
+`initialize()`を追加したら、必ず`lib/main.dart`の起動シーケンスに
+呼び出しを追加すること。追加し忘れても`flutter analyze`やコンパイルでは
+検出されず、実行時に例外が握り潰されて機能がサイレントに壊れる。
+
+なお、`ScenarioRepository`/`WarlordRepository`のように、公開メソッドの
+冒頭で`if (_isInitialized) return;`付きの内部初期化を自前で呼ぶ
+「遅延自己初期化」パターンであれば、`main.dart`側の呼び出し忘れという
+形では壊れない（この種のクラスを新設する際は、外部からの`initialize()`
+呼び出しに依存するパターンより、こちらの自己完結パターンの方が安全）。

@@ -1,3 +1,5 @@
+import '../../data/models/achievement.dart';
+import '../../data/repositories/battle_stats_repository.dart';
 import 'achievement_checker.dart';
 import 'package:flutter/foundation.dart';
 
@@ -6,6 +8,7 @@ class PlaytimeTracker {
   static final PlaytimeTracker _instance = PlaytimeTracker._internal();
 
   late AchievementChecker _achievementChecker;
+  final _battleStatsRepo = BattleStatsRepository();
 
   factory PlaytimeTracker() {
     return _instance;
@@ -18,44 +21,26 @@ class PlaytimeTracker {
     _achievementChecker = AchievementChecker();
   }
 
-  /// 戦闘後にプレイ時間を記録し、関連実績をチェック
+  /// 戦闘後にプレイ時間を記録し、関連実績をチェックする。
   /// [userId] ユーザーID
   /// [battleDurationSeconds] 戦闘時間（秒）
-  Future<void> recordBattlePlaytime(
+  /// 戻り値は、今回新たに解放された実績の一覧。
+  Future<List<Achievement>> recordBattlePlaytime(
     String userId,
     int battleDurationSeconds,
   ) async {
     try {
-      // プレイ時間を記録（実装は別のメソッドで）
-      await _addPlaytime(userId, battleDurationSeconds);
-      
-      // プレイ時間ベースの実績をチェック
-      final totalPlaytimeMinutes = await _getTotalPlaytimeMinutes(userId);
-      await _achievementChecker.checkPlayTimeAchievements(
+      await _battleStatsRepo.addPlaytimeSeconds(battleDurationSeconds);
+
+      final totalPlaytimeMinutes = await _battleStatsRepo
+          .getTotalPlaytimeMinutes();
+      return await _achievementChecker.checkPlayTimeAchievements(
         userId: userId,
         totalPlayTimeMinutes: totalPlaytimeMinutes,
       );
     } catch (e) {
       debugPrint('Error recording playtime: $e');
-    }
-  }
-
-  /// プレイ時間を追加
-  Future<void> _addPlaytime(String userId, int durationSeconds) async {
-    // TODO: Firestore に playtime_records を記録
-    // スキーマ: users/{userId}/playtime_records/{recordId}
-    // フィールド: battleDate, durationSeconds, elapsedAt
-  }
-
-  /// 総プレイ時間を取得
-  Future<int> _getTotalPlaytimeMinutes(String userId) async {
-    try {
-      // TODO: Firestore から playtime_records を集計
-      // return sum(durationSeconds) / 60
-      return 0; // ダミー
-    } catch (e) {
-      debugPrint('Error getting total playtime: $e');
-      return 0;
+      return [];
     }
   }
 }

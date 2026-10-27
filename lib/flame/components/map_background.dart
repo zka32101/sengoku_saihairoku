@@ -31,7 +31,7 @@ class MapBackground extends PositionComponent {
     canvas.drawRect(Rect.fromLTWH(0, 0, 360, 260), hazePaint);
   }
 
-  /// 画面端を暗くして臨場感・没入感を高めるビネット
+  /// 画面端を暗くして臨場感・没入感を高めるビネット（立体の陰影を見やすくするため控えめに）
   void _drawVignette(Canvas canvas) {
     final vignettePaint = Paint()
       ..shader = RadialGradient(
@@ -39,7 +39,7 @@ class MapBackground extends PositionComponent {
         radius: 0.95,
         colors: [
           Colors.black.withValues(alpha: 0),
-          Colors.black.withValues(alpha: 0.35),
+          Colors.black.withValues(alpha: 0.2),
         ],
         stops: const [0.6, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, 360, 640));
@@ -47,15 +47,12 @@ class MapBackground extends PositionComponent {
   }
 
   void _drawBase(Canvas canvas) {
-    // グラデーション背景：空→地面
+    // グラデーション背景：空→地面（立体表現が見やすいよう明るめのトーンに）
     final basePaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
-          const Color(0xFF0A1A0A),
-          const Color(0xFF0A0A00),
-        ],
+        colors: [const Color(0xFF203A20), const Color(0xFF2A2410)],
       ).createShader(Rect.fromLTWH(0, 0, 360, 640));
     canvas.drawRect(Rect.fromLTWH(0, 0, 360, 640), basePaint);
 
@@ -66,7 +63,7 @@ class MapBackground extends PositionComponent {
         radius: 1.2,
         colors: [
           Colors.black.withValues(alpha: 0),
-          Colors.black.withValues(alpha: 0.3),
+          Colors.black.withValues(alpha: 0.15),
         ],
       ).createShader(Rect.fromLTWH(0, 0, 360, 640));
     canvas.drawRect(Rect.fromLTWH(0, 0, 360, 640), depthPaint);
@@ -109,8 +106,7 @@ class MapBackground extends PositionComponent {
 
   void _drawNagashino(Canvas canvas) {
     // 長篠川（横断する河川）
-    final riverPaint = Paint()..color = const Color(0xFF1A4A6A);
-    canvas.drawRect(Rect.fromLTWH(0, 300, 360, 20), riverPaint);
+    _drawRiver(canvas, Rect.fromLTWH(0, 300, 360, 20));
     _drawLabel(canvas, '設楽原川', 130, 305, const Color(0xFF64B5F6));
     // 馬防柵エリア
     _drawBarricade(canvas, 50, 270, 260);
@@ -129,16 +125,18 @@ class MapBackground extends PositionComponent {
     _drawHill(canvas, 30, 320, 80);
     _drawHill(canvas, 280, 320, 80);
     // 中央平野
-    final plainPaint = Paint()..color = const Color(0xFF152515);
-    canvas.drawRect(Rect.fromLTWH(80, 250, 200, 140), plainPaint);
+    _drawPlain(
+      canvas,
+      Rect.fromLTWH(80, 250, 200, 140),
+      const Color(0xFF283B28),
+    );
     _drawLabel(canvas, '関ヶ原', 150, 320, const Color(0xFFAAAAAA));
   }
 
   void _drawKawanakajima(Canvas canvas) {
     // 千曲川と犀川の合流点（川中島の平野）
-    final riverPaint = Paint()..color = const Color(0xFF1A4A6A);
-    canvas.drawRect(Rect.fromLTWH(0, 60, 360, 16), riverPaint);
-    canvas.drawRect(Rect.fromLTWH(0, 500, 360, 16), riverPaint);
+    _drawRiver(canvas, Rect.fromLTWH(0, 60, 360, 16));
+    _drawRiver(canvas, Rect.fromLTWH(0, 500, 360, 16));
     _drawLabel(canvas, '犀川', 160, 62, const Color(0xFF64B5F6));
     _drawLabel(canvas, '千曲川', 155, 502, const Color(0xFF64B5F6));
     // 夜明けの霧（車懸りの奇襲を示す薄い白霧）
@@ -151,9 +149,16 @@ class MapBackground extends PositionComponent {
 
   void _drawItsukushima(Canvas canvas) {
     // 狭い島を挟む瀬戸内海（左右）
-    final seaPaint = Paint()..color = const Color(0xFF0A2A3A);
-    canvas.drawRect(Rect.fromLTWH(0, 0, 80, 640), seaPaint);
-    canvas.drawRect(Rect.fromLTWH(280, 0, 80, 640), seaPaint);
+    _drawWaterArea(
+      canvas,
+      Rect.fromLTWH(0, 0, 80, 640),
+      const Color(0xFF0A2A3A),
+    );
+    _drawWaterArea(
+      canvas,
+      Rect.fromLTWH(280, 0, 80, 640),
+      const Color(0xFF0A2A3A),
+    );
     _drawLabel(canvas, '瀬戸内海', 15, 20, const Color(0xFF64B5F6));
 
     // 宮尾城（本陣）
@@ -170,8 +175,11 @@ class MapBackground extends PositionComponent {
 
   void _drawOshijo(Canvas canvas) {
     // 水攻めによる湖水（城の周囲を囲む）
-    final floodPaint = Paint()..color = const Color(0xFF1A4A6A);
-    canvas.drawRect(Rect.fromLTWH(0, 340, 360, 300), floodPaint);
+    _drawWaterArea(
+      canvas,
+      Rect.fromLTWH(0, 340, 360, 300),
+      const Color(0xFF1A4A6A),
+    );
     _drawLabel(canvas, '水攻めの湖水', 120, 350, const Color(0xFF64B5F6));
 
     // 忍城（浮き城、中央の丘の上）
@@ -186,8 +194,11 @@ class MapBackground extends PositionComponent {
 
   void _drawMikatagahara(Canvas canvas) {
     // 三方ヶ原台地（広い平野）
-    final plainPaint = Paint()..color = const Color(0xFF2A2515);
-    canvas.drawRect(Rect.fromLTWH(0, 250, 360, 180), plainPaint);
+    _drawPlain(
+      canvas,
+      Rect.fromLTWH(0, 250, 360, 180),
+      const Color(0xFF3F3522),
+    );
     _drawLabel(canvas, '三方ヶ原台地', 120, 330, const Color(0xFFAAAAAA));
 
     // 浜松城（徳川本陣、画面下）
@@ -203,8 +214,7 @@ class MapBackground extends PositionComponent {
 
   void _drawAnegawa(Canvas canvas) {
     // 姉川（画面中央を横断する浅瀬の川）
-    final riverPaint = Paint()..color = const Color(0xFF1A4A6A);
-    canvas.drawRect(Rect.fromLTWH(0, 310, 360, 40), riverPaint);
+    _drawRiver(canvas, Rect.fromLTWH(0, 310, 360, 40));
     _drawLabel(canvas, '姉川', 160, 325, const Color(0xFF64B5F6));
 
     // 横山城（遠景の丘上の城）
@@ -225,8 +235,11 @@ class MapBackground extends PositionComponent {
     _drawLabel(canvas, '賤ヶ岳', 148, 290, const Color(0xFFAA8844));
 
     // 余呉湖（画面上部の湖）
-    final lakePaint = Paint()..color = const Color(0xFF1A4A6A);
-    canvas.drawRect(Rect.fromLTWH(0, 60, 360, 60), lakePaint);
+    _drawWaterArea(
+      canvas,
+      Rect.fromLTWH(0, 60, 360, 60),
+      const Color(0xFF1A4A6A),
+    );
     _drawLabel(canvas, '余呉湖', 155, 85, const Color(0xFF64B5F6));
 
     // 美濃大返しの急行軍を示す土煙の帯（画面右から中央へ）
@@ -241,8 +254,11 @@ class MapBackground extends PositionComponent {
   static const _groundSquash = 0.55;
 
   void _drawHill(Canvas canvas, double cx, double cy, double r) {
-    final footprint =
-        Rect.fromCenter(center: Offset(cx, cy), width: r * 2, height: r * 2 * _groundSquash);
+    final footprint = Rect.fromCenter(
+      center: Offset(cx, cy),
+      width: r * 2,
+      height: r * 2 * _groundSquash,
+    );
 
     // 接地影：楕円の足元にさらに伸びた影を落として高さを演出
     final shadowPaint = Paint()
@@ -255,10 +271,7 @@ class MapBackground extends PositionComponent {
       ..shader = RadialGradient(
         center: Alignment(cx / 180 - 1, cy / 320 - 1),
         radius: 1,
-        colors: [
-          const Color(0xFF3A4A2A),
-          const Color(0xFF1A2A0A),
-        ],
+        colors: [const Color(0xFF4F6A3A), const Color(0xFF2A4014)],
       ).createShader(footprint);
     canvas.drawOval(footprint, outerPaint);
 
@@ -268,11 +281,11 @@ class MapBackground extends PositionComponent {
       width: r * 1.5,
       height: r * 1.5 * _groundSquash,
     );
-    canvas.drawOval(domeRect, Paint()..color = const Color(0xFF4A5A3A));
+    canvas.drawOval(domeRect, Paint()..color = const Color(0xFF658048));
 
     // 内側のハイライト（左上から光が当たっている稜線）
     final highlightPaint = Paint()
-      ..color = const Color(0xFF5F7A4A).withValues(alpha: 0.7)
+      ..color = const Color(0xFF7FA05E).withValues(alpha: 0.75)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
     canvas.drawOval(
       Rect.fromCenter(
@@ -285,8 +298,11 @@ class MapBackground extends PositionComponent {
   }
 
   void _drawForest(Canvas canvas, double cx, double cy, double r) {
-    final footprint =
-        Rect.fromCenter(center: Offset(cx, cy), width: r * 2, height: r * 2 * _groundSquash);
+    final footprint = Rect.fromCenter(
+      center: Offset(cx, cy),
+      width: r * 2,
+      height: r * 2 * _groundSquash,
+    );
 
     // 接地影
     final shadowPaint = Paint()
@@ -297,10 +313,7 @@ class MapBackground extends PositionComponent {
     // 外側：濃い森（足元の楕円）
     final outerPaint = Paint()
       ..shader = RadialGradient(
-        colors: [
-          const Color(0xFF2A4A0A),
-          const Color(0xFF0A2A00),
-        ],
+        colors: [const Color(0xFF3A5F14), const Color(0xFF1A3A08)],
       ).createShader(footprint);
     canvas.drawOval(footprint, outerPaint);
 
@@ -310,11 +323,11 @@ class MapBackground extends PositionComponent {
       width: r * 1.4,
       height: r * 1.4 * _groundSquash,
     );
-    canvas.drawOval(canopyRect, Paint()..color = const Color(0xFF1A3A0A));
+    canvas.drawOval(canopyRect, Paint()..color = const Color(0xFF2A4F14));
 
     // 樹の質感：3つの小さな樹冠で立体感（それぞれわずかに高さをずらす）
     final treePaint = Paint()
-      ..color = const Color(0xFF0A2A00).withValues(alpha: 0.5);
+      ..color = const Color(0xFF1A3A08).withValues(alpha: 0.5);
     for (int i = 0; i < 3; i++) {
       final angle = (i * 120) * pi / 180;
       final dist = r * 0.4;
@@ -376,13 +389,142 @@ class MapBackground extends PositionComponent {
   }
 
   void _drawBarricade(Canvas canvas, double startX, double y, double endX) {
-    final paint = Paint()
-      ..color = const Color(0xFF8B6914)
-      ..strokeWidth = 3;
+    const stakeWidth = 3.0;
+    const stakeHeight = 12.0;
     double x = startX;
     while (x < endX) {
-      canvas.drawLine(Offset(x, y), Offset(x, y + 10), paint);
+      // 接地影
+      canvas.drawOval(
+        Rect.fromCenter(
+          center: Offset(x + stakeWidth / 2, y + stakeHeight),
+          width: 5,
+          height: 2,
+        ),
+        Paint()..color = Colors.black.withValues(alpha: 0.3),
+      );
+      // 杭本体（左面に陰影を付けて丸みのある立体感を出す）
+      final stakeRect = Rect.fromLTWH(x, y, stakeWidth, stakeHeight);
+      canvas.drawRect(
+        stakeRect,
+        Paint()
+          ..shader = const LinearGradient(
+            colors: [Color(0xFF6B4A0F), Color(0xFFA37F1E)],
+          ).createShader(stakeRect),
+      );
+      // 杭の先端ハイライト
+      canvas.drawCircle(
+        Offset(x + stakeWidth / 2, y),
+        1.2,
+        Paint()..color = const Color(0xFFD4B35A),
+      );
       x += 8;
+    }
+  }
+
+  /// 水域（海・湖・洪水）を奥行きのあるグラデーションと波のハイライトで描画
+  void _drawWaterArea(Canvas canvas, Rect area, Color baseColor) {
+    canvas.drawRect(
+      area,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [baseColor.withValues(alpha: 0.75), baseColor],
+        ).createShader(area),
+    );
+    // 水面の波ハイライト（細い横線を数本、奥から手前へ間隔を広げて立体感を出す）
+    final wavePaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.12)
+      ..strokeWidth = 1;
+    final isHorizontal = area.width >= area.height;
+    if (isHorizontal) {
+      double y = area.top + 4;
+      double gap = 10;
+      while (y < area.bottom - 2) {
+        canvas.drawLine(
+          Offset(area.left + 6, y),
+          Offset(area.right - 6, y),
+          wavePaint,
+        );
+        y += gap;
+        gap += 2;
+      }
+    } else {
+      double x = area.left + 4;
+      double gap = 10;
+      while (x < area.right - 2) {
+        canvas.drawLine(
+          Offset(x, area.top + 6),
+          Offset(x, area.bottom - 6),
+          wavePaint,
+        );
+        x += gap;
+        gap += 2;
+      }
+    }
+    // 岸との境界を縁取って段差（深さ）を演出
+    canvas.drawRect(
+      area,
+      Paint()
+        ..color = Colors.black.withValues(alpha: 0.25)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
+  }
+
+  /// 河川：水域より細く、両岸に陰影の帯を付けて水路の掘れ込みを表現
+  void _drawRiver(Canvas canvas, Rect area) {
+    _drawWaterArea(canvas, area, const Color(0xFF1A4A6A));
+    final bankPaint = Paint()..color = Colors.black.withValues(alpha: 0.3);
+    if (area.width >= area.height) {
+      canvas.drawRect(
+        Rect.fromLTWH(area.left, area.top, area.width, 2.5),
+        bankPaint,
+      );
+      canvas.drawRect(
+        Rect.fromLTWH(area.left, area.bottom - 2.5, area.width, 2.5),
+        bankPaint,
+      );
+    } else {
+      canvas.drawRect(
+        Rect.fromLTWH(area.left, area.top, 2.5, area.height),
+        bankPaint,
+      );
+      canvas.drawRect(
+        Rect.fromLTWH(area.right - 2.5, area.top, 2.5, area.height),
+        bankPaint,
+      );
+    }
+  }
+
+  /// 平野・台地：奥（上）ほど明るく、手前（下）ほど暗いグラデーションで
+  /// 奥行きを演出し、草地のテクスチャを点在させる
+  void _drawPlain(Canvas canvas, Rect area, Color baseColor) {
+    final hsl = HSLColor.fromColor(baseColor);
+    final farColor = hsl
+        .withLightness((hsl.lightness + 0.08).clamp(0.0, 1.0))
+        .toColor();
+    final nearColor = hsl
+        .withLightness((hsl.lightness - 0.06).clamp(0.0, 1.0))
+        .toColor();
+    canvas.drawRect(
+      area,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [farColor, nearColor],
+        ).createShader(area),
+    );
+    // 草地の質感：小さな点を疎らに配置（奥は小さく密、手前は大きく疎にして遠近感）
+    final rand = Random(area.left.toInt() * 31 + area.top.toInt());
+    final texturePaint = Paint()..color = Colors.black.withValues(alpha: 0.15);
+    for (int i = 0; i < 40; i++) {
+      final dx = area.left + rand.nextDouble() * area.width;
+      final dy = area.top + rand.nextDouble() * area.height;
+      final depthRatio = (dy - area.top) / area.height;
+      final dotRadius = 0.6 + depthRatio * 1.2;
+      canvas.drawCircle(Offset(dx, dy), dotRadius, texturePaint);
     }
   }
 
@@ -410,5 +552,4 @@ class MapBackground extends PositionComponent {
       canvas.drawLine(Offset(0, y), Offset(360, y), paint);
     }
   }
-
 }

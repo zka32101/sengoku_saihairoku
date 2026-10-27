@@ -295,8 +295,21 @@ class _BattleScreenState extends State<BattleScreen> {
                 children: [
                   GameWidget(game: game),
                   if (_lastTP != null)
-                    _TurningPointBanner(
-                        tp: _lastTP!, flavorText: _lastTPFlavor, l10n: l10n),
+                    TweenAnimationBuilder<double>(
+                      key: ValueKey(_lastTP!.id),
+                      tween: Tween(begin: 0.0, end: 1.0),
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.easeOutBack,
+                      builder: (context, t, child) => Opacity(
+                        opacity: t.clamp(0.0, 1.0),
+                        child: Transform.translate(
+                          offset: Offset(0, (1 - t) * -20),
+                          child: Transform.scale(scale: t, child: child),
+                        ),
+                      ),
+                      child: _TurningPointBanner(
+                          tp: _lastTP!, flavorText: _lastTPFlavor, l10n: l10n),
+                    ),
                   if (_debugMode)
                     _DebugPanel(
                       elapsed: _elapsed,

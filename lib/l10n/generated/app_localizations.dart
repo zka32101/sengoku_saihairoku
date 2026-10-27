@@ -152,6 +152,24 @@ abstract class AppLocalizations {
   /// **'キャンセル'**
   String get commonCancel;
 
+  /// No description provided for @battleExitConfirmTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'戦闘を中断しますか？'**
+  String get battleExitConfirmTitle;
+
+  /// No description provided for @battleExitConfirmBody.
+  ///
+  /// In ja, this message translates to:
+  /// **'ここで戻ると、この戦闘の進行状況は失われます。'**
+  String get battleExitConfirmBody;
+
+  /// No description provided for @battleExitConfirmButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'中断する'**
+  String get battleExitConfirmButton;
+
   /// No description provided for @commonConfirm.
   ///
   /// In ja, this message translates to:

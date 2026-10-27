@@ -90,10 +90,14 @@ class _BattleScreenState extends State<BattleScreen> {
           displayName: altPerspective.displayName,
           year: data.year,
           description: altPerspective.description,
-          playerInitialStrength:
-              altPerspective.playerUnits.fold(0, (sum, u) => sum + u.strength),
-          enemyInitialStrength:
-              altPerspective.enemyUnits.fold(0, (sum, u) => sum + u.strength),
+          playerInitialStrength: altPerspective.playerUnits.fold(
+            0,
+            (sum, u) => sum + u.strength,
+          ),
+          enemyInitialStrength: altPerspective.enemyUnits.fold(
+            0,
+            (sum, u) => sum + u.strength,
+          ),
           difficulty: altPerspective.difficulty,
           estimatedDuration: data.estimatedDuration,
           backgroundImage: data.backgroundImage,
@@ -155,8 +159,9 @@ class _BattleScreenState extends State<BattleScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage =
-              AppLocalizations.of(context)!.battleScenarioLoadError(e.toString());
+          _errorMessage = AppLocalizations.of(
+            context,
+          )!.battleScenarioLoadError(e.toString());
           _loading = false;
         });
       }
@@ -193,10 +198,14 @@ class _BattleScreenState extends State<BattleScreen> {
     }).toList();
 
     // 調整されたユニットから初期兵力を再計算
-    final playerInitialStrength =
-        adjustedPlayerUnits.fold(0, (sum, u) => sum + u.strength);
-    final enemyInitialStrength =
-        adjustedEnemyUnits.fold(0, (sum, u) => sum + u.strength);
+    final playerInitialStrength = adjustedPlayerUnits.fold(
+      0,
+      (sum, u) => sum + u.strength,
+    );
+    final enemyInitialStrength = adjustedEnemyUnits.fold(
+      0,
+      (sum, u) => sum + u.strength,
+    );
 
     return ScenarioData(
       id: data.id,
@@ -256,15 +265,16 @@ class _BattleScreenState extends State<BattleScreen> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     if (_errorMessage != null) {
       return Scaffold(
         body: Center(
-          child: Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+          child: Text(
+            _errorMessage!,
+            style: const TextStyle(color: Colors.red),
+          ),
         ),
       );
     }
@@ -273,85 +283,124 @@ class _BattleScreenState extends State<BattleScreen> {
     final data = _scenarioData!;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF0A1A0A),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-            _BattleStatusBar(
-              displayName: data.displayName,
-              playerRatio: _playerRatio,
-              enemyRatio: _enemyRatio,
-              elapsed: _elapsed,
-              battleMomentum: _battleMomentum,
-              context: context,
-              difficultyMode: widget.difficultyMode,
-              l10n: l10n,
-            ),
-            Expanded(
-              child: Stack(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final shouldExit = await _confirmExitBattle(context, l10n);
+        if (shouldExit && context.mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFF0A1A0A),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
                 children: [
-                  GameWidget(game: game),
-                  if (_lastTP != null)
-                    TweenAnimationBuilder<double>(
-                      key: ValueKey(_lastTP!.id),
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      duration: const Duration(milliseconds: 350),
-                      curve: Curves.easeOutBack,
-                      builder: (context, t, child) => Opacity(
-                        opacity: t.clamp(0.0, 1.0),
-                        child: Transform.translate(
-                          offset: Offset(0, (1 - t) * -20),
-                          child: Transform.scale(scale: t, child: child),
-                        ),
-                      ),
-                      child: _TurningPointBanner(
-                          tp: _lastTP!, flavorText: _lastTPFlavor, l10n: l10n),
+                  _BattleStatusBar(
+                    displayName: data.displayName,
+                    playerRatio: _playerRatio,
+                    enemyRatio: _enemyRatio,
+                    elapsed: _elapsed,
+                    battleMomentum: _battleMomentum,
+                    context: context,
+                    difficultyMode: widget.difficultyMode,
+                    l10n: l10n,
+                  ),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        GameWidget(game: game),
+                        if (_lastTP != null)
+                          TweenAnimationBuilder<double>(
+                            key: ValueKey(_lastTP!.id),
+                            tween: Tween(begin: 0.0, end: 1.0),
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeOutBack,
+                            builder: (context, t, child) => Opacity(
+                              opacity: t.clamp(0.0, 1.0),
+                              child: Transform.translate(
+                                offset: Offset(0, (1 - t) * -20),
+                                child: Transform.scale(scale: t, child: child),
+                              ),
+                            ),
+                            child: _TurningPointBanner(
+                              tp: _lastTP!,
+                              flavorText: _lastTPFlavor,
+                              l10n: l10n,
+                            ),
+                          ),
+                        if (_debugMode)
+                          _DebugPanel(
+                            elapsed: _elapsed,
+                            playerCount: _playerUnitCount,
+                            enemyCount: _enemyUnitCount,
+                            playerRatio: _playerRatio,
+                            enemyRatio: _enemyRatio,
+                            tpCount: _tpCount,
+                            tpTotal: data.turningPoints.length,
+                            commandCount: _commandCount,
+                            commandHistory: _commandHistory,
+                          ),
+                      ],
                     ),
-                  if (_debugMode)
-                    _DebugPanel(
-                      elapsed: _elapsed,
-                      playerCount: _playerUnitCount,
-                      enemyCount: _enemyUnitCount,
-                      playerRatio: _playerRatio,
-                      enemyRatio: _enemyRatio,
-                      tpCount: _tpCount,
-                      tpTotal: data.turningPoints.length,
-                      commandCount: _commandCount,
-                      commandHistory: _commandHistory,
-                    ),
+                  ),
+                  _BattleCommandUI(
+                    tpCount: _tpCount,
+                    tpTotal: data.turningPoints.length,
+                    commandScore: _commandScore,
+                    comboCount: _comboCount,
+                    comboMultiplier: _comboMultiplier,
+                    l10n: l10n,
+                    onCommand: (cmd) {
+                      game.executeCommand(cmd);
+                      if (_debugMode) {
+                        setState(() {
+                          _commandHistory.add(cmd.name);
+                          if (_commandHistory.length > 10) {
+                            _commandHistory.removeAt(0);
+                          }
+                        });
+                      }
+                    },
+                  ),
                 ],
               ),
-            ),
-            _BattleCommandUI(
-              tpCount: _tpCount,
-              tpTotal: data.turningPoints.length,
-              commandScore: _commandScore,
-              comboCount: _comboCount,
-              comboMultiplier: _comboMultiplier,
-              l10n: l10n,
-              onCommand: (cmd) {
-                game.executeCommand(cmd);
-                if (_debugMode) {
-                  setState(() {
-                    _commandHistory.add(cmd.name);
-                    if (_commandHistory.length > 10) {
-                      _commandHistory.removeAt(0);
-                    }
-                  });
-                }
-              },
-            ),
-              ],
-            ),
-            if (_showEndFlash)
-              _BattleEndFlash(won: _endFlashWon),
-          ],
+              if (_showEndFlash) _BattleEndFlash(won: _endFlashWon),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<bool> _confirmExitBattle(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.battleExitConfirmTitle),
+        content: Text(l10n.battleExitConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.commonCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(
+              l10n.battleExitConfirmButton,
+              style: const TextStyle(color: Colors.redAccent),
+            ),
+          ),
+        ],
+      ),
+    );
+    return result ?? false;
   }
 }
 
@@ -390,13 +439,14 @@ class _BattleEndFlashState extends State<_BattleEndFlash>
 
   @override
   Widget build(BuildContext context) {
-    final color = widget.won ? const Color(0xFFFFD700) : const Color(0xFF8B1A1A);
+    final color = widget.won
+        ? const Color(0xFFFFD700)
+        : const Color(0xFF8B1A1A);
     return IgnorePointer(
       child: AnimatedBuilder(
         animation: _opacity,
-        builder: (context, child) => Container(
-          color: color.withValues(alpha: _opacity.value * 0.6),
-        ),
+        builder: (context, child) =>
+            Container(color: color.withValues(alpha: _opacity.value * 0.6)),
       ),
     );
   }
@@ -424,7 +474,10 @@ class _BattleStatusBar extends StatelessWidget {
   });
 
   String _formatTime(double seconds) {
-    final remaining = (BattleState.maxBattleTime - seconds).clamp(0, BattleState.maxBattleTime);
+    final remaining = (BattleState.maxBattleTime - seconds).clamp(
+      0,
+      BattleState.maxBattleTime,
+    );
     final mins = (remaining / 60).floor();
     final secs = (remaining % 60).floor();
     return '${mins.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
@@ -485,7 +538,10 @@ class _BattleStatusBar extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: remaining < 60
                           ? Colors.red.withValues(alpha: 0.2)
@@ -527,7 +583,11 @@ class _BattleStatusBar extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.help_outline, color: Color(0xFFFFD700), size: 20),
+                    icon: const Icon(
+                      Icons.help_outline,
+                      color: Color(0xFFFFD700),
+                      size: 20,
+                    ),
                     constraints: const BoxConstraints(),
                     padding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
@@ -548,7 +608,11 @@ class _BattleStatusBar extends StatelessWidget {
                 ),
                 child: Text(
                   l10n.battlePlayerSideLabel,
-                  style: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -573,7 +637,11 @@ class _BattleStatusBar extends StatelessWidget {
                 ),
                 child: Text(
                   l10n.battleEnemySideLabel,
-                  style: const TextStyle(color: Colors.blue, fontSize: 11, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -600,55 +668,48 @@ class _StrengthBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final filled = constraints.maxWidth * value.clamp(0.0, 1.0);
-      return Container(
-        height: 12,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            color: color.withValues(alpha: 0.3),
-            width: 1,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final filled = constraints.maxWidth * value.clamp(0.0, 1.0);
+        return Container(
+          height: 12,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1A1A1A),
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
           ),
-        ),
-        child: Align(
-          alignment: reversed ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            width: filled,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  color.withValues(alpha: 0.8),
-                  color,
+          child: Align(
+            alignment: reversed ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              width: filled,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [color.withValues(alpha: 0.8), color],
+                ),
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: [
+                  BoxShadow(
+                    color: color,
+                    blurRadius: 8,
+                    offset: const Offset(0, 0),
+                  ),
                 ],
               ),
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  color: color,
-                  blurRadius: 8,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    color.withValues(alpha: 0.4),
-                    Colors.transparent,
-                  ],
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [color.withValues(alpha: 0.4), Colors.transparent],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -739,7 +800,11 @@ class _BattleCommandUI extends StatelessWidget {
                         Transform.scale(scale: scale, child: child),
                     child: Row(
                       children: [
-                        const Icon(Icons.flash_on, size: 16, color: Color(0xFFFFAA00)),
+                        const Icon(
+                          Icons.flash_on,
+                          size: 16,
+                          color: Color(0xFFFFAA00),
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           l10n.battleComboCounter(comboCount),
@@ -763,7 +828,11 @@ class _BattleCommandUI extends StatelessWidget {
                   ),
                 Row(
                   children: [
-                    const Icon(Icons.trending_up, size: 16, color: Colors.orange),
+                    const Icon(
+                      Icons.trending_up,
+                      size: 16,
+                      color: Colors.orange,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       l10n.battleCommandScore(commandScore),
@@ -883,13 +952,16 @@ class _CommandButton extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: isSpecial
-                  ? [color.withValues(alpha: 0.45), color.withValues(alpha: 0.15)]
-                  : [color.withValues(alpha: 0.3), color.withValues(alpha: 0.1)],
+                  ? [
+                      color.withValues(alpha: 0.45),
+                      color.withValues(alpha: 0.15),
+                    ]
+                  : [
+                      color.withValues(alpha: 0.3),
+                      color.withValues(alpha: 0.1),
+                    ],
             ),
-            border: Border.all(
-              color: color,
-              width: isSpecial ? 2.5 : 2,
-            ),
+            border: Border.all(color: color, width: isSpecial ? 2.5 : 2),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -907,9 +979,18 @@ class _CommandButton extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: color, size: isSpecial ? 22 : 24, shadows: [
-                Shadow(color: color, blurRadius: isSpecial ? 12 : 8, offset: Offset.zero),
-              ]),
+              Icon(
+                icon,
+                color: color,
+                size: isSpecial ? 22 : 24,
+                shadows: [
+                  Shadow(
+                    color: color,
+                    blurRadius: isSpecial ? 12 : 8,
+                    offset: Offset.zero,
+                  ),
+                ],
+              ),
               const SizedBox(height: 3),
               Text(
                 label,
@@ -984,7 +1065,9 @@ class _DebugPanel extends StatelessWidget {
             children: [
               Text('⏱ ${elapsed.toStringAsFixed(1)}s'),
               Text('👥 P:$playerCount E:$enemyCount'),
-              Text('💪 P:${(playerRatio * 100).toStringAsFixed(0)}% E:${(enemyRatio * 100).toStringAsFixed(0)}%'),
+              Text(
+                '💪 P:${(playerRatio * 100).toStringAsFixed(0)}% E:${(enemyRatio * 100).toStringAsFixed(0)}%',
+              ),
               Text('⭐ TP:$tpCount/$tpTotal'),
               Text('📋 CMD:$commandCount'),
               const SizedBox(height: 4),
@@ -993,9 +1076,13 @@ class _DebugPanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('--- Commands ---'),
-                    ...commandHistory.skip(commandHistory.length > 5 ? commandHistory.length - 5 : 0).map(
-                      (cmd) => Text('  $cmd'),
-                    ),
+                    ...commandHistory
+                        .skip(
+                          commandHistory.length > 5
+                              ? commandHistory.length - 5
+                              : 0,
+                        )
+                        .map((cmd) => Text('  $cmd')),
                   ],
                 ),
             ],
@@ -1011,8 +1098,11 @@ class _TurningPointBanner extends StatelessWidget {
   final String? flavorText;
   final AppLocalizations l10n;
 
-  const _TurningPointBanner(
-      {required this.tp, this.flavorText, required this.l10n});
+  const _TurningPointBanner({
+    required this.tp,
+    this.flavorText,
+    required this.l10n,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1112,88 +1202,94 @@ class _BattleMomentumBarState extends State<_BattleMomentumBar>
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: LayoutBuilder(builder: (context, constraints) {
-                final width = constraints.maxWidth;
-                final playerWidth = width * momentum;
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final width = constraints.maxWidth;
+                  final playerWidth = width * momentum;
 
-                return AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (context, child) {
-                    final pulse = inDanger ? _pulseController.value : 0.0;
-                    return Container(
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1A1A1A),
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(
-                          color: inDanger
-                              ? Color.lerp(const Color(0xFFFF3333),
-                                  Colors.red.withValues(alpha: 0.3), pulse)!
-                              : Colors.grey.withValues(alpha: 0.3),
-                          width: inDanger ? 1.2 : 0.5,
+                  return AnimatedBuilder(
+                    animation: _pulseController,
+                    builder: (context, child) {
+                      final pulse = inDanger ? _pulseController.value : 0.0;
+                      return Container(
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1A1A1A),
+                          borderRadius: BorderRadius.circular(3),
+                          border: Border.all(
+                            color: inDanger
+                                ? Color.lerp(
+                                    const Color(0xFFFF3333),
+                                    Colors.red.withValues(alpha: 0.3),
+                                    pulse,
+                                  )!
+                                : Colors.grey.withValues(alpha: 0.3),
+                            width: inDanger ? 1.2 : 0.5,
+                          ),
+                          boxShadow: inDanger
+                              ? [
+                                  BoxShadow(
+                                    color: const Color(
+                                      0xFFFF3333,
+                                    ).withValues(alpha: 0.5 * pulse),
+                                    blurRadius: 6,
+                                    spreadRadius: 1,
+                                  ),
+                                ]
+                              : null,
                         ),
-                        boxShadow: inDanger
-                            ? [
-                                BoxShadow(
-                                  color: const Color(0xFFFF3333)
-                                      .withValues(alpha: 0.5 * pulse),
-                                  blurRadius: 6,
-                                  spreadRadius: 1,
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: child,
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      // 敵側（左）
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          width: width * (1 - momentum),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.blue.withValues(alpha: 0.6),
-                                Colors.blue.withValues(alpha: 0.3),
-                              ],
+                        child: child,
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        // 敵側（左）
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: width * (1 - momentum),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.blue.withValues(alpha: 0.6),
+                                  Colors.blue.withValues(alpha: 0.3),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(3),
                             ),
-                            borderRadius: BorderRadius.circular(3),
                           ),
                         ),
-                      ),
-                      // プレイヤー側（右）
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          width: playerWidth,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.red.withValues(alpha: 0.3),
-                                Colors.red.withValues(alpha: 0.6),
-                              ],
+                        // プレイヤー側（右）
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            width: playerWidth,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.red.withValues(alpha: 0.3),
+                                  Colors.red.withValues(alpha: 0.6),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(3),
                             ),
-                            borderRadius: BorderRadius.circular(3),
                           ),
                         ),
-                      ),
-                      // 中央インジケーター
-                      Positioned(
-                        left: width * 0.5 - 1,
-                        top: -1,
-                        bottom: -1,
-                        child: Container(
-                          width: 2,
-                          color: Colors.yellow.withValues(alpha: 0.5),
+                        // 中央インジケーター
+                        Positioned(
+                          left: width * 0.5 - 1,
+                          top: -1,
+                          bottom: -1,
+                          child: Container(
+                            width: 2,
+                            color: Colors.yellow.withValues(alpha: 0.5),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(width: 8),
             Text(

@@ -36,6 +36,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonCancel => 'Cancel';
 
   @override
+  String get battleExitConfirmTitle => 'Abandon this battle?';
+
+  @override
+  String get battleExitConfirmBody =>
+      'Going back now will lose your progress in this battle.';
+
+  @override
+  String get battleExitConfirmButton => 'Abandon';
+
+  @override
   String get commonConfirm => 'Confirm';
 
   @override

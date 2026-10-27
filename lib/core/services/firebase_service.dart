@@ -6,8 +6,11 @@ import '../../data/repositories/pending_battle_result_queue.dart';
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Firebase.initializeApp()が未完了/失敗していてもFirebaseService()の構築自体は
+  // 失敗しないよう、実際に使われるまで評価を遅らせる（main.dartでFirebase初期化が
+  // 失敗した場合でもアプリ起動が止まらないようにするため）。
+  FirebaseAuth get _auth => FirebaseAuth.instance;
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
 
   String? _userId;
 

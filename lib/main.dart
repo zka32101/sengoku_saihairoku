@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart' hide FirebaseService;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,57 +42,74 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const _SplashScreen());
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseService().initialize();
+  try {
+    await Future(() async {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await FirebaseService().initialize();
+    }).timeout(const Duration(seconds: 8));
+  } catch (e) {
+    // Firebase初期化に失敗・タイムアウトしても起動自体は続行する（オフライン環境や、
+    // Webアプリ未登録等でappIdが暫定値の場合でも画面確認ができるように）。
+    // タイムアウトを設けるのは、WebではFirebase JS SDKの動的importが
+    // 失敗した際にFutureが解決も失敗もせず無期限に止まることがあるため。
+    debugPrint('Firebase initialization failed or timed out: $e');
+  }
   await LocaleController.instance.loadSaved();
 
-  // オフライン時に送信できず端末内に溜まっていたバトル結果があれば再送する
-  await FirebaseService().flushPendingBattleResults();
+  var needsOnboarding = false;
+  try {
+    // オフライン時に送信できず端末内に溜まっていたバトル結果があれば再送する
+    await FirebaseService().flushPendingBattleResults();
 
-  // ターンランクリポジトリを初期化
-  final turnRankRepo = TurnRankRepository();
-  await turnRankRepo.initialize();
+    // ターンランクリポジトリを初期化
+    final turnRankRepo = TurnRankRepository();
+    await turnRankRepo.initialize();
 
-  // Initialize DailyChallengeRepository
-  final challengeRepo = DailyChallengeRepository();
-  await challengeRepo.initialize();
+    // Initialize DailyChallengeRepository
+    final challengeRepo = DailyChallengeRepository();
+    await challengeRepo.initialize();
 
-  // Initialize ProgressionRepository
-  final progressionRepo = ProgressionRepository();
-  await progressionRepo.initialize();
+    // Initialize ProgressionRepository
+    final progressionRepo = ProgressionRepository();
+    await progressionRepo.initialize();
 
-  // Initialize RewardRepository
-  final rewardRepo = RewardRepository();
-  await rewardRepo.initialize();
+    // Initialize RewardRepository
+    final rewardRepo = RewardRepository();
+    await rewardRepo.initialize();
 
-  // Initialize AchievementRepository
-  final achievementRepo = AchievementRepository();
-  await achievementRepo.initialize();
+    // Initialize AchievementRepository
+    final achievementRepo = AchievementRepository();
+    await achievementRepo.initialize();
 
-  // Initialize BattlePassRepository
-  final battlePassRepo = BattlePassRepository();
-  await battlePassRepo.initialize();
+    // Initialize BattlePassRepository
+    final battlePassRepo = BattlePassRepository();
+    await battlePassRepo.initialize();
 
-  // Initialize PurchaseService（起動直後に購入ストリームを購読し、
-  // 未完了の購入・復元を取りこぼさないようにする）
-  await PurchaseService().initialize();
+    // Initialize PurchaseService（起動直後に購入ストリームを購読し、
+    // 未完了の購入・復元を取りこぼさないようにする）
+    await PurchaseService().initialize();
 
-  // Initialize NotificationService（ローカル通知の権限リクエスト・初期化）
-  await NotificationService().initialize();
+    // Initialize NotificationService（ローカル通知の権限リクエスト・初期化）
+    await NotificationService().initialize();
 
-  // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
-  await AdService().initialize();
+    // Initialize AdService（リワード広告SDKの初期化と事前読み込み）
+    await AdService().initialize();
 
-  // Initialize PushNotificationService（サーバーサイドイベント通知の受信設定）
-  await PushNotificationService().initialize();
-  final currentUserId = FirebaseService().userId;
-  if (currentUserId != null) {
-    await PushNotificationService().registerToken(currentUserId);
+    // Initialize PushNotificationService（サーバーサイドイベント通知の受信設定）
+    await PushNotificationService().initialize();
+    final currentUserId = FirebaseService().userId;
+    if (currentUserId != null) {
+      await PushNotificationService().registerToken(currentUserId);
+    }
+
+    // 初回起動オンボーディングが必要か確認
+    needsOnboarding =
+        await OnboardingRepository().needsOnboarding(FirebaseService().userId);
+  } catch (e) {
+    // 各種リポジトリ・サービスの初期化が（Firebase未初期化等により）失敗しても、
+    // 起動がスプラッシュ画面のまま止まらないようにする。
+    debugPrint('Startup initialization failed: $e');
   }
-
-  // 初回起動オンボーディングが必要か確認
-  final needsOnboarding =
-      await OnboardingRepository().needsOnboarding(FirebaseService().userId);
 
   runApp(ProviderScope(
     child: SengokuSaihairokuApp(

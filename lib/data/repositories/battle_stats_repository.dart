@@ -14,6 +14,7 @@ class BattleStatsRepository {
   BattleStatsRepository._internal();
 
   static const _totalWinsKey = 'battle_stats_total_wins';
+  static const _totalPlaytimeSecondsKey = 'battle_stats_total_playtime_seconds';
   static const _clearedKeyPrefix = 'battle_stats_cleared_';
 
   static String _clearedKey(Scenario scenario, DifficultyMode difficulty) =>
@@ -46,5 +47,19 @@ class BattleStatsRepository {
     await prefs.setBool(key, true);
 
     return isFirstClear;
+  }
+
+  /// 戦闘時間（秒）を累計プレイ時間に加算する
+  Future<void> addPlaytimeSeconds(int seconds) async {
+    final prefs = await SharedPreferences.getInstance();
+    final current = prefs.getInt(_totalPlaytimeSecondsKey) ?? 0;
+    await prefs.setInt(_totalPlaytimeSecondsKey, current + seconds);
+  }
+
+  /// これまでの累計プレイ時間（分）を取得
+  Future<int> getTotalPlaytimeMinutes() async {
+    final prefs = await SharedPreferences.getInstance();
+    final totalSeconds = prefs.getInt(_totalPlaytimeSecondsKey) ?? 0;
+    return totalSeconds ~/ 60;
   }
 }

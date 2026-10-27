@@ -26,6 +26,7 @@ import '../../data/services/progression_calculator.dart';
 import '../../domain/challenges/challenge_service.dart';
 import '../../domain/achievement_checking/achievement_checker.dart';
 import '../../domain/achievement_checking/achievement_notification_service.dart';
+import '../../domain/achievement_checking/playtime_tracker.dart';
 import '../../data/repositories/battle_pass_repository.dart';
 import '../../domain/battle_pass/battle_pass_notification_service.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -65,6 +66,7 @@ class _ResultScreenState extends State<ResultScreen> {
   late ProgressionRepository _progressionRepo;
   late RewardRepository _rewardRepo;
   late AchievementChecker _achievementChecker;
+  late PlaytimeTracker _playtimeTracker;
   late AchievementNotificationService _notificationService;
   late BattlePassRepository _battlePassRepo;
   late BattlePassNotificationService _battlePassNotificationService;
@@ -94,6 +96,7 @@ class _ResultScreenState extends State<ResultScreen> {
     _progressionRepo = ProgressionRepository();
     _rewardRepo = RewardRepository();
     _achievementChecker = AchievementChecker();
+    _playtimeTracker = PlaytimeTracker();
     _notificationService = AchievementNotificationService();
     _battlePassRepo = BattlePassRepository();
     _battlePassNotificationService = BattlePassNotificationService();
@@ -178,6 +181,35 @@ class _ResultScreenState extends State<ResultScreen> {
     // Check battle achievements
     if (userId != null) {
       await _checkBattleAchievements(data);
+      await _checkPlaytimeAchievements(userId, data);
+    }
+  }
+
+  Future<void> _checkPlaytimeAchievements(
+    String userId,
+    BattleStateData data,
+  ) async {
+    try {
+      final unlockedAchievements = await _playtimeTracker.recordBattlePlaytime(
+        userId,
+        data.elapsedTime.toInt(),
+      );
+
+      if (unlockedAchievements.isNotEmpty) {
+        setState(() {
+          _unlockedAchievements.addAll(unlockedAchievements);
+        });
+
+        if (mounted) {
+          for (final achievement in unlockedAchievements) {
+            await _notificationService.showAchievementUnlockNotification(
+              achievement,
+            );
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Error checking playtime achievements: $e');
     }
   }
 

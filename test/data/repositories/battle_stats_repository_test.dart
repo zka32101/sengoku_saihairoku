@@ -73,5 +73,20 @@ void main() {
       expect(otherScenarioIsFirstClear, isTrue);
       expect(await repo.getTotalWins(), 2);
     });
+
+    test('初期状態では累計プレイ時間は0分', () async {
+      final repo = BattleStatsRepository();
+      expect(await repo.getTotalPlaytimeMinutes(), 0);
+    });
+
+    test('addPlaytimeSecondsで累計時間が秒単位で加算され、分単位に切り捨てて取得できる', () async {
+      final repo = BattleStatsRepository();
+
+      await repo.addPlaytimeSeconds(90);
+      await repo.addPlaytimeSeconds(45);
+
+      // 90 + 45 = 135秒 = 2分15秒 → 分単位では2分（切り捨て）
+      expect(await repo.getTotalPlaytimeMinutes(), 2);
+    });
   });
 }

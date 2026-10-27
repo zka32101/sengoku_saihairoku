@@ -37,6 +37,8 @@ import 'data/repositories/progression_repository.dart';
 import 'data/repositories/reward_repository.dart';
 import 'data/repositories/achievement_repository.dart';
 import 'data/repositories/battle_pass_repository.dart';
+import 'domain/achievement_checking/achievement_checker.dart';
+import 'domain/achievement_checking/playtime_tracker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +46,9 @@ void main() async {
 
   try {
     await Future(() async {
-      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
       await FirebaseService().initialize();
     }).timeout(const Duration(seconds: 8));
   } catch (e) {
@@ -81,6 +85,14 @@ void main() async {
     final achievementRepo = AchievementRepository();
     await achievementRepo.initialize();
 
+    // Initialize AchievementChecker（実績判定サービス本体。これを呼び忘れると
+    // 判定メソッド群が未初期化例外を投げ、呼び出し側のtry/catchで
+    // サイレントに握り潰されて実績が一切解放されなくなる）
+    await AchievementChecker().initialize();
+
+    // Initialize PlaytimeTracker
+    await PlaytimeTracker().initialize();
+
     // Initialize BattlePassRepository
     final battlePassRepo = BattlePassRepository();
     await battlePassRepo.initialize();
@@ -103,19 +115,22 @@ void main() async {
     }
 
     // 初回起動オンボーディングが必要か確認
-    needsOnboarding =
-        await OnboardingRepository().needsOnboarding(FirebaseService().userId);
+    needsOnboarding = await OnboardingRepository().needsOnboarding(
+      FirebaseService().userId,
+    );
   } catch (e) {
     // 各種リポジトリ・サービスの初期化が（Firebase未初期化等により）失敗しても、
     // 起動がスプラッシュ画面のまま止まらないようにする。
     debugPrint('Startup initialization failed: $e');
   }
 
-  runApp(ProviderScope(
-    child: SengokuSaihairokuApp(
-      initialRoute: needsOnboarding ? '/onboarding' : '/home',
+  runApp(
+    ProviderScope(
+      child: SengokuSaihairokuApp(
+        initialRoute: needsOnboarding ? '/onboarding' : '/home',
+      ),
     ),
-  ));
+  );
 }
 
 /// 起動時の非同期初期化（Firebase・各種リポジトリ）が完了するまで表示する
@@ -126,8 +141,9 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final asset =
-        Random().nextBool() ? 'assets/images/loading_1.png' : 'assets/images/loading_2.png';
+    final asset = Random().nextBool()
+        ? 'assets/images/loading_1.png'
+        : 'assets/images/loading_2.png';
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -176,8 +192,9 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: lookupAppLocalizations(LocaleController.instance.resolvedLocale)
-          .homeAppTitle,
+      title: lookupAppLocalizations(
+        LocaleController.instance.resolvedLocale,
+      ).homeAppTitle,
       theme: _buildTheme(),
       locale: LocaleController.instance.value,
       supportedLocales: LocaleController.supportedLocales,
@@ -210,12 +227,14 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
       onGenerateRoute: (settings) {
         if (settings.name == '/result') {
           return MaterialPageRoute(
-            builder: (_) => ResultScreen(args: settings.arguments as ResultScreenArgs),
+            builder: (_) =>
+                ResultScreen(args: settings.arguments as ResultScreenArgs),
           );
         }
         if (settings.name == '/message') {
           return MaterialPageRoute(
-            builder: (_) => MessageScreen(args: settings.arguments as MessageScreenArgs),
+            builder: (_) =>
+                MessageScreen(args: settings.arguments as MessageScreenArgs),
           );
         }
         return null;
@@ -253,7 +272,10 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
       textTheme: const TextTheme(
         bodyMedium: TextStyle(color: Color(0xFFE8D5B0)),
         bodyLarge: TextStyle(color: Color(0xFFE8D5B0)),
-        titleLarge: TextStyle(color: Color(0xFFFFD700), fontWeight: FontWeight.bold),
+        titleLarge: TextStyle(
+          color: Color(0xFFFFD700),
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

@@ -255,7 +255,8 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
         brightness: Brightness.dark,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF3B1A1A),
+        // 戦闘マップの立体表現強化に合わせ、UI全体のベースも視認しやすい明るめのトーンに調整
+        backgroundColor: Color(0xFF502323),
         foregroundColor: Color(0xFFFFD700),
         elevation: 0,
       ),
@@ -267,13 +268,13 @@ class _SengokuSaihairokuAppState extends State<SengokuSaihairokuApp> {
         ),
       ),
       cardTheme: CardThemeData(
-        color: const Color(0xFF2A1A0A),
+        color: const Color(0xFF3D260E),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
           side: const BorderSide(color: Color(0xFF8B6914), width: 1),
         ),
       ),
-      scaffoldBackgroundColor: const Color(0xFF1A0F0A),
+      scaffoldBackgroundColor: const Color(0xFF2A1810),
       textTheme: const TextTheme(
         bodyMedium: TextStyle(color: Color(0xFFE8D5B0)),
         bodyLarge: TextStyle(color: Color(0xFFE8D5B0)),

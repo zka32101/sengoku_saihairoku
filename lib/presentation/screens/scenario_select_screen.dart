@@ -24,17 +24,21 @@ class _ScenarioEntry {
   final String description;
   final bool isUnlocked;
 
-  const _ScenarioEntry(this.scenario, this.name, this.year, this.difficulty,
-      this.playTime, this.description, this.isUnlocked);
+  const _ScenarioEntry(
+    this.scenario,
+    this.name,
+    this.year,
+    this.difficulty,
+    this.playTime,
+    this.description,
+    this.isUnlocked,
+  );
 }
 
 class ScenarioSelectScreen extends StatelessWidget {
   const ScenarioSelectScreen({super.key});
 
-  static void _showScenarioSettings(
-    BuildContext context,
-    Scenario scenario,
-  ) {
+  static void _showScenarioSettings(BuildContext context, Scenario scenario) {
     showDialog(
       context: context,
       builder: (context) => _ScenarioSettingsDialog(scenario: scenario),
@@ -42,30 +46,96 @@ class ScenarioSelectScreen extends StatelessWidget {
   }
 
   static List<_ScenarioEntry> _scenariosFor(AppLocalizations l10n) => [
-    _ScenarioEntry(Scenario.odigahara, l10n.scenarioNameOdigahara, 1560, 1,
-        l10n.scenarioPlayTimeOdigahara, l10n.scenarioDescOdigahara, true),
-    _ScenarioEntry(Scenario.nagashino, l10n.scenarioNameNagashino, 1575, 2,
-        l10n.scenarioPlayTimeNagashino, l10n.scenarioDescNagashino, true),
-    _ScenarioEntry(Scenario.honnoJi, l10n.scenarioNameHonnoji, 1582, 3,
-        l10n.scenarioPlayTimeHonnoji, l10n.scenarioDescHonnoji, true),
-    _ScenarioEntry(Scenario.sekigahara, l10n.scenarioNameSekigahara, 1600, 4,
-        l10n.scenarioPlayTimeSekigahara, l10n.scenarioDescSekigahara, true),
-    _ScenarioEntry(Scenario.kawanakajima, l10n.scenarioNameKawanakajima, 1561,
-        3, l10n.scenarioPlayTimeKawanakajima, l10n.scenarioDescKawanakajima,
-        true),
-    _ScenarioEntry(Scenario.itsukushima, l10n.scenarioNameItsukushima, 1555,
-        3, l10n.scenarioPlayTimeItsukushima, l10n.scenarioDescItsukushima,
-        true),
-    _ScenarioEntry(Scenario.oshiJo, l10n.scenarioNameOshijo, 1590, 2,
-        l10n.scenarioPlayTimeOshijo, l10n.scenarioDescOshijo, true),
-    _ScenarioEntry(Scenario.mikatagahara, l10n.scenarioNameMikatagahara, 1573,
-        3, l10n.scenarioPlayTimeMikatagahara, l10n.scenarioDescMikatagahara,
-        true),
-    _ScenarioEntry(Scenario.anegawa, l10n.scenarioNameAnegawa, 1570, 2,
-        l10n.scenarioPlayTimeAnegawa, l10n.scenarioDescAnegawa, true),
-    _ScenarioEntry(Scenario.shizugatake, l10n.scenarioNameShizugatake, 1583,
-        3, l10n.scenarioPlayTimeShizugatake, l10n.scenarioDescShizugatake,
-        true),
+    _ScenarioEntry(
+      Scenario.odigahara,
+      l10n.scenarioNameOdigahara,
+      1560,
+      1,
+      l10n.scenarioPlayTimeOdigahara,
+      l10n.scenarioDescOdigahara,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.nagashino,
+      l10n.scenarioNameNagashino,
+      1575,
+      2,
+      l10n.scenarioPlayTimeNagashino,
+      l10n.scenarioDescNagashino,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.honnoJi,
+      l10n.scenarioNameHonnoji,
+      1582,
+      3,
+      l10n.scenarioPlayTimeHonnoji,
+      l10n.scenarioDescHonnoji,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.sekigahara,
+      l10n.scenarioNameSekigahara,
+      1600,
+      4,
+      l10n.scenarioPlayTimeSekigahara,
+      l10n.scenarioDescSekigahara,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.kawanakajima,
+      l10n.scenarioNameKawanakajima,
+      1561,
+      3,
+      l10n.scenarioPlayTimeKawanakajima,
+      l10n.scenarioDescKawanakajima,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.itsukushima,
+      l10n.scenarioNameItsukushima,
+      1555,
+      3,
+      l10n.scenarioPlayTimeItsukushima,
+      l10n.scenarioDescItsukushima,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.oshiJo,
+      l10n.scenarioNameOshijo,
+      1590,
+      2,
+      l10n.scenarioPlayTimeOshijo,
+      l10n.scenarioDescOshijo,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.mikatagahara,
+      l10n.scenarioNameMikatagahara,
+      1573,
+      3,
+      l10n.scenarioPlayTimeMikatagahara,
+      l10n.scenarioDescMikatagahara,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.anegawa,
+      l10n.scenarioNameAnegawa,
+      1570,
+      2,
+      l10n.scenarioPlayTimeAnegawa,
+      l10n.scenarioDescAnegawa,
+      true,
+    ),
+    _ScenarioEntry(
+      Scenario.shizugatake,
+      l10n.scenarioNameShizugatake,
+      1583,
+      3,
+      l10n.scenarioPlayTimeShizugatake,
+      l10n.scenarioDescShizugatake,
+      true,
+    ),
   ];
 
   @override
@@ -80,9 +150,7 @@ class ScenarioSelectScreen extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (ctx) => const HelpModal(
-                  initialTab: 'tutorial',
-                ),
+                builder: (ctx) => const HelpModal(initialTab: 'tutorial'),
               );
             },
             icon: const Icon(Icons.help_outline),
@@ -98,7 +166,7 @@ class ScenarioSelectScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          color: const Color(0xFF1A0F0A).withValues(alpha: 0.72),
+          color: const Color(0xFF2A1810).withValues(alpha: 0.65),
           child: ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: scenarios.length,
@@ -159,17 +227,29 @@ class _ScenarioCard extends StatelessWidget {
           children: [
             ClipRRect(
               child: isUnlocked
-                  ? Image.asset(
-                      thumbnailAsset,
-                      height: 120,
-                      fit: BoxFit.cover,
-                    )
+                  ? Image.asset(thumbnailAsset, height: 120, fit: BoxFit.cover)
                   : ColorFiltered(
                       colorFilter: const ColorFilter.matrix(<double>[
-                        0.2126, 0.7152, 0.0722, 0, 0,
-                        0.2126, 0.7152, 0.0722, 0, 0,
-                        0.2126, 0.7152, 0.0722, 0, 0,
-                        0, 0, 0, 1, 0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
                       ]),
                       child: Image.asset(
                         thumbnailAsset,
@@ -179,68 +259,74 @@ class _ScenarioCard extends StatelessWidget {
                     ),
             ),
             Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFFD700),
-                          ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFFFD700),
+                              ),
+                            ),
+                            Text(
+                              l10n.scenarioYearSuffix(year),
+                              style: TextStyle(
+                                color: Colors.grey[500],
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          l10n.scenarioYearSuffix(year),
-                          style: TextStyle(
-                            color: Colors.grey[500],
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+                      ),
+                      if (!isUnlocked)
+                        const Icon(Icons.lock, color: Colors.grey),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  _DifficultyStars(difficulty: difficulty),
+                  const SizedBox(height: 8),
+                  Text(
+                    description,
+                    style: const TextStyle(
+                      color: Color(0xFFE8D5B0),
+                      fontSize: 13,
                     ),
                   ),
-                  if (!isUnlocked)
-                    const Icon(Icons.lock, color: Colors.grey),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.timer, size: 14, color: Colors.grey),
+                      const SizedBox(width: 4),
+                      Text(
+                        playTime,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (isUnlocked) ...[
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: onTap,
+                        child: Text(l10n.commonSortie),
+                      ),
+                    ),
+                  ],
                 ],
               ),
-              const SizedBox(height: 8),
-              _DifficultyStars(difficulty: difficulty),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                style: const TextStyle(color: Color(0xFFE8D5B0), fontSize: 13),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  const Icon(Icons.timer, size: 14, color: Colors.grey),
-                  const SizedBox(width: 4),
-                  Text(
-                    playTime,
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                ],
-              ),
-              if (isUnlocked) ...[
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: onTap,
-                    child: Text(l10n.commonSortie),
-                  ),
-                ),
-              ],
-            ],
-          ),
             ),
           ],
         ),
@@ -299,8 +385,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   }
 
   Future<void> _loadLastDifficulty() async {
-    final difficulty = await ScenarioDifficultyRepository()
-        .getLastDifficulty(widget.scenario);
+    final difficulty = await ScenarioDifficultyRepository().getLastDifficulty(
+      widget.scenario,
+    );
     if (!mounted) return;
     setState(() => _selectedDifficulty = difficulty);
   }
@@ -323,14 +410,15 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     if (userId == null) return;
 
     final allWarlords = await WarlordRepository().getAllWarlords();
-    final unlockedIds =
-        await WarlordCollectionRepository().getUnlockedWarlordIds(userId);
+    final unlockedIds = await WarlordCollectionRepository()
+        .getUnlockedWarlordIds(userId);
     final exp = await WarlordProgressRepository().getAllExp(userId);
 
     if (!mounted) return;
     setState(() {
-      _unlockedWarlords =
-          allWarlords.where((w) => unlockedIds.contains(w.id)).toList();
+      _unlockedWarlords = allWarlords
+          .where((w) => unlockedIds.contains(w.id))
+          .toList();
       _warlordExp = exp;
     });
   }
@@ -349,8 +437,9 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     for (final warlord in _selectedWarlords) {
       final bonus = (warlord.leadership / 1000.0).clamp(0.0, 0.10);
       multiplier += bonus;
-      multiplier *= WarlordProgressRepository()
-          .strengthBonusForLevel(_levelOf(warlord));
+      multiplier *= WarlordProgressRepository().strengthBonusForLevel(
+        _levelOf(warlord),
+      );
     }
 
     if (_selectedWarlords.length >= 2) {
@@ -382,14 +471,16 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
 
   Future<void> _loadScenario() async {
     try {
-      final scenarioJson = await DefaultAssetBundle.of(context)
-          .loadString('assets/data/scenarios.json');
+      final scenarioJson = await DefaultAssetBundle.of(
+        context,
+      ).loadString('assets/data/scenarios.json');
       final Map<String, dynamic> scenarios =
           jsonDecode(scenarioJson) as Map<String, dynamic>;
       final scenarioKey = widget.scenario.name;
       if (scenarios.containsKey(scenarioKey)) {
-        final data =
-            ScenarioData.fromJson(scenarios[scenarioKey] as Map<String, dynamic>);
+        final data = ScenarioData.fromJson(
+          scenarios[scenarioKey] as Map<String, dynamic>,
+        );
         if (mounted) {
           setState(() {
             _scenarioData = data;
@@ -411,8 +502,10 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     final perspective = _selectedPerspectiveId;
     final difficulty = _selectedDifficulty;
 
-    ScenarioDifficultyRepository()
-        .setLastDifficulty(widget.scenario, difficulty);
+    ScenarioDifficultyRepository().setLastDifficulty(
+      widget.scenario,
+      difficulty,
+    );
 
     Navigator.pop(context);
 
@@ -428,9 +521,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
     if (MessageSettings().storyMessagesEnabled) {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (_) => PrologueScreen(args: prologueArgs),
-        ),
+        MaterialPageRoute(builder: (_) => PrologueScreen(args: prologueArgs)),
       );
       return;
     }
@@ -533,11 +624,14 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                   title: mainPerspective.alternativePerspective!.displayName,
                   description:
                       mainPerspective.alternativePerspective!.description,
-                  difficulty: mainPerspective.alternativePerspective!.difficulty,
+                  difficulty:
+                      mainPerspective.alternativePerspective!.difficulty,
                   isSelected: _selectedPerspectiveId != null,
                   onTap: () {
-                    setState(() => _selectedPerspectiveId =
-                        mainPerspective.alternativePerspective!.id);
+                    setState(
+                      () => _selectedPerspectiveId =
+                          mainPerspective.alternativePerspective!.id,
+                    );
                   },
                 ),
                 const SizedBox(height: 24),
@@ -565,51 +659,57 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: _unlockedWarlords
-                        .map((w) => Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: FilterChip(
-                                label: Text(
-                                  l10n.scenarioWarlordChipLabel(
-                                    w.name,
-                                    _levelOf(w),
-                                    WarlordProgressRepository()
-                                            .isAwakened(_levelOf(w))
-                                        ? l10n.scenarioWarlordAwakenedTag
-                                        : '',
-                                    w.leadership,
-                                  ),
+                        .map(
+                          (w) => Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: FilterChip(
+                              label: Text(
+                                l10n.scenarioWarlordChipLabel(
+                                  w.name,
+                                  _levelOf(w),
+                                  WarlordProgressRepository().isAwakened(
+                                        _levelOf(w),
+                                      )
+                                      ? l10n.scenarioWarlordAwakenedTag
+                                      : '',
+                                  w.leadership,
                                 ),
-                                selected: _selectedWarlords
-                                    .any((sw) => sw.id == w.id),
-                                onSelected: (_) => _toggleWarlord(w),
                               ),
-                            ))
+                              selected: _selectedWarlords.any(
+                                (sw) => sw.id == w.id,
+                              ),
+                              onSelected: (_) => _toggleWarlord(w),
+                            ),
+                          ),
+                        )
                         .toList(),
                   ),
                 ),
                 if (_selectedWarlords.length >= 2) ...[
                   const SizedBox(height: 8),
-                  Builder(builder: (context) {
-                    final compatibility = WarlordCompatibility.multiplier(
-                      _selectedWarlords[0],
-                      _selectedWarlords[1],
-                    );
-                    final isPositive = compatibility >= 1.0;
-                    return Text(
-                      l10n.scenarioCompatibilityLabel(
-                        compatibility.toStringAsFixed(2),
-                        isPositive
-                            ? l10n.scenarioCompatibilityPositive
-                            : l10n.scenarioCompatibilityNegative,
-                      ),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isPositive
-                            ? Colors.lightGreenAccent
-                            : Colors.orangeAccent,
-                      ),
-                    );
-                  }),
+                  Builder(
+                    builder: (context) {
+                      final compatibility = WarlordCompatibility.multiplier(
+                        _selectedWarlords[0],
+                        _selectedWarlords[1],
+                      );
+                      final isPositive = compatibility >= 1.0;
+                      return Text(
+                        l10n.scenarioCompatibilityLabel(
+                          compatibility.toStringAsFixed(2),
+                          isPositive
+                              ? l10n.scenarioCompatibilityPositive
+                              : l10n.scenarioCompatibilityNegative,
+                        ),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isPositive
+                              ? Colors.lightGreenAccent
+                              : Colors.orangeAccent,
+                        ),
+                      );
+                    },
+                  ),
                 ],
                 const SizedBox(height: 24),
                 const Divider(color: Color(0xFF8B6914)),
@@ -625,14 +725,19 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 ),
               ),
               const SizedBox(height: 12),
-              ...[DifficultyMode.easy, DifficultyMode.normal, DifficultyMode.hard]
-                  .map((mode) => _DifficultyOption(
-                        mode: mode,
-                        isSelected: _selectedDifficulty == mode,
-                        onTap: () {
-                          setState(() => _selectedDifficulty = mode);
-                        },
-                      )),
+              ...[
+                DifficultyMode.easy,
+                DifficultyMode.normal,
+                DifficultyMode.hard,
+              ].map(
+                (mode) => _DifficultyOption(
+                  mode: mode,
+                  isSelected: _selectedDifficulty == mode,
+                  onTap: () {
+                    setState(() => _selectedDifficulty = mode);
+                  },
+                ),
+              ),
               const SizedBox(height: 24),
               // Action Buttons
               Row(
@@ -684,7 +789,9 @@ class _PerspectiveOption extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? const Color(0xFFFFD700) : const Color(0xFF8B6914),
+            color: isSelected
+                ? const Color(0xFFFFD700)
+                : const Color(0xFF8B6914),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(8),
@@ -756,7 +863,9 @@ class _DifficultyOption extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? const Color(0xFFFFD700) : const Color(0xFF8B6914),
+            color: isSelected
+                ? const Color(0xFFFFD700)
+                : const Color(0xFF8B6914),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(8),

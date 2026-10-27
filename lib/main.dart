@@ -39,6 +39,7 @@ import 'data/repositories/achievement_repository.dart';
 import 'data/repositories/battle_pass_repository.dart';
 import 'domain/achievement_checking/achievement_checker.dart';
 import 'domain/achievement_checking/playtime_tracker.dart';
+import 'domain/achievement_checking/prestige_achievement_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,6 +93,10 @@ void main() async {
 
     // Initialize PlaytimeTracker
     await PlaytimeTracker().initialize();
+
+    // Initialize PrestigeAchievementHandler（これも呼び忘れると、
+    // プレスティジリセット時の実績判定が未初期化例外で握り潰される）
+    await PrestigeAchievementHandler().initialize();
 
     // Initialize BattlePassRepository
     final battlePassRepo = BattlePassRepository();

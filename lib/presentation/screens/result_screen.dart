@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/services/firebase_service.dart';
@@ -611,15 +612,35 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 }
 
-class _ResultHeader extends StatelessWidget {
+class _ResultHeader extends StatefulWidget {
   final bool won;
   final AppLocalizations l10n;
 
   const _ResultHeader({required this.won, required this.l10n});
 
   @override
+  State<_ResultHeader> createState() => _ResultHeaderState();
+}
+
+class _ResultHeaderState extends State<_ResultHeader>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 700),
+    vsync: this,
+  )..forward();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    final won = widget.won;
+    final l10n = widget.l10n;
+
+    final card = Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: won
@@ -650,7 +671,62 @@ class _ResultHeader extends StatelessWidget {
         ],
       ),
     );
+
+    return Stack(
+      alignment: Alignment.center,
+      clipBehavior: Clip.none,
+      children: [
+        if (won)
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, _) => CustomPaint(
+              painter: _VictorySparklePainter(progress: _controller.value),
+              size: const Size(double.infinity, 160),
+            ),
+          ),
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final t = Curves.elasticOut.transform(_controller.value);
+            return Opacity(
+              opacity: _controller.value.clamp(0.0, 1.0),
+              child: Transform.scale(scale: t, child: child),
+            );
+          },
+          child: card,
+        ),
+      ],
+    );
   }
+}
+
+/// 勝利時のみ表示する、出現と同時に外側へ飛び散る金色の光の粒。
+class _VictorySparklePainter extends CustomPainter {
+  final double progress;
+
+  _VictorySparklePainter({required this.progress});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress <= 0) return;
+    final center = Offset(size.width / 2, size.height / 2);
+    const sparkleCount = 12;
+    final alpha = (1.0 - progress).clamp(0.0, 1.0);
+    for (int i = 0; i < sparkleCount; i++) {
+      final angle = i * 2 * math.pi / sparkleCount;
+      final distance = progress * 120 * (i.isEven ? 1.0 : 0.7);
+      final offset = center + Offset.fromDirection(angle, distance);
+      canvas.drawCircle(
+        offset,
+        i.isEven ? 3.5 : 2.0,
+        Paint()..color = const Color(0xFFFFD700).withValues(alpha: alpha),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _VictorySparklePainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }
 
 class _ScoreCard extends StatelessWidget {

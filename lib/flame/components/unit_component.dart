@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import '../../domain/combat/unit.dart';
@@ -16,6 +17,10 @@ class UnitComponent extends PositionComponent {
 
   bool _wasColliding = false;
   bool _wasDead = false;
+
+  // 生物らしい揺れ・進行方向への旋回を演出するための状態
+  double _bobTime = 0;
+  double _facingAngle = 0;
 
   // 奥行きスケール：奥（画面上部）は小さく遠く、手前（画面下部）は大きく近く見せる
   static const _minDepthScale = 0.72;
@@ -37,6 +42,20 @@ class UnitComponent extends PositionComponent {
     // Y座標に応じた擬似遠近スケーリング（2.5D感）
     final depthT = (unit.posY / _fieldHeight).clamp(0.0, 1.0);
     _depthScale = _minDepthScale + (_maxDepthScale - _minDepthScale) * depthT;
+
+    // 待機中の揺れ（生物らしさの演出）。移動中は歩行による上下動として速く揺らす
+    _bobTime += dt * (unit.isMoving ? 6.0 : 2.0);
+
+    // 進行方向への旋回（急な向き変更を避けるため滑らかに補間する）
+    if (unit.isMoving) {
+      final dx = unit.targetX - unit.posX;
+      final dy = unit.targetY - unit.posY;
+      if (dx.abs() > 0.5 || dy.abs() > 0.5) {
+        final targetAngle = atan2(dy, dx) + pi / 2;
+        final diff = _shortestAngleDiff(_facingAngle, targetAngle);
+        _facingAngle += diff.clamp(-8.0 * dt, 8.0 * dt);
+      }
+    }
 
     // 手前のユニットが奥のユニットより前面に描画されるよう優先度をY座標で並べ替え
     final newPriority = unit.posY.toInt();
@@ -72,6 +91,14 @@ class UnitComponent extends PositionComponent {
     _wasDead = nowDead;
   }
 
+  /// -pi〜piの範囲に正規化した最短角度差を返す（旋回を滑らかに補間するため）
+  double _shortestAngleDiff(double from, double to) {
+    var diff = (to - from) % (2 * pi);
+    if (diff > pi) diff -= 2 * pi;
+    if (diff < -pi) diff += 2 * pi;
+    return diff;
+  }
+
   @override
   void render(Canvas canvas) {
     if (unit.isDead) return;
@@ -84,7 +111,12 @@ class UnitComponent extends PositionComponent {
     // 地面への接地影は遠近の影響を受けず独立して描画（スケールしても不自然にならない）
     _drawGroundShadow(canvas);
 
+    // 待機・歩行時の軽い上下の揺れ（静止画のような硬さを和らげる）
+    final bobAmplitude = unit.isMoving ? 1.4 : 0.5;
+    final bobOffsetY = sin(_bobTime) * bobAmplitude;
+
     canvas.save();
+    canvas.translate(0, bobOffsetY);
     canvas.scale(_depthScale);
     _drawBody(canvas, fill);
     _drawHealthBar(canvas, ratio);
@@ -124,6 +156,10 @@ class UnitComponent extends PositionComponent {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
+    // 進行方向へ機首を向けることで、移動の向きが視覚的に伝わるようにする
+    canvas.save();
+    canvas.rotate(_facingAngle);
+
     switch (unit.type) {
       case UnitType.cavalry:
         final path = Path()
@@ -157,6 +193,8 @@ class UnitComponent extends PositionComponent {
       ..color = Colors.white.withValues(alpha: 0.2)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
     canvas.drawCircle(Offset(-_halfSize * 0.3, -_halfSize * 0.3), _halfSize * 0.4, highlightPaint);
+
+    canvas.restore();
   }
 
   void _drawHealthBar(Canvas canvas, double ratio) {

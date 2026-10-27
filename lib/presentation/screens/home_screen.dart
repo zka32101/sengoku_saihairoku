@@ -45,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadWeeklyChallenge();
     _loadActiveEvent();
     _loadBattlePassUpsellState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkDailyLoginBonus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _checkDailyLoginBonus(),
+    );
   }
 
   Future<void> _loadBattlePassUpsellState() async {
@@ -160,10 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         event: _activeEvent!,
                         progress: _eventProgress,
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/scenario_select',
-                          );
+                          Navigator.pushNamed(context, '/scenario_select');
                         },
                         onClaim: _claimEventReward,
                       ),
@@ -259,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Colors.black.withValues(alpha: 0.15),
-              const Color(0xFF1A0F0A).withValues(alpha: 0.75),
+              const Color(0xFF2A1810).withValues(alpha: 0.7),
             ],
           ),
         ),
@@ -373,8 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () =>
-                    Navigator.pushNamed(context, '/chain_battle'),
+                onPressed: () => Navigator.pushNamed(context, '/chain_battle'),
                 icon: const Icon(Icons.whatshot, color: Colors.redAccent),
                 label: Text(
                   l10n.homeChainBattleButton,
@@ -454,7 +452,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.leaderboard, color: Color(0xFFFFD700), size: 28),
+                const Icon(
+                  Icons.leaderboard,
+                  color: Color(0xFFFFD700),
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.homeRankingTitle,
@@ -493,7 +495,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildChallengeHistoryCard(BuildContext context, AppLocalizations l10n) {
+  Widget _buildChallengeHistoryCard(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -502,7 +507,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.card_giftcard, color: Color(0xFFFFD700), size: 28),
+                const Icon(
+                  Icons.card_giftcard,
+                  color: Color(0xFFFFD700),
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.homeChallengeHistoryTitle,
@@ -551,7 +560,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.people, color: Colors.lightGreenAccent, size: 28),
+                const Icon(
+                  Icons.people,
+                  color: Colors.lightGreenAccent,
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.homeFriendsTitle,
@@ -590,7 +603,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildWarlordCollectionCard(BuildContext context, AppLocalizations l10n) {
+  Widget _buildWarlordCollectionCard(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -599,7 +615,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.military_tech, color: Colors.orangeAccent, size: 28),
+                const Icon(
+                  Icons.military_tech,
+                  color: Colors.orangeAccent,
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.homeWarlordCollectionTitle,
@@ -621,8 +641,10 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/warlords'),
-                icon: const Icon(Icons.military_tech,
-                    color: Colors.orangeAccent),
+                icon: const Icon(
+                  Icons.military_tech,
+                  color: Colors.orangeAccent,
+                ),
                 label: Text(
                   l10n.homeWarlordCollectionButton,
                   style: const TextStyle(color: Colors.orangeAccent),
@@ -696,7 +718,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                const Icon(Icons.monetization_on, color: Colors.amber, size: 28),
+                const Icon(
+                  Icons.monetization_on,
+                  color: Colors.amber,
+                  size: 28,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.homeGoldShopTitle,
@@ -764,7 +790,10 @@ class _HomeScreenState extends State<HomeScreen> {
             if (_missedPremiumRewardCount > 0) ...[
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.purple.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
@@ -772,11 +801,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.warning_amber_rounded,
-                        color: Colors.amber, size: 14),
+                    const Icon(
+                      Icons.warning_amber_rounded,
+                      color: Colors.amber,
+                      size: 14,
+                    ),
                     const SizedBox(width: 6),
                     Text(
-                      l10n.homeBattlePassMissedRewards(_missedPremiumRewardCount),
+                      l10n.homeBattlePassMissedRewards(
+                        _missedPremiumRewardCount,
+                      ),
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -820,9 +854,20 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            _navItem(context, Icons.home, l10n.navHome, '/home', selected: true),
+            _navItem(
+              context,
+              Icons.home,
+              l10n.navHome,
+              '/home',
+              selected: true,
+            ),
             _navItem(context, Icons.person, l10n.navProfile, '/profile'),
-            _navItem(context, Icons.bar_chart, l10n.navStatistics, '/statistics'),
+            _navItem(
+              context,
+              Icons.bar_chart,
+              l10n.navStatistics,
+              '/statistics',
+            ),
             _navItem(context, Icons.videocam, l10n.navReplay, '/replay'),
             _navItem(context, Icons.leaderboard, l10n.navRanking, '/ranking'),
             _navItem(context, Icons.settings, l10n.navSettings, '/settings'),
@@ -832,8 +877,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _navItem(BuildContext context, IconData icon, String label, String route,
-      {bool selected = false}) {
+  Widget _navItem(
+    BuildContext context,
+    IconData icon,
+    String label,
+    String route, {
+    bool selected = false,
+  }) {
     return SizedBox(
       width: 72,
       child: InkWell(

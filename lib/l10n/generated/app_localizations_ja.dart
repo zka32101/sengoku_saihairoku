@@ -36,6 +36,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get commonCancel => 'キャンセル';
 
   @override
+  String get battleExitConfirmTitle => '戦闘を中断しますか？';
+
+  @override
+  String get battleExitConfirmBody => 'ここで戻ると、この戦闘の進行状況は失われます。';
+
+  @override
+  String get battleExitConfirmButton => '中断する';
+
+  @override
   String get commonConfirm => '確認';
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import '../core/services/audio_manager.dart';
 import '../core/services/locale_controller.dart';
 import '../data/models/scenario_data.dart';
@@ -12,7 +13,7 @@ import 'components/effect_component.dart';
 import 'components/map_background.dart';
 import 'components/unit_component.dart';
 
-class BattleGame extends FlameGame {
+class BattleGame extends FlameGame with ScaleDetector, ScrollDetector {
   final ScenarioData scenarioData;
   final double playerStrengthMultiplier;
   final List<double>? perUnitStrengthMultipliers;
@@ -29,6 +30,14 @@ class BattleGame extends FlameGame {
   double _shakeDuration = 0;
   double _shakeMagnitude = 0;
 
+  // カメラのパン・ズーム状態
+  static const double _minZoom = 1.0;
+  static const double _maxZoom = 2.5;
+  double _zoom = 1.0;
+  double _zoomAtGestureStart = 1.0;
+  Vector2 _panOffset = Vector2.zero();
+  Vector2 _baseScale = Vector2.all(1);
+
   BattleGame({
     required this.scenarioData,
     this.playerStrengthMultiplier = 1.0,
@@ -39,7 +48,10 @@ class BattleGame extends FlameGame {
   Future<void> onLoad() async {
     await super.onLoad();
 
-    _world.scale = Vector2(size.x / 360, size.y / 640);
+    _world.size = Vector2(360, 640);
+    _world.anchor = Anchor.center;
+    _baseScale = Vector2(size.x / 360, size.y / 640);
+    _applyWorldTransform();
     await add(_world);
 
     await _world.add(MapBackground(scenario: scenarioData.id));
@@ -61,26 +73,26 @@ class BattleGame extends FlameGame {
     };
 
     for (final unit in _battleState.playerArmy.units) {
-      await _world.add(UnitComponent(
-        unit: unit,
-        isPlayer: true,
-        onEffect: _spawnUnitEffect,
-      ));
+      await _world.add(
+        UnitComponent(unit: unit, isPlayer: true, onEffect: _spawnUnitEffect),
+      );
     }
     for (final (index, unit) in _battleState.enemyArmy.units.indexed) {
       // 先頭ユニット＝敵将。討死の瞬間だけ演出を強める。
       final isCommander = index == 0;
-      await _world.add(UnitComponent(
-        unit: unit,
-        isPlayer: false,
-        onEffect: (pos, type, {damage, isCritical}) => _spawnUnitEffect(
-          pos,
-          type,
-          damage: damage,
-          isCritical: isCritical,
-          isCommander: isCommander,
+      await _world.add(
+        UnitComponent(
+          unit: unit,
+          isPlayer: false,
+          onEffect: (pos, type, {damage, isCritical}) => _spawnUnitEffect(
+            pos,
+            type,
+            damage: damage,
+            isCritical: isCritical,
+            isCommander: isCommander,
+          ),
         ),
-      ));
+      );
     }
 
     _battleState.start();
@@ -88,12 +100,20 @@ class BattleGame extends FlameGame {
     _ready = true;
   }
 
-  void _spawnUnitEffect(Vector2 pos, UnitEffectType type,
-      {double? damage, bool? isCritical, bool isCommander = false}) {
+  void _spawnUnitEffect(
+    Vector2 pos,
+    UnitEffectType type, {
+    double? damage,
+    bool? isCritical,
+    bool isCommander = false,
+  }) {
     switch (type) {
       case UnitEffectType.hit:
         _world.add(HitFlashEffect(pos: pos, isPlayer: true));
-        AudioManager().playSe('hit_${pos.hashCode % 3}', 'assets/audio/hit.wav');
+        AudioManager().playSe(
+          'hit_${pos.hashCode % 3}',
+          'assets/audio/hit.wav',
+        );
       case UnitEffectType.death:
         _world.add(DeathExplosionEffect(pos: pos, isPlayer: true));
         AudioManager().playSe('death', 'assets/audio/death.wav');
@@ -103,11 +123,13 @@ class BattleGame extends FlameGame {
         }
       case UnitEffectType.damage:
         if (damage != null) {
-          _world.add(DamageNumberEffect(
-            pos: pos,
-            damage: damage.toInt(),
-            isCritical: isCritical ?? false,
-          ));
+          _world.add(
+            DamageNumberEffect(
+              pos: pos,
+              damage: damage.toInt(),
+              isCritical: isCritical ?? false,
+            ),
+          );
           if (isCritical ?? false) {
             AudioManager().playSe('crit', 'assets/audio/crit.wav');
             _triggerShake(6, 0.2);
@@ -127,7 +149,8 @@ class BattleGame extends FlameGame {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     if (isMounted) {
-      _world.scale = Vector2(size.x / 360, size.y / 640);
+      _baseScale = Vector2(size.x / 360, size.y / 640);
+      _applyWorldTransform();
     }
   }
 
@@ -140,24 +163,70 @@ class BattleGame extends FlameGame {
 
   /// 迫力を演出する画面シェイク。クリティカルヒット・TP達成・敵将討死の瞬間に
   /// [_triggerShake]で呼び出され、時間経過とともに揺れ幅が減衰する。
+  Vector2 _shakeOffset = Vector2.zero();
+
   void _updateShake(double dt) {
     if (_shakeTimeLeft <= 0) {
-      if (_world.position != Vector2.zero()) _world.position = Vector2.zero();
+      if (_shakeOffset != Vector2.zero()) {
+        _shakeOffset = Vector2.zero();
+        _applyWorldTransform();
+      }
       return;
     }
     _shakeTimeLeft -= dt;
     final decay = (_shakeTimeLeft / _shakeDuration).clamp(0.0, 1.0);
     final magnitude = _shakeMagnitude * decay;
-    _world.position = Vector2(
+    _shakeOffset = Vector2(
       (_rng.nextDouble() * 2 - 1) * magnitude,
       (_rng.nextDouble() * 2 - 1) * magnitude,
     );
+    _applyWorldTransform();
   }
 
   void _triggerShake(double magnitude, double duration) {
     _shakeMagnitude = magnitude;
     _shakeDuration = duration;
     _shakeTimeLeft = duration;
+  }
+
+  /// ズーム・パン・画面シェイクを合成して[_world]の表示状態を更新する。
+  /// ズーム1倍・パンなしのときは従来どおり画面いっぱいに地図が収まる。
+  void _applyWorldTransform() {
+    _world.scale = _baseScale * _zoom;
+    final scaledSize = Vector2(360 * _world.scale.x, 640 * _world.scale.y);
+    final maxPan = Vector2(
+      max(0.0, (scaledSize.x - size.x) / 2),
+      max(0.0, (scaledSize.y - size.y) / 2),
+    );
+    _panOffset = Vector2(
+      _panOffset.x.clamp(-maxPan.x, maxPan.x),
+      _panOffset.y.clamp(-maxPan.y, maxPan.y),
+    );
+    _world.position = size / 2 + _panOffset + _shakeOffset;
+  }
+
+  @override
+  void onScaleStart(ScaleStartInfo info) {
+    _zoomAtGestureStart = _zoom;
+  }
+
+  @override
+  void onScaleUpdate(ScaleUpdateInfo info) {
+    final scaleDelta = (info.scale.global.x + info.scale.global.y) / 2;
+    if (scaleDelta != 1.0) {
+      _zoom = (_zoomAtGestureStart * scaleDelta).clamp(_minZoom, _maxZoom);
+    }
+    // 1本指ドラッグ・2本指パン（focalPointDeltaは前回更新からの増分）
+    _panOffset += info.delta.global;
+    _applyWorldTransform();
+  }
+
+  @override
+  void onScroll(PointerScrollInfo info) {
+    // マウスホイール／トラックパッドでのズーム（Web・デスクトップ向け）
+    final scrollDelta = info.scrollDelta.global.y;
+    _zoom = (_zoom - scrollDelta * 0.0015).clamp(_minZoom, _maxZoom);
+    _applyWorldTransform();
   }
 
   void executeCommand(PlayerCommand command) {
@@ -169,8 +238,9 @@ class BattleGame extends FlameGame {
 
   void _spawnCommandFeedback(PlayerCommand command) {
     // 画面中央上部にコマンド名を表示
-    final l10n =
-        lookupAppLocalizations(LocaleController.instance.resolvedLocale);
+    final l10n = lookupAppLocalizations(
+      LocaleController.instance.resolvedLocale,
+    );
     final commandName = switch (command) {
       PlayerCommand.advance => l10n.battleCommandAdvance,
       PlayerCommand.retreat => l10n.battleCommandRetreat,
@@ -182,10 +252,9 @@ class BattleGame extends FlameGame {
       PlayerCommand.charge => l10n.battleCommandCharge,
     };
 
-    _world.add(CommandFeedbackEffect(
-      pos: Vector2(180, 100),
-      commandName: commandName,
-    ));
+    _world.add(
+      CommandFeedbackEffect(pos: Vector2(180, 100), commandName: commandName),
+    );
   }
 
   Future<void> _playBattleBgm() async {
@@ -214,17 +283,17 @@ class BattleGame extends FlameGame {
   }
 
   String _getBattleBgmPath() => switch (scenarioData.id) {
-        Scenario.odigahara => 'assets/audio/bgm_odigahara.wav',
-        Scenario.nagashino => 'assets/audio/bgm_nagashino.wav',
-        Scenario.honnoJi => 'assets/audio/bgm_honnoji.wav',
-        Scenario.sekigahara => 'assets/audio/bgm_sekigahara.wav',
-        Scenario.kawanakajima => 'assets/audio/bgm_kawanakajima.wav',
-        Scenario.itsukushima => 'assets/audio/bgm_itsukushima.wav',
-        Scenario.oshiJo => 'assets/audio/bgm_oshijo.wav',
-        Scenario.mikatagahara => 'assets/audio/bgm_mikatagahara.wav',
-        Scenario.anegawa => 'assets/audio/bgm_anegawa.wav',
-        Scenario.shizugatake => 'assets/audio/bgm_shizugatake.wav',
-      };
+    Scenario.odigahara => 'assets/audio/bgm_odigahara.wav',
+    Scenario.nagashino => 'assets/audio/bgm_nagashino.wav',
+    Scenario.honnoJi => 'assets/audio/bgm_honnoji.wav',
+    Scenario.sekigahara => 'assets/audio/bgm_sekigahara.wav',
+    Scenario.kawanakajima => 'assets/audio/bgm_kawanakajima.wav',
+    Scenario.itsukushima => 'assets/audio/bgm_itsukushima.wav',
+    Scenario.oshiJo => 'assets/audio/bgm_oshijo.wav',
+    Scenario.mikatagahara => 'assets/audio/bgm_mikatagahara.wav',
+    Scenario.anegawa => 'assets/audio/bgm_anegawa.wav',
+    Scenario.shizugatake => 'assets/audio/bgm_shizugatake.wav',
+  };
 
   double get elapsedTime => _ready ? _battleState.elapsedTime : 0;
   double get playerStrengthRatio =>
@@ -239,7 +308,8 @@ class BattleGame extends FlameGame {
   // 結果画面と同じ式で采配スコアを算出する（表示のズレを防ぐ）。
   int get commandScore => _ready
       ? ScoreCalculator.commandScoreForCommands(
-          _battleState.commandHandler.commandHistory)
+          _battleState.commandHandler.commandHistory,
+        )
       : 0;
 
   // コンボ関連のゲッター
@@ -251,8 +321,7 @@ class BattleGame extends FlameGame {
   double get battleMomentum =>
       _ready ? _battleState.momentum.playerMomentum : 0.5;
 
-  BattlePhase get phase =>
-      _ready ? _battleState.phase : BattlePhase.waiting;
+  BattlePhase get phase => _ready ? _battleState.phase : BattlePhase.waiting;
 }
 
 class _ScaledWorld extends PositionComponent {

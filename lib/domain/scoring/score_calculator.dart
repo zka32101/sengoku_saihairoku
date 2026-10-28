@@ -39,12 +39,19 @@ class ScoreBreakdownResult {
 }
 
 class ScoreCalculator {
+  /// 敗北時は勝利スコアと歴史ボーナスが0になる上に、効率・采配・転換点の各スコアも
+  /// この割合まで下げる。「負けても少しは入る」が、勝った場合より大きくならないようにする。
+  static const double defeatFactor = 0.25;
+
   ScoreBreakdownResult calculate(ScoreInput input) {
+    final factor = input.won ? 1.0 : defeatFactor;
+    int scaled(int v) => (v * factor).toInt();
     return ScoreBreakdownResult(
       victoryScore: _victoryScore(input.won),
-      efficiencyScore: _efficiencyScore(input.casualtyRate, input.battleDurationSeconds),
-      commandScore: _commandScore(input.commands),
-      turningPointScore: input.turningPointBonus,
+      efficiencyScore:
+          scaled(_efficiencyScore(input.casualtyRate, input.battleDurationSeconds)),
+      commandScore: scaled(_commandScore(input.commands)),
+      turningPointScore: scaled(input.turningPointBonus),
       historyBonus: _historyBonus(input.won, input.allTurningPointsAchieved),
     );
   }

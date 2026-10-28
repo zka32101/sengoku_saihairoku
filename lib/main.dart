@@ -28,6 +28,7 @@ import 'presentation/screens/battle_pass_screen.dart';
 import 'presentation/screens/gold_shop_screen.dart';
 import 'presentation/screens/onboarding_screen.dart';
 import 'data/repositories/onboarding_repository.dart';
+import 'data/repositories/scenario_unlock_repository.dart';
 import 'presentation/screens/friends_screen.dart';
 import 'presentation/screens/warlord_collection_screen.dart';
 import 'presentation/screens/chain_battle_screen.dart';
@@ -62,6 +63,8 @@ void main() async {
   await LocaleController.instance.loadSaved();
 
   var needsOnboarding = false;
+  // シナリオのクリア記録(端末内)。選択画面の解放表示に使う。
+  await ScenarioUnlockRepository.load();
   try {
     // オフライン時に送信できず端末内に溜まっていたバトル結果があれば再送する
     await FirebaseService().flushPendingBattleResults();

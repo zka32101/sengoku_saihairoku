@@ -10,6 +10,7 @@ import '../../data/models/difficulty_mode.dart';
 import '../../domain/state/battle_state.dart';
 import '../../domain/scoring/score_calculator.dart';
 import '../../domain/ranking/turn_rank_calculator.dart';
+import '../../data/repositories/scenario_unlock_repository.dart';
 import '../../data/repositories/turn_rank_repository.dart';
 import '../../data/models/cosmetic.dart';
 import '../../data/repositories/daily_challenge_repository.dart';
@@ -106,6 +107,11 @@ class _ResultScreenState extends State<ResultScreen> {
       _notificationService.initialize(context);
       _battlePassNotificationService.initialize(context);
     });
+
+    // 勝利したら、一覧の次のシナリオが解放される。
+    if (widget.args.data.won) {
+      ScenarioUnlockRepository.markCleared(widget.args.scenario);
+    }
 
     final battleResultSaved = _saveBattleResult();
     _checkEventChallengeCompletion();

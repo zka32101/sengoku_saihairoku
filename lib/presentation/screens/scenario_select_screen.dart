@@ -8,6 +8,7 @@ import '../../data/models/warlord_data.dart';
 import '../../data/repositories/warlord_repository.dart';
 import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/scenario_difficulty_repository.dart';
+import '../../data/repositories/scenario_unlock_repository.dart';
 import '../../data/repositories/warlord_progress_repository.dart';
 import '../../domain/warlord/warlord_compatibility.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -168,22 +169,30 @@ class ScenarioSelectScreen extends StatelessWidget {
         ),
         child: Container(
           color: const Color(0xFF2A1810).withValues(alpha: 0.65),
-          child: ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: scenarios.length,
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemBuilder: (context, index) {
-              final s = scenarios[index];
-              return _ScenarioCard(
-                thumbnailAsset: s.scenario.thumbnailAsset,
-                name: s.name,
-                year: s.year,
-                difficulty: s.difficulty,
-                playTime: s.playTime,
-                description: s.description,
-                isUnlocked: s.isUnlocked,
-                onTap: () => _showScenarioSettings(context, s.scenario),
-                l10n: l10n,
+          // 並び順で、前のシナリオをクリアすると次が解放される(先頭は最初から遊べる)。
+          child: ValueListenableBuilder<Set<String>>(
+            valueListenable: ScenarioUnlockRepository.cleared,
+            builder: (context, cleared, _) {
+              final order = [for (final e in scenarios) e.scenario];
+              return ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: scenarios.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final s = scenarios[index];
+                  return _ScenarioCard(
+                    thumbnailAsset: s.scenario.thumbnailAsset,
+                    name: s.name,
+                    year: s.year,
+                    difficulty: s.difficulty,
+                    playTime: s.playTime,
+                    description: s.description,
+                    isUnlocked: ScenarioUnlockRepository.isUnlockedAt(
+                        index, order, cleared),
+                    onTap: () => _showScenarioSettings(context, s.scenario),
+                    l10n: l10n,
+                  );
+                },
               );
             },
           ),

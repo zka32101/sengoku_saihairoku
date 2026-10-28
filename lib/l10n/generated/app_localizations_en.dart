@@ -1192,6 +1192,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scenarioDifficultyTitle => 'Choose Difficulty';
 
   @override
+  String get scenarioPersuasionTitle => 'Persuasion before battle';
+
+  @override
+  String get scenarioPersuasionHint =>
+      'On success the battle changes. The result stays the same for the day (once per day).';
+
+  @override
+  String get scenarioPersuasionButton => 'Persuade';
+
+  @override
+  String scenarioPersuasionRate(int percent) {
+    return 'Success rate $percent%';
+  }
+
+  @override
   String get scenarioLoadingText => 'Loading scenario...';
 
   @override

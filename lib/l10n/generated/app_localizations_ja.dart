@@ -1174,6 +1174,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scenarioDifficultyTitle => '難易度を選ぶ';
 
   @override
+  String get scenarioPersuasionTitle => '出陣前の説得';
+
+  @override
+  String get scenarioPersuasionHint => '成功すると戦況が変わります。結果はその日のうちは変わりません(1日1回)。';
+
+  @override
+  String get scenarioPersuasionButton => '説得する';
+
+  @override
+  String scenarioPersuasionRate(int percent) {
+    return '成功率 $percent%';
+  }
+
+  @override
   String get scenarioLoadingText => 'シナリオを読み込み中...';
 
   @override

@@ -527,6 +527,13 @@
   "scenarioCompatibilityPositive": " (Good match)",
   "scenarioCompatibilityNegative": " (Poor match)",
   "scenarioDifficultyTitle": "Choose Difficulty",
+  "scenarioPersuasionTitle": "Persuasion before battle",
+  "scenarioPersuasionHint": "On success the battle changes. The result stays the same for the day (once per day).",
+  "scenarioPersuasionButton": "Persuade",
+  "scenarioPersuasionRate": "Success rate {percent}%",
+  "@scenarioPersuasionRate": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
   "scenarioLoadingText": "Loading scenario...",
   "scenarioLoadErrorText": "Failed to load scenario",
   "scenarioNameOdigahara": "Battle of Okehazama",

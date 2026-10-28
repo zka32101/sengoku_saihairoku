@@ -1,0 +1,40 @@
+{
+  "odigahara": {
+    "persuasions": [
+      {
+        "id": "odigahara_hachisuka",
+        "name": "蜂須賀小六",
+        "description": "尾張の地侍。抜け道に通じ、手勢を率いて参陣する。",
+        "baseSuccessRate": 0.4,
+        "successText": "小六が手勢を率いて駆けつけた!",
+        "failureText": "小六は様子見を決め込んだ…",
+        "effects": [
+          {
+            "type": "addPlayerUnit",
+            "unit": {
+              "id": "player_spear_hachisuka",
+              "name": "蜂須賀隊",
+              "type": "spear",
+              "strength": 900
+            }
+          }
+        ]
+      },
+      {
+        "id": "odigahara_yanada",
+        "name": "梁田政綱",
+        "description": "今川本陣の位置を探り当てた斥候。情報で敵の騎馬隊を撹乱する。",
+        "baseSuccessRate": 0.5,
+        "successText": "政綱が義元本陣の動きを報せた!",
+        "failureText": "政綱の報せは間に合わなかった…",
+        "effects": [
+          {
+            "type": "scaleEnemyUnit",
+            "enemyUnitId": "enemy_cavalry_1",
+            "factor": 0.8
+          }
+        ]
+      }
+    ]
+  }
+}

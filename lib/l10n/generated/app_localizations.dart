@@ -2227,6 +2227,30 @@ abstract class AppLocalizations {
   /// **'難易度を選ぶ'**
   String get scenarioDifficultyTitle;
 
+  /// No description provided for @scenarioPersuasionTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'出陣前の説得'**
+  String get scenarioPersuasionTitle;
+
+  /// No description provided for @scenarioPersuasionHint.
+  ///
+  /// In ja, this message translates to:
+  /// **'成功すると戦況が変わります。結果はその日のうちは変わりません(1日1回)。'**
+  String get scenarioPersuasionHint;
+
+  /// No description provided for @scenarioPersuasionButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'説得する'**
+  String get scenarioPersuasionButton;
+
+  /// No description provided for @scenarioPersuasionRate.
+  ///
+  /// In ja, this message translates to:
+  /// **'成功率 {percent}%'**
+  String scenarioPersuasionRate(int percent);
+
   /// No description provided for @scenarioLoadingText.
   ///
   /// In ja, this message translates to:

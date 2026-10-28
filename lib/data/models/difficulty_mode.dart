@@ -15,7 +15,7 @@ extension DifficultyModeExtension on DifficultyMode {
 
   /// 難易度の説明
   String get description => switch (this) {
-        DifficultyMode.easy => '初心者向け - 敵の兵力が30%減少',
+        DifficultyMode.easy => '初心者向け - 味方の兵力が1.5倍・敵の兵力が75%減少',
         DifficultyMode.normal => '標準難易度 - 史実に基づいた設定',
         DifficultyMode.hard => '上級者向け - 敵の兵力が30%増加',
       };
@@ -29,14 +29,14 @@ extension DifficultyModeExtension on DifficultyMode {
 
   /// ユニット兵力の調整係数
   double get unitStrengthMultiplier => switch (this) {
-        DifficultyMode.easy => 1.3, // プレイヤー兵力 30% 増加
+        DifficultyMode.easy => 1.5, // プレイヤー兵力 50% 増加
         DifficultyMode.normal => 1.0,
         DifficultyMode.hard => 0.7, // プレイヤー兵力 30% 減少 (敵が30%増加)
       };
 
   /// 敵ユニット兵力の調整係数
   double get enemyUnitStrengthMultiplier => switch (this) {
-        DifficultyMode.easy => 0.7, // 敵兵力 30% 減少
+        DifficultyMode.easy => 0.25, // 敵兵力 75% 減少
         DifficultyMode.normal => 1.0,
         DifficultyMode.hard => 1.3, // 敵兵力 30% 増加
       };

@@ -20,6 +20,15 @@ sealed class WhatIfEffect {
           json['enemyUnitId'] as String,
           (json['factor'] as num).toDouble(),
         );
+      case 'reinforce':
+        return ReinforceDuringBattle(
+          unit: UnitDataSnapshot.fromJson(json['unit'] as Map<String, dynamic>),
+          afterSeconds: (json['afterSeconds'] as num).toDouble(),
+          maxPlayerRatio: (json['maxPlayerRatio'] as num?)?.toDouble(),
+          spawnX: (json['spawnX'] as num?)?.toDouble() ?? 40,
+          spawnY: (json['spawnY'] as num?)?.toDouble() ?? 520,
+          message: json['message'] as String,
+        );
       default:
         throw FormatException('unknown whatIf effect: ${json['type']}');
     }
@@ -43,6 +52,44 @@ class ScaleEnemyUnit extends WhatIfEffect {
   final String enemyUnitId;
   final double factor;
   const ScaleEnemyUnit(this.enemyUnitId, this.factor);
+}
+
+/// 戦闘の途中で協力者の部隊が駆けつける。
+///
+/// [afterSeconds] 経過後、かつ自軍の兵力割合が [maxPlayerRatio] を下回って
+/// いるとき（苦戦しているとき）に到着する。[maxPlayerRatio] が null なら
+/// 時間だけで到着する。到着は1回だけ。
+class ReinforceDuringBattle extends WhatIfEffect {
+  final UnitDataSnapshot unit;
+  final double afterSeconds;
+  final double? maxPlayerRatio;
+  final double spawnX;
+  final double spawnY;
+  final String message;
+
+  const ReinforceDuringBattle({
+    required this.unit,
+    required this.afterSeconds,
+    this.maxPlayerRatio,
+    this.spawnX = 40,
+    this.spawnY = 520,
+    required this.message,
+  });
+
+  /// 難易度などで部隊の兵力を [factor] 倍した複製。
+  ReinforceDuringBattle scaled(double factor) => ReinforceDuringBattle(
+        unit: UnitDataSnapshot(
+          id: unit.id,
+          name: unit.name,
+          type: unit.type,
+          strength: max(1, (unit.strength * factor).round()),
+        ),
+        afterSeconds: afterSeconds,
+        maxPlayerRatio: maxPlayerRatio,
+        spawnX: spawnX,
+        spawnY: spawnY,
+        message: message,
+      );
 }
 
 /// 出陣前に試みる「説得」。成功すると [effects] が戦況に反映される。
@@ -109,6 +156,8 @@ ScenarioData applyWhatIfEffects(
         player.add(unit);
       case RemoveEnemyUnit(:final enemyUnitId):
         enemy = enemy.where((u) => u.id != enemyUnitId).toList();
+      case ReinforceDuringBattle():
+        break; // 戦闘中に BattleState が処理する（開戦時の編成は変えない）
       case ScaleEnemyUnit(:final enemyUnitId, :final factor):
         enemy = enemy
             .map((u) => u.id == enemyUnitId
@@ -142,3 +191,7 @@ ScenarioData applyWhatIfEffects(
     alternativePerspective: data.alternativePerspective,
   );
 }
+
+/// 効果の一覧から、戦闘中に到着する協力者だけを取り出す。
+List<ReinforceDuringBattle> reinforcementsOf(List<WhatIfEffect> effects) =>
+    effects.whereType<ReinforceDuringBattle>().toList();

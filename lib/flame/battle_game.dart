@@ -9,6 +9,7 @@ import '../l10n/generated/app_localizations.dart';
 import '../domain/scoring/battle_event_log.dart';
 import '../domain/scoring/score_calculator.dart';
 import '../domain/state/battle_state.dart';
+import '../domain/whatif/persuasion.dart';
 import 'components/effect_component.dart';
 import 'components/map_background.dart';
 import 'components/unit_component.dart';
@@ -17,7 +18,9 @@ class BattleGame extends FlameGame with ScaleDetector, ScrollDetector {
   final ScenarioData scenarioData;
   final double playerStrengthMultiplier;
   final List<double>? perUnitStrengthMultipliers;
+  final List<ReinforceDuringBattle> reinforcements;
 
+  Function(ReinforceDuringBattle)? onReinforcement;
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
 
@@ -42,6 +45,7 @@ class BattleGame extends FlameGame with ScaleDetector, ScrollDetector {
     required this.scenarioData,
     this.playerStrengthMultiplier = 1.0,
     this.perUnitStrengthMultipliers,
+    this.reinforcements = const [],
   });
 
   @override
@@ -60,7 +64,16 @@ class BattleGame extends FlameGame with ScaleDetector, ScrollDetector {
       scenario: scenarioData,
       playerStrengthMultiplier: playerStrengthMultiplier,
       perUnitStrengthMultipliers: perUnitStrengthMultipliers,
+      reinforcements: reinforcements,
     );
+    _battleState.onReinforcementArrived = (r, unit) {
+      _world.add(
+        UnitComponent(unit: unit, isPlayer: true, onEffect: _spawnUnitEffect),
+      );
+      _triggerShake(5, 0.25);
+      AudioManager().playSe('tp_achieve', 'assets/audio/tp_achieve.wav');
+      onReinforcement?.call(r);
+    };
     _battleState.onBattleEnd = (data) {
       pauseEngine();
       _playBattleEndSound(data.won);

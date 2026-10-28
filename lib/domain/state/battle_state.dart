@@ -8,6 +8,7 @@ import '../scoring/battle_event_log.dart';
 import '../scoring/score_calculator.dart';
 import '../scoring/turning_point_evaluator.dart';
 import './battle_momentum.dart';
+import '../whatif/persuasion.dart';
 
 enum BattlePhase { waiting, active, ended }
 
@@ -183,6 +184,10 @@ class BattleState {
 
   Function(BattleStateData)? onBattleEnd;
   Function(TurningPoint, int)? onTurningPointAchieved;
+  Function(ReinforceDuringBattle, Unit)? onReinforcementArrived;
+
+  // まだ到着していない協力者（出陣前の説得に成功した分）。
+  late final List<ReinforceDuringBattle> _pendingReinforcements;
 
   /// 自軍ユニットのインデックスごとの追加兵力倍率（[playerStrengthMultiplier]に
   /// 乗算で重ねがけされる）。配属武将ごとに担当部隊を分けるために使う。
@@ -193,7 +198,9 @@ class BattleState {
     required this.scenario,
     this.playerStrengthMultiplier = 1.0,
     this.perUnitStrengthMultipliers,
+    List<ReinforceDuringBattle> reinforcements = const [],
   }) {
+    _pendingReinforcements = List.of(reinforcements);
     _initializeArmies();
     enemyAI = EnemyAI(enemyArmy: enemyArmy, playerArmy: playerArmy);
     commandHandler = PlayerCommandHandler(
@@ -264,6 +271,7 @@ class BattleState {
     }
     enemyAI.update(dt);
     _updateCombat(dt);
+    _checkReinforcements();
 
     // 戦闘の勢いを更新
     momentum.update(dt, playerArmy.getStrengthRatio(), enemyArmy.getStrengthRatio());
@@ -332,6 +340,36 @@ class BattleState {
     for (final eu in enemyArmy.aliveUnits) {
       eu.isColliding = collidingEnemies.contains(eu);
       if (eu.isColliding) eu.isMoving = false;
+    }
+  }
+
+  /// 説得で味方につけた協力者が、条件を満たした時点で戦場に加わる。
+  void _checkReinforcements() {
+    if (_pendingReinforcements.isEmpty) return;
+    final ratio = playerArmy.getStrengthRatio();
+    for (final r in List.of(_pendingReinforcements)) {
+      if (elapsedTime < r.afterSeconds) continue;
+      final maxRatio = r.maxPlayerRatio;
+      if (maxRatio != null && ratio >= maxRatio) continue;
+
+      _pendingReinforcements.remove(r);
+      final unit = createUnitFromType(
+        r.unit.id,
+        r.unit.name,
+        _parseUnitType(r.unit.type),
+        r.unit.strength,
+        r.spawnX,
+        r.spawnY,
+      );
+      final nearest = enemyArmy.nearestAliveTo(unit.posX, unit.posY);
+      if (nearest != null) {
+        unit.targetX = nearest.posX;
+        unit.targetY = nearest.posY;
+        unit.isMoving = true;
+        unit.seeksEnemy = true;
+      }
+      playerArmy.units.add(unit);
+      onReinforcementArrived?.call(r, unit);
     }
   }
 

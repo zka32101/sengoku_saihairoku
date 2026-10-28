@@ -75,7 +75,7 @@ void main() {
 
     test('損失率100%は生存分が0点になる', () {
       final result = calculator.calculate(ScoreInput(
-        won: false,
+        won: true,
         casualtyRate: 1.0,
         battleDurationSeconds: 300,
         commands: const [],
@@ -84,6 +84,27 @@ void main() {
       ));
 
       expect(result.efficiencyScore, 5000); // 生存0 + 時間スコア5000
+    });
+
+    test('敗北でも少しは入るが、勝利時より大きくならない(効率・采配・転換点は25%)', () {
+      ScoreBreakdownResult run(bool won) => calculator.calculate(ScoreInput(
+            won: won,
+            casualtyRate: 0.0,
+            battleDurationSeconds: 300,
+            commands: const [],
+            turningPointBonus: 4000,
+            allTurningPointsAchieved: false,
+          ));
+
+      final win = run(true);
+      final lose = run(false);
+
+      expect(lose.efficiencyScore, 5000); // 20000 × 0.25
+      expect(lose.turningPointScore, 1000); // 4000 × 0.25
+      expect(lose.efficiencyScore, greaterThan(0));
+      expect(lose.total, lessThan(win.total));
+      expect(lose.victoryScore, 0);
+      expect(lose.historyBonus, 0);
     });
 
     test('300秒より長い戦闘は時間スコアが頭打ちにならず減少する', () {

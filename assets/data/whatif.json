@@ -34,6 +34,30 @@
             "factor": 0.8
           }
         ]
+      },
+      {
+        "id": "odigahara_maeda",
+        "name": "前田利家",
+        "description": "勘当中の若き武者。許されれば、苦戦のさなかに騎馬隊を率いて駆けつける。",
+        "baseSuccessRate": 0.35,
+        "successText": "利家が帰参を許された。苦戦したときに駆けつけてくれる!",
+        "failureText": "利家の勘当は解けなかった…",
+        "effects": [
+          {
+            "type": "reinforce",
+            "unit": {
+              "id": "player_cavalry_maeda",
+              "name": "前田利家隊",
+              "type": "cavalry",
+              "strength": 1200
+            },
+            "afterSeconds": 40,
+            "maxPlayerRatio": 0.7,
+            "spawnX": 40,
+            "spawnY": 520,
+            "message": "前田利家が駆けつけた!"
+          }
+        ]
       }
     ]
   }

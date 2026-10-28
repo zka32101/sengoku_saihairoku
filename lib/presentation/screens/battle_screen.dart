@@ -55,6 +55,7 @@ class _BattleScreenState extends State<BattleScreen> {
   bool _loading = true;
   String? _errorMessage;
   TurningPoint? _lastTP;
+  ReinforceDuringBattle? _lastReinforcement;
   String? _lastTPFlavor;
   bool _showEndFlash = false;
   bool _endFlashWon = false;
@@ -114,18 +115,21 @@ class _BattleScreenState extends State<BattleScreen> {
       }
 
       // 説得に成功した「もしも」の効果（本編の視点のみ）
+      var reinforcements = <ReinforceDuringBattle>[];
       if (widget.persuadedIds.isNotEmpty &&
           widget.alternativePerspectiveId == null) {
         final persuasions = await PersuasionRepository.forScenario(
           widget.scenario,
         );
-        data = applyWhatIfEffects(
-          data,
-          persuasions
-              .where((p) => widget.persuadedIds.contains(p.id))
-              .expand((p) => p.effects)
-              .toList(),
-        );
+        final effects = persuasions
+            .where((p) => widget.persuadedIds.contains(p.id))
+            .expand((p) => p.effects)
+            .toList();
+        data = applyWhatIfEffects(data, effects);
+        // 協力者の兵力にも味方と同じ難易度倍率をかける
+        reinforcements = reinforcementsOf(effects)
+            .map((r) => r.scaled(widget.difficultyMode.unitStrengthMultiplier))
+            .toList();
       }
 
       // Apply difficulty multipliers
@@ -135,8 +139,19 @@ class _BattleScreenState extends State<BattleScreen> {
         scenarioData: data,
         playerStrengthMultiplier: widget.warlordStrengthMultiplier,
         perUnitStrengthMultipliers: widget.perUnitStrengthMultipliers,
+        reinforcements: reinforcements,
       );
       game.onBattleEnd = _onBattleEnd;
+      game.onReinforcement = (r) {
+        if (!mounted) return;
+        setState(() {
+          _lastReinforcement = r;
+          _playerUnitCount++;
+        });
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted) setState(() => _lastReinforcement = null);
+        });
+      };
       game.onTurningPointAchieved = (tp, idx) {
         if (!mounted) return;
         final flavor = MessageSettings().storyMessagesEnabled
@@ -350,6 +365,15 @@ class _BattleScreenState extends State<BattleScreen> {
                               tp: _lastTP!,
                               flavorText: _lastTPFlavor,
                               l10n: l10n,
+                            ),
+                          ),
+                        if (_lastReinforcement != null)
+                          Positioned(
+                            left: 16,
+                            right: 16,
+                            bottom: 24,
+                            child: _ReinforcementBanner(
+                              message: _lastReinforcement!.message,
                             ),
                           ),
                         if (_debugMode)
@@ -1319,6 +1343,34 @@ class _BattleMomentumBarState extends State<_BattleMomentumBar>
           ],
         ),
       ],
+    );
+  }
+}
+
+/// 戦闘中に協力者が到着したことを知らせる帯。
+class _ReinforcementBanner extends StatelessWidget {
+  final String message;
+
+  const _ReinforcementBanner({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xE62A1A10),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.lightGreenAccent),
+      ),
+      child: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.lightGreenAccent,
+        ),
+      ),
     );
   }
 }

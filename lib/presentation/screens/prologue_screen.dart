@@ -15,6 +15,7 @@ class PrologueScreenArgs {
   final double warlordStrengthMultiplier;
   final List<double>? perUnitStrengthMultipliers;
   final List<String> sortiedWarlordIds;
+  final List<String> persuadedIds;
 
   PrologueScreenArgs({
     required this.scenario,
@@ -23,6 +24,7 @@ class PrologueScreenArgs {
     required this.warlordStrengthMultiplier,
     this.perUnitStrengthMultipliers,
     required this.sortiedWarlordIds,
+    this.persuadedIds = const [],
   });
 }
 
@@ -71,6 +73,7 @@ class _PrologueScreenState extends State<PrologueScreen> {
           warlordStrengthMultiplier: args.warlordStrengthMultiplier,
           perUnitStrengthMultipliers: args.perUnitStrengthMultipliers,
           sortiedWarlordIds: args.sortiedWarlordIds,
+          persuadedIds: args.persuadedIds,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/message_settings.dart';
@@ -10,7 +11,9 @@ import '../../data/repositories/warlord_collection_repository.dart';
 import '../../data/repositories/scenario_difficulty_repository.dart';
 import '../../data/repositories/scenario_unlock_repository.dart';
 import '../../data/repositories/warlord_progress_repository.dart';
+import '../../data/repositories/persuasion_repository.dart';
 import '../../domain/warlord/warlord_compatibility.dart';
+import '../../domain/whatif/persuasion.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
 import 'battle_screen.dart';
@@ -386,10 +389,48 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
   Map<String, int> _warlordExp = {};
   final List<Warlord> _selectedWarlords = [];
 
+  // 出陣前の説得（もしも）。結果は今日の分を保存し、再び開いても同じ。
+  List<Persuasion> _persuasions = [];
+  final Map<String, bool> _persuasionResults = {};
+
+  List<String> get _persuadedIds => _selectedPerspectiveId == null
+      ? _persuasionResults.entries
+          .where((e) => e.value)
+          .map((e) => e.key)
+          .toList()
+      : const [];
+
+  Future<void> _loadPersuasions() async {
+    final persuasions = await PersuasionRepository.forScenario(
+      widget.scenario,
+    );
+    final now = DateTime.now();
+    final results = <String, bool>{};
+    for (final p in persuasions) {
+      final r = await PersuasionRepository.todayResult(p.id, now);
+      if (r != null) results[p.id] = r;
+    }
+    if (!mounted) return;
+    setState(() {
+      _persuasions = persuasions;
+      _persuasionResults
+        ..clear()
+        ..addAll(results);
+    });
+  }
+
+  Future<void> _attemptPersuasion(Persuasion persuasion) async {
+    final success = persuasion.attempt(_selectedWarlords, Random());
+    await PersuasionRepository.record(persuasion.id, success, DateTime.now());
+    if (!mounted) return;
+    setState(() => _persuasionResults[persuasion.id] = success);
+  }
+
   @override
   void initState() {
     super.initState();
     _loadScenario();
+    _loadPersuasions();
     _loadUnlockedWarlords();
     _loadLastDifficulty();
   }
@@ -526,6 +567,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
       warlordStrengthMultiplier: _warlordStrengthMultiplier,
       perUnitStrengthMultipliers: _perUnitStrengthMultipliers,
       sortiedWarlordIds: _selectedWarlords.map((w) => w.id).toList(),
+      persuadedIds: _persuadedIds,
     );
 
     if (MessageSettings().storyMessagesEnabled) {
@@ -546,6 +588,7 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
           warlordStrengthMultiplier: _warlordStrengthMultiplier,
           perUnitStrengthMultipliers: _perUnitStrengthMultipliers,
           sortiedWarlordIds: _selectedWarlords.map((w) => w.id).toList(),
+          persuadedIds: _persuadedIds,
         ),
       ),
     );
@@ -725,6 +768,34 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
                 const Divider(color: Color(0xFF8B6914)),
                 const SizedBox(height: 24),
               ],
+              // Persuasion（もしも）: 本編の視点のみ
+              if (_persuasions.isNotEmpty && _selectedPerspectiveId == null) ...[
+                Text(
+                  l10n.scenarioPersuasionTitle,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFD700),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  l10n.scenarioPersuasionHint,
+                  style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                ),
+                const SizedBox(height: 12),
+                ..._persuasions.map(
+                  (p) => _PersuasionCard(
+                    persuasion: p,
+                    rate: p.successRate(_selectedWarlords),
+                    result: _persuasionResults[p.id],
+                    onAttempt: () => _attemptPersuasion(p),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Divider(color: Color(0xFF8B6914)),
+                const SizedBox(height: 24),
+              ],
               // Difficulty Selection
               Text(
                 l10n.scenarioDifficultyTitle,
@@ -776,6 +847,83 @@ class _ScenarioSettingsDialogState extends State<_ScenarioSettingsDialog> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PersuasionCard extends StatelessWidget {
+  final Persuasion persuasion;
+  final double rate;
+  final bool? result;
+  final VoidCallback onAttempt;
+
+  const _PersuasionCard({
+    required this.persuasion,
+    required this.rate,
+    required this.result,
+    required this.onAttempt,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final done = result != null;
+    final success = result == true;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2A1A10),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: !done
+              ? const Color(0xFF8B6914)
+              : (success ? Colors.lightGreenAccent : Colors.grey),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            persuasion.name,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFFFD700),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            persuasion.description,
+            style: TextStyle(fontSize: 12, color: Colors.grey[400]),
+          ),
+          const SizedBox(height: 8),
+          if (!done)
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.scenarioPersuasionRate((rate * 100).round()),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: onAttempt,
+                  child: Text(l10n.scenarioPersuasionButton),
+                ),
+              ],
+            )
+          else
+            Text(
+              success ? persuasion.successText : persuasion.failureText,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: success ? Colors.lightGreenAccent : Colors.grey,
+              ),
+            ),
+        ],
       ),
     );
   }

@@ -11,6 +11,8 @@ import '../../core/services/audio_manager.dart';
 import '../../core/services/message_loader.dart';
 import '../../core/services/message_settings.dart';
 import '../../flame/battle_game.dart';
+import '../../data/repositories/persuasion_repository.dart';
+import '../../domain/whatif/persuasion.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../widgets/help_modal.dart';
 import 'result_screen.dart';
@@ -22,6 +24,8 @@ class BattleScreen extends StatefulWidget {
   final double warlordStrengthMultiplier;
   final List<double>? perUnitStrengthMultipliers;
   final List<String> sortiedWarlordIds;
+  // 出陣前の説得に成功したID（もしもの効果を戦況に反映する）。
+  final List<String> persuadedIds;
   final void Function(BattleStateData)? onChainBattleEnd;
 
   const BattleScreen({
@@ -32,6 +36,7 @@ class BattleScreen extends StatefulWidget {
     this.warlordStrengthMultiplier = 1.0,
     this.perUnitStrengthMultipliers,
     this.sortiedWarlordIds = const [],
+    this.persuadedIds = const [],
     this.onChainBattleEnd,
   });
 
@@ -105,6 +110,21 @@ class _BattleScreenState extends State<BattleScreen> {
           playerUnits: altPerspective.playerUnits,
           enemyUnits: altPerspective.enemyUnits,
           alternativePerspective: data.alternativePerspective,
+        );
+      }
+
+      // 説得に成功した「もしも」の効果（本編の視点のみ）
+      if (widget.persuadedIds.isNotEmpty &&
+          widget.alternativePerspectiveId == null) {
+        final persuasions = await PersuasionRepository.forScenario(
+          widget.scenario,
+        );
+        data = applyWhatIfEffects(
+          data,
+          persuasions
+              .where((p) => widget.persuadedIds.contains(p.id))
+              .expand((p) => p.effects)
+              .toList(),
         );
       }
 

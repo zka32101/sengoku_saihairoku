@@ -530,6 +530,13 @@
   "scenarioCompatibilityPositive": "（好相性）",
   "scenarioCompatibilityNegative": "（不協和）",
   "scenarioDifficultyTitle": "難易度を選ぶ",
+  "scenarioPersuasionTitle": "出陣前の説得",
+  "scenarioPersuasionHint": "成功すると戦況が変わります。結果はその日のうちは変わりません(1日1回)。",
+  "scenarioPersuasionButton": "説得する",
+  "scenarioPersuasionRate": "成功率 {percent}%",
+  "@scenarioPersuasionRate": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
   "scenarioLoadingText": "シナリオを読み込み中...",
   "scenarioLoadErrorText": "シナリオの読み込みに失敗しました",
   "scenarioNameOdigahara": "桶狭間の戦",
